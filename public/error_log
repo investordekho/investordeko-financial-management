@@ -1,0 +1,19 @@
+[30-Sep-2024 20:50:13 UTC] PHP Fatal error:  Cannot declare class ContactController, because the name is already in use in /home1/pubgyejb/laravel_data/app/Http/Controllers/ContactController.php on line 7
+[30-Sep-2024 20:50:56 UTC] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /home1/pubgyejb/laravel_data/app/Http/Controllers/ContactController.php on line 5
+[30-Sep-2024 20:52:26 UTC] PHP Fatal error:  Cannot declare class ContactController because the name is already in use in /home1/pubgyejb/laravel_data/app/Http/Controllers/ContactController.php on line 7
+[30-Sep-2024 20:52:47 UTC] PHP Fatal error:  Cannot declare class ContactController, because the name is already in use in /home1/pubgyejb/laravel_data/app/Http/Controllers/ContactController.php on line 7
+[04-Oct-2024 11:44:13 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 11:44:14 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 11:44:46 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 11:45:15 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 11:45:18 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 12:26:51 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 12:27:42 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 12:30:40 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 12:30:42 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 12:30:47 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 12:30:52 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 12:33:19 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[04-Oct-2024 12:33:21 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 183
+[05-Oct-2024 10:18:59 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\BankerController::filterInvestees() in /home1/pubgyejb/laravel_data/app/Http/Controllers/BankerController.php on line 162
+[16-Oct-2024 09:06:00 UTC] PHP Fatal error:  Cannot use App\Models\Investor as Investor because the name is already in use in /home1/pubgyejb/laravel_data/app/Http/Controllers/DashboardController.php on line 15
