@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     #Ctext{
@@ -302,44 +300,58 @@
                 <h2 class="text-center">Signup Now</h2>
 
                 <!-- Display Success or Error Messages -->
-                @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
-                @if(session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-                @endif
+                <?php if(session('success')): ?>
+                <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+                <?php endif; ?>
+                <?php if(session('error')): ?>
+                <div class="alert alert-danger"><?php echo e(session('error')); ?></div>
+                <?php endif; ?>
 
-                @if ($errors->any())
+                <?php if($errors->any()): ?>
                 <div class="alert alert-danger">
                     <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
-                @endif
+                <?php endif; ?>
 
                 <!-- Registration Form -->
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('register')); ?>">
+                    <?php echo csrf_field(); ?>
 
                     <!-- Full Name and Email Fields on the Same Line -->
                     <div class="row g-3">
                         <div class="col-sm-6 mb-3">
                             <label id="Ctext" for="fullName">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" name="name" value="{{ old('name') }}" placeholder="Enter your full name" required>
+                            <input type="text" class="form-control" id="fullName" name="name" value="<?php echo e(old('name')); ?>" placeholder="Enter your full name" required>
                             
-                            @error('name')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger"><?php echo e($message); ?></div>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label id="Ctext" for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required>
+                            <input type="email" class="form-control" id="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="Enter your email" required>
                             
-                            @error('email')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger"><?php echo e($message); ?></div>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                       <div class="row g-3">
@@ -349,17 +361,24 @@
                         <div class="input-group" style="margin-bottom: -10px;">
                             <!-- Country Code Dropdown -->
                             <select class="form-select p-1" name="country_code" id="country_code" required style="max-width: 150px;">
-                                @include('partials.countryphonecode')
+                                <?php echo $__env->make('partials.countryphonecode', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                 <!-- Add more country codes as needed -->
                             </select>
 
                             <!-- Phone Number Input -->
-                            <input type="number" class="form-control phone" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Enter your phone number" required maxlength="10">
+                            <input type="number" class="form-control phone" id="phone" name="phone" value="<?php echo e(old('phone')); ?>" placeholder="Enter your phone number" required maxlength="10">
                         </div>
                         <label for="phone"></label>
-                        @error('phone')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="text-danger"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
                     </div>
 
@@ -369,9 +388,16 @@
                             <label id="Ctext" for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                             
-                            @error('password')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger"><?php echo e($message); ?></div>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="col-md-6 form-auto mb-1">
                             <label id="Ctext" for="password_confirmation">Confirm Password</label>
@@ -385,52 +411,81 @@
                          <label id="Ctext" for="category">Join as</label>
                         <select class="form-select" id="category" name="category" required>
                             <option value="">Select Category</option>
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>
-                                {{ $category->category_name }}
+                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($category->id); ?>" <?php echo e(old('category') == $category->id ? 'selected' : ''); ?>>
+                                <?php echo e($category->category_name); ?>
+
                             </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                        
-                        @error('category')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <?php $__errorArgs = ['category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="text-danger"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- CAPTCHA Field -->
                   
                     <!-- <div class="form-auto mb-3">
                         <input type="text" class="form-control" id="captcha" name="captcha" placeholder="Enter the result" required>
-                        <label id="Ctext" for="captcha">What is {{ session('captcha_value_1') }}?</label>
-                        @error('captcha')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <label id="Ctext" for="captcha">What is <?php echo e(session('captcha_value_1')); ?>?</label>
+                        <?php $__errorArgs = ['captcha'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="text-danger"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div> -->
 
                     <div class="form-group mb-3">
                         <label for="captcha">Enter the text shown in the image:</label>
                         <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Enter CAPTCHA" required>
                         <br>
-                        <img id="captchaImage" src="{{ url('/captcha') }}" alt="CAPTCHA Image">
-                        <!-- <button type="button" onclick="document.querySelector('img[alt=\'CAPTCHA Image\']').src = '{{ url('/captcha') }}?' + Math.random();">
+                        <img id="captchaImage" src="<?php echo e(url('/captcha')); ?>" alt="CAPTCHA Image">
+                        <!-- <button type="button" onclick="document.querySelector('img[alt=\'CAPTCHA Image\']').src = '<?php echo e(url('/captcha')); ?>?' + Math.random();">
                             Reload CAPTCHA
                         </button> -->
-                        <img src="{{ asset('img/refresh.png') }}" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:25px; margin-left:10px;" onclick="refreshCaptcha()">
+                        <img src="<?php echo e(asset('img/refresh.png')); ?>" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:25px; margin-left:10px;" onclick="refreshCaptcha()">
 
-                        @error('captcha')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <?php $__errorArgs = ['captcha'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Terms and Conditions Checkbox -->
                     <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
                         <label class="form-check-label" for="terms">
-                            By clicking to register, I agree to the <a href="{{ route('terms') }}">Terms of Use</a> and <a href="{{ route('privacy-policy') }}">Privacy Policy</a>.
+                            By clicking to register, I agree to the <a href="<?php echo e(route('terms')); ?>">Terms of Use</a> and <a href="<?php echo e(route('privacy-policy')); ?>">Privacy Policy</a>.
                         </label>
-                        @error('terms')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="text-danger"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Submit Button -->
@@ -438,7 +493,7 @@
                 </form>
 
                 <!-- Already have an account -->
-                <h3 class="text-center mt-4">Already have an account? <a href="{{ route('login') }}">Login</a></h3>
+                <h3 class="text-center mt-4">Already have an account? <a href="<?php echo e(route('login')); ?>">Login</a></h3>
             </div>
         </div>
     </div>
@@ -448,14 +503,14 @@
     function refreshCaptcha() {
         var captchaImage = document.getElementById('captchaImage');
         // Append a random query string to prevent caching
-        captchaImage.src = '{{ url('/captcha') }}?' + Math.random();
+        captchaImage.src = '<?php echo e(url('/captcha')); ?>?' + Math.random();
     }
 </script> -->
 <!-- <script>
     function refreshCaptcha() {
         // Refresh the CAPTCHA image by appending a random query string to avoid caching
         var captchaImage = document.getElementById('captchaImage');
-        captchaImage.src = '{{ url('/captcha') }}?' + Math.random();
+        captchaImage.src = '<?php echo e(url('/captcha')); ?>?' + Math.random();
         
         // Get the refresh icon and apply the rotation effect
         var refreshIcon = document.getElementById('refreshIcon');
@@ -472,7 +527,7 @@
     function refreshCaptcha() {
         // Refresh the CAPTCHA image by appending a random query string to avoid caching
         var captchaImage = document.getElementById('captchaImage');
-        captchaImage.src = '{{ url('/captcha') }}?' + Math.random();
+        captchaImage.src = '<?php echo e(url('/captcha')); ?>?' + Math.random();
 
         // Get the refresh icon and add the rotation class to trigger the animation
         var refreshIcon = document.getElementById('refreshIcon');
@@ -483,4 +538,6 @@
         refreshIcon.classList.add('rotate-clockwise');
     }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/auth/register.blade.php ENDPATH**/ ?>
