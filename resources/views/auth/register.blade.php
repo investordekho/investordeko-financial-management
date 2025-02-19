@@ -8,6 +8,19 @@
         color: grey;
     }
 </style>
+<style>
+    /* Define the clockwise rotation animation */
+    @keyframes rotateClockwise {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Apply the animation when the class is added */
+    .rotate-clockwise {
+        animation: rotateClockwise 0.5s ease-in-out;
+    }
+</style>
+
 <div class="container-xxl py-5">
     <div class="container">
         <div class="row justify-content-center">
@@ -354,16 +367,27 @@
                     </div>
 
                     <!-- CAPTCHA Field -->
-                    @php
-                        // Assuming you set a CAPTCHA sum in the session
-                        $captchaValue = session('captcha', rand(1, 10) + rand(1, 10));
-                        session(['captcha' => $captchaValue]);
-                    @endphp
-                    <div class="form-auto mb-3">
+                  
+                    <!-- <div class="form-auto mb-3">
                         <input type="text" class="form-control" id="captcha" name="captcha" placeholder="Enter the result" required>
-                        <label id="Ctext" for="captcha">What is {{ session('captcha_value_1') }} + {{ session('captcha_value_2') }}?</label>
+                        <label id="Ctext" for="captcha">What is {{ session('captcha_value_1') }}?</label>
                         @error('captcha')
                         <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div> -->
+
+                    <div class="form-group mb-3">
+                        <label for="captcha">Enter the text shown in the image:</label>
+                        <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Enter CAPTCHA" required>
+                        <br>
+                        <img id="captchaImage" src="{{ url('/captcha') }}" alt="CAPTCHA Image">
+                        <!-- <button type="button" onclick="document.querySelector('img[alt=\'CAPTCHA Image\']').src = '{{ url('/captcha') }}?' + Math.random();">
+                            Reload CAPTCHA
+                        </button> -->
+                        <img src="{{ asset('img/refresh.png') }}" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:30px; margin-left:10px;" onclick="refreshCaptcha()">
+
+                        @error('captcha')
+                            <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -388,4 +412,44 @@
         </div>
     </div>
 </div>
+
+<!-- <script>
+    function refreshCaptcha() {
+        var captchaImage = document.getElementById('captchaImage');
+        // Append a random query string to prevent caching
+        captchaImage.src = '{{ url('/captcha') }}?' + Math.random();
+    }
+</script> -->
+<!-- <script>
+    function refreshCaptcha() {
+        // Refresh the CAPTCHA image by appending a random query string to avoid caching
+        var captchaImage = document.getElementById('captchaImage');
+        captchaImage.src = '{{ url('/captcha') }}?' + Math.random();
+        
+        // Get the refresh icon and apply the rotation effect
+        var refreshIcon = document.getElementById('refreshIcon');
+        refreshIcon.style.transition = "transform 0.5s ease-in-out";
+        refreshIcon.style.transform = "rotate(360deg)";
+        
+        // Reset the rotation after the animation completes (0.5 seconds)
+        setTimeout(function() {
+            refreshIcon.style.transform = "rotate(0deg)";
+        }, 500);
+    }
+</script> -->
+<script>
+    function refreshCaptcha() {
+        // Refresh the CAPTCHA image by appending a random query string to avoid caching
+        var captchaImage = document.getElementById('captchaImage');
+        captchaImage.src = '{{ url('/captcha') }}?' + Math.random();
+
+        // Get the refresh icon and add the rotation class to trigger the animation
+        var refreshIcon = document.getElementById('refreshIcon');
+
+        // Remove the class if it's already there, then force a reflow before adding it again.
+        refreshIcon.classList.remove('rotate-clockwise');
+        void refreshIcon.offsetWidth; // This forces reflow, so the animation will re-trigger
+        refreshIcon.classList.add('rotate-clockwise');
+    }
+</script>
 @endsection
