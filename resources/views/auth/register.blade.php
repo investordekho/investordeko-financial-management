@@ -384,7 +384,7 @@
                         <!-- <button type="button" onclick="document.querySelector('img[alt=\'CAPTCHA Image\']').src = '{{ url('/captcha') }}?' + Math.random();">
                             Reload CAPTCHA
                         </button> -->
-                        <img src="{{ asset('img/refresh.png') }}" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:30px; margin-left:10px;" onclick="refreshCaptcha()">
+                        <img src="{{ asset('img/refresh.png') }}" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:25px; margin-left:10px;" onclick="refreshCaptcha()">
 
                         @error('captcha')
                             <div class="text-danger">{{ $message }}</div>

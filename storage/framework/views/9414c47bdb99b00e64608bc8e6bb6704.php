@@ -425,7 +425,7 @@ unset($__errorArgs, $__bag); ?>
                         <!-- <button type="button" onclick="document.querySelector('img[alt=\'CAPTCHA Image\']').src = '<?php echo e(url('/captcha')); ?>?' + Math.random();">
                             Reload CAPTCHA
                         </button> -->
-                        <img src="<?php echo e(asset('img/refresh.png')); ?>" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:30px; margin-left:10px;" onclick="refreshCaptcha()">
+                        <img src="<?php echo e(asset('img/refresh.png')); ?>" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:25px; margin-left:10px;" onclick="refreshCaptcha()">
 
                         <?php $__errorArgs = ['captcha'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
