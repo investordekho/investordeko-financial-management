@@ -7,4 +7,4 @@
 </div>
 
 <?php echo $__env->make('includes.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php /**PATH C:\xampp\htdocs\laravel_data\resources\views/layouts/app.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/layouts/app.blade.php ENDPATH**/ ?>

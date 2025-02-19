@@ -10,24 +10,39 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-
+use App\Rules\CaptchaMatch;
 class RegisterController extends Controller
 {
     // Add the ValidatesRequests trait to your controller
     use ValidatesRequests;
 
+    // public function showRegistrationForm()
+    // {
+    //     // Generate captcha numbers and store in session
+    //     $num1 = rand(1, 10);
+    //     $num2 = rand(1, 10);
+    //     session(['captcha_value_1' => $num1, 'captcha_value_2' => $num2]);
+
+    //     // Fetch categories for the registration form
+    //     $categories = Category::all();
+
+    //     return view('auth.register', compact('categories', 'num1', 'num2'));
+    // }
+
     public function showRegistrationForm()
     {
-        // Generate captcha numbers and store in session
-        $num1 = rand(1, 10);
-        $num2 = rand(1, 10);
-        session(['captcha_value_1' => $num1, 'captcha_value_2' => $num2]);
-
-        // Fetch categories for the registration form
+        // Fetch categories from the database
         $categories = Category::all();
+        $numchar ='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $num1 = substr(str_shuffle($numchar), 0, 6);
+       
+        // Store the CAPTCHA values in session
+        session(['captcha_value_1' => $num1]);
 
-        return view('auth.register', compact('categories', 'num1', 'num2'));
+        // Pass the categories and CAPTCHA values to the view
+        return view('auth.register', compact('categories', 'num1'));
     }
+
 
     public function register(Request $request)
 {
@@ -38,18 +53,23 @@ class RegisterController extends Controller
         'phone' => 'required|string|max:10|unique:users',
         'password' => 'required|string|min:8|confirmed',
         'category' => 'required',
-        'captcha' => 'required',
+        // 'captcha' => ['required', new CaptchaMatch(session('captcha_value_1'))],
+        'captcha'   => ['required', function ($attribute, $value, $fail) {
+            if ($value !== session('captcha_text')) {
+                $fail('The CAPTCHA is incorrect.');
+            }
+        }],
         'terms' => 'accepted',
     ]);
 
-    // Manually validate captcha
-    $num1 = session('captcha_value_1');
-    $num2 = session('captcha_value_2');
-    $correctCaptcha = $num1 + $num2;
+    // // Manually validate captcha
+    // $num1 = session('captcha_value_1');
+    // $num2 = session('captcha_value_2');
+    // $correctCaptcha = $num1 + $num2;
 
-    if ($request->captcha != $correctCaptcha) {
-        return back()->withErrors(['captcha' => 'The entered captcha is incorrect'])->withInput();
-    }
+    // if ($request->captcha != $correctCaptcha) {
+    //     return back()->withErrors(['captcha' => 'The entered captcha is incorrect'])->withInput();
+    // }
 
     // Create the user
     $user = User::create([
@@ -66,4 +86,6 @@ class RegisterController extends Controller
     // Redirect to OTP verification page
     return redirect()->route('otp.form')->with('success', 'Registration successful! Please verify your mobile number using the OTP sent.');
 }
+
+
 }

@@ -26,6 +26,7 @@ use App\Http\Controllers\LocationDetailnewController;
 use App\Http\Controllers\SectorDetailnewController;
 use App\Http\Controllers\ServiceContactController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\CaptchaController;
 
 // Home, About, Services, Contact Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -135,3 +136,4 @@ Auth::routes();
 Route::get('/service-contact', [ServiceContactController::class, 'showContactForm'])->name('service.contact.form');
 Route::post('/service-contact', [ServiceContactController::class, 'submitContactForm'])->name('service.contact.submit');
 
+Route::get('/captcha', [CaptchaController::class, 'generateCaptcha']);

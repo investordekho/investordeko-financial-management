@@ -1184,4 +1184,4 @@
         });
     </script>
 </body>
-</html><?php /**PATH C:\xampp\htdocs\laravel_data\resources\views/includes/header.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/includes/header.blade.php ENDPATH**/ ?>

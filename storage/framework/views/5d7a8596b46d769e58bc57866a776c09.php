@@ -133,4 +133,4 @@
 
 
 
-<?php /**PATH C:\xampp\htdocs\laravel_data\resources\views/includes/footer.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/includes/footer.blade.php ENDPATH**/ ?>
