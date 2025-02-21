@@ -27,6 +27,7 @@ use App\Http\Controllers\SectorDetailnewController;
 use App\Http\Controllers\ServiceContactController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CaptchaController;
+use App\Http\Controllers\AdminDashboard;
 
 // Home, About, Services, Contact Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -121,6 +122,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/investor', [InvestorDashboardController::class, 'index'])->name('investor.dashboard');
     Route::get('/dashboard/banker', [BankerController::class, 'showBankerDashboard'])->name('banker.dashboard');
     Route::get('/dashboard/other', [OtherDashboardController::class, 'index'])->name('other.dashboard');
+
+    Route::get('/dashboard/admin', [AdminDashboard::class,'callAdminDashboard'])->name('admin.dashboard');
 });
 
 // Search Submission Route
