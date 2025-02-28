@@ -91,7 +91,7 @@
                if (data.success) {
                   console.log("data that have uploaded are -------------------",data);
                   alert(data.message);
-                  // location.reload();
+                   location.reload();
                  
                } else {
                   alert(data.message || 'An error occurred while uploading the file');
