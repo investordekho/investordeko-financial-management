@@ -221,6 +221,21 @@
         <div class="col-md-9 d-flex justify-content-end">
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
+
+                @auth
+                    <!-- <li class="nav-item">
+                        <span class="nav-link">Role: {{ auth()->user()->roles->pluck('name') }}</span>
+                    </li> -->
+
+                    @if(auth()->user()->hasRole('Admin'))
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                        </li>
+                    @endif
+                @endauth
+
+
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Home</a>
                     </li>

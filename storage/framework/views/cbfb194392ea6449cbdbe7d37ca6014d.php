@@ -221,6 +221,21 @@
         <div class="col-md-9 d-flex justify-content-end">
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
+
+                <?php if(auth()->guard()->check()): ?>
+                    <!-- <li class="nav-item">
+                        <span class="nav-link">Role: <?php echo e(auth()->user()->roles->pluck('name')); ?></span>
+                    </li> -->
+
+                    <?php if(auth()->user()->hasRole('Admin')): ?>
+                        <li class="nav-item">
+                            <a class="nav-link " href="<?php echo e(route('admin.dashboard')); ?>">Admin Dashboard</a>
+                        </li>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+
+
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo e(route('home')); ?>">Home</a>
                     </li>
