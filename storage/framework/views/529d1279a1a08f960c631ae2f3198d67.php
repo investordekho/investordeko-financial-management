@@ -1,6 +1,6 @@
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
    <!-- //excel upload of customer information and employee managerment admin dashboard  -->
   
       <div class="row">
@@ -19,21 +19,23 @@
                         </ul>
                         <div class="tab-content" id="myTabContent">
                            <div class="tab-pane fade show active" id="excel-upload" role="tabpanel" aria-labelledby="excel-upload-tab">
-                           @if (session('success_message'))
+                           <?php if(session('success_message')): ?>
                               <div class="alert alert-success">
-                                 {{ session('success_message') }}
-                              </div>
-                           @endif
+                                 <?php echo e(session('success_message')); ?>
 
-                           @if (session('error_message'))
-                              <div class="alert alert-danger">
-                                 {{ session('error_message') }}
                               </div>
-                           @endif 
-                              <!-- <form action="{{ route('investor.excelupload') }}" method="POST" enctype="multipart/form-data" class="form-horizontal"> -->
-                              <form id="excel-upload-form" action="{{ route('investor.excelupload') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                           <?php endif; ?>
+
+                           <?php if(session('error_message')): ?>
+                              <div class="alert alert-danger">
+                                 <?php echo e(session('error_message')); ?>
+
+                              </div>
+                           <?php endif; ?> 
+                              <!-- <form action="<?php echo e(route('investor.excelupload')); ?>" method="POST" enctype="multipart/form-data" class="form-horizontal"> -->
+                              <form id="excel-upload-form" action="<?php echo e(route('investor.excelupload')); ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
    
-                              @csrf
+                              <?php echo csrf_field(); ?>
                                  <div class="form-group">
                                     <label for="file" class="col-sm-3 control-label" style="margin-top: 20px;">Upload Investor File</label>
                                     <div class="col-sm-9">
@@ -78,7 +80,7 @@
                 console.log("formdata",formData);
                
    
-            fetch("{{route('investor.excelupload')}}", {
+            fetch("<?php echo e(route('investor.excelupload')); ?>", {
                method: 'POST',
                body: formData,
                headers: {
@@ -109,4 +111,5 @@
       
       
       </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/dashboards/admindashboard.blade.php ENDPATH**/ ?>

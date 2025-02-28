@@ -19,7 +19,7 @@ class Investor extends Model
     // One-to-One relationship for contact details
     public function contactDetails()
     {
-        return $this->hasOne(ContactDetail::class);
+        return $this->hasOne(ContactDetails::class);
     }
 
     // One-to-Many relationship for public links
@@ -59,5 +59,10 @@ class Investor extends Model
     public function public_links()
     {
         return $this->hasMany(PublicLink::class);
+    }
+
+    public function investorAddresses()
+    {
+        return $this->hasMany(InvestorAddress::class);
     }
 }

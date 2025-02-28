@@ -63,6 +63,7 @@
             </div>
         </div>
     </div>
+    
     <!-- jQuery (necessary for various plugins like Owl Carousel, WOW.js, and others) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 

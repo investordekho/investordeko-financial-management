@@ -28,6 +28,7 @@ use App\Http\Controllers\ServiceContactController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\AdminDashboard;
+use App\Http\Controllers\ExcelUploadController;
 
 // Home, About, Services, Contact Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -124,8 +125,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/other', [OtherDashboardController::class, 'index'])->name('other.dashboard');
 
     Route::get('/dashboard/admin', [AdminDashboard::class,'callAdminDashboard'])->name('admin.dashboard');
+    // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
 });
-
+Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
+// Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
 // Search Submission Route
 Route::post('/perform-search', [SearchController::class, 'performSearch'])->name('perform.search');
 
