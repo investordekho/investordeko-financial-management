@@ -19,40 +19,180 @@
                         </ul>
                         <div class="tab-content" id="myTabContent">
                            <div class="tab-pane fade show active" id="excel-upload" role="tabpanel" aria-labelledby="excel-upload-tab">
-                           <?php if(session('success_message')): ?>
-                              <div class="alert alert-success">
-                                 <?php echo e(session('success_message')); ?>
+                              <?php if(session('success_message')): ?>
+                                 <div class="alert alert-success">
+                                    <?php echo e(session('success_message')); ?>
 
-                              </div>
-                           <?php endif; ?>
-
-                           <?php if(session('error_message')): ?>
-                              <div class="alert alert-danger">
-                                 <?php echo e(session('error_message')); ?>
-
-                              </div>
-                           <?php endif; ?> 
-                              <!-- <form action="<?php echo e(route('investor.excelupload')); ?>" method="POST" enctype="multipart/form-data" class="form-horizontal"> -->
-                              <form id="excel-upload-form" action="<?php echo e(route('investor.excelupload')); ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
-   
-                              <?php echo csrf_field(); ?>
-                                 <div class="form-group">
-                                    <label for="file" class="col-sm-3 control-label" style="margin-top: 20px;">Upload Investor File</label>
-                                    <div class="col-sm-9">
-                                          <input type="file" id="file" name="file" class="form-control" style="border: 1px solid #ced4da; border-radius: 0.25rem; padding: 0.375rem 0.75rem; font-size: 1rem; margin-top: 20px; margin-bottom: 20px;" required>
-                                    </div>
                                  </div>
-                                 <div class="form-group">
-                                    <div class="col-sm-offset-3 col-sm-9">
-                                       <button type="submit" class="btn btn-success">Import Investor Data</button>
-                                    </div>
+                              <?php endif; ?>
+
+                              <?php if(session('error_message')): ?>
+                                 <div class="alert alert-danger">
+                                    <?php echo e(session('error_message')); ?>
+
                                  </div>
-                              </form>
+                              <?php endif; ?> 
+                                 <!-- <form action="<?php echo e(route('investor.excelupload')); ?>" method="POST" enctype="multipart/form-data" class="form-horizontal"> -->
+                                 <form id="excel-upload-form" action="<?php echo e(route('investor.excelupload')); ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
+      
+                                 <?php echo csrf_field(); ?>
+                                    <div class="form-group">
+                                       <label for="file" class="col-sm-3 control-label" style="margin-top: 20px;">Upload Investor File</label>
+                                       <div class="col-sm-9">
+                                             <input type="file" id="file" name="file" class="form-control" style="border: 1px solid #ced4da; border-radius: 0.25rem; padding: 0.375rem 0.75rem; font-size: 1rem; margin-top: 20px; margin-bottom: 20px;" required>
+                                       </div>
+                                    </div>
+                                    <div class="form-group">
+                                       <div class="col-sm-offset-3 col-sm-9">
+                                          <button type="submit" class="btn btn-success">Import Investor Data</button>
+                                       </div>
+                                    </div>
+                                 </form>
                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                            <div class="tab-pane fade" id="employee-management" role="tabpanel" aria-labelledby="employee-management-tab">
-                              <div class="card-header">Employee Management</div>
-                              <!-- Add your employee management content here -->
+                              <!-- <div class="card-header">Employee Management</div> -->
+                               <div style="display:flex;justify-content:flex-end;">
+                                 <button style="background-color:#007bff; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; transition:0.3s;"
+                                 onmouseover="this.style.backgroundColor='#0056b3'"
+                                 onmouseout="this.style.backgroundColor='#077bff'">Create</button>
+                               </div>
+                              
+                              <div class="card shadow-lg">
+                                 <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Employee Management</h5>
+                                 </div>
+                                 <div class="card-body">
+                                    <?php if(session('success_message')): ?>
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                       <?php echo e(session('success_message')); ?>
+
+                                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <?php endif; ?>
+                                    
+                                    <?php if(session('error_message')): ?>
+                                       <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                          <?php echo e(session('error_message')); ?>
+
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                       </div>
+                                    <?php endif; ?>
+                                 </div>         
+                             
+                                 <!-- Add your employee management content here -->
+
+                                 <div class="table-responsive">
+                                    <table class="table table-striped table-hover align-middle shadow-sm">
+                                       <thead class="table-dark">
+                                          <tr class="table-primary">
+                                             <th>Employee ID</th>
+                                             <th>Employee Name</th>
+                                             <th>Employee Email</th>
+                                             <th>Action</th>                                      
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <?php $__currentLoopData = $employeedata; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>                                             
+                                          <tr>
+                                             <td><?php echo e($employee->id); ?></td>
+                                             <td><?php echo e($employee->name); ?></td>
+                                             <td><?php echo e($employee->email); ?></td>
+                                             <td><i class="bi bi-eye"></i>
+                                             <i class="bi bi-pencil-square"></i>
+                                             <i class="bi bi-trash"></i></td>
+                                          </tr>
+                                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                                          
+                                       </tbody>
+                                    </table>
+                                    <!-- <?php phpinfo()?> -->
+                                 </div>
+                              </div>
                            </div>
+
+
+
+                           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         </div>
                      </div>
 
@@ -110,6 +250,10 @@
 
       
       
+      </script>
+      <script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
       </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/dashboards/admindashboard.blade.php ENDPATH**/ ?>
