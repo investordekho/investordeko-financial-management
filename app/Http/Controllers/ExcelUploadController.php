@@ -242,9 +242,12 @@ class ExcelUploadController extends Controller
 
                     // Assign values dynamically with random fallback values
                     $investorData = [
-                        'investor_name' => $getValue('investor_name') ?: $this->getRandomValue('name'),
-                        'address' => $getValue('address') ?: $this->getRandomValue('address'),
-                        'sectors_preferred' => $getValue('sectors_preferred') ?: $this->getRandomValue('sector'),
+                        // 'investor_name' => $getValue('investor_name') ?: $this->getRandomValue('name'),
+                        // 'address' => $getValue('address') ?: $this->getRandomValue('address'),
+                        // 'sectors_preferred' => $getValue('sectors_preferred') ?: $this->getRandomValue('sector'),'Not Specified'
+                        'investor_name' => $getValue('investor_name') ?: 'Not Specified',
+                        'address' => $getValue('address') ?: 'Not Specified',
+                        'sectors_preferred' => $getValue('sectors_preferred') ?: 'Not Specified',
                         'user_id' => auth()->id() ?? 7,
                         'created_at' => now(),
                         'updated_at' => now(),
@@ -265,7 +268,8 @@ class ExcelUploadController extends Controller
                     }
 
                     // Store Contact Details
-                    $mobile = $getValue('mobile') ?: $this->getRandomValue('mobile');
+                    // $mobile = $getValue('mobile') ?: $this->getRandomValue('mobile');
+                    $mobile = $getValue('mobile') ?: "000000000";
                     // foreach (explode(',', $mobile) as $number) {
                     //     ContactDetails::firstOrCreate(
                     //         ['investors_id' => $investor->id, 'concerned_person_phone' => trim($number)],
@@ -298,7 +302,8 @@ class ExcelUploadController extends Controller
  
                     // Store Public Links
                     foreach (['website', 'linkedin', 'twitter'] as $dbColumn) {
-                        $url = $getValue($dbColumn) ?: $this->getRandomValue('url');
+                        // $url = $getValue($dbColumn) ?: $this->getRandomValue('url');
+                        $url =  $getValue($dbColumn) ?: 'Not Provided';
                         PublicLink::firstOrCreate(
                             ['investor_id' => $investor->id, 'url' => $url],
                             ['link_description' => ucfirst($dbColumn)]
@@ -307,18 +312,25 @@ class ExcelUploadController extends Controller
 
                     // Store Address
                     $addressData = [
-                        'country' => $getValue('country') ?: $this->getRandomValue('country'),
-                        'state' => $getValue('state') ?: $this->getRandomValue('state'),
-                        'city' => $getValue('city') ?: $this->getRandomValue('city'),
-                        'zip_code' => $getValue('zip_code') ?: mt_rand(10000, 99999),
+                        // 'country' => $getValue('country') ?: $this->getRandomValue('country'),
+                        // 'state' => $getValue('state') ?: $this->getRandomValue('state'),
+                        // 'city' => $getValue('city') ?: $this->getRandomValue('city'),
+                        // 'zip_code' => $getValue('zip_code') ?: mt_rand(10000, 99999),
+                        'country' => $getValue('country') ?: 'Not Specified',
+                        'state' => $getValue('state') ?: 'Not Specified',
+                        'city' => $getValue('city') ?: 'Not Specified',
+                        'zip_code' => $getValue('zip_code') ?: 0,
                     ];
                     InvestorAddress::firstOrCreate(['investor_id' => $investor->id], $addressData);
 
                     // Store Investment Details
                     $investmentData = [
-                        'investment_size' => $getValue('investment_size') ?: mt_rand(100000, 5000000),
-                        'investor_type' => $getValue('investor_type') ?: $this->getRandomValue('investor_type'),
-                        'investment_tenure' => $getValue('investment_tenure') ?: mt_rand(1, 10) . ' years',
+                        // 'investment_size' => $getValue('investment_size') ?: mt_rand(100000, 5000000),
+                        // 'investor_type' => $getValue('investor_type') ?: $this->getRandomValue('investor_type'),
+                        // 'investment_tenure' => $getValue('investment_tenure') ?: mt_rand(1, 10) . ' years',
+                        'investment_size' => $getValue('investment_size') ?: 0,
+                        'investor_type' => $getValue('investor_type') ?: 'Not Specified',
+                        'investment_tenure' => $getValue('investment_tenure') ?: 'Not Specified years',
                     ];
                     InvestmentDetail::firstOrCreate(['investor_id' => $investor->id], $investmentData);
 
