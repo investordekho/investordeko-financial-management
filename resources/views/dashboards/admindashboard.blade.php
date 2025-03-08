@@ -11,7 +11,10 @@
                      <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                            <li class="nav-item">
-                              <a class="nav-link active" id="excel-upload-tab" data-toggle="tab" href="#excel-upload" role="tab" aria-controls="excel-upload" aria-selected="true">Excel Upload</a>
+                              <a class="nav-link active" id="excel-upload-tab" data-toggle="tab" href="#excel-upload" role="tab" aria-controls="excel-upload" aria-selected="true">Investor Excel Upload</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" id="investor-exceldownload-tab" data-toggle="tab" href="#investor-excel-download" role="tab" aria-controls="investor-excel-download" aria-selected="false">Investor Excel Download</a>
                            </li>
                            <li class="nav-item">
                               <a class="nav-link" id="employee-management-tab" data-toggle="tab" href="#employee-management" role="tab" aria-controls="employee-management" aria-selected="false">Employee Management</a>
@@ -126,12 +129,44 @@
                            </div>
 
 
+                           
 
                            
 
 
 
+                           <!-- <div class="tab-pane fade" id="investor-excel-download" role="tabpanel" aria-labelledby="investor-exceldownload-tab"> -->
+                              <!-- <div> 
+                                 <h5>download investor excel</h5>
+                                 <button id="download-investor-excel-data">Download Investor Excel Data</button>
+                              </div> -->
+                              <!-- <form action="{{ route('investor.exceldownload') }}" method="GET">
+                              <label for="format">Select Export Format:</label>
+                              <select name="format" id="format">
+                                 <option value="xlsx">XLSX</option>
+                                 <option value="xls">XLS</option>
+                                 <option value="csv">CSV</option>
+                                 <option value="pdf">PDF</option>
+                              </select>
+                              <button type="submit">Download</button>
+                               </form>
+                           </div> -->
 
+                           
+                           <div class="tab-pane fade" id="investor-excel-download" role="tabpanel" aria-labelledby="investor-exceldownload-tab">
+                                <form action="{{ route('investor.exceldownload') }}" method="GET" style="margin-top: 20px;">
+                                  <div class="form-group">
+                                    <label for="format" style="margin-right: 10px;">Select Export Format:</label>
+                                    <select name="format" id="format" class="form-control" style="display: inline-block; width: auto; margin-right: 10px;">
+                                       <option value="xlsx">XLSX</option>
+                                       <option value="xls">XLS</option>
+                                       <option value="csv">CSV</option>
+                                       <!-- <option value="pdf">PDF</option> -->
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Download</button>
+                                  </div>
+                                </form>
+                           </div>
 
 
 
@@ -246,6 +281,46 @@
 
       
       
+      </script>
+
+    
+
+
+
+
+
+
+
+            <!-- <script>
+                document.addEventListener('DOMContentLoaded',function(){
+                  console.log("script has stated here");
+                  let downloadbutton = document.getElementById('download-investor-excel-data');
+                  downloadbutton.addEventListener('click',function(){
+                     fetch("{{route('investor.exceldownload')}}", {
+                        method:'GET',
+                        headers: {
+                           'X-CSRF-TOKEN':document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        }
+                     })
+                     .then(response => response.blob())
+                     .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display='none';
+                        a.href=url;
+                        a.download = 'investor_data.xlsx';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        alert('Excel Downloaded successfully');
+                     })
+                     .catch(error => {
+                        console.error("Error:",error);
+                        alert('An error occurred while downloading the file')
+                     });
+                  });
+                });
+            </script> -->
       </script>
       <script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
