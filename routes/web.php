@@ -126,8 +126,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard/admin', [AdminDashboard::class,'callAdminDashboard'])->name('admin.dashboard');
     // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
+    Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
+    Route::get('/investor/exceldownload',[ExcelUploadController::class, 'downloaddataofInvestorExcel'])->name('investor.exceldownload');
 });
-Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
+
 // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
 // Search Submission Route
 Route::post('/perform-search', [SearchController::class, 'performSearch'])->name('perform.search');

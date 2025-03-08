@@ -16,6 +16,11 @@ class ContactDetails extends Model
         'concerned_person_phone',
         'email',
     ];
+
+    public function investor()
+    {
+        return $this->belongsTo(Investor::class);
+    }
 }
 
 
