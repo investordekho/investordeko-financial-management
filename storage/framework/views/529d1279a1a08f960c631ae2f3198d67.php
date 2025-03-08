@@ -165,7 +165,7 @@
                                        <option value="xlsx">XLSX</option>
                                        <option value="xls">XLS</option>
                                        <option value="csv">CSV</option>
-                                       <option value="pdf">PDF</option>
+                                       <!-- <option value="pdf">PDF</option> -->
                                     </select>
                                     <button type="submit" class="btn btn-primary">Download</button>
                                   </div>
