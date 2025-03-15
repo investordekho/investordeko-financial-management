@@ -20,4 +20,8 @@ class Founder extends Model
         'education',
         'experience',
     ];
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

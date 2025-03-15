@@ -14,6 +14,7 @@ class ReferralSource extends Model
      *
      * @var array
      */
+    protected $table = 'referral_sources';
     protected $fillable = [
         'company_id',   // Add company_id to allow mass assignment
         'source',       // Assuming 'source' is a field for the referral source
