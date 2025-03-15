@@ -15,7 +15,7 @@ class InvestorDashboardController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function indexe()
 {
     // Get the logged-in user's ID
     $userId = auth()->user()->id;
@@ -33,7 +33,23 @@ class InvestorDashboardController extends Controller
     // Pass investees, sectors, locations, and subscriber to the view
     return view('dashboards.investordashboard', compact('investees', 'sectors', 'locations', 'subscriber'));
 }
+   public function index()
+   {
+       $userId = auth()->user()->id;
+       $subscriber = Subscriber::where('user_id',$userId)->first();
+       $investeesQuery = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource']);
+       $sectors = SectorDetail::all();
+       $locations =LocationDetail::all();
 
+       if($subscriber && $subscriber->is_subscribed){
+            $investees = $investeesQuery->limit(10)->get();
+       }
+       else
+       {
+            $investees = $investeesQuery->limit(3)->get();
+       }
+       return view('dashboards.investordashboard',compact('subscriber','investees','sectors','locations'));
+   }
     /**
      * Search function for filtering investees.
      */
@@ -74,9 +90,30 @@ class InvestorDashboardController extends Controller
         }
 
         // Fetch the filtered results
-        $investees = $query->with(['user', 'fundRequirements', 'previousRounds'])->get();
+        $investeesdata = $query->with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])->get();
 
+        
+       if($subscriber && $subscriber->is_subscribed){
+                $investees = $investeesdata->take(10)->values();
+        }
+        else
+        {
+                $investees = $investeesdata->take(3)->values();
+        }
         // Pass investees and subscriber to the partial view
         return view('partials.investee_list', compact('investees', 'subscriber'))->render();
+    }
+
+
+    public function investordetaildashboard($id)
+    {
+        // $id = $request->input('id');
+
+        $investee = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])->find($id);
+        
+        if(!$investee){
+            abort(404,'investee not found');
+        }
+        return view('partials.investee_list_detail',compact('investee'));
     }
 }

@@ -19,4 +19,9 @@ class ConcernedPerson extends Model
         'email',
         'phone',
     ];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }
