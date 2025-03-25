@@ -238,7 +238,7 @@ class BankerController extends Controller
 
     // Return the filtered results with a view for display
     return view('partials.investor_list', compact('investors', 'subscriber'))->render();
-    return view('partials.investor_list', compact('investors'))->render();
+    // return view('partials.investor_list', compact('investors'))->render();
 }
 
 

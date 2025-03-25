@@ -36,7 +36,7 @@
              
                  
                     <div class="col-md-4 text-end">
-                        <a href="{{ route('investor.investorlistdetail', ['id' => $investee->id]) }}" 
+                        <a href="{{ route('investordashboard.investeelistdetail', ['id' => $investee->id]) }}" 
                         class="btn btn-primary btn-sm">🔍 View Profile</a>
                     </div>
 

@@ -16,6 +16,6 @@ class Referral extends Model
 
     public function investor()
     {
-        return $this->belongsTo(Investor::class);
+        return $this->belongsTo(Investor::class, 'investor_id');
     }
 }

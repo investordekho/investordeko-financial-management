@@ -1,7 +1,7 @@
 
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <style>
 /* Container Styling */
@@ -249,166 +249,162 @@ h2, h4 {
             
                 <div class="mb-3">
                     <label class="form-label">Investor Name</label>
-                    <input type="text" class="form-control" value="{{ $investor->investor_name }}" readonly>
+                    <input type="text" class="form-control" value="<?php echo e($investor->investor_name); ?>" readonly>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Address</label>
-                    <input type="text" class="form-control" value="{{ $investor->address }}" readonly>
+                    <input type="text" class="form-control" value="<?php echo e($investor->address); ?>" readonly>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Investor Profile</label>
-                    <input type="text" class="form-control" value="{{ $investor->investor_profile }}" readonly>
+                    <input type="text" class="form-control" value="<?php echo e($investor->investor_profile); ?>" readonly>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Sectors Preferred</label>
-                    <input type="text" class="form-control" value="{{ $investor->sectors_preferred }}" readonly>
+                    <input type="text" class="form-control" value="<?php echo e($investor->sectors_preferred); ?>" readonly>
                 </div>    
         </div>
-        @if(isset($investor->contactDetails) && !empty($investor->contactDetails))
-            <div class="section-card">
+        <div class="section-card">
                 <h4 id="contact_details">Contact Details</h4>
-               
+                <?php if(isset($investor->contactDetails)): ?>
                    
                     
                         <div class="mb-3">
                         <label class="form-label">Person Name</label>
-                        <input type="text" class="form-control" value="{{  $investor->contactDetails->concerned_person_name }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investor->contactDetails->concerned_person_name); ?>" readonly>
                         </div>
-                        @if(isset($investor->contactDetails->concerned_person_designation))
+                        <?php if(isset($investor->contactDetails->concerned_person_designation)): ?>
                         <div class="mb-3">
                             <label class="form-label">Designation</label>
-                            <input type="text" class="form-control" value="{{ $investor->contactDetails->concerned_person_designation }}" readonly>
+                            <input type="text" class="form-control" value="<?php echo e($investor->contactDetails->concerned_person_designation); ?>" readonly>
                         </div>
-                        @endif
-                        @if(isset($investor->contactDetails->concerned_person_phone))
+                        <?php endif; ?>
+                        <?php if(isset($investor->contactDetails->concerned_person_phone)): ?>
                         <div class="mb-3">
                             <label class="form-label">Phone</label>
-                            <input type="text" class="form-control" value="{{ $investor->contactDetails->concerned_person_phone }}" readonly>
+                            <input type="text" class="form-control" value="<?php echo e($investor->contactDetails->concerned_person_phone); ?>" readonly>
                         </div>
-                        @endif
-                        @if(isset($investor->contactDetails->email))
+                        <?php endif; ?>
+                        <?php if(isset($investor->contactDetails->email)): ?>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" value="{{ $investor->contactDetails->email }}" readonly>
+                            <input type="email" class="form-control" value="<?php echo e($investor->contactDetails->email); ?>" readonly>
                         </div>
-                        @endif
+                        <?php endif; ?>
+                 
+                <?php endif; ?>    
                 </div>
-            @endif    
-                
-                @if(isset($investor->publicLinks) && $investor->publicLinks->isNotEmpty())
                 <div class="section-card">
                 <h4 id="public-links">Public Links</h4>
-                @foreach($investor->publicLinks as $link)
+                <?php $__currentLoopData = $investor->publicLinks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="mb-3">
                         <label class="form-label">URL</label>
-                        <a href="{{ $link->url }}" class="form-control">{{ $link->url }}</a>
+                        <a href="<?php echo e($link->url); ?>" class="form-control"><?php echo e($link->url); ?></a>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <input type="text" class="form-control" value="{{ $link['link_description'] }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($link['link_description']); ?>" readonly>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
-                @endif
-                @if(isset($investor->previousInvestments) && $investor->previousInvestments->isNotEmpty())
-              
+
+                <?php if(isset($investor->previousInvestments)): ?>
                 <div class="section-card">
                 <h4 id="previous-investment">Previous Investments</h4>
-                @foreach($investor->previousInvestments as $investment)
+                <?php $__currentLoopData = $investor->previousInvestments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $investment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="mb-3">
                         <label class="form-label">Year</label>
-                        <input type="text" class="form-control" value="{{ $investment['previous_investment_year'] }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investment['previous_investment_year']); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Company</label>
-                        <input type="text" class="form-control" value="{{ $investment['previous_investment_company'] }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investment['previous_investment_company']); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sector</label>
-                        <input type="text" class="form-control" value="{{ $investment['sector'] }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investment['sector']); ?>" readonly>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
-                @endif
-              
-                @if(isset($investor->investmentDetails))
+                <?php endif; ?>
+                <?php if(isset($investor->investmentDetails)): ?>
                 <div class="section-card">
                 <h4 id="investment-details">Investment Details</h4>
                 
                     <div class="mb-3">
                         <label class="form-label">Invest In</label>
-                        <input type="text" class="form-control" value="{{ $investor->investmentDetails->invest_in }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investor->investmentDetails->invest_in); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Investor Type</label>
-                        <input type="text" class="form-control" value="{{ $investor->investmentDetails->investor_type }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investor->investmentDetails->investor_type); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Investment Size</label>
-                        <input type="text" class="form-control" value="{{ $investor->investmentDetails->investment_size }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investor->investmentDetails->investment_size); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Investment Tenure</label>
-                        <input type="text" class="form-control" value="{{ $investor->investmentDetails->investment_tenure }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investor->investmentDetails->investment_tenure); ?>" readonly>
                     </div>
                 
                 </div>
-                @endif
-                @if(isset($investor->referrals) && $investor->referrals->isNotEmpty())
+                <?php endif; ?>
+                <?php if(isset($investor->referrals) && $investor->referrals->isNotEmpty()): ?>
                     <div class="section-card">
                         <h4 id="referrals">Referrals</h4>
-                            @foreach($investor->referrals as $referral)
+                            <?php $__currentLoopData = $investor->referrals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $referral): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="mb-3">
                                     <label class="form-label">Referral Source</label>
-                                    <input type="text" class="form-control" value="{{ $referral->referral_source }}" readonly>
+                                    <input type="text" class="form-control" value="<?php echo e($referral->referral_source); ?>" readonly>
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
-                @endif
-                @if(isset($investor->guidanceNeeds) && !empty($investor->guidanceNeeds))
+                <?php endif; ?>
+                <?php if(isset($investor->guidanceNeeds)): ?>
                 <div class="section-card">
                 <h4 id="guidance-needs">Guidance Needs</h4>
               
-                @if(isset($investor['guidanceNeeds']) && isset($investor['guidanceNeeds']['guidance_needed']))
+                <?php if(isset($investor['guidanceNeeds']) && isset($investor['guidanceNeeds']['guidance_needed'])): ?>
                
                     <div class="mb-3">
                         <label class="form-label">Guidance Needed</label>
-                        <textarea class="form-control" readonly>{{ $investor->guidanceNeeds->guidance_needed }}</textarea>
+                        <textarea class="form-control" readonly><?php echo e($investor->guidanceNeeds->guidance_needed); ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Other Guidance</label>
-                        <input type="text" class="form-control" value="{{ $investor->guidanceNeeds->other_guidance }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($investor->guidanceNeeds->other_guidance); ?>" readonly>
                     </div>
                
-                @endif
+                <?php endif; ?>
                 </div>
-                @endif
-                @if(isset($investor->investorAddresses) && $investor->investorAddresses->isNotEmpty())
+                <?php endif; ?>
+                <?php if(isset($investor->investorAddresses)): ?>
                 <div class="section-card">
                 <h4 id="investor-address">Investor Address</h4>
-                @foreach($investor->investorAddresses as $address)
+                <?php $__currentLoopData = $investor->investorAddresses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $address): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="mb-3">
                         <label class="form-label">Country</label>
-                        <input type="text" class="form-control" value="{{ $address->country }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($address->country); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">State</label>
-                        <input type="text" class="form-control" value="{{ $address->state }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($address->state); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">City</label>
-                        <input type="text" class="form-control" value="{{ $address->city }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($address->city); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">ZIP Code</label>
-                        <input type="text" class="form-control" value="{{ $address->zip_code }}" readonly>
+                        <input type="text" class="form-control" value="<?php echo e($address->zip_code); ?>" readonly>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
-                @endif
+                <?php endif; ?>
             
         </div>
     </div>
@@ -479,4 +475,6 @@ h2, h4 {
 
 
 
-@endsection 
+<?php $__env->stopSection(); ?> 
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/partials/investor_list_detail.blade.php ENDPATH**/ ?>

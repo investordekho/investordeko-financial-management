@@ -7,3 +7,4 @@
 </div>
 
 @include('includes.footer')
+
