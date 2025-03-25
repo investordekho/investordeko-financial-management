@@ -19,7 +19,7 @@ class ContactDetails extends Model
 
     public function investor()
     {
-        return $this->belongsTo(Investor::class);
+        return $this->belongsTo(Investor::class, 'investors_id');
     }
 }
 

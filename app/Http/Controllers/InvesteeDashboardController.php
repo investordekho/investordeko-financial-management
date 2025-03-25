@@ -12,7 +12,7 @@ class InvesteeDashboardController extends Controller
     /**
      * Show the Investee Dashboard.
      */
-    public function index()
+    public function index1()
     {
         // Get the logged-in user's ID
         $userId = auth()->user()->id;
@@ -21,8 +21,8 @@ class InvesteeDashboardController extends Controller
         $subscriber = Subscriber::where('user_id', $userId)->first();
 
         // Fetch investors with their related public links and previous investments
-        $investorsQuery = Investor::with(['publicLinks', 'previousInvestments', 'investmentDetails']);
-
+        // $investorsQuery = Investor::with(['publicLinks', 'previousInvestments', 'investmentDetails']);
+        $investorsQuery = Investor::with(['contactDetails','publicLinks', 'previousInvestments', 'investmentDetails','referrals','guidanceNeeds','public_links','investorAddresses']);
         // Apply limits based on subscription status
         if ($subscriber && $subscriber->is_subscribed) {
             // Fetch 10 results for subscribed users
@@ -31,10 +31,41 @@ class InvesteeDashboardController extends Controller
             // Fetch 3 results for unsubscribed users
             $investors = $investorsQuery->take(3)->get();
         }
-
+        // foreach ($investors as $investor) {
+        //     if ($investor->investmentDetails) {
+        //         dd($investor->investmentDetails->investment_size);
+        //     }
+        // }
+        
+        // dd($investors);        
+        
+        // foreach ($investors as $investor) {
+        //     if (!$investor->contactDetails) {
+        //         \Log::info("Investor {$investor->investor_name} has no contact details.");
+        //     }
+        // }
+        
         // Return the investee dashboard view with investors and subscriber data
         return view('dashboards.investee', compact('investors', 'subscriber'));
     }
+    public function index()
+{
+    $userId = auth()->user()->id;
+    $subscriber = Subscriber::where('user_id', $userId)->first();
+
+    // Fetch investors with related data
+    $investorsQuery = Investor::with([
+        'contactDetails', 'publicLinks', 'previousInvestments',
+        'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
+    ]);
+
+    $investors = ($subscriber && $subscriber->is_subscribed) ? 
+        $investorsQuery->take(10)->get() : 
+        $investorsQuery->take(3)->get();
+
+    return view('dashboards.investee', compact('investors', 'subscriber'));
+}
+
 
     /**
      * Search for investors based on filter criteria.
@@ -123,4 +154,16 @@ class InvesteeDashboardController extends Controller
     return view('partials.investor_list', compact('investors', 'subscriber'));
 }
 
+public function investeedetaildashboard($id)
+{
+     // Fetch the investor with the given ID
+     $investor = Investor::with(['contactDetails','publicLinks', 'previousInvestments', 'investmentDetails','referrals','guidanceNeeds','public_links','investorAddresses'])->find($id);
+
+     if(!$investor){
+          // Redirect back with an error message if the investor is not found 
+           return redirect()->back()->with('error', 'Investor not found');
+     }
+
+     return view('partials.investor_list_detail', compact('investor'));
+}
 }

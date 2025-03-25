@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class InvestmentDetails extends Model
 {
     use HasFactory;
-    
+    protected $table = 'investment_details';
     protected $fillable = [
         'investor_id',
         'invest_in',
@@ -16,5 +16,8 @@ class InvestmentDetails extends Model
         'investment_size',
         'investment_tenure'
     ];
-
+    public function investor()
+    {
+        return $this->belongsTo(Investor::class);
+    }
 }

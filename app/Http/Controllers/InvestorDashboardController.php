@@ -86,7 +86,7 @@ class InvestorDashboardController extends Controller
         if (!empty($fund_usage)) {
             $query->whereHas('fundRequirements', function ($q) use ($fund_usage) {
                 $q->where('usage', $fund_usage); // Filter by usage of funds
-            });
+            }); 
         }
 
         // Fetch the filtered results
@@ -114,6 +114,6 @@ class InvestorDashboardController extends Controller
         if(!$investee){
             abort(404,'investee not found');
         }
-        return view('partials.investee_list_detail',compact('investee'));
+        return view('partials.investor_list_detail',compact('investee'));
     }
 }

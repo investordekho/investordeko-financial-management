@@ -43,7 +43,7 @@ class Investor extends Model
     // One-to-One relationship for referrals
     public function referrals()
     {
-        return $this->hasOne(Referral::class, 'investor_id');
+        return $this->hasMany(Referral::class, 'investor_id');
     }
 
     // One-to-One relationship for guidance needs
