@@ -130,6 +130,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/investor/exceldownload',[ExcelUploadController::class, 'downloaddataofInvestorExcel'])->name('investor.exceldownload');
     Route::get('/investordashboard/investeelistdetail/{id}',[InvestorDashboardController::class,'investordetaildashboard'])->name('investordashboard.investeelistdetail');
     Route::get('/investeedashboard/investorlistdetail/{id}',[InvesteeDashboardController::class,'investeedetaildashboard'])->name('investeedashboard.investorlistdetail');
+    Route::get('/bankerdashboard/investordata',[BankerController::class,'investordata'])->name('bankerdashboard.investordata');
 });
 
 // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');

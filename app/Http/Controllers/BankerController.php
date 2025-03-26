@@ -296,4 +296,23 @@ public function search(Request $request)
     return view('partials.investee_list', compact('investees', 'subscriber'))->render();
 }
 
+public function investordata()
+{
+    $userId = auth()->user()->id;
+    $subscriber = Subscriber::where('user_id', $userId)->first();
+
+    // Fetch investors with related data
+    $investorsQuery = Investor::with([
+        'contactDetails', 'publicLinks', 'previousInvestments',
+        'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
+    ]);
+
+    $investors = ($subscriber && $subscriber->is_subscribed) ? 
+        $investorsQuery->take(10)->get() : 
+        $investorsQuery->take(3)->get();
+
+    return view('dashboards.bankerinvestor', compact('investors', 'subscriber'));
+}
+
+
 }

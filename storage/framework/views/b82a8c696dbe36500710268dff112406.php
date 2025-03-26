@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
    .scrollable-menu {
@@ -75,14 +73,14 @@
                                     <div class="px-3 py-2">
                                         <input type="text" class="form-control mb-2" id="locationSearch" placeholder="Search location" onkeyup="filterLocations()">
                                         <ul style="padding-left: 0px;">
-                                            @foreach ($locations as $location)
+                                            <?php $__currentLoopData = $locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li class="dropdown-item">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="location[]" value="{{ $location->name }}" id="location_{{ $location->name }}">
-                                                    <label class="form-check-label" for="location_{{ $location->name }}">{{ $location->name }}</label>
+                                                    <input class="form-check-input" type="checkbox" name="location[]" value="<?php echo e($location->name); ?>" id="location_<?php echo e($location->name); ?>">
+                                                    <label class="form-check-label" for="location_<?php echo e($location->name); ?>"><?php echo e($location->name); ?></label>
                                                 </div>
                                             </li>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
                                     </div>
                                 </ul>
@@ -102,14 +100,14 @@
                                     <div class="px-3 py-2">
                                         <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
                                         <ul>
-                                            @foreach ($sectors as $sector)
+                                            <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <li class="dropdown-item">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="{{ $sector->sectors_name }}" id="sector_{{ $sector->sectors_name }}">
-                                                        <label class="form-check-label" for="sector_{{ $sector->sectors_name }}">{{ $sector->sectors_name }}</label>
+                                                        <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->sectors_name); ?>">
+                                                        <label class="form-check-label" for="sector_<?php echo e($sector->sectors_name); ?>"><?php echo e($sector->sectors_name); ?></label>
                                                     </div>
                                                 </li>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                         </ul>
                                     </div>
@@ -227,7 +225,7 @@
             <div style="margin-top: -30px; padding-left: 10px; padding-down: 10px;" class="container">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('investee.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Search Results</li>
                         <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here -->
                     </ol>
@@ -253,8 +251,8 @@
         <div class="tab-pane fade" id="investor-data" role="tabpanel" aria-labelledby="investor-data-tab">
         
             <!-- Filter Form for Investor -->
-            <!-- <form class="form-control bg-light p-4" id="searchForm" method="POST" action="{{ route('filter.banker.investees') }}">
-                @csrf
+            <!-- <form class="form-control bg-light p-4" id="searchForm" method="POST" action="<?php echo e(route('filter.banker.investees')); ?>">
+                <?php echo csrf_field(); ?>
                 <div class="row g-1">
                    
                     <div class="col-md-3 mb-3">
@@ -268,14 +266,14 @@
                                     <div class="px-3 py-2">
                                         <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
                                         <ul>
-                                            @foreach ($sectors as $sector)
+                                            <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li class="dropdown-item">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="{{ $sector->name }}" id="sector_{{ $sector->name }}">
-                                                    <label class="form-check-label" for="sector_{{ $sector->sectors_name}}">{{ $sector->sectors_name }}</label>
+                                                    <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->name); ?>" id="sector_<?php echo e($sector->name); ?>">
+                                                    <label class="form-check-label" for="sector_<?php echo e($sector->sectors_name); ?>"><?php echo e($sector->sectors_name); ?></label>
                                                 </div>
                                             </li>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
                                     </div>
                                 </ul>
@@ -293,14 +291,14 @@
                                     <div class="px-3 py-2">
                                         <input type="text" class="form-control mb-2" id="locationSearch" placeholder="Search location" onkeyup="filterLocations()">
                                         <ul>
-                                            @foreach ($locations as $location)
+                                            <?php $__currentLoopData = $locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li class="dropdown-item">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="location[]" value="{{ $location->name }}" id="location_{{ $location->name }}">
-                                                    <label class="form-check-label" for="location_{{ $location->name }}">{{ $location->name }}</label>
+                                                    <input class="form-check-input" type="checkbox" name="location[]" value="<?php echo e($location->name); ?>" id="location_<?php echo e($location->name); ?>">
+                                                    <label class="form-check-label" for="location_<?php echo e($location->name); ?>"><?php echo e($location->name); ?></label>
                                                 </div>
                                             </li>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
                                     </div>
                                 </ul>
@@ -457,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var searchBoxValue = document.getElementById('searchBox').value;
         formData.append('searchBox', searchBoxValue); // Ensure searchBox value is included
 
-        fetch('{{ route("filter.banker.investees") }}', { // Ensure this route is correct for investee search
+        fetch('<?php echo e(route("filter.banker.investees")); ?>', { // Ensure this route is correct for investee search
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
@@ -621,10 +619,10 @@ function fetchInvestorResults() {
     var sort = $('select[name="sort"]').val();
 
     $.ajax({
-        url: "{{ route('filter.banker.investors') }}",
+        url: "<?php echo e(route('filter.banker.investors')); ?>",
         method: "POST",
         data: {
-            _token: "{{ csrf_token() }}",
+            _token: "<?php echo e(csrf_token()); ?>",
             location: location,
             nature_of_business: natureOfBusiness,
             investment_size: investmentSize,
@@ -649,7 +647,7 @@ function fetchResults() {
     var searchBoxValue = document.getElementById('searchBox').value;
     formData.append('searchBox', searchBoxValue); // Ensure searchBox value is included
 
-    fetch('{{ route("investee.search") }}', { // Change route to investee search route
+    fetch('<?php echo e(route("investee.search")); ?>', { // Change route to investee search route
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
@@ -717,10 +715,10 @@ function fetchInvesteeResults() {
 
     // Call the investee filtering route and update the investee list container
     $.ajax({
-        url: "{{ route('filter.banker.investees') }}",  // Ensure this is the correct route for investees
+        url: "<?php echo e(route('filter.banker.investees')); ?>",  // Ensure this is the correct route for investees
         method: "POST",
         data: {
-            _token: "{{ csrf_token() }}", 
+            _token: "<?php echo e(csrf_token()); ?>", 
             location: location,
             nature_of_business: natureOfBusiness,
             incorporated_in: incorporatedIn,
@@ -765,10 +763,10 @@ function fetchInvestorResults() {
     var sort = $('select[name="sort"]').val();
 
     $.ajax({
-        url: "{{ route('filter.banker.investors') }}",
+        url: "<?php echo e(route('filter.banker.investors')); ?>",
         method: "POST",
         data: {
-            _token: "{{ csrf_token() }}",
+            _token: "<?php echo e(csrf_token()); ?>",
             location: location,
             nature_of_business: natureOfBusiness,
             investment_size: investmentSize,
@@ -793,7 +791,7 @@ function fetchResults() {
     var searchBoxValue = document.getElementById('searchBox').value;
     formData.append('searchBox', searchBoxValue); // Ensure searchBox value is included
 
-    fetch('{{ route("investee.search") }}', { // Change route to investee search route
+    fetch('<?php echo e(route("investee.search")); ?>', { // Change route to investee search route
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
@@ -833,7 +831,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function(){
 //    <!-- investor-data-tab on click this id tab -->
     $('#investor-data-tab').on('click', function(){
-        fetch('{{ route("bankerdashboard.investordata")}}',{
+        fetch('<?php echo e(route("bankerdashboard.investordata")); ?>',{
             method:'GET',
             headers:{
                 'X-CSRF-TOKEN':document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -865,4 +863,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     <!-- CounterUp (correct CDN for version 2.1.0) -->
     <script src="https://cdn.jsdelivr.net/npm/jquery.counterup@2.1.0/jquery.counterup.min.js"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/dashboards/banker.blade.php ENDPATH**/ ?>

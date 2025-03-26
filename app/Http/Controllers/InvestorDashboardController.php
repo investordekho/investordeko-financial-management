@@ -114,6 +114,6 @@ class InvestorDashboardController extends Controller
         if(!$investee){
             abort(404,'investee not found');
         }
-        return view('partials.investor_list_detail',compact('investee'));
+        return view('partials.investee_list_detail',compact('investee'));
     }
 }
