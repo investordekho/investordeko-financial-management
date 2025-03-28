@@ -227,7 +227,7 @@
             <div style="margin-top: -30px; padding-left: 10px; padding-down: 10px;" class="container">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('investee.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Search Results</li>
                         <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here -->
                     </ol>
@@ -847,7 +847,21 @@ document.addEventListener('DOMContentLoaded', function(){
     })
 })
 </script>
-
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    fetch('{{ route("bankerdashboard.investeedata")}}',{
+        method:'GET',
+        headers:{
+            'X-CSRF-TOKEN':document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+    })
+    .then(response  => response.text())
+    .then(data=>{
+        document.getElementById('filtered-investees').innerHTML = data || '<p class="no-results">No resultes found</p>';
+    })
+    .catch(error=> console.error('Error fetching results:', error));
+})
+<script>
  <!-- jQuery (necessary for various plugins like Owl Carousel, WOW.js, and others) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 

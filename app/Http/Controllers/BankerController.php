@@ -290,8 +290,18 @@ public function search(Request $request)
     }
 
     // Fetch the filtered results
-    $investees = $query->with(['user', 'fundRequirements', 'previousRounds'])->get();
+    // $investees = $query->with(['user', 'fundRequirements', 'previousRounds'])->get();    
+    // Fetch the filtered results
+    $investeesdata = $query->with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])->get();
 
+            
+    if($subscriber && $subscriber->is_subscribed){
+            $investees = $investeesdata->take(10)->values();
+    }
+    else
+    {
+            $investees = $investeesdata->take(3)->values();
+    }
     // Pass investees and subscriber to the partial view for the banker dashboard
     return view('partials.investee_list', compact('investees', 'subscriber'))->render();
 }
@@ -314,5 +324,21 @@ public function investordata()
     return view('dashboards.bankerinvestor', compact('investors', 'subscriber'));
 }
 
+public function investeedata()
+{
+    $userId = auth()->user()->id;
+    $subscriber = Subscriber::where('user_id',$userId)->first();
+    $investeesQuery = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource']);
+    $sectors = SectorDetail::all();
+    $locations =LocationDetail::all();
 
+    if($subscriber && $subscriber->is_subscribed){
+         $investees = $investeesQuery->limit(10)->get();
+    }
+    else
+    {
+         $investees = $investeesQuery->limit(3)->get();
+    }
+    return view('dashboards.investordashboard',compact('subscriber','investees','sectors','locations'));
+}
 }
