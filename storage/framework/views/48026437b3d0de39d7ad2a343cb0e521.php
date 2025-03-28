@@ -521,39 +521,39 @@
 
 
 
+<h4 id="company-other-links" style="text-align: center; font-size: 22px; font-weight: 600; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;"> 
+    🔗 Other Links
+</h4>
 
+<ul style="list-style: none; padding: 0; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <?php $__currentLoopData = $investee->otherLinks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; padding: 12px; background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">
+            <!-- Link Title and Icon -->
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                <p style="color: #007bff; font-weight: 600; margin-bottom: 5px; font-size: 16px;">
+                    <!-- Dynamic Icon based on Link Description -->
+                    <?php if(stripos($link->link_description, 'facebook') !== false): ?>
+                        <img src="https://img.icons8.com/ios/50/000000/facebook.png" alt="Facebook Icon" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;" />
+                    <?php elseif(stripos($link->link_description, 'twitter') !== false): ?>
+                        <img src="https://img.icons8.com/ios/50/000000/twitter.png" alt="Twitter Icon" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;" />
+                    <?php else: ?>
+                        <img src="https://img.icons8.com/ios/50/000000/domain.png" alt="Company Icon" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;" />
+                    <?php endif; ?>
+                    <?php echo e($link->link_description); ?>
 
+                </p>
 
-            <!-- <hr style="margin: 20px 0; border: none:height:2px;  background: linear-gradient(to right, #ccc, transparent);"> -->
-            <h4 id="company-other-links" style="text-align: center; font-size: 22px; font-weight: 600; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;">
-                🔗 Other Links
-            </h4>
+                <!-- Link URL -->
+                <a href="<?php echo e($link->link_url); ?>" target="_blank" style="color: #555; text-decoration: none; font-size: 14px; transition: color 0.3s ease;" onmouseover="this.style.color='#007bff'" onmouseout="this.style.color='#555'">
+                    <span style="color: #007bff;">👉</span> <?php echo e($link->link_url); ?>
 
-            <ul style="list-style: none; padding: 0; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                <?php $__currentLoopData = $investee->otherLinks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; padding: 12px; background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">
-                        <!-- Link Title -->
-                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
-                            <p style="color: #007bff; font-weight: 600; margin-bottom: 5px; font-size: 16px;">
-                                <?php echo e($link->link_description); ?>
+                </a>
+            </div>
+        </li>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+</ul>
 
-                            </p>
-
-                            <!-- Link URL -->
-                            <a href="<?php echo e($link->link_url); ?>" target="_blank" style="color: #555; text-decoration: none; font-size: 14px; transition: color 0.3s ease;" onmouseover="this.style.color='#007bff'" onmouseout="this.style.color='#555'">
-                                <span style="color: #007bff;">👉</span> <?php echo e($link->link_url); ?>
-
-                            </a>
-                        </div>
-                    </li>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </ul>
-
-            <hr style="margin: 30px 0; border: none; height: 2px; background: linear-gradient(to right, #ddd, transparent);">
-
-
-
-
+<hr style="margin: 30px 0; border: none; height: 2px; background: linear-gradient(to right, #ddd, transparent);">
 
 
 
