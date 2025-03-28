@@ -60,7 +60,7 @@
                 <div style="background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: 30px auto; text-align: left; border-left: 5px solid #007bff;">
 
                 <!-- Title -->
-                <h2 style="margin-bottom: 20px; font-size: 20px; font-weight: 600; color: #333; letter-spacing: 0.5px;">
+                <h2 style="margin-bottom: 20px; font-size: 20px; font-weight: 600; color: #333; letter-spacing: 0.5px;" class="section">
                     Company Details
                 </h2>
 
@@ -143,7 +143,7 @@
 
 
         <div style="background: linear-gradient(135deg, #f8f9fb, #ffffff); padding: 20px; border-radius: 10px; box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08); border: 1px solid #ddd; width: 100%; max-width: 100%; font-family: Arial, sans-serif; box-sizing: border-box; margin-bottom: 20px;">
-            <h4 id="company-founders" style="font-size: 18px; color: #333; font-weight: bold; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 8px;">
+            <h4 id="company-founders" style="font-size: 18px; color: #333; font-weight: bold; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 8px;" class="section">
                 🚀 Founders Information
             </h4>
 
@@ -231,7 +231,7 @@
 
                 <!-- Concerned Person Section -->
                 <div style="background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border: 1px solid #e3e7ec; width: 100%; max-width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box;">
-                    <h4 id="company-concerned-person" style="display: flex; align-items: center; font-size: 20px; color: #2d3e50; font-weight: bold; margin-bottom: 18px; border-bottom: 3px solid #007bff; padding-bottom: 8px;">
+                    <h4 id="company-concerned-person" style="display: flex; align-items: center; font-size: 20px; color: #2d3e50; font-weight: bold; margin-bottom: 18px; border-bottom: 3px solid #007bff; padding-bottom: 8px;" class="section">
                         <span style="font-size: 22px; margin-right: 8px;">🔎</span> Concerned Person
                     </h4>
 
@@ -349,7 +349,7 @@
 <div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: 30px auto;">
 
     <!-- Title -->
-    <h4 id="company-fund-requirements" style="text-align: left; font-size: 22px; color: #333; font-weight: 600; border-bottom: 2px solid #007bff; padding-bottom: 8px; margin-bottom: 18px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h4 id="company-fund-requirements" style="text-align: left; font-size: 22px; color: #333; font-weight: 600; border-bottom: 2px solid #007bff; padding-bottom: 8px; margin-bottom: 18px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="section">
         <i class="fa fa-wallet" style="margin-right: 8px; color: #007bff; font-size: 24px;"></i>Fund Requirements
     </h4>
 
@@ -420,7 +420,7 @@
 <div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: 30px auto;">
 
     <!-- Title Section -->
-    <h4 id="company-previous-rounds" style="text-align: left; font-size: 24px; color: #2c3e50; font-weight: bold; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h4 id="company-previous-rounds" style="text-align: left; font-size: 24px; color: #2c3e50; font-weight: bold; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="section">
     <i class="fa fa-piggy-bank" style="margin-right: 8px; color: #007bff;"></i> Previous Investment Rounds
 </h4>
 
@@ -521,7 +521,7 @@
 
 
 
-<h4 id="company-other-links" style="text-align: center; font-size: 22px; font-weight: 600; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;"> 
+<h4 id="company-other-links" style="text-align: center; font-size: 22px; font-weight: 600; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;" class="section"> 
     🔗 Other Links
 </h4>
 
@@ -565,7 +565,7 @@
 
 
 
-            <h4 id="company-attachments" style="text-align: center; font-size: 20px; color: #2c3e50; font-weight: 600; border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-bottom: 20px;">
+            <h4 id="company-attachments" style="text-align: center; font-size: 20px; color: #2c3e50; font-weight: 600; border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-bottom: 20px;" class="section">
                 📄 Attachments
             </h4>
             <!-- <ul style="list-style: none; padding: 0;">
@@ -611,6 +611,28 @@
                     <dfn style="font-size: 14px; color: #333;"><?php echo e($investee->source_name ?? 'N/A'); ?></dfn>
                 </li>
             </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 
         </div>
@@ -809,6 +831,53 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+</script>
+<!-- <Script>
+window.addEventListener("scroll",function(){
+    let scrollposition =window.scrollY;
+    document.querySelectorAll(".section-card").forEach(section => {
+        let sectionTop = section.offsetTop;
+        let sectionHeight = section.clientHeight;
+        
+
+        if(scrollposition >= sectionTop-50 && scrollposition < sectionTop + sectionHeight){
+            document.querySelectorAll(".list-group-item").forEach(link => {
+                link.classList.remove("active");
+            })
+
+          let sidebarsection=document.querySelector(`.list-group-item[href="#${section.id}"]`);
+          if(sidebarsection){
+            sidebarsection.classList.add("active");
+          }
+        }
+    })
+})
+</script> -->
+<!-- Your existing script -->
+<script>
+window.addEventListener("scroll", function() {
+    let scrollPosition = window.scrollY; // Get current scroll position
+
+    // Loop through each section
+    document.querySelectorAll(".section").forEach(section => {
+        let sectionTop = section.offsetTop; // Get top position of the section
+        let sectionHeight = section.clientHeight; // Get height of the section
+
+        // Check if scroll is within the section
+        if (scrollPosition >= sectionTop - 50 && scrollPosition < sectionTop + sectionHeight) {
+            // Remove active class from all sidebar links
+            document.querySelectorAll(".list-group-item").forEach(link => {
+                link.classList.remove("active");
+            });
+
+            // Add active class to the current link
+            let sidebarSection = document.querySelector(`.list-group-item[href="#${section.id}"]`);
+            if (sidebarSection) {
+                sidebarSection.classList.add("active");
+            }
+        }
+    });
+});
 </script>
 <?php $__env->stopSection(); ?>
 
