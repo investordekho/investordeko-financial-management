@@ -127,35 +127,35 @@
                                 <input type="text" class="form-control mb-2" id="incorporatedSearch" placeholder="Search year">
                                 <ul>
                                    <li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2024" id="incorporated_2024">
-        <label class="form-check-label" for="incorporated_2024">2024</label>
-    </div>
-</li>
-<li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2023" id="incorporated_2023">
-        <label class="form-check-label" for="incorporated_2023">2023</label>
-    </div>
-</li>
-<li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2022" id="incorporated_2022">
-        <label class="form-check-label" for="incorporated_2022">2022</label>
-    </div>
-</li>
-<li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2021" id="incorporated_2021">
-        <label class="form-check-label" for="incorporated_2021">2021</label>
-    </div>
-</li>
-<li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2020" id="incorporated_2020">
-        <label class="form-check-label" for="incorporated_2020">2020</label>
-    </div>
-</li>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2024" id="incorporated_2024">
+                                                <label class="form-check-label" for="incorporated_2024">2024</label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2023" id="incorporated_2023">
+                                                <label class="form-check-label" for="incorporated_2023">2023</label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2022" id="incorporated_2022">
+                                                <label class="form-check-label" for="incorporated_2022">2022</label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2021" id="incorporated_2021">
+                                                <label class="form-check-label" for="incorporated_2021">2021</label>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2020" id="incorporated_2020">
+                                                <label class="form-check-label" for="incorporated_2020">2020</label>
+                                            </div>
+                                        </li>
 
                                     <!-- Add more years similarly -->
                                 </ul>
@@ -178,35 +178,35 @@
                                 <input type="text" class="form-control mb-2" id="fundUsageSearch" placeholder="Search fund usage">
                                 <ul style="padding-left: 0px;">
                                     <li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Acquisition" id="fund_acquisition">
-        <label class="form-check-label" for="fund_acquisition">Acquisition</label>
-    </div>
-</li>
-<li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Capex" id="fund_capex">
-        <label class="form-check-label" for="fund_capex">Capex</label>
-    </div>
-</li>
-<li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Debt Requirement" id="fund_debt">
-        <label class="form-check-label" for="fund_debt">Debt Requirement</label>
-    </div>
-</li>
-<li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Opex" id="fund_opex">
-        <label class="form-check-label" for="fund_opex">Opex</label>
-    </div>
-</li>
-<li class="dropdown-item">
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Other" id="fund_other">
-        <label class="form-check-label" for="fund_other">Other</label>
-    </div>
-</li>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Acquisition" id="fund_acquisition">
+                                            <label class="form-check-label" for="fund_acquisition">Acquisition</label>
+                                        </div>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Capex" id="fund_capex">
+                                            <label class="form-check-label" for="fund_capex">Capex</label>
+                                        </div>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Debt Requirement" id="fund_debt">
+                                            <label class="form-check-label" for="fund_debt">Debt Requirement</label>
+                                        </div>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Opex" id="fund_opex">
+                                            <label class="form-check-label" for="fund_opex">Opex</label>
+                                        </div>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="fund_usage[]" value="Other" id="fund_other">
+                                            <label class="form-check-label" for="fund_other">Other</label>
+                                        </div>
+                                    </li>
 
                                     <!-- Add more fund usage options -->
                                 </ul>
@@ -277,12 +277,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Add each selected filter to the breadcrumb
         Object.keys(selectedFilters).forEach(key => {
-            addFilterToBreadcrumb(key, selectedFilters[key]);
+            if(Array.isArray(selectedFilters[key])){
+                selectedFilters[key].forEach(values => {
+                    addFilterToBreadcrumb(key, values);
+                });
+            }
+            else{
+                addFilterToBreadcrumb(key, selectedFilters[key]);
+            }
         });
 
         // Add searchBox value to the breadcrumb if it's not empty
         let searchBoxValue = document.getElementById('searchBox').value;
-        if (searchBoxValue) {
+        if (searchBoxValue && searchBoxValue.trim() !== '') {
             addFilterToBreadcrumb('searchBox', searchBoxValue); // Add searchBox filter
         }
     }
@@ -339,29 +346,36 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedFilters = {}; // Clear previous selected filters
 
         // Capture selected locations
+        selectedFilters['location'] = []; // Initialize as an array
         document.querySelectorAll('input[name="location[]"]:checked').forEach(el => {
-            selectedFilters['location'] = el.value;
+            selectedFilters['location'].push(el.value);
         });
 
         // Capture selected sectors (nature of business)
+        selectedFilters['nature_of_business'] = []; // Initialize as an array
         document.querySelectorAll('input[name="nature_of_business[]"]:checked').forEach(el => {
-            selectedFilters['nature_of_business'] = el.value;
+            selectedFilters['nature_of_business'].push(el.value);
         });
 
         // Capture selected incorporated years
+        selectedFilters['incorporated_in'] = []; // Initialize as an array
         document.querySelectorAll('input[name="incorporated_in[]"]:checked').forEach(el => {
-            selectedFilters['incorporated_in'] = el.value;
+            selectedFilters['incorporated_in'].push(el.value);
         });
 
         // Capture selected fund usages
+        selectedFilters['fund_usage'] = []; // Initialize as an array
         document.querySelectorAll('input[name="fund_usage[]"]:checked').forEach(el => {
-            selectedFilters['fund_usage'] = el.value;
+            selectedFilters['fund_usage'].push(el.value);
         });
 
         // Capture searchBox value
-        const searchBoxValue = document.getElementById('searchBox').value;
+        selectedFilters['searchBox'] = ''; // Initialize as an empty string
+        const searchBoxValue = document.getElementById('searchBox').value.trim();
         if (searchBoxValue) {
             selectedFilters['searchBox'] = searchBoxValue; // Add searchBox to selected filters
+        } else {
+            delete selectedFilters['searchBox']; // Remove searchBox if empty
         }
     }
 
