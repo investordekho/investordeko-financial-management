@@ -222,14 +222,14 @@
 
     </form>
     <div style="margin-top: -30px;" class="container">
-    <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Search Results</li>
-        <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here -->
-    </ol>
-</nav>
-</div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Search Results</li>
+                <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here -->
+            </ol>
+        </nav>
+    </div>
 
     <!-- Investee List Section -->
     <div class="row mt-4" id="investeeList">
