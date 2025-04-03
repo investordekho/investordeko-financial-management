@@ -247,29 +247,6 @@ public function search(Request $request)
             
             
             
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             
 
@@ -378,26 +355,6 @@ function isOverlappingTenure($selected, $normalized) {
 
     return $overlapping;
 }
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-
 
 
 
