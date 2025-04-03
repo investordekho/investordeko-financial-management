@@ -155,25 +155,25 @@
                             <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                 <li class="dropdown-item">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="1 Years" id="tenure_less_1">
+                                        <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="0-1 years" id="tenure_less_1">
                                         <label class="form-check-label" for="tenure_less_1">Less than 1 year</label>
                                     </div>
                                 </li>
                                 <li class="dropdown-item">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="3 Years" id="tenure_1_3">
+                                        <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="1-3 years" id="tenure_1_3">
                                         <label class="form-check-label" for="tenure_1_3">1-3 years</label>
                                     </div>
                                 </li>
                                 <li class="dropdown-item">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="5 Years" id="tenure_3_5">
+                                        <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="3-5 years" id="tenure_3_5">
                                         <label class="form-check-label" for="tenure_3_5">3-5 years</label>
                                     </div>
                                 </li>
                                 <li class="dropdown-item">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="7 Years" id="tenure_5_plus">
+                                        <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="More than 5 years" id="tenure_5_plus">
                                         <label class="form-check-label" for="tenure_5_plus">More than 5 years</label>
                                     </div>
                                 </li>
@@ -196,19 +196,19 @@
                             <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                 <li class="dropdown-item">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="investor_type[]" value="Private Equity" id="type_private_equity">
+                                        <input class="form-check-input" type="checkbox" name="investor_type[]" value="PE" id="type_private_equity">
                                         <label class="form-check-label" for="type_private_equity">Private Equity</label>
                                     </div>
                                 </li>
                                 <li class="dropdown-item">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel Investor" id="type_angel_investor">
+                                        <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel" id="type_angel_investor">
                                         <label class="form-check-label" for="type_angel_investor">Angel Investor</label>
                                     </div>
                                 </li>
                                 <li class="dropdown-item">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="investor_type[]" value="Venture Capital" id="type_venture_capitalist">
+                                        <input class="form-check-input" type="checkbox" name="investor_type[]" value="VC" id="type_venture_capitalist">
                                         <label class="form-check-label" for="type_venture_capitalist">Venture Capitalist</label>
                                     </div>
                                 </li>
@@ -216,6 +216,12 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="investor_type[]" value="Family Office" id="type_corporate_investor">
                                         <label class="form-check-label" for="type_corporate_investor">Corporate Investor</label>
+                                    </div>
+                                </li>
+                                <li class="dropdown-item">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="investor_type[]" value="Seed" id="type_Seed_investor">
+                                        <label class="form-check-label" for="type_Seed_investor">Seed Investor</label>
                                     </div>
                                 </li>
                             </div>
