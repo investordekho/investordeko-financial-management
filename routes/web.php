@@ -29,6 +29,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\ExcelUploadController;
+use App\Http\Controllers\NewBankController;
 
 // Home, About, Services, Contact Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -132,6 +133,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/investeedashboard/investorlistdetail/{id}',[InvesteeDashboardController::class,'investeedetaildashboard'])->name('investeedashboard.investorlistdetail');
     Route::get('/bankerdashboard/investordata',[BankerController::class,'investordata'])->name('bankerdashboard.investordata');
     Route::get('/bankerdashboard/investeedata',[BankerController::class,'investeedata'])->name('bankerdashboard.investeedata');
+    Route::get('/newbankerdashbaord/investor',[NewBankController::class,'searchinvestorforbanker'])->name('newbankerdashboard.investor');
+    Route::get('/newbankerdashbaord/investee',[NewBankController::class,'searchinvesteeforbanker'])->name('newbankerdashbaord.inbestee');
+    Route::get('/newbankerdashbaord/investorview',[NewBankController::class,'returninvestorview'])->name('newbankerdashboard.investorview');
+    Route::get('/newbankerdashbaord/investeeview',[NewBankController::class,'returninvesteeview'])->name('newbankerdashboard.investeeview');
 });
 
 // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');

@@ -245,6 +245,12 @@ public function search(Request $request)
             // }
 
             
+            $investorTypes = $request->input('investor_type', []);
+            if (!empty($investorTypes) && $investmentDetails) {
+                $match = $match && collect($investorTypes)->contains(function ($type) use ($investmentDetails) {
+                    return str_contains($investmentDetails->investor_type, $type);
+                });
+            }
             
             
 

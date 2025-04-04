@@ -67,8 +67,19 @@ class InvestorDashboardController extends Controller
         $incorporated_in = $request->input('incorporated_in', null);
         $fund_usage = $request->input('fund_usage', null);
 
+        $searchbox = $request->input('searchbox',[]);
+
         // Start building the query
         $query = Company::query();
+
+        // Apply searchbox filter
+        if (!empty($searchbox)){
+            $query->where(function ($q) use ($searchbox){
+                $q->where('company_name', 'LIKE', '%' . $searchbox . '%')
+                    ->orwhere('address', 'LIKE', '%'. $searchbox . '%')
+                    ->orwhere('nature_of_business' , 'LIKE' , '%'. $searchbox . '%');
+            });
+        }
 
         // Apply filters
         if (!empty($address)) {
