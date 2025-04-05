@@ -5,7 +5,7 @@
         margin: auto;
         background: #fff;
         padding: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         border-radius: 12px;
     }
 
@@ -41,7 +41,7 @@
         color: white;
         font-weight: bold;
         border-bottom: 2px solid #3b82f6;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .tab-content {
@@ -169,7 +169,7 @@
 
 <!-- 
 
-------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------investor--------------------------------------------------------
  -->
 
                 <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
@@ -392,13 +392,13 @@
 
                                 <div style="margin-top: -30px;" class="container">
                                 <!-- Breadcrumb -->
-                            <nav aria-label="breadcrumb">
+                            <!-- <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Investee Dashboard / Search Investors</li>
                               
                                 </ol>
-                            </nav>
+                            </nav> -->
                             <nav class="nav">
                                 <li class="breadcrumb-item" id="selected-filters-container-list"></li> <!-- Dynamic filter labels will go here -->
                             
@@ -948,6 +948,12 @@
         document.getElementById('searchNowButton').addEventListener('click', function () {
             fetchResults1();
         });
+
+        document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
+        dropdown.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    });
     });
 
     function filterInvestmentSize(){
@@ -1116,6 +1122,12 @@
         console.log("Search button 2 clicked!"); // Debugging log
         updateSelectedFilters();  // Update the selected filters
         fetchResults();  // Fetch results
+
+        document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
+        dropdown.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    });
     });
 
 
