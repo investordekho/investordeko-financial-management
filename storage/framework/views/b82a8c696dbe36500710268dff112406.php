@@ -480,7 +480,7 @@
                                 </div>
 
                                 <!-- Nature of Business Multi-select Dropdown -->
-                                <div class="col-md-3 mt-4">
+                                <!-- <div class="col-md-3 mt-4">
                                     <div class="filter-box">
                                     
                                         <div class="dropdown">
@@ -505,7 +505,34 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div> -->
+
+
+
+                                <div class="col-md-3 mt-4">
+                                    <div class="filter-box">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="natureOfBusinessDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Select Sector
+                                            </button>
+                                            <div class="dropdown-menu p-3" aria-labelledby="natureOfBusinessDropdown" style="width: 100%; max-height: 300px; overflow-y: auto;">
+                                                <input type="text" class="form-control mb-2" id="sectorSearch2" placeholder="Search sector" onkeyup="filterSectors()">
+                                                <ul id="sectorList2" class="list-unstyled m-0">
+                                                    <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <li class="mb-1">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->id); ?>">
+                                                                <label class="form-check-label" for="sector_<?php echo e($sector->id); ?>"><?php echo e($sector->sectors_name); ?></label>
+                                                            </div>
+                                                        </li>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+
 
                                 <!-- Incorporated In Multi-select Dropdown -->
                                 <div class="col-md-3 mt-4">

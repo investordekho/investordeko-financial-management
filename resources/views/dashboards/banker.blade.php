@@ -481,7 +481,7 @@
                                 </div>
 
                                 <!-- Nature of Business Multi-select Dropdown -->
-                                <div class="col-md-3 mt-4">
+                                <!-- <div class="col-md-3 mt-4">
                                     <div class="filter-box">
                                     
                                         <div class="dropdown">
@@ -506,7 +506,34 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div> -->
+
+
+
+                                <div class="col-md-3 mt-4">
+                                    <div class="filter-box">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="natureOfBusinessDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Select Sector
+                                            </button>
+                                            <div class="dropdown-menu p-3" aria-labelledby="natureOfBusinessDropdown" style="width: 100%; max-height: 300px; overflow-y: auto;">
+                                                <input type="text" class="form-control mb-2" id="sectorSearch2" placeholder="Search sector" onkeyup="filterSectors()">
+                                                <ul id="sectorList2" class="list-unstyled m-0">
+                                                    @foreach ($sectors as $sector)
+                                                        <li class="mb-1">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="{{ $sector->sectors_name }}" id="sector_{{ $sector->id }}">
+                                                                <label class="form-check-label" for="sector_{{ $sector->id }}">{{ $sector->sectors_name }}</label>
+                                                            </div>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+
 
                                 <!-- Incorporated In Multi-select Dropdown -->
                                 <div class="col-md-3 mt-4">
