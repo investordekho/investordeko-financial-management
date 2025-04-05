@@ -1,41 +1,41 @@
-<?php $__env->startSection('content'); ?>
+
 
 <style>
-    /* CSS to make the dropdown scrollable */
-.scrollable-menu {
-    max-height: 200px; /* Set the maximum height for the dropdown */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Disable horizontal scrolling */
-}
+        /* CSS to make the dropdown scrollable */
+    .scrollable-menu {
+        max-height: 200px; /* Set the maximum height for the dropdown */
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: hidden; /* Disable horizontal scrolling */
+    }
 
-/* Optional: Add styling to the scrollbar */
-.scrollable-menu::-webkit-scrollbar {
-    width: 6px; /* Width of the scrollbar */
-}
+    /* Optional: Add styling to the scrollbar */
+    .scrollable-menu::-webkit-scrollbar {
+        width: 6px; /* Width of the scrollbar */
+    }
 
-.scrollable-menu::-webkit-scrollbar-thumb {
-    background-color: #888; /* Color of the scrollbar thumb */
-    border-radius: 10px; /* Rounded corners */
-}
+    .scrollable-menu::-webkit-scrollbar-thumb {
+        background-color: #888; /* Color of the scrollbar thumb */
+        border-radius: 10px; /* Rounded corners */
+    }
 
-.scrollable-menu::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Darker color on hover */
-}
+    .scrollable-menu::-webkit-scrollbar-thumb:hover {
+        background-color: #555; /* Darker color on hover */
+    }
 
-.bg-light {
-    --bs-bg-opacity: 1;
-    background-color: #e8eaed !important;
-    border: 0px;
-}
+    .bg-light {
+        --bs-bg-opacity: 1;
+        background-color: #e8eaed !important;
+        border: 0px;
+    }
 
-#searchBox, #locationDropdown, #natureOfBusinessDropdown, #incorporatedDropdown, #fundUsageDropdown {
-    color: #198754;
-    background-color: #ffffff;
-    font-family: robot;
-    font-weight: 400;
-    font-size: 18px;
-    border: 0px;
-}
+    #searchBox, #locationDropdown, #natureOfBusinessDropdown, #incorporatedDropdown, #fundUsageDropdown {
+        color: #198754;
+        background-color: #ffffff;
+        font-family: robot;
+        font-weight: 400;
+        font-size: 18px;
+        border: 0px;
+    }
 
 
 
@@ -43,7 +43,7 @@
 </style>
 <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
     <div class="container">
-        <h1 style="font-size: 16px; color: grey;" class="display-8 mb-4 animated slideInDown">Welcome <?php echo e(Auth::user()->name); ?> </h1>
+        <h1 style="font-size: 16px; color: grey;" class="display-8 mb-4 animated slideInDown">Welcome {{ Auth::user()->name }} </h1>
     </div>
 </div>
 
@@ -72,14 +72,14 @@
                             <div class="px-3 py-2">
                                 <input type="text" class="form-control mb-2" id="locationSearch" placeholder="Search location" onkeyup="filterLocations()">
                                 <ul style="padding-left: 0px;">
-                                    <?php $__currentLoopData = $locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    @foreach ($locations as $location)
                                     <li class="dropdown-item">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="location[]" value="<?php echo e($location->name); ?>" id="location_<?php echo e($location->name); ?>">
-                                            <label class="form-check-label" for="location_<?php echo e($location->name); ?>"><?php echo e($location->name); ?></label>
+                                            <input class="form-check-input" type="checkbox" name="location[]" value="{{ $location->name }}" id="location_{{ $location->name }}">
+                                            <label class="form-check-label" for="location_{{ $location->name }}">{{ $location->name }}</label>
                                         </div>
                                     </li>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    @endforeach
                                 </ul>
                             </div>
                         </ul>
@@ -99,14 +99,14 @@
                             <div class="px-3 py-2">
                                 <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
                                 <ul>
-                                    <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    @foreach ($sectors as $sector)
                                         <li class="dropdown-item">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->sectors_name); ?>">
-                                                <label class="form-check-label" for="sector_<?php echo e($sector->sectors_name); ?>"><?php echo e($sector->sectors_name); ?></label>
+                                                <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="{{ $sector->sectors_name }}" id="sector_{{ $sector->sectors_name }}">
+                                                <label class="form-check-label" for="sector_{{ $sector->sectors_name }}">{{ $sector->sectors_name }}</label>
                                             </div>
                                         </li>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    @endforeach
 
                                 </ul>
                             </div>
@@ -224,7 +224,7 @@
     <div style="margin-top: -30px;" class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('investee.dashboard') }}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Search Results</li>
                 <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here -->
             </ol>
@@ -243,167 +243,164 @@
 
 <!-- JavaScript for Dropdown Filters and Fetch Results -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
-    let selectedFilters = {}; // Object to store selected filters and their labels
+        let selectedFilters = {}; // Object to store selected filters and their labels
 
-    // Function to fetch results based on form input
-    function fetchResults() {
-        var formData = new FormData(document.getElementById('searchForm'));
+        // Function to fetch results based on form input
+        function fetchResults() {
+            var formData = new FormData(document.getElementById('searchForm'));
 
-        // Add the searchBox value to the formData
-        var searchBoxValue = document.getElementById('searchBox').value;
-        formData.append('searchBox', searchBoxValue); // Ensure searchBox value is included
+            // Add the searchBox value to the formData
+            var searchBoxValue = document.getElementById('searchBox').value;
+            formData.append('searchBox', searchBoxValue); // Ensure searchBox value is included
 
-        fetch('<?php echo e(route("investor.search")); ?>', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
-            },
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('investeeList').innerHTML = data || '<p class="no-results">No results found.</p>';
-            updateBreadcrumb(); // Update the breadcrumb after search results
-        })
-        .catch(error => console.error('Error fetching results:', error));
-    }
-
-    // Function to update breadcrumb with selected filters
-    function updateBreadcrumb() {
-        const container = document.getElementById('selected-filters-container');
-        container.innerHTML = ''; // Clear the breadcrumb
-
-        // Add each selected filter to the breadcrumb
-        Object.keys(selectedFilters).forEach(key => {
-            if(Array.isArray(selectedFilters[key])){
-                selectedFilters[key].forEach(values => {
-                    addFilterToBreadcrumb(key, values);
-                });
-            }
-            else{
-                addFilterToBreadcrumb(key, selectedFilters[key]);
-            }
-        });
-
-        // Add searchBox value to the breadcrumb if it's not empty
-        let searchBoxValue = document.getElementById('searchBox').value;
-        if (searchBoxValue && searchBoxValue.trim() !== '') {
-            addFilterToBreadcrumb('searchBox', searchBoxValue); // Add searchBox filter
+            fetch('{{ route("investor.search") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
+                },
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('investeeList').innerHTML = data || '<p class="no-results">No results found.</p>';
+                updateBreadcrumb(); // Update the breadcrumb after search results
+            })
+            .catch(error => console.error('Error fetching results:', error));
         }
-    }
 
-    // Function to add filter to the breadcrumb
-    function addFilterToBreadcrumb(name, label) {
-        const container = document.getElementById('selected-filters-container');
+        // Function to update breadcrumb with selected filters
+        function updateBreadcrumb() {
+            const container = document.getElementById('selected-filters-container');
+            container.innerHTML = ''; // Clear the breadcrumb
 
-        // Create a span element for the filter
-        const filterElement = document.createElement('span');
-        filterElement.className = 'badge bg-secondary me-2';
-        filterElement.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
+            // Add each selected filter to the breadcrumb
+            Object.keys(selectedFilters).forEach(key => {
+                if(Array.isArray(selectedFilters[key])){
+                    selectedFilters[key].forEach(values => {
+                        addFilterToBreadcrumb(key, values);
+                    });
+                }
+                else{
+                    addFilterToBreadcrumb(key, selectedFilters[key]);
+                }
+            });
 
-        // Add the filter label to the breadcrumb
-        container.appendChild(filterElement);
-
-        // Add an event listener to the cross button to remove the filter
-        filterElement.querySelector('.btn-close').addEventListener('click', function () {
-            removeFilter(name, label);
-        });
-
-        // Store the filter in selectedFilters
-        selectedFilters[name] = label;
-    }
-
-    // Function to remove a filter from the breadcrumb and uncheck it
-    function removeFilter(name, value) {
-        // Remove the filter from the selected filters object
-        delete selectedFilters[name];
-
-        // If the filter is from the searchBox, clear the searchBox input
-        if (name === 'searchBox') {
-            document.getElementById('searchBox').value = ''; // Clear the search box
-        } else {
-            // Uncheck the corresponding checkbox for other filters
-            const filterElement = document.querySelector(`input[name="${name}[]"][value="${value}"]`);
-            if (filterElement) {
-                filterElement.checked = false; // Uncheck the filter
+            // Add searchBox value to the breadcrumb if it's not empty
+            let searchBoxValue = document.getElementById('searchBox').value;
+            if (searchBoxValue && searchBoxValue.trim() !== '') {
+                addFilterToBreadcrumb('searchBox', searchBoxValue); // Add searchBox filter
             }
         }
 
-        updateSelectedFilters(); // Update selected filters after removal
-        fetchResults(); // Fetch updated results
-    }
+        // Function to add filter to the breadcrumb
+        function addFilterToBreadcrumb(name, label) {
+            const container = document.getElementById('selected-filters-container');
 
-    // Attach fetchResults function to the "Search Now" button
-    document.querySelector('.btn-success').addEventListener('click', function () {
-        updateSelectedFilters();  // Update the selected filters
-        fetchResults();  // Fetch results
-    });
+            // Create a span element for the filter
+            const filterElement = document.createElement('span');
+            filterElement.className = 'badge bg-secondary me-2';
+            filterElement.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
 
-    // Function to update selected filters based on checkboxes
-    function updateSelectedFilters() {
-        selectedFilters = {}; // Clear previous selected filters
+            // Add the filter label to the breadcrumb
+            container.appendChild(filterElement);
 
-        // Capture selected locations
-        selectedFilters['location'] = []; // Initialize as an array
-        document.querySelectorAll('input[name="location[]"]:checked').forEach(el => {
-            selectedFilters['location'].push(el.value);
-        });
+            // Add an event listener to the cross button to remove the filter
+            filterElement.querySelector('.btn-close').addEventListener('click', function () {
+                removeFilter(name, label);
+            });
 
-        // Capture selected sectors (nature of business)
-        selectedFilters['nature_of_business'] = []; // Initialize as an array
-        document.querySelectorAll('input[name="nature_of_business[]"]:checked').forEach(el => {
-            selectedFilters['nature_of_business'].push(el.value);
-        });
-
-        // Capture selected incorporated years
-        selectedFilters['incorporated_in'] = []; // Initialize as an array
-        document.querySelectorAll('input[name="incorporated_in[]"]:checked').forEach(el => {
-            selectedFilters['incorporated_in'].push(el.value);
-        });
-
-        // Capture selected fund usages
-        selectedFilters['fund_usage'] = []; // Initialize as an array
-        document.querySelectorAll('input[name="fund_usage[]"]:checked').forEach(el => {
-            selectedFilters['fund_usage'].push(el.value);
-        });
-
-        // Capture searchBox value
-        selectedFilters['searchBox'] = ''; // Initialize as an empty string
-        const searchBoxValue = document.getElementById('searchBox').value.trim();
-        if (searchBoxValue) {
-            selectedFilters['searchBox'] = searchBoxValue; // Add searchBox to selected filters
-        } else {
-            delete selectedFilters['searchBox']; // Remove searchBox if empty
+            // Store the filter in selectedFilters
+            selectedFilters[name] = label;
         }
-    }
 
-    // Filter logic for sector search (dropdown)
-    document.getElementById('sectorSearch').addEventListener('keyup', function () {
-        var searchValue = this.value.toLowerCase();
-        document.querySelectorAll('#sectorList .form-check').forEach(function (item) {
-            var label = item.querySelector('label').innerText.toLowerCase();
-            item.style.display = label.includes(searchValue) ? '' : 'none';
+        // Function to remove a filter from the breadcrumb and uncheck it
+        function removeFilter(name, value) {
+            // Remove the filter from the selected filters object
+            delete selectedFilters[name];
+
+            // If the filter is from the searchBox, clear the searchBox input
+            if (name === 'searchBox') {
+                document.getElementById('searchBox').value = ''; // Clear the search box
+            } else {
+                // Uncheck the corresponding checkbox for other filters
+                const filterElement = document.querySelector(`input[name="${name}[]"][value="${value}"]`);
+                if (filterElement) {
+                    filterElement.checked = false; // Uncheck the filter
+                }
+            }
+
+            updateSelectedFilters(); // Update selected filters after removal
+            fetchResults(); // Fetch updated results
+        }
+
+        // Attach fetchResults function to the "Search Now" button
+        document.querySelector('.btn-success').addEventListener('click', function () {
+            updateSelectedFilters();  // Update the selected filters
+            fetchResults();  // Fetch results
         });
-    });
 
-    // Filter logic for location search (dropdown)
-    document.getElementById('locationSearch').addEventListener('keyup', function () {
-        var searchValue = this.value.toLowerCase();
-        document.querySelectorAll('#locationList .form-check').forEach(function (item) {
-            var label = item.querySelector('label').innerText.toLowerCase();
-            item.style.display = label.includes(searchValue) ? '' : 'none';  // Ensure this updates properly
+        // Function to update selected filters based on checkboxes
+        function updateSelectedFilters() {
+            selectedFilters = {}; // Clear previous selected filters
+
+            // Capture selected locations
+            selectedFilters['location'] = []; // Initialize as an array
+            document.querySelectorAll('input[name="location[]"]:checked').forEach(el => {
+                selectedFilters['location'].push(el.value);
+            });
+
+            // Capture selected sectors (nature of business)
+            selectedFilters['nature_of_business'] = []; // Initialize as an array
+            document.querySelectorAll('input[name="nature_of_business[]"]:checked').forEach(el => {
+                selectedFilters['nature_of_business'].push(el.value);
+            });
+
+            // Capture selected incorporated years
+            selectedFilters['incorporated_in'] = []; // Initialize as an array
+            document.querySelectorAll('input[name="incorporated_in[]"]:checked').forEach(el => {
+                selectedFilters['incorporated_in'].push(el.value);
+            });
+
+            // Capture selected fund usages
+            selectedFilters['fund_usage'] = []; // Initialize as an array
+            document.querySelectorAll('input[name="fund_usage[]"]:checked').forEach(el => {
+                selectedFilters['fund_usage'].push(el.value);
+            });
+
+            // Capture searchBox value
+            selectedFilters['searchBox'] = ''; // Initialize as an empty string
+            const searchBoxValue = document.getElementById('searchBox').value.trim();
+            if (searchBoxValue) {
+                selectedFilters['searchBox'] = searchBoxValue; // Add searchBox to selected filters
+            } else {
+                delete selectedFilters['searchBox']; // Remove searchBox if empty
+            }
+        }
+
+        // Filter logic for sector search (dropdown)
+        document.getElementById('sectorSearch').addEventListener('keyup', function () {
+            var searchValue = this.value.toLowerCase();
+            document.querySelectorAll('#sectorList .form-check').forEach(function (item) {
+                var label = item.querySelector('label').innerText.toLowerCase();
+                item.style.display = label.includes(searchValue) ? '' : 'none';
+            });
         });
-    });
 
-    // Trigger the initial fetch to load the default results
-    fetchResults();
-});
+        // Filter logic for location search (dropdown)
+        document.getElementById('locationSearch').addEventListener('keyup', function () {
+            var searchValue = this.value.toLowerCase();
+            document.querySelectorAll('#locationList .form-check').forEach(function (item) {
+                var label = item.querySelector('label').innerText.toLowerCase();
+                item.style.display = label.includes(searchValue) ? '' : 'none';  // Ensure this updates properly
+            });
+        });
+
+        // Trigger the initial fetch to load the default results
+        fetchResults();
+    });
 
 
 </script>
 
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/dashboards/investordashboard.blade.php ENDPATH**/ ?>

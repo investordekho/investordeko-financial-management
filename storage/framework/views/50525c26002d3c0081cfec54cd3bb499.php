@@ -38,7 +38,7 @@
              
                  
                     <div class="col-md-4 text-end">
-                        <a href="<?php echo e(route('investor.investorlistdetail', ['id' => $investee->id])); ?>" 
+                        <a href="<?php echo e(route('investordashboard.investeelistdetail', ['id' => $investee->id])); ?>" 
                         class="btn btn-primary btn-sm">🔍 View Profile</a>
                     </div>
 
