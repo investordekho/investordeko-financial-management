@@ -7,13 +7,17 @@
         margin: auto;
         background: #fff;
         padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
     }
+
     .tab-buttons {
         display: flex;
         border-bottom: 2px solid #ddd;
+        flex-wrap: wrap;
+        gap: 5px;
     }
+
     .tab-button {
         flex: 1;
         padding: 12px;
@@ -21,32 +25,53 @@
         cursor: pointer;
         font-size: 16px;
         color: #555;
-        transition: all 0.3s ease;
         border: none;
-        background: none;
+        background:rgb(187, 193, 194);
         outline: none;
+        border-radius: 8px 8px 0 0;
+        transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.2s ease;
+        font-weight: 500;
     }
+
     .tab-button:hover {
+        background-color: #e0e0e0;
         color: #3b82f6;
     }
+
     .tab-button.active {
         background-color: #3b82f6;
         color: white;
         font-weight: bold;
         border-bottom: 2px solid #3b82f6;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
+
     .tab-content {
         padding: 20px;
         font-size: 16px;
         color: #333;
     }
+
     .tab-pane {
         display: none;
     }
+
     .tab-pane.active {
         display: block;
     }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .tab-buttons {
+            flex-direction: column;
+        }
+
+        .tab-button {
+            border-radius: 8px;
+        }
+    }
 </style>
+
 
 
 <!-- ------------------------------------------------------investor style ------------------------------------------------ -->
@@ -409,13 +434,13 @@
 
 
 
-                <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
+                <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s" style="margin-top: -10px;">
                     <div class="container">
                         <h1 style="font-size: 16px; color: grey;" class="display-8 mb-4 animated slideInDown">Welcome {{ Auth::user()->name }} </h1>
                     </div>
                 </div>
 
-                    <div class="container p-1">
+                    <div class="container p-1" style="margin-top: -20px;">
                         <!-- Filter Options Form -->
                         <form id="searchForm2" class="form-control p-3 bg-light">
                             <div class="row-g-1">
