@@ -610,7 +610,7 @@
                                 </div>
                                 <div class="col-md-2 mt-4 text-center">
                                     <!-- <button type="button" class="btn btn-success" onclick="fetchResults()">Search Now</button> -->
-                                    <button id="searchBtn2" class="btn btn-success">Search 2</button>
+                                    <button id="searchBtn2" class="btn btn-success">Search</button>
 
                                 </div>
                             </div>
