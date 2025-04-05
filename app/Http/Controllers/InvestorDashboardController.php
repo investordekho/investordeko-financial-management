@@ -67,7 +67,7 @@ class InvestorDashboardController extends Controller
         $incorporated_in = $request->input('incorporated_in', null);
         $fund_usage = $request->input('fund_usage', null);
 
-        $searchbox = $request->input('searchbox',[]);
+        $searchbox = $request->input('searchBox',[]);
 
         // Start building the query
         $query = Company::query();
