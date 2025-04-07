@@ -297,7 +297,10 @@ unset($__errorArgs, $__bag); ?>
                         <br>
                         <img id="captchaImage" src="<?php echo e(url('/captcha')); ?>" alt="CAPTCHA Image">
                         <img src="<?php echo e(asset('img/refresh.png')); ?>" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:25px; margin-left:10px;" onclick="refreshCaptcha()">
-
+                        
+                        <div id="captchaerrormsgdiv" style="display:none;">
+                            <div class="text-danger">Incorrect Captcha Enter</div>
+                        </div>
                         <?php $__errorArgs = ['captcha'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -371,6 +374,23 @@ unset($__errorArgs, $__bag); ?>
 
     //  passwordinput.addEventListener("input", confirmpassword);
      confirmpasswordinput.addEventListener("input", confirmpassword);
+
+    //  let captchainput = document.getElementById("captcha");
+    //  let captchadivmsg = document.getElementById("captchaerrormsgdiv");
+    //  var captchavalue = <?php echo json_encode(session('captcha_text'), 15, 512) ?>;
+    //  function captchacheck() {
+        
+    //      if(captchainput.value !== captchavalue){
+    //         captchainput.style.borderColor = "red";
+    //         captchadivmsg.style.display = "block";
+    //      }
+    //      else{
+    //         captchainput.style.borderColor = "";
+    //         captchadivmsg.style.display = "none";
+    //      }
+    //  }
+
+    //  captchainput.addEventListener("input", captchacheck);
 </script>
 <?php $__env->stopSection(); ?>
 

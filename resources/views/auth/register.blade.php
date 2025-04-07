@@ -256,7 +256,10 @@
                         <br>
                         <img id="captchaImage" src="{{ url('/captcha') }}" alt="CAPTCHA Image">
                         <img src="{{ asset('img/refresh.png') }}" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:25px; margin-left:10px;" onclick="refreshCaptcha()">
-
+                        
+                        <div id="captchaerrormsgdiv" style="display:none;">
+                            <div class="text-danger">Incorrect Captcha Enter</div>
+                        </div>
                         @error('captcha')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
