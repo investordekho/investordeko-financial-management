@@ -374,23 +374,6 @@ unset($__errorArgs, $__bag); ?>
 
     //  passwordinput.addEventListener("input", confirmpassword);
      confirmpasswordinput.addEventListener("input", confirmpassword);
-
-    //  let captchainput = document.getElementById("captcha");
-    //  let captchadivmsg = document.getElementById("captchaerrormsgdiv");
-    //  var captchavalue = <?php echo json_encode(session('captcha_text'), 15, 512) ?>;
-    //  function captchacheck() {
-        
-    //      if(captchainput.value !== captchavalue){
-    //         captchainput.style.borderColor = "red";
-    //         captchadivmsg.style.display = "block";
-    //      }
-    //      else{
-    //         captchainput.style.borderColor = "";
-    //         captchadivmsg.style.display = "none";
-    //      }
-    //  }
-
-    //  captchainput.addEventListener("input", captchacheck);
 </script>
 <?php $__env->stopSection(); ?>
 
