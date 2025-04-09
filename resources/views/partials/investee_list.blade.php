@@ -95,12 +95,18 @@
             </div>
         </div>
     @endif
-@else
+<!-- @else
     <div class="col-md-12 text-center">
         <p class="text-muted">No investees found matching your criteria.</p>
     </div>
-@endif
+@endif -->
 
+@else
+    <div class="container mt-5 {{!$isSubscribed ? 'locked-content' : ''}}">
+        <h2 class="text-center mb-4 fw-bold text-dark">No Investees Found</h2>
+        <p class="text-center">Please check back later or consider subscribing for more options.</p>
+    </div>
+@endif
 
 <style>
     .investee-card {

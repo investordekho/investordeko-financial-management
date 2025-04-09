@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
    <!-- <div class="container">
         <h1 class="display-3 mb-4 animated slideInDown">Pricing</h1>
@@ -86,7 +84,7 @@
         document.getElementById('total_price').innerText = totalPrice;
 
         // Update checkout link dynamically
-        let checkoutLink = "{{ route('order') }}";
+        let checkoutLink = "<?php echo e(route('order')); ?>";
         document.getElementById('checkout_link').href = checkoutLink + '?investors=' + numInvestors + '&price=' + totalPrice;
     }
 
@@ -100,4 +98,6 @@
 </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/subscription.blade.php ENDPATH**/ ?>

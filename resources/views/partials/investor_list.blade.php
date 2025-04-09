@@ -1,8 +1,14 @@
+@if($investors->count())
+    @php 
+        $isSubscribed = $subscriber && $subscriber->is_subscribed;
+        $visibleInvestorCount = $isSubscribed ? $investors->count() : min($investors->count(), 3);
+    @endphp
+
 <div class="container mt-5">
     <!-- <h2 class="text-center mb-4 fw-bold text-dark">Investors List</h2> -->
 
     <div class="row">
-        @foreach ($investors as $investor)
+        @foreach ($investors->take($visibleInvestorCount) as $investor)
             <div class="col-md-12 mb-4">
                 <div class="investor-card p-4">
                     <div class="row align-items-center">
@@ -19,10 +25,10 @@
 
                         <!-- Investor Info Section -->
                         <div class="col-md-6">
-                            <h4 class="fw-bold name-text">
+                            <h4 class="fw-bold name-text {{ !$isSubscribed ? 'locked-content' : ''}}">
                                 {{ $investor['investor_name'] ?? 'Unknown Investor' }}
                             </h4> 
-                            <p class="text-muted details-text">
+                            <p class="text-muted details-text {{ !$isSubscribed ? 'locked-content' : ''}}">
                                 <i class="bi bi-geo-alt-fill text-primary"></i> {{ $investor['address'] }}  
                                 &nbsp;|&nbsp;
                                 <i class="bi bi-cash-coin text-success"></i> 
@@ -31,7 +37,7 @@
                         </div>
 
                         <!-- View Profile Button (Navigates to Details Page) -->
-                        <div class="col-md-4 text-end">
+                        <div class="col-md-4 text-end {{ !$isSubscribed ? 'locked-content' : ''}}">
                             <a href="{{ route('investeedashboard.investorlistdetail',['id' => $investor['id']])}}" 
                                class="btn btn-primary btn-sm">🔍 View Details</a>
                         </div>
@@ -40,8 +46,22 @@
                 </div>
             </div>
         @endforeach
+
+        @if (!$isSubscribed && $investors->count() == 3)
+            <div class="col-md-12 text-center">
+                <a href="{{ route('subscription') }}" class="btn btn-secondary">🔒 Unlock More Investors</a>
+            </div>
+        @endif
+
     </div>
 </div>
+
+@else
+    <div class="container mt-5 {{!$isSubscribed ? 'locked-content' : ''}}">
+        <h2 class="text-center mb-4 fw-bold text-dark">No Investors Found</h2>
+        <p class="text-center">Please check back later or consider subscribing for more options.</p>
+    </div>
+@endif
 
 <style>
     .investor-card {
@@ -94,6 +114,22 @@
     .info-value {
         font-size: 16px;
         color: #333;
+    }
+    
+    .locked-content {
+        filter: blur(3px);
+        opacity: 0.6;
+    }
+    
+    .subscription-box {
+        background: #fffae6;
+        padding: 20px;
+        border-radius: 12px;
+        transition: 0.3s;
+    }
+
+    .subscription-box:hover {
+        background: #ffe5b4;
     }
 </style>
 

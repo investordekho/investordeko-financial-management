@@ -78,8 +78,8 @@ Route::post('/filter/banker-investees', [BankerController::class, 'search'])->na
 
 // Order Routes
 Route::get('/order', [OrderController::class, 'showOrderPage'])->name('order');
-Route::post('/process-order', [OrderController::class, 'processOrder'])->name('processOrder');
-
+Route::post('/processOrder/{plan}/{totalprice}', [OrderController::class, 'processOrder'])->name('processOrder');
+//=========================================================================
 // Profile Routes
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/profile/settings', [ProfileController::class, 'showProfileSettings'])->name('profile.settings');
