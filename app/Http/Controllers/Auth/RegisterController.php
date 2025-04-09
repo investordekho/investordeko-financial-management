@@ -11,10 +11,19 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Rules\CaptchaMatch;
+use App\Http\Controllers\OTPController;
+use App\Services\OtpService;
 class RegisterController extends Controller
 {
     // Add the ValidatesRequests trait to your controller
     use ValidatesRequests;
+
+    protected $otpService;
+
+    public function __construct(OtpService $otpService)
+    {
+        $this->otpService = $otpService;
+    }
 
     // public function showRegistrationForm()
     // {
@@ -81,8 +90,11 @@ class RegisterController extends Controller
     ]);
 
     // Store OTP (default 123456) in session
-    session(['otp' => '123456', 'user_id' => $user->id]);
+    // Generate OTP and send
+    $otp = rand(100000, 999999);
+    session(['otp' => $otp, 'user_id' => $user->id]);
 
+    $this->otpService->sendOtp($request->phone, $otp);
     // Redirect to OTP verification page
     return redirect()->route('otp.form')->with('success', 'Registration successful! Please verify your mobile number using the OTP sent.');
 }

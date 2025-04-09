@@ -295,7 +295,8 @@ public function store(Request $request)
         }
     }
 
-    if ($user->category_id == 1) {
+    if ($user->category_id == 1) { 
+       
         return redirect()->route('investee.dashboard')->with('success', 'Form submitted successfully!');
     }
 
