@@ -50,13 +50,16 @@ class OTPController extends Controller
         ]);
 
         if ($request->otp == session('otp')) {
+
+            session()->forget('otp'); // Clear OTP from session
+           
             // You can mark user as verified or logged in
-            return response()->json(['message' => 'OTP verified successfully!']);
+            // return response()->json(['message' => 'OTP verified successfully!']);
+            return redirect()->route('login')->with('success', 'Your mobile number has been verified. Please log in.');
         }
 
-        return response()->json(['message' => 'Invalid OTP'], 422);
+        // return response()->json(['message' => 'Invalid OTP'], 422);
+        return back()->withErrors(['otp'=> 'The entered OTP is incorrect. Please try again.']);
     }
 }
-
-
 
