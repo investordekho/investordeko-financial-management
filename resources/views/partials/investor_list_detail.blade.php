@@ -304,7 +304,7 @@ h2, h4 {
 
                 @if(isset($investor->contactDetails->concerned_person_phone))
                 <div style="display: flex; align-items: center; border-bottom: 1px solid #ddd; padding: 14px 0;">
-                    <i class="fas fa-phone-alt" style="color: #17a2b8; font-size: 14px; width: 30px;"></i>
+                    <i class="fas fa-phone-alt" style="color: #17a2b8; font-size: 14px; width: 30px; transform: scaleX(-1); margin-right: 10px;  margin-left: -12px;"></i>
                     <strong style="color: #333; font-size: 16px; flex: 1;">Phone</strong>
                     <span style="font-size: 15px; font-weight: 500; color: #555;">{{ $investor->contactDetails->concerned_person_phone }}</span>
                 </div>

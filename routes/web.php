@@ -92,9 +92,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [CustomRegistrationController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [CustomRegistrationController::class, 'register']);
 
-// OTP Verification Routes
-Route::get('/verify-otp', [OTPController::class, 'showOtpForm'])->name('otp.form');
-Route::post('/verify-otp', [OTPController::class, 'verifyOtp'])->name('otp.verify');
 
 // Subscription Routes
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');
@@ -154,3 +151,6 @@ Route::get('/service-contact', [ServiceContactController::class, 'showContactFor
 Route::post('/service-contact', [ServiceContactController::class, 'submitContactForm'])->name('service.contact.submit');
 
 Route::get('/captcha', [CaptchaController::class, 'generateCaptcha']);
+
+Route::get('/verify-otp', [OTPController::class, 'showForm'])->name('otp.form'); // for showing OTP form
+Route::post('/verify-otp', [OTPController::class, 'verify'])->name('otp.verify'); // for submitting OTP

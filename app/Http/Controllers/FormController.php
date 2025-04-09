@@ -7,6 +7,27 @@ use App\Models\Investor;
 use App\Models\ContactDetails;
 use App\Models\PublicLink;
 use App\Models\InvestmentDetails; // Import the InvestmentDetails model
+use App\Models\Referral;
+use App\Models\Company;
+use App\Models\ConcernedPerson;
+use App\Models\Founder;
+use App\Models\FundRequirement;
+use App\Models\PreviousRound;
+use App\Models\Attachment;
+use App\Models\OtherLink;
+use App\Models\ReferralSource;
+use App\Models\GuidanceNeeded;
+use App\Models\Banker;
+use App\Models\Other;
+use App\Models\TermsAcceptance;
+use App\Models\Financial;
+use App\Models\Location;
+use App\Models\Sector;
+use App\Models\Investee;
+use App\Models\InvestorProfile;
+use App\Models\BankerProfile;
+use App\Models\OtherProfile;
+use App\Models\InvesteeProfile;
 
 
 class FormController extends Controller
@@ -50,13 +71,13 @@ public function submitInvesteeForm(Request $request)
         'concerned_person_phone' => 'required|numeric|digits:10',
         'company_website' => 'required|url',
         'linkedin' => 'required|url',
-        'public_links.*' => 'nullable|url',
+        // 'public_links.*' => 'nullable|url',
         'link_descriptions.*' => 'nullable|string',
         'founder_name.*' => 'required|string|max:255',
         'founder_position.*' => 'required|string',
         'founder_education.*' => 'required|string|max:255',
         'founder_experience.*' => 'required|numeric',
-        'fund_usage.*' => 'required|string',
+        'fund_usage.*' => 'nullable|string',
         'fund_requirement.*' => 'required|numeric',
         'fund_unit.*' => 'required|string',
         'previous_rounds.*' => 'required|string',
@@ -67,16 +88,147 @@ public function submitInvesteeForm(Request $request)
         'financials.*' => 'nullable|file|mimes:pdf,doc,docx',
         'pitch_deck' => 'required|file|mimes:pdf,doc,docx',
         'referral_source' => 'required|string',
-        'terms' => 'accepted',
+        'guidance_needed.*' => 'nullable|string',
+        'other_links.*' => 'nullable|url',
+        'link_descriptions.*' => 'nullable|string',
+       
+        // 'terms' => 'accepted',
     ]);
 
     // Store data in the database (Investee)
-    $investee = new Investee();
+    $investee = new Company();
     $investee->company_name = $request->company_name;
     $investee->address = $request->address;
     $investee->nature_of_business = $request->nature_of_business;
     $investee->incorporated_in = $request->incorporated_in;
+    $investee->website = $request->company_website;
+    $investee->linkedin = $request->linkedin;
     $investee->save();
+
+    // Store concerned person details = 
+    $concernedPerson = new ConcernedPerson();
+    $concernedPerson->company_id = $investee->id;
+    $concernedPerson->name = $request->concerned_person_name;
+    $concernedPerson->designation = $request->concerned_person_designation;
+    $concernedPerson->email = $request->concerned_person_email;
+    $concernedPerson->phone = $request->concerned_person_phone;
+    $concernedPerson->save();
+    // Store public links
+    
+    // if ($request->has('public_links')) {
+    //     foreach ($request->public_links as $index => $link) {
+    //         $publicLink = new PublicLink();
+    //         $publicLink->investee_id = $investee->id;
+    //         $publicLink->url = $link;
+    //         $publicLink->link_description = $request->link_descriptions[$index];
+    //         $publicLink->save();
+    //     }
+    // }
+    // Store founder details =
+
+    if ($request->has('founder_name')) {
+        foreach ($request->founder_name as $index => $name) {
+            $founder = new Founder();
+            $founder->company_id = $investee->id;
+            $founder->name = $name;
+            $founder->position = $request->founder_position[$index];
+            $founder->education = $request->founder_education[$index];
+            $founder->experience = $request->founder_experience[$index];
+            $founder->save();
+        }
+    }
+
+    // Store fund requirements =
+    if ($request->has('fund_usage')) {
+        foreach ($request->fund_usage as $index => $usage) {
+            $fundRequirement = new FundRequirement();
+            $fundRequirement->company_id = $investee->id;
+            $fundRequirement->usage = $usage;
+            $fundRequirement->amount = $request->fund_requirement[$index];
+            $fundRequirement->unit = $request->fund_unit[$index];
+            $fundRequirement->save();
+        }
+    }
+    // Store previous rounds=
+    if ($request->has('previous_rounds')) {
+        foreach ($request->previous_rounds as $index => $round) {
+            $previousRound = new PreviousRound();
+            $previousRound->investee_id = $investee->id;
+            $previousRound->round = $investee->previous_rounds[$index];
+            $previousRound->investor = $request->investors[$index];
+            $previousRound->amount_raised = $request->amount_raised[$index];
+            $previousRound->valuation = $request->valuation[$index];
+            $previousRound->save();
+        }
+    }
+
+    // Store financials
+    // if ($request->has('financials')) {
+    //     foreach ($request->financials as $index => $file) {
+    //         $financial = new Financial();
+    //         $financial->investee_id = $investee->id;
+    //         $financial->fiscal_year = $request->fiscal_year[$index];
+    //         $financial->file_path = $file->store('financials');
+    //         $financial->save();
+    //     }
+    // }============
+
+    if($request->has('other_links')) {
+        foreach ($request->other_links as $index => $link) {
+            $otherLink = new OtherLink();
+            $otherLink->company_id = $investee->id;
+            $otherLink->link_url = $link;
+            $otherLink->link_description = $request->link_descriptions[$index];
+            $otherLink->save();
+        }
+    }
+
+     // Store attachments = ======================= 
+     if ($request->hasFile('financials')) {
+        foreach ($request->file('financials') as $file) {
+            $attachment = new Attachment();
+            $attachment->investee_id = $investee->id;
+            $attachment->type ="financials"; // Assuming you want to store the file type    
+            $attachment->fiscal_year = $request->fiscal_year; // Assuming you have a fiscal year field in the form            
+            $attachment->file_path = $file->store('financials');
+            $attachment->save();
+        }
+    }
+
+    // Store pitch deck ==========================
+    if ($request->hasFile('pitch_deck')) {
+        $pitchDeck = new Attachment();
+        $pitchDeck->investee_id = $investee->id;
+        $pitchDeck->type = 'pitch_deck'; // Assuming you want to store the file type
+        $pitchDeck->fiscal_year = date('Y'); // Assuming you have a fiscal year field in the form
+        $pitchDeck->file_path = $request->file('pitch_deck')->store('pitch_decks');
+        $pitchDeck->save();
+    }
+    // Store referral source =======================
+    $referralSource = new ReferralSource();
+    $referralSource->investee_id = $investee->id;
+    $referralSource->source = $request->referral_source;
+    $referralSource->save();
+    // Store terms acceptance
+    // $termsAcceptance = new TermsAcceptance();
+    // $termsAcceptance->investee_id = $investee->id;
+    // $termsAcceptance->accepted = $request->terms;
+    // $termsAcceptance->save();
+   
+    // Store guidance needed================================
+    if ($request->has('guidance_needed')) {
+        foreach ($request->guidance_needed as $index => $guidance) {
+            $guidanceNeeded = new GuidanceNeeded();
+            $guidanceNeeded->investee_id = $investee->id;
+            $guidanceNeeded->guidance_needed = $guidance;
+            $guidanceNeeded->save();
+        }
+    }
+    // Step 7: Redirect after form submission
+    $user = auth()->user();
+    $user->form_filled = 1; // Mark the form as filled
+    $user->save(); // Save the changes to the database
+    // Step 8: Redirect after form submission
 
     return redirect()->route('dashboard')->with('success', 'Investee form submitted successfully!');
 }
@@ -95,7 +247,9 @@ public function submitInvesteeForm(Request $request)
             'concerned_person_phone' => 'required|string|max:10',
             'email' => 'required|email',
             'public_links' => 'array',
+            // 'link_descriptions' => 'nullable|string',
             'public_links.*' => 'url',
+            // 'link_descriptions.*' => 'string',
             'invest_in' => 'required|string',
             'investor_type' => 'required|string',
             'investment_size' => 'required|string',
@@ -105,6 +259,7 @@ public function submitInvesteeForm(Request $request)
             'previous_investment_company.*' => 'string',
             'sector' => 'array',
             'sector.*' => 'string',
+            'referral_source' => 'required|string',
         ]);
 
         // Step 2: Store form data in the Investor table
@@ -161,6 +316,13 @@ if ($request->has('previous_investment_year')) {
             'investors_id' => $investor->id, // Assuming 'investors_id' is the foreign key in the previous_investments table
         ]);
     }
+}
+
+if($request->has('referral_source')) {
+    $referralSource = new Referral();
+    $referralSource->investor_id = $investor->id;
+    $referralSource->referral_source = $request->referral_source;
+    $referralSource->save();
 }
 
         // Step 7: Redirect after form submission

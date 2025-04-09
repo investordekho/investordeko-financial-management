@@ -5,13 +5,17 @@
         margin: auto;
         background: #fff;
         padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
     }
+
     .tab-buttons {
         display: flex;
         border-bottom: 2px solid #ddd;
+        flex-wrap: wrap;
+        gap: 5px;
     }
+
     .tab-button {
         flex: 1;
         padding: 12px;
@@ -19,32 +23,53 @@
         cursor: pointer;
         font-size: 16px;
         color: #555;
-        transition: all 0.3s ease;
         border: none;
-        background: none;
+        background:rgb(187, 193, 194);
         outline: none;
+        border-radius: 8px 8px 0 0;
+        transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.2s ease;
+        font-weight: 500;
     }
+
     .tab-button:hover {
+        background-color: #e0e0e0;
         color: #3b82f6;
     }
+
     .tab-button.active {
         background-color: #3b82f6;
         color: white;
         font-weight: bold;
         border-bottom: 2px solid #3b82f6;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
+
     .tab-content {
         padding: 20px;
         font-size: 16px;
         color: #333;
     }
+
     .tab-pane {
         display: none;
     }
+
     .tab-pane.active {
         display: block;
     }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .tab-buttons {
+            flex-direction: column;
+        }
+
+        .tab-button {
+            border-radius: 8px;
+        }
+    }
 </style>
+
 
 
 <!-- ------------------------------------------------------investor style ------------------------------------------------ -->
@@ -144,7 +169,7 @@
 
 <!-- 
 
-------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------investor--------------------------------------------------------
  -->
 
                 <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
@@ -367,13 +392,13 @@
 
                                 <div style="margin-top: -30px;" class="container">
                                 <!-- Breadcrumb -->
-                            <nav aria-label="breadcrumb">
+                            <!-- <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Investee Dashboard / Search Investors</li>
                               
                                 </ol>
-                            </nav>
+                            </nav> -->
                             <nav class="nav">
                                 <li class="breadcrumb-item" id="selected-filters-container-list"></li> <!-- Dynamic filter labels will go here -->
                             
@@ -408,13 +433,13 @@
 
 
 
-                <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
+                <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s" style="margin-top: -10px;">
                     <div class="container">
                         <h1 style="font-size: 16px; color: grey;" class="display-8 mb-4 animated slideInDown">Welcome <?php echo e(Auth::user()->name); ?> </h1>
                     </div>
                 </div>
 
-                    <div class="container p-1">
+                    <div class="container p-1" style="margin-top: -20px;">
                         <!-- Filter Options Form -->
                         <form id="searchForm2" class="form-control p-3 bg-light">
                             <div class="row-g-1">
@@ -455,7 +480,7 @@
                                 </div>
 
                                 <!-- Nature of Business Multi-select Dropdown -->
-                                <div class="col-md-3 mt-4">
+                                <!-- <div class="col-md-3 mt-4">
                                     <div class="filter-box">
                                     
                                         <div class="dropdown">
@@ -480,7 +505,34 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div> -->
+
+
+
+                                <div class="col-md-3 mt-4">
+                                    <div class="filter-box">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="natureOfBusinessDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Select Sector
+                                            </button>
+                                            <div class="dropdown-menu p-3" aria-labelledby="natureOfBusinessDropdown" style="width: 100%; max-height: 300px; overflow-y: auto;">
+                                                <input type="text" class="form-control mb-2" id="sectorSearch2" placeholder="Search sector" onkeyup="filterSectors()">
+                                                <ul id="sectorList2" class="list-unstyled m-0">
+                                                    <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <li class="mb-1">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->id); ?>">
+                                                                <label class="form-check-label" for="sector_<?php echo e($sector->id); ?>"><?php echo e($sector->sectors_name); ?></label>
+                                                            </div>
+                                                        </li>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+
 
                                 <!-- Incorporated In Multi-select Dropdown -->
                                 <div class="col-md-3 mt-4">
@@ -584,7 +636,7 @@
                                 </div>
                                 <div class="col-md-2 mt-4 text-center">
                                     <!-- <button type="button" class="btn btn-success" onclick="fetchResults()">Search Now</button> -->
-                                    <button id="searchBtn2" class="btn btn-success">Search 2</button>
+                                    <button id="searchBtn2" class="btn btn-success">Search</button>
 
                                 </div>
                             </div>
@@ -923,6 +975,12 @@
         document.getElementById('searchNowButton').addEventListener('click', function () {
             fetchResults1();
         });
+
+        document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
+        dropdown.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    });
     });
 
     function filterInvestmentSize(){
@@ -1091,6 +1149,12 @@
         console.log("Search button 2 clicked!"); // Debugging log
         updateSelectedFilters();  // Update the selected filters
         fetchResults();  // Fetch results
+
+        document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
+        dropdown.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    });
     });
 
 

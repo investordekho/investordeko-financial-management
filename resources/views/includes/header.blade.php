@@ -247,7 +247,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a href="{{ route('services') }}" class="nav-link dropdown-toggle" id="servicesDropdown" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
-                        <div class="dropdown-menu dropdown-menu-columns border-light m-0">
+                        <div class="dropdown-menu dropdown-menu-columns border-light m-0" style="left: 50% !important; transform: translateX(-50%) !important; width: max-content; padding: 1rem;">
                             <div class="row">
                                 <div class="col-sm-3 dropdown-menu-column">
                                     <h5><a href="{{ route('services') }}"><i class="fa-solid fa-chart-line"></i> Fund Raising</a></h5>
