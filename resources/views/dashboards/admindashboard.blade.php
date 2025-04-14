@@ -5,7 +5,7 @@
   
       <div class="row">
          <div class="col-md-12">
-            <div class="card col-md-6">
+            <div class="card col-md-8">
                   
                      
                      <div class="card-body">
@@ -15,6 +15,9 @@
                            </li>
                            <li class="nav-item">
                               <a class="nav-link" id="investor-exceldownload-tab" data-toggle="tab" href="#investor-excel-download" role="tab" aria-controls="investor-excel-download" aria-selected="false">Investor Excel Download</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" id="investee-exceldownload-tab" data-toggle="tab" href="#investee-excel-download" role="tab" aria-controls="investee-excel-download" aria-selected="false">Investee/Company Excel Download</a>
                            </li>
                            <li class="nav-item">
                               <a class="nav-link" id="employee-management-tab" data-toggle="tab" href="#employee-management" role="tab" aria-controls="employee-management" aria-selected="false">Employee Management</a>
@@ -170,7 +173,20 @@
 
 
 
-
+                           <div class="tab-pane fade" id="investee-excel-download" role="tabpanel" aria-labelledby="investee-exceldownload-tab">
+                                <form action="{{ route('investee.exceldownload') }}" method="GET" style="margin-top: 20px;">
+                                  <div class="form-group">
+                                    <label for="format" style="margin-right: 10px;">Select Export Format:</label>
+                                    <select name="format" id="format" class="form-control" style="display: inline-block; width: auto; margin-right: 10px;">
+                                       <option value="xlsx">XLSX</option>
+                                       <option value="xls">XLS</option>
+                                       <option value="csv">CSV</option>
+                                       <!-- <option value="pdf">PDF</option> -->
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Download</button>
+                                  </div>
+                                </form>
+                           </div>
 
 
 

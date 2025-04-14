@@ -237,8 +237,16 @@
                     <?php endif; ?>
                 <?php endif; ?>
 
-
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logoeffect">Logo</a>
+                    </li>
+                    <?php if(auth()->guard()->check()): ?>
+                    <?php if(auth()->user() && auth()->user()->hasRole('Admin')): ?>                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo e(route('subscriptionrequest')); ?>">Subscription Requests </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php endif; ?>    
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo e(route('home')); ?>">Home</a>
                     </li>

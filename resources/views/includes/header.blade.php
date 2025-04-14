@@ -237,8 +237,16 @@
                     @endif
                 @endauth
 
-
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logoeffect">Logo</a>
+                    </li>
+                    @auth
+                    @if(auth()->user() && auth()->user()->hasRole('Admin'))                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('subscriptionrequest') }}">Subscription Requests </a>
+                    </li>
+                    @endif
+                    @endauth    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Home</a>
                     </li>

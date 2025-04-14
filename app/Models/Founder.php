@@ -10,7 +10,7 @@ class Founder extends Model
     use HasFactory;
 
     // Define the table name if it's different from Laravel's naming convention (optional)
-    // protected $table = 'founders';
+    protected $table = 'founders';
 
     // Allow mass assignment for the listed fields
     protected $fillable = [

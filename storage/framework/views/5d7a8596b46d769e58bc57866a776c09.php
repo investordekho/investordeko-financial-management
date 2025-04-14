@@ -4,9 +4,9 @@
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
                     <h2 class="text-white mb-4">Our Office</h2>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>4V67+824, Dr. Charat Singh Colony Signal, Chakala, Andheri East, Guru Hargovindji Rd, Chakala, Andheri East, Mumbai, Maharashtra 400093</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 2231561436</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@financialmindss.com</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square btn-outline-light rounded-circle me-2" href="https://x.com/investordekho"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-square btn-outline-light rounded-circle me-2" href="https://www.facebook.com/profile.php?id=61568901415594"><i class="fab fa-facebook-f"></i></a>

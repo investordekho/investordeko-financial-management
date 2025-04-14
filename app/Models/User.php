@@ -72,4 +72,12 @@ class User extends Authenticatable
         }
         return false;
     }
+    public function subscriptionRequests()
+    {
+        return $this->hasMany(SubscriptionRequest::class);
+    }
+    public function paymentDetails()
+    {
+        return $this->hasMany(Payment_detail::class);
+    }
 }

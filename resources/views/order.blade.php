@@ -9,7 +9,8 @@
             <h2>You're about to subscribe to the {{ ucfirst($plan) }} plan</h2>
         </div>
         <div class="card-body">
-            <p>Details about the {{ ucfirst($plan) }} plan:</p>
+        <p>You have selected the {{ ucfirst($plan) }} plan. Total price: {{ ucfirst($totalprice) }}</p>
+
 
             @if($plan === 'basic')
                 <ul>
@@ -30,7 +31,7 @@
 
             <p>Click the button below to proceed with your subscription:</p>
 
-            <form method="POST" action="{{ route('processOrder') }}">
+            <form method="POST" action="{{ route('processOrder',['plan' => $plan,'totalprice' => $totalprice]) }}">
                 @csrf
                 <input type="hidden" name="plan" value="{{ $plan }}">
                 <button type="submit" class="btn btn-primary">Confirm Subscription</button>
