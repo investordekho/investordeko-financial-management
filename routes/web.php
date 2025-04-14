@@ -179,12 +179,12 @@ Route::get('/logoeffect', function () {
 
 
 
-Route::get('/check-storage', function () {
-    $path = storage_path('app/public/screenshots');
+// Route::get('/check-storage', function () {
+//     $path = storage_path('app/public/screenshots');
 
-    return [
-        'is_writable' => File::isWritable($path),
-        'exists' => File::exists($path),
-        'path' => $path
-    ];
-});
+//     return [
+//         'is_writable' => File::isWritable($path),
+//         'exists' => File::exists($path),
+//         'path' => $path
+//     ];
+// });
