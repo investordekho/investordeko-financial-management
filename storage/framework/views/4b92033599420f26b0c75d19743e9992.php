@@ -1,3 +1,10 @@
+<?php if(session('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert"><?php echo e(session('success')); ?>
+
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
 <!-- Hero Section -->
 <section class="hero-banner">
     <div class="container">

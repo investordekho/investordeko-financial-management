@@ -31,7 +31,7 @@
 
             <p>Click the button below to proceed with your subscription:</p>
 
-            <form method="POST" action="{{ route('processOrder',['plan' => ucfirst($plan),'totalprice' => ucfirst($totalprice)]) }}">
+            <form method="POST" action="{{ route('processOrder',['plan' => $plan,'totalprice' => $totalprice]) }}">
                 @csrf
                 <input type="hidden" name="plan" value="{{ $plan }}">
                 <button type="submit" class="btn btn-primary">Confirm Subscription</button>

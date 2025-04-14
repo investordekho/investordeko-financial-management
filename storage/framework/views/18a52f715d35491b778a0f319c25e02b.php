@@ -29,7 +29,7 @@
 
             <p>Click the button below to proceed with your subscription:</p>
 
-            <form method="POST" action="<?php echo e(route('processOrder',['plan' => ucfirst($plan),'totalprice' => ucfirst($totalprice)])); ?>">
+            <form method="POST" action="<?php echo e(route('processOrder',['plan' => $plan,'totalprice' => $totalprice])); ?>">
                 <?php echo csrf_field(); ?>
                 <input type="hidden" name="plan" value="<?php echo e($plan); ?>">
                 <button type="submit" class="btn btn-primary">Confirm Subscription</button>

@@ -30,6 +30,10 @@ use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\ExcelUploadController;
 use App\Http\Controllers\NewBankController;
+use App\Http\Controllers\SubscriptionRequestController;
+
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 // Home, About, Services, Contact Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -134,6 +138,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/newbankerdashbaord/investee',[NewBankController::class,'searchinvesteeforbanker'])->name('newbankerdashbaord.inbestee');
     Route::get('/newbankerdashbaord/investorview',[NewBankController::class,'returninvestorview'])->name('newbankerdashboard.investorview');
     Route::get('/newbankerdashbaord/investeeview',[NewBankController::class,'returninvesteeview'])->name('newbankerdashboard.investeeview');
+
+    Route::post('/createsubscriptionrequest',[SubscriptionRequestController::class,'createsubscriptionrequest'])->name('createsubscriptionrequest');
+    Route::get('/subscriptionrequest',[SubscriptionRequestController::class,'allrequests'])->name('subscriptionrequest');
+    Route ::put('/updatestatus/{id}',[SubscriptionRequestController::class,'updatestatus'])->name('subscriptionrequest.updatestatus');
 });
 
 // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
@@ -154,3 +162,29 @@ Route::get('/captcha', [CaptchaController::class, 'generateCaptcha']);
 
 Route::get('/verify-otp', [OTPController::class, 'showForm'])->name('otp.form'); // for showing OTP form
 Route::post('/verify-otp', [OTPController::class, 'verify'])->name('otp.verify'); // for submitting OTP
+
+Route::get('/logoeffect', function () {
+    return view('logoeffect');
+})->name('logo');
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/check-storage', function () {
+    $path = storage_path('app/public/screenshots');
+
+    return [
+        'is_writable' => File::isWritable($path),
+        'exists' => File::exists($path),
+        'path' => $path
+    ];
+});
