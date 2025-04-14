@@ -33,6 +33,7 @@
                             <tr>
                                 <th style="padding: 15px; width: 5%;">ID</th>
                                 <th style="padding: 15px; width: 15%;">User</th>
+                                <th style="padding: 15px; width: 10%;">Login User Contact</th>
                                 <th style="padding: 15px; width: 10%;">Plan</th>
                                 <th style="padding: 15px; width: 10%;">Data Count</th>
                                 <th style="padding: 15px; min-width: 150px; width: 50%;">Status</th> <!-- Adjusted width for Status -->
@@ -52,6 +53,7 @@
                             <tr>
                                 <td style="padding: 15px;"><?php echo e($request->id); ?></td>
                                 <td style="padding: 15px;"><?php echo e($request->user->name ?? 'Guest'); ?></td>
+                                <td style="padding: 15px;"><?php echo e($request->user->phone ?? 'N/A'); ?></td>
                                 <td style="padding: 15px;"><?php echo e($request->plan); ?></td>
                                 <td style="padding: 15px;"><?php echo e($request->no_of_data); ?></td>
 
