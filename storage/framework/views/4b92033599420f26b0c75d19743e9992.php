@@ -46,7 +46,7 @@
                     <?php echo e(route('banker.dashboard')); ?>
 
                 <?php elseif(Auth::user()->category_id == 4): ?>
-                    <?php echo e(route('other.dashboard')); ?>
+                    <?php echo e(route('banker.dashboard')); ?>
 
                 <?php else: ?>
                     <?php echo e(route('home')); ?>

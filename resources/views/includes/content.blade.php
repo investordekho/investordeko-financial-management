@@ -42,7 +42,7 @@
                 @elseif(Auth::user()->category_id == 3)
                     {{ route('banker.dashboard') }}
                 @elseif(Auth::user()->category_id == 4)
-                    {{ route('other.dashboard') }}
+                    {{ route('banker.dashboard') }}
                 @else
                     {{ route('home') }}
                 @endif
