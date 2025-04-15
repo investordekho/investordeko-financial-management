@@ -282,7 +282,7 @@
                 </form>
 
                 <!-- Already have an account -->
-                <h3 class="text-center mt-4">Already have an account? <a href="{{ route('login') }}">Login</a></h3>
+                <h4 class="text-center mt-4">Already have an account? <a href="{{ route('login') }}">Login</a></h4>
             </div>
         </div>
     </div>
