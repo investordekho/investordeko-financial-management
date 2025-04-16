@@ -21,16 +21,19 @@
 </style>
 
 <div class="container">
-   <div class="row p-2"  style="background: #a5bdc4;">
+   <div class="row p-2"  style="background: #a5bdc4;
+   max-width: 1400px;
+   width: 100%;
+   border-radius: 8px; margin-left:0px">
        <h2> Investee Form</h2>
    </div>
     
-     
+
 <form class="bg-light p-4" id="investeeForm" action="<?php echo e(route('form.submit')); ?>" method="POST" enctype="multipart/form-data" novalidate>
 
     <?php echo csrf_field(); ?>
     <!-- Company Details Section -->
-    <div class="row g-3">
+    <!-- <div class="row g-3">
         <div class="col-sm-2">
             <h3 class="mt-4" style="font-size: 22px; font-weight: 600;">Company Details</h3>
         </div>
@@ -111,155 +114,155 @@ unset($__errorArgs, $__bag); ?>"
                 required
             >
             <datalist id="business-options">
-                <!-- Add your business options here -->
+                
                 <option value="Accounting">Accounting</option>
-<option value="Airlines/Aviation">Airlines/Aviation</option>
-<option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
-<option value="Alternative Medicine">Alternative Medicine</option>
-<option value="Animation">Animation</option>
-<option value="Apparel/Fashion">Apparel/Fashion</option>
-<option value="Architecture/Planning">Architecture/Planning</option>
-<option value="Arts/Crafts">Arts/Crafts</option>
-<option value="Automotive">Automotive</option>
-<option value="Aviation/Aerospace">Aviation/Aerospace</option>
-<option value="Banking/Mortgage">Banking/Mortgage</option>
-<option value="Biotechnology/Greentech">Biotechnology/Greentech</option>
-<option value="Broadcast Media">Broadcast Media</option>
-<option value="Building Materials">Building Materials</option>
-<option value="Business Supplies/Equipment">Business Supplies/Equipment</option>
-<option value="Capital Markets/Hedge Fund/Private Equity">Capital Markets/Hedge Fund/Private Equity</option>
-<option value="Chemicals">Chemicals</option>
-<option value="Civic/Social Organization">Civic/Social Organization</option>
-<option value="Civil Engineering">Civil Engineering</option>
-<option value="Commercial Real Estate">Commercial Real Estate</option>
-<option value="Computer Games">Computer Games</option>
-<option value="Computer Hardware">Computer Hardware</option>
-<option value="Computer Networking">Computer Networking</option>
-<option value="Computer Software/Engineering">Computer Software/Engineering</option>
-<option value="Computer/Network Security">Computer/Network Security</option>
-<option value="Construction">Construction</option>
-<option value="Consumer Electronics">Consumer Electronics</option>
-<option value="Consumer Goods">Consumer Goods</option>
-<option value="Consumer Services">Consumer Services</option>
-<option value="Cosmetics">Cosmetics</option>
-<option value="Dairy">Dairy</option>
-<option value="Defense/Space">Defense/Space</option>
-<option value="Design">Design</option>
-<option value="E-Learning">E-Learning</option>
-<option value="Education Management">Education Management</option>
-<option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
-<option value="Entertainment/Movie Production">Entertainment/Movie Production</option>
-<option value="Environmental Services">Environmental Services</option>
-<option value="Events Services">Events Services</option>
-<option value="Executive Office">Executive Office</option>
-<option value="Facilities Services">Facilities Services</option>
-<option value="Farming">Farming</option>
-<option value="Financial Services">Financial Services</option>
-<option value="Fine Art">Fine Art</option>
-<option value="Fishery">Fishery</option>
-<option value="Food Production">Food Production</option>
-<option value="Food/Beverages">Food/Beverages</option>
-<option value="Fundraising">Fundraising</option>
-<option value="Furniture">Furniture</option>
-<option value="Gambling/Casinos">Gambling/Casinos</option>
-<option value="Glass/Ceramics/Concrete">Glass/Ceramics/Concrete</option>
-<option value="Government Administration">Government Administration</option>
-<option value="Government Relations">Government Relations</option>
-<option value="Graphic Design/Web Design">Graphic Design/Web Design</option>
-<option value="Health/Fitness">Health/Fitness</option>
-<option value="Higher Education/Acadamia">Higher Education/Acadamia</option>
-<option value="Hospital/Health Care">Hospital/Health Care</option>
-<option value="Hospitality">Hospitality</option>
-<option value="Human Resources/HR">Human Resources/HR</option>
-<option value="Import/Export">Import/Export</option>
-<option value="Individual/Family Services">Individual/Family Services</option>
-<option value="Industrial Automation">Industrial Automation</option>
-<option value="Information Services">Information Services</option>
-<option value="Information Technology/IT">Information Technology/IT</option>
-<option value="Insurance">Insurance</option>
-<option value="International Affairs">International Affairs</option>
-<option value="International Trade/Development">International Trade/Development</option>
-<option value="Internet">Internet</option>
-<option value="Investment Banking/Venture">Investment Banking/Venture</option>
-<option value="Investment Management/Hedge Fund/Private Equity">Investment Management/Hedge Fund/Private Equity</option>
-<option value="Judiciary">Judiciary</option>
-<option value="Law Enforcement">Law Enforcement</option>
-<option value="Law Practice/Law Firms">Law Practice/Law Firms</option>
-<option value="Legal Services">Legal Services</option>
-<option value="Legislative Office">Legislative Office</option>
-<option value="Leisure/Travel">Leisure/Travel</option>
-<option value="Library">Library</option>
-<option value="Logistics/Procurement">Logistics/Procurement</option>
-<option value="Luxury Goods/Jewelry">Luxury Goods/Jewelry</option>
-<option value="Machinery">Machinery</option>
-<option value="Management Consulting">Management Consulting</option>
-<option value="Maritime">Maritime</option>
-<option value="Market Research">Market Research</option>
-<option value="Marketing/Advertising/Sales">Marketing/Advertising/Sales</option>
-<option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
-<option value="Media Production">Media Production</option>
-<option value="Medical Equipment">Medical Equipment</option>
-<option value="Medical Practice">Medical Practice</option>
-<option value="Mental Health Care">Mental Health Care</option>
-<option value="Military Industry">Military Industry</option>
-<option value="Mining/Metals">Mining/Metals</option>
-<option value="Motion Pictures/Film">Motion Pictures/Film</option>
-<option value="Museums/Institutions">Museums/Institutions</option>
-<option value="Music">Music</option>
-<option value="Nanotechnology">Nanotechnology</option>
-<option value="Newspapers/Journalism">Newspapers/Journalism</option>
-<option value="Non-Profit/Volunteering">Non-Profit/Volunteering</option>
-<option value="Oil/Energy/Solar/Greentech">Oil/Energy/Solar/Greentech</option>
-<option value="Online Publishing">Online Publishing</option>
-<option value="Other Industry">Other Industry</option>
-<option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
-<option value="Package/Freight Delivery">Package/Freight Delivery</option>
-<option value="Packaging/Containers">Packaging/Containers</option>
-<option value="Paper/Forest Products">Paper/Forest Products</option>
-<option value="Performing Arts">Performing Arts</option>
-<option value="Pharmaceuticals">Pharmaceuticals</option>
-<option value="Philanthropy">Philanthropy</option>
-<option value="Photography">Photography</option>
-<option value="Plastics">Plastics</option>
-<option value="Political Organization">Political Organization</option>
-<option value="Primary/Secondary Education">Primary/Secondary Education</option>
-<option value="Printing">Printing</option>
-<option value="Professional Training">Professional Training</option>
-<option value="Program Development">Program Development</option>
-<option value="Public Relations/PR">Public Relations/PR</option>
-<option value="Public Safety">Public Safety</option>
-<option value="Publishing Industry">Publishing Industry</option>
-<option value="Railroad Manufacture">Railroad Manufacture</option>
-<option value="Ranching">Ranching</option>
-<option value="Real Estate/Mortgage">Real Estate/Mortgage</option>
-<option value="Recreational Facilities/Services">Recreational Facilities/Services</option>
-<option value="Religious Institutions">Religious Institutions</option>
-<option value="Renewables/Environment">Renewables/Environment</option>
-<option value="Research Industry">Research Industry</option>
-<option value="Restaurants">Restaurants</option>
-<option value="Retail Industry">Retail Industry</option>
-<option value="Security/Investigations">Security/Investigations</option>
-<option value="Semiconductors">Semiconductors</option>
-<option value="Shipbuilding">Shipbuilding</option>
-<option value="Sporting Goods">Sporting Goods</option>
-<option value="Sports">Sports</option>
-<option value="Staffing/Recruiting">Staffing/Recruiting</option>
-<option value="Supermarkets">Supermarkets</option>
-<option value="Telecommunications">Telecommunications</option>
-<option value="Textiles">Textiles</option>
-<option value="Think Tanks">Think Tanks</option>
-<option value="Tobacco">Tobacco</option>
-<option value="Translation/Localization">Translation/Localization</option>
-<option value="Transportation">Transportation</option>
-<option value="Utilities">Utilities</option>
-<option value="Venture Capital/VC">Venture Capital/VC</option>
-<option value="Veterinary">Veterinary</option>
-<option value="Warehousing">Warehousing</option>
-<option value="Wholesale">Wholesale</option>
-<option value="Wine/Spirits">Wine/Spirits</option>
-<option value="Wireless">Wireless</option>
-<option value="Writing/Editing">Writing/Editing</option>
-                <!-- Add other options as needed -->
+                <option value="Airlines/Aviation">Airlines/Aviation</option>
+                <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
+                <option value="Alternative Medicine">Alternative Medicine</option>
+                <option value="Animation">Animation</option>
+                <option value="Apparel/Fashion">Apparel/Fashion</option>
+                <option value="Architecture/Planning">Architecture/Planning</option>
+                <option value="Arts/Crafts">Arts/Crafts</option>
+                <option value="Automotive">Automotive</option>
+                <option value="Aviation/Aerospace">Aviation/Aerospace</option>
+                <option value="Banking/Mortgage">Banking/Mortgage</option>
+                <option value="Biotechnology/Greentech">Biotechnology/Greentech</option>
+                <option value="Broadcast Media">Broadcast Media</option>
+                <option value="Building Materials">Building Materials</option>
+                <option value="Business Supplies/Equipment">Business Supplies/Equipment</option>
+                <option value="Capital Markets/Hedge Fund/Private Equity">Capital Markets/Hedge Fund/Private Equity</option>
+                <option value="Chemicals">Chemicals</option>
+                <option value="Civic/Social Organization">Civic/Social Organization</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Commercial Real Estate">Commercial Real Estate</option>
+                <option value="Computer Games">Computer Games</option>
+                <option value="Computer Hardware">Computer Hardware</option>
+                <option value="Computer Networking">Computer Networking</option>
+                <option value="Computer Software/Engineering">Computer Software/Engineering</option>
+                <option value="Computer/Network Security">Computer/Network Security</option>
+                <option value="Construction">Construction</option>
+                <option value="Consumer Electronics">Consumer Electronics</option>
+                <option value="Consumer Goods">Consumer Goods</option>
+                <option value="Consumer Services">Consumer Services</option>
+                <option value="Cosmetics">Cosmetics</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Defense/Space">Defense/Space</option>
+                <option value="Design">Design</option>
+                <option value="E-Learning">E-Learning</option>
+                <option value="Education Management">Education Management</option>
+                <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
+                <option value="Entertainment/Movie Production">Entertainment/Movie Production</option>
+                <option value="Environmental Services">Environmental Services</option>
+                <option value="Events Services">Events Services</option>
+                <option value="Executive Office">Executive Office</option>
+                <option value="Facilities Services">Facilities Services</option>
+                <option value="Farming">Farming</option>
+                <option value="Financial Services">Financial Services</option>
+                <option value="Fine Art">Fine Art</option>
+                <option value="Fishery">Fishery</option>
+                <option value="Food Production">Food Production</option>
+                <option value="Food/Beverages">Food/Beverages</option>
+                <option value="Fundraising">Fundraising</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Gambling/Casinos">Gambling/Casinos</option>
+                <option value="Glass/Ceramics/Concrete">Glass/Ceramics/Concrete</option>
+                <option value="Government Administration">Government Administration</option>
+                <option value="Government Relations">Government Relations</option>
+                <option value="Graphic Design/Web Design">Graphic Design/Web Design</option>
+                <option value="Health/Fitness">Health/Fitness</option>
+                <option value="Higher Education/Acadamia">Higher Education/Acadamia</option>
+                <option value="Hospital/Health Care">Hospital/Health Care</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Human Resources/HR">Human Resources/HR</option>
+                <option value="Import/Export">Import/Export</option>
+                <option value="Individual/Family Services">Individual/Family Services</option>
+                <option value="Industrial Automation">Industrial Automation</option>
+                <option value="Information Services">Information Services</option>
+                <option value="Information Technology/IT">Information Technology/IT</option>
+                <option value="Insurance">Insurance</option>
+                <option value="International Affairs">International Affairs</option>
+                <option value="International Trade/Development">International Trade/Development</option>
+                <option value="Internet">Internet</option>
+                <option value="Investment Banking/Venture">Investment Banking/Venture</option>
+                <option value="Investment Management/Hedge Fund/Private Equity">Investment Management/Hedge Fund/Private Equity</option>
+                <option value="Judiciary">Judiciary</option>
+                <option value="Law Enforcement">Law Enforcement</option>
+                <option value="Law Practice/Law Firms">Law Practice/Law Firms</option>
+                <option value="Legal Services">Legal Services</option>
+                <option value="Legislative Office">Legislative Office</option>
+                <option value="Leisure/Travel">Leisure/Travel</option>
+                <option value="Library">Library</option>
+                <option value="Logistics/Procurement">Logistics/Procurement</option>
+                <option value="Luxury Goods/Jewelry">Luxury Goods/Jewelry</option>
+                <option value="Machinery">Machinery</option>
+                <option value="Management Consulting">Management Consulting</option>
+                <option value="Maritime">Maritime</option>
+                <option value="Market Research">Market Research</option>
+                <option value="Marketing/Advertising/Sales">Marketing/Advertising/Sales</option>
+                <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
+                <option value="Media Production">Media Production</option>
+                <option value="Medical Equipment">Medical Equipment</option>
+                <option value="Medical Practice">Medical Practice</option>
+                <option value="Mental Health Care">Mental Health Care</option>
+                <option value="Military Industry">Military Industry</option>
+                <option value="Mining/Metals">Mining/Metals</option>
+                <option value="Motion Pictures/Film">Motion Pictures/Film</option>
+                <option value="Museums/Institutions">Museums/Institutions</option>
+                <option value="Music">Music</option>
+                <option value="Nanotechnology">Nanotechnology</option>
+                <option value="Newspapers/Journalism">Newspapers/Journalism</option>
+                <option value="Non-Profit/Volunteering">Non-Profit/Volunteering</option>
+                <option value="Oil/Energy/Solar/Greentech">Oil/Energy/Solar/Greentech</option>
+                <option value="Online Publishing">Online Publishing</option>
+                <option value="Other Industry">Other Industry</option>
+                <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
+                <option value="Package/Freight Delivery">Package/Freight Delivery</option>
+                <option value="Packaging/Containers">Packaging/Containers</option>
+                <option value="Paper/Forest Products">Paper/Forest Products</option>
+                <option value="Performing Arts">Performing Arts</option>
+                <option value="Pharmaceuticals">Pharmaceuticals</option>
+                <option value="Philanthropy">Philanthropy</option>
+                <option value="Photography">Photography</option>
+                <option value="Plastics">Plastics</option>
+                <option value="Political Organization">Political Organization</option>
+                <option value="Primary/Secondary Education">Primary/Secondary Education</option>
+                <option value="Printing">Printing</option>
+                <option value="Professional Training">Professional Training</option>
+                <option value="Program Development">Program Development</option>
+                <option value="Public Relations/PR">Public Relations/PR</option>
+                <option value="Public Safety">Public Safety</option>
+                <option value="Publishing Industry">Publishing Industry</option>
+                <option value="Railroad Manufacture">Railroad Manufacture</option>
+                <option value="Ranching">Ranching</option>
+                <option value="Real Estate/Mortgage">Real Estate/Mortgage</option>
+                <option value="Recreational Facilities/Services">Recreational Facilities/Services</option>
+                <option value="Religious Institutions">Religious Institutions</option>
+                <option value="Renewables/Environment">Renewables/Environment</option>
+                <option value="Research Industry">Research Industry</option>
+                <option value="Restaurants">Restaurants</option>
+                <option value="Retail Industry">Retail Industry</option>
+                <option value="Security/Investigations">Security/Investigations</option>
+                <option value="Semiconductors">Semiconductors</option>
+                <option value="Shipbuilding">Shipbuilding</option>
+                <option value="Sporting Goods">Sporting Goods</option>
+                <option value="Sports">Sports</option>
+                <option value="Staffing/Recruiting">Staffing/Recruiting</option>
+                <option value="Supermarkets">Supermarkets</option>
+                <option value="Telecommunications">Telecommunications</option>
+                <option value="Textiles">Textiles</option>
+                <option value="Think Tanks">Think Tanks</option>
+                <option value="Tobacco">Tobacco</option>
+                <option value="Translation/Localization">Translation/Localization</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Venture Capital/VC">Venture Capital/VC</option>
+                <option value="Veterinary">Veterinary</option>
+                <option value="Warehousing">Warehousing</option>
+                <option value="Wholesale">Wholesale</option>
+                <option value="Wine/Spirits">Wine/Spirits</option>
+                <option value="Wireless">Wireless</option>
+                <option value="Writing/Editing">Writing/Editing</option>
+                
             </datalist>
             <?php $__errorArgs = ['nature_of_business'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -272,64 +275,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
         </div>
-       <div class="col-sm-3">
-    <label id="labelinput" for="incorporated_in" class="required">Incorporated In <span style="color:red;">*</span></label>
-    <input 
-        type="number" 
-        class="form-control spaced-input <?php $__errorArgs = ['incorporated_in'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-        id="incorporated_in" 
-        name="incorporated_in" 
-        value="<?php echo e(old('incorporated_in')); ?>" 
-        required
-    >
-    <?php $__errorArgs = ['incorporated_in'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-        <span class="text-danger">This Field is Required</span>
-    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-</div>
-
-    </div>
-    <hr>
-
-    <!-- Concerned Person Details Section -->
-<div class="row g-3 mb-1">
-    <div class="col-sm-2">
-        <h3 class="mt-2" style="font-size: 12px; font-weight: 600;">Concerned Person Details</h3>
-        <div class="mt-1">
+        <div class="col-sm-3">
+            <label id="labelinput" for="incorporated_in" class="required">Incorporated In <span style="color:red;">*</span></label>
             <input 
-                type="checkbox" 
-                class="form-check-input" 
-                id="concerned_person_is_me" 
-                onclick="fillConcernedPersonDetails()"
-            >
-            <label 
-                class="form-check-label" 
-                for="concerned_person_is_me" 
-                style="color: red; font-size: 12px;"
-            >
-                Same as registered
-            </label>
-        </div>
-    </div>
-
-    <div class="col-sm-2">
-        <label id="labelinput" for="concerned_person_name" class="required">Concerned Person <span style="color:red;">*</span></label>
-        <input 
-            type="text" 
-            class="form-control spaced-input <?php $__errorArgs = ['concerned_person_name'];
+                type="number" 
+                class="form-control spaced-input <?php $__errorArgs = ['incorporated_in'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -337,227 +287,12 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" 
-            id="concerned_person_name" 
-            name="concerned_person_name" 
-            value="<?php echo e(old('concerned_person_name')); ?>" 
-            required
-        >
-        <?php $__errorArgs = ['concerned_person_name'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-
-    <div class="col-md-2">
-        <label id="labelinput" for="concerned_person_designation" class="required">Designation <span style="color:red;">*</span></label>
-        <input 
-            type="text" 
-            class="form-control spaced-input <?php $__errorArgs = ['concerned_person_designation'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            id="concerned_person_designation" 
-            name="concerned_person_designation" 
-            value="<?php echo e(old('concerned_person_designation')); ?>" 
-            required
-        >
-        <?php $__errorArgs = ['concerned_person_designation'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-
-    <div class="col-md-3">
-        <label id="labelinput" for="concerned_person_email" class="required">Email <span style="color:red;">*</span></label>
-        <input 
-            type="email" 
-            class="form-control spaced-input <?php $__errorArgs = ['concerned_person_email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            id="concerned_person_email" 
-            name="concerned_person_email" 
-            value="<?php echo e(old('concerned_person_email')); ?>" 
-            required
-        >
-        <?php $__errorArgs = ['concerned_person_email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-
-    <div class="col-md-3">
-        <label id="labelinput" for="concerned_person_phone" class="phone required">Phone <span style="color:red;">*</span></label>
-        <input 
-            type="number" 
-            class="form-control spaced-input <?php $__errorArgs = ['concerned_person_phone'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            id="concerned_person_phone" 
-            name="concerned_person_phone" 
-            value="<?php echo e(old('concerned_person_phone')); ?>" 
-            required 
-            maxlength="10" 
-            oninput="this.value=this.value.slice(0, 10)"
-        >
-        <?php $__errorArgs = ['concerned_person_phone'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-</div>
-
-    <hr>
-
-    <!-- Company Links Section -->
-                    
-    <div class="row g-3">
-    <div class="col-sm-2">
-        <h3 class="mt-4" style="font-size: 22px; font-weight: 600;">Company Links</h3>
-    </div>
-    <div class="col-md-5">
-        <label id="labelinput" for="company_website" class="required">Company Website <span style="color:red;">*</span></label>
-        <input 
-            type="url" 
-            class="form-control spaced-input <?php $__errorArgs = ['website'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            id="company_website" 
-            name="website" 
-            value="<?php echo e(old('website')); ?>" 
-            required
-        >
-        <?php $__errorArgs = ['website'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-5">
-        <label id="labelinput" for="linkedin_link">LinkedIn <span style="color:red;">*</span></label>
-        <input 
-            type="url" 
-            class="form-control spaced-input <?php $__errorArgs = ['linkedin'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            id="linkedin_link" 
-            name="linkedin" 
-            value="<?php echo e(old('linkedin')); ?>" 
-            required
-        >
-        <?php $__errorArgs = ['linkedin'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-</div>
-<div class="row g-3 mt-1">
-    <div class="col-sm-2">
-        <h3 class="mt-2" style="font-size: 22px; font-weight: 600;">Other Links</h3>
-    </div>
-    <div class="col-sm-10" id="public-links-container">
-        <div class="input-group mb-3">
-            <input 
-                class="form-control spaced-input <?php $__errorArgs = ['public_links.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-                type="url" 
-                name="public_links[]" 
-                placeholder="URL" 
-                value="<?php echo e(old('public_links.0')); ?>"
-            >
-            
-            <select 
-                class="form-control spaced-input <?php $__errorArgs = ['link_descriptions.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-                name="link_descriptions[]" 
+                id="incorporated_in" 
+                name="incorporated_in" 
+                value="<?php echo e(old('incorporated_in')); ?>" 
                 required
             >
-                <option value="" disabled <?php echo e(old('link_descriptions.0') ? '' : 'selected'); ?>>Select Account</option>
-                <option value="Facebook" <?php echo e(old('link_descriptions.0') == 'Facebook' ? 'selected' : ''); ?>>Facebook</option>
-                <option value="Twitter" <?php echo e(old('link_descriptions.0') == 'Twitter' ? 'selected' : ''); ?>>Twitter</option>
-                <option value="Others" <?php echo e(old('link_descriptions.0') == 'Others' ? 'selected' : ''); ?>>Others</option>
-            </select>
-            
-            <button 
-                class="btn btn-info float-end" 
-                style="margin-right: 8px;" 
-                type="button" 
-                onclick="addPublicLinkField()"
-            >
-                + Add More Links
-            </button>
-        </div>
-        <?php $__errorArgs = ['public_links.0'];
+            <?php $__errorArgs = ['incorporated_in'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -567,189 +302,1431 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    </div>
-</div>
+        </div>
+    </div> -->
 
-<hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row g-4 mb-4">
+        <div class="col-12">
+            <h3 class="text-dark fw-semibold fs-4 border-bottom pb-2">Company Details</h3>
+        </div>
+
+        <div class="col-md-3">
+            <label for="company_name" class="form-label fw-medium">Company Name <span class="text-danger">*</span></label>
+            <input
+                type="text"
+                class="form-control shadow-sm rounded-3 <?php $__errorArgs = ['company_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                id="company_name"
+                name="company_name"
+                value="<?php echo e(old('company_name')); ?>"
+                required
+            >
+            <?php $__errorArgs = ['company_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="invalid-feedback">This Field is Required</div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+
+        <div class="col-md-3">
+            <label for="address" class="form-label fw-medium">Address <span class="text-danger">*</span></label>
+            <input
+                type="text"
+                class="form-control shadow-sm rounded-3 <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                id="address"
+                name="address"
+                value="<?php echo e(old('address')); ?>"
+                required
+            >
+            <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="invalid-feedback">This Field is Required</div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+
+        <div class="col-md-3">
+            <label for="nature_of_business" class="form-label fw-medium">Nature of Business <span class="text-danger">*</span></label>
+            <input
+                list="business-options"
+                class="form-control shadow-sm rounded-3 <?php $__errorArgs = ['nature_of_business'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                id="nature_of_business"
+                name="nature_of_business"
+                value="<?php echo e(old('nature_of_business')); ?>"
+                required
+            >
+            <?php $__errorArgs = ['nature_of_business'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="invalid-feedback">This Field is Required</div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            <datalist id="business-options">
+                
+                <option value="Accounting">Accounting</option>
+                <option value="Airlines/Aviation">Airlines/Aviation</option>
+                <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
+                <option value="Alternative Medicine">Alternative Medicine</option>
+                <option value="Animation">Animation</option>
+                <option value="Apparel/Fashion">Apparel/Fashion</option>
+                <option value="Architecture/Planning">Architecture/Planning</option>
+                <option value="Arts/Crafts">Arts/Crafts</option>
+                <option value="Automotive">Automotive</option>
+                <option value="Aviation/Aerospace">Aviation/Aerospace</option>
+                <option value="Banking/Mortgage">Banking/Mortgage</option>
+                <option value="Biotechnology/Greentech">Biotechnology/Greentech</option>
+                <option value="Broadcast Media">Broadcast Media</option>
+                <option value="Building Materials">Building Materials</option>
+                <option value="Business Supplies/Equipment">Business Supplies/Equipment</option>
+                <option value="Capital Markets/Hedge Fund/Private Equity">Capital Markets/Hedge Fund/Private Equity</option>
+                <option value="Chemicals">Chemicals</option>
+                <option value="Civic/Social Organization">Civic/Social Organization</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Commercial Real Estate">Commercial Real Estate</option>
+                <option value="Computer Games">Computer Games</option>
+                <option value="Computer Hardware">Computer Hardware</option>
+                <option value="Computer Networking">Computer Networking</option>
+                <option value="Computer Software/Engineering">Computer Software/Engineering</option>
+                <option value="Computer/Network Security">Computer/Network Security</option>
+                <option value="Construction">Construction</option>
+                <option value="Consumer Electronics">Consumer Electronics</option>
+                <option value="Consumer Goods">Consumer Goods</option>
+                <option value="Consumer Services">Consumer Services</option>
+                <option value="Cosmetics">Cosmetics</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Defense/Space">Defense/Space</option>
+                <option value="Design">Design</option>
+                <option value="E-Learning">E-Learning</option>
+                <option value="Education Management">Education Management</option>
+                <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
+                <option value="Entertainment/Movie Production">Entertainment/Movie Production</option>
+                <option value="Environmental Services">Environmental Services</option>
+                <option value="Events Services">Events Services</option>
+                <option value="Executive Office">Executive Office</option>
+                <option value="Facilities Services">Facilities Services</option>
+                <option value="Farming">Farming</option>
+                <option value="Financial Services">Financial Services</option>
+                <option value="Fine Art">Fine Art</option>
+                <option value="Fishery">Fishery</option>
+                <option value="Food Production">Food Production</option>
+                <option value="Food/Beverages">Food/Beverages</option>
+                <option value="Fundraising">Fundraising</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Gambling/Casinos">Gambling/Casinos</option>
+                <option value="Glass/Ceramics/Concrete">Glass/Ceramics/Concrete</option>
+                <option value="Government Administration">Government Administration</option>
+                <option value="Government Relations">Government Relations</option>
+                <option value="Graphic Design/Web Design">Graphic Design/Web Design</option>
+                <option value="Health/Fitness">Health/Fitness</option>
+                <option value="Higher Education/Acadamia">Higher Education/Acadamia</option>
+                <option value="Hospital/Health Care">Hospital/Health Care</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Human Resources/HR">Human Resources/HR</option>
+                <option value="Import/Export">Import/Export</option>
+                <option value="Individual/Family Services">Individual/Family Services</option>
+                <option value="Industrial Automation">Industrial Automation</option>
+                <option value="Information Services">Information Services</option>
+                <option value="Information Technology/IT">Information Technology/IT</option>
+                <option value="Insurance">Insurance</option>
+                <option value="International Affairs">International Affairs</option>
+                <option value="International Trade/Development">International Trade/Development</option>
+                <option value="Internet">Internet</option>
+                <option value="Investment Banking/Venture">Investment Banking/Venture</option>
+                <option value="Investment Management/Hedge Fund/Private Equity">Investment Management/Hedge Fund/Private Equity</option>
+                <option value="Judiciary">Judiciary</option>
+                <option value="Law Enforcement">Law Enforcement</option>
+                <option value="Law Practice/Law Firms">Law Practice/Law Firms</option>
+                <option value="Legal Services">Legal Services</option>
+                <option value="Legislative Office">Legislative Office</option>
+                <option value="Leisure/Travel">Leisure/Travel</option>
+                <option value="Library">Library</option>
+                <option value="Logistics/Procurement">Logistics/Procurement</option>
+                <option value="Luxury Goods/Jewelry">Luxury Goods/Jewelry</option>
+                <option value="Machinery">Machinery</option>
+                <option value="Management Consulting">Management Consulting</option>
+                <option value="Maritime">Maritime</option>
+                <option value="Market Research">Market Research</option>
+                <option value="Marketing/Advertising/Sales">Marketing/Advertising/Sales</option>
+                <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
+                <option value="Media Production">Media Production</option>
+                <option value="Medical Equipment">Medical Equipment</option>
+                <option value="Medical Practice">Medical Practice</option>
+                <option value="Mental Health Care">Mental Health Care</option>
+                <option value="Military Industry">Military Industry</option>
+                <option value="Mining/Metals">Mining/Metals</option>
+                <option value="Motion Pictures/Film">Motion Pictures/Film</option>
+                <option value="Museums/Institutions">Museums/Institutions</option>
+                <option value="Music">Music</option>
+                <option value="Nanotechnology">Nanotechnology</option>
+                <option value="Newspapers/Journalism">Newspapers/Journalism</option>
+                <option value="Non-Profit/Volunteering">Non-Profit/Volunteering</option>
+                <option value="Oil/Energy/Solar/Greentech">Oil/Energy/Solar/Greentech</option>
+                <option value="Online Publishing">Online Publishing</option>
+                <option value="Other Industry">Other Industry</option>
+                <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
+                <option value="Package/Freight Delivery">Package/Freight Delivery</option>
+                <option value="Packaging/Containers">Packaging/Containers</option>
+                <option value="Paper/Forest Products">Paper/Forest Products</option>
+                <option value="Performing Arts">Performing Arts</option>
+                <option value="Pharmaceuticals">Pharmaceuticals</option>
+                <option value="Philanthropy">Philanthropy</option>
+                <option value="Photography">Photography</option>
+                <option value="Plastics">Plastics</option>
+                <option value="Political Organization">Political Organization</option>
+                <option value="Primary/Secondary Education">Primary/Secondary Education</option>
+                <option value="Printing">Printing</option>
+                <option value="Professional Training">Professional Training</option>
+                <option value="Program Development">Program Development</option>
+                <option value="Public Relations/PR">Public Relations/PR</option>
+                <option value="Public Safety">Public Safety</option>
+                <option value="Publishing Industry">Publishing Industry</option>
+                <option value="Railroad Manufacture">Railroad Manufacture</option>
+                <option value="Ranching">Ranching</option>
+                <option value="Real Estate/Mortgage">Real Estate/Mortgage</option>
+                <option value="Recreational Facilities/Services">Recreational Facilities/Services</option>
+                <option value="Religious Institutions">Religious Institutions</option>
+                <option value="Renewables/Environment">Renewables/Environment</option>
+                <option value="Research Industry">Research Industry</option>
+                <option value="Restaurants">Restaurants</option>
+                <option value="Retail Industry">Retail Industry</option>
+                <option value="Security/Investigations">Security/Investigations</option>
+                <option value="Semiconductors">Semiconductors</option>
+                <option value="Shipbuilding">Shipbuilding</option>
+                <option value="Sporting Goods">Sporting Goods</option>
+                <option value="Sports">Sports</option>
+                <option value="Staffing/Recruiting">Staffing/Recruiting</option>
+                <option value="Supermarkets">Supermarkets</option>
+                <option value="Telecommunications">Telecommunications</option>
+                <option value="Textiles">Textiles</option>
+                <option value="Think Tanks">Think Tanks</option>
+                <option value="Tobacco">Tobacco</option>
+                <option value="Translation/Localization">Translation/Localization</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Venture Capital/VC">Venture Capital/VC</option>
+                <option value="Veterinary">Veterinary</option>
+                <option value="Warehousing">Warehousing</option>
+                <option value="Wholesale">Wholesale</option>
+                <option value="Wine/Spirits">Wine/Spirits</option>
+                <option value="Wireless">Wireless</option>
+                <option value="Writing/Editing">Writing/Editing</option>
+                
+            </datalist>
+        </div>
+
+        <div class="col-md-3">
+            <label for="incorporated_in" class="form-label fw-medium">Incorporated In <span class="text-danger">*</span></label>
+            <input 
+                type="number" 
+                class="form-control shadow-sm rounded-3 <?php $__errorArgs = ['incorporated_in'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="incorporated_in" 
+                name="incorporated_in" 
+                value="<?php echo e(old('incorporated_in')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['incorporated_in'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="invalid-feedback">This Field is Required</div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+    </div>
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <hr> -->
+
+    <!-- Concerned Person Details Section d -->
+    <!-- <div class="row g-3 mb-1">
+        <div class="col-sm-2">
+            <h3 class="mt-2" style="font-size: 12px; font-weight: 600;">Concerned Person Details</h3>
+            <div class="mt-1">
+                <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    id="concerned_person_is_me" 
+                    name="concerned_person_is_me"
+                    value="1" 
+                
+                    <?php echo e(old('concerned_person_is_me') ? 'checked':''); ?>
+
+                    onclick="fillConcernedPersonDetails()"
+                >
+                <label 
+                    class="form-check-label" 
+                    for="concerned_person_is_me" 
+                    style="color: red; font-size: 12px;"
+                >
+                    Same as registered
+                </label>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <label id="labelinput" for="concerned_person_name" class="required">Concerned Person <span style="color:red;">*</span></label>
+            <input 
+                type="text" 
+                class="form-control spaced-input <?php $__errorArgs = ['concerned_person_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="concerned_person_name" 
+                name="concerned_person_name" 
+                value="<?php echo e(old('concerned_person_name')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['concerned_person_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+
+        <div class="col-md-2">
+            <label id="labelinput" for="concerned_person_designation" class="required">Designation <span style="color:red;">*</span></label>
+            <input 
+                type="text" 
+                class="form-control spaced-input <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="concerned_person_designation" 
+                name="concerned_person_designation" 
+                value="<?php echo e(old('concerned_person_designation')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+
+        <div class="col-md-3">
+            <label id="labelinput" for="concerned_person_email" class="required">Email <span style="color:red;">*</span></label>
+            <input 
+                type="email" 
+                class="form-control spaced-input <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="concerned_person_email" 
+                name="concerned_person_email" 
+                value="<?php echo e(old('concerned_person_email')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+
+        <div class="col-md-3">
+            <label id="labelinput" for="concerned_person_phone" class="phone required">Phone <span style="color:red;">*</span></label>
+            <input 
+                type="number" 
+                class="form-control spaced-input <?php $__errorArgs = ['concerned_person_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="concerned_person_phone" 
+                name="concerned_person_phone" 
+                value="<?php echo e(old('concerned_person_phone')); ?>" 
+                required 
+                maxlength="10" 
+                oninput="this.value=this.value.slice(0, 10)"
+            >
+            <?php $__errorArgs = ['concerned_person_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+    </div> -->
+
+
+
+
+
+
+
+
+
+
+    <div class="card p-3 rounded-3 shadow-sm mb-4">
+        <h5 class="mb-3 text-dark fw-semibold" style="font-size: 14px;">Concerned Person Details</h5>
+        <div class="row g-4 align-items-end">
+
+            <div class="col-sm-2">
+                <div class="form-check mb-1">
+                    <input 
+                        type="checkbox" 
+                        class="form-check-input rounded-sm" 
+                        id="concerned_person_is_me" 
+                        name="concerned_person_is_me" 
+                        value="1"
+                        <?php echo e(old('concerned_person_is_me') ? 'checked' : ''); ?>
+
+                        onclick="fillConcernedPersonDetails()"
+                    >
+                    <label class="form-check-label text-danger small" for="concerned_person_is_me">
+                        Same as registered
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <label for="concerned_person_name" class="form-label small fw-semibold text-muted">Concerned Person <span class="text-danger">*</span></label>
+                <input 
+                    type="text" 
+                    class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    id="concerned_person_name" 
+                    name="concerned_person_name" 
+                    value="<?php echo e(old('concerned_person_name')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['concerned_person_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback d-block small">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="col-sm-2">
+                <label for="concerned_person_designation" class="form-label small fw-semibold text-muted">Designation <span class="text-danger">*</span></label>
+                <input 
+                    type="text" 
+                    class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    id="concerned_person_designation" 
+                    name="concerned_person_designation" 
+                    value="<?php echo e(old('concerned_person_designation')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback d-block small">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="col-md-3">
+                <label for="concerned_person_email" class="form-label small fw-semibold text-muted">Email <span class="text-danger">*</span></label>
+                <input 
+                    type="email" 
+                    class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    id="concerned_person_email" 
+                    name="concerned_person_email" 
+                    value="<?php echo e(old('concerned_person_email')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback d-block small">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="col-md-3">
+                <label for="concerned_person_phone" class="form-label small fw-semibold text-muted">Phone <span class="text-danger">*</span></label>
+                <input 
+                    type="number" 
+                    class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    id="concerned_person_phone" 
+                    name="concerned_person_phone" 
+                    value="<?php echo e(old('concerned_person_phone')); ?>" 
+                    maxlength="10" 
+                    oninput="this.value=this.value.slice(0, 10)" 
+                    required
+                >
+                <?php $__errorArgs = ['concerned_person_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback d-block small">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <hr> -->
+
+    <!-- Company Links Section -->
+                    
+    <!-- <div class="row g-3">
+        <div class="col-sm-2">
+            <h3 class="mt-4" style="font-size: 22px; font-weight: 600;">Company Links</h3>
+        </div>
+        <div class="col-md-5">
+            <label id="labelinput" for="company_website" class="required">Company Website <span style="color:red;">*</span></label>
+            <input 
+                type="url" 
+                class="form-control spaced-input <?php $__errorArgs = ['website'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="company_website" 
+                name="website" 
+                value="<?php echo e(old('website')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['website'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+        <div class="col-md-5">
+            <label id="labelinput" for="linkedin_link">LinkedIn <span style="color:red;">*</span></label>
+            <input 
+                type="url" 
+                class="form-control spaced-input <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="linkedin_link" 
+                name="linkedin" 
+                value="<?php echo e(old('linkedin')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+        </div>
+        <div class="row g-3 mt-1">
+        <div class="col-sm-2">
+            <h3 class="mt-2" style="font-size: 22px; font-weight: 600;">Other Links</h3>
+        </div>
+        <div class="col-sm-10" id="public-links-container">
+            <div class="input-group mb-3">
+                <input 
+                    class="form-control spaced-input <?php $__errorArgs = ['public_links.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    type="url" 
+                    name="public_links[]" 
+                    placeholder="URL" 
+                    value="<?php echo e(old('public_links.0')); ?>"
+                >
+                
+                <select 
+                    class="form-control spaced-input <?php $__errorArgs = ['link_descriptions.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="link_descriptions[]" 
+                    required
+                >
+                    <option value="" disabled <?php echo e(old('link_descriptions.0') ? '' : 'selected'); ?>>Select Account</option>
+                    <option value="Facebook" <?php echo e(old('link_descriptions.0') == 'Facebook' ? 'selected' : ''); ?>>Facebook</option>
+                    <option value="Twitter" <?php echo e(old('link_descriptions.0') == 'Twitter' ? 'selected' : ''); ?>>Twitter</option>
+                    <option value="Others" <?php echo e(old('link_descriptions.0') == 'Others' ? 'selected' : ''); ?>>Others</option>
+                </select>
+                
+                <button 
+                    class="btn btn-info float-end" 
+                    style="margin-right: 8px;" 
+                    type="button" 
+                    onclick="addPublicLinkField()"
+                >
+                    + Add More Links
+                </button>
+            </div>
+            <?php $__errorArgs = ['public_links.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger">This Field is Required</span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+    </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row g-3 mb-4">
+        <!-- Company Links Section -->
+        <div class="col-sm-2">
+            <h3 class="mt-3" style="font-size: 16px; font-weight: 600;">Company Links</h3>
+        </div>
+
+        <div class="col-md-5">
+            <label for="company_website" class="form-label required">Company Website <span class="text-danger">*</span></label>
+            <input 
+                type="url" 
+                class="form-control <?php $__errorArgs = ['website'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="company_website" 
+                name="website" 
+                value="<?php echo e(old('website')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['website'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="invalid-feedback">This Field is Required</div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+
+        <div class="col-md-5">
+            <label for="linkedin_link" class="form-label required">LinkedIn <span class="text-danger">*</span></label>
+            <input 
+                type="url" 
+                class="form-control <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                id="linkedin_link" 
+                name="linkedin" 
+                value="<?php echo e(old('linkedin')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="invalid-feedback">This Field is Required</div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-3">
+        <!-- Other Links Section -->
+        <div class="col-sm-2">
+            <h3 class="mt-3" style="font-size: 16px; font-weight: 600;">Other Links</h3>
+        </div>
+
+        <div class="col-sm-10" id="public-links-container">
+            <div class="input-group mb-3">
+                <input 
+                    class="form-control <?php $__errorArgs = ['public_links.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    type="url" 
+                    name="public_links[]" 
+                    placeholder="URL" 
+                    value="<?php echo e(old('public_links.0')); ?>"
+                >
+                <select 
+                    class="form-control <?php $__errorArgs = ['link_descriptions.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="link_descriptions[]" 
+                    required
+                >
+                    <option value="" disabled <?php echo e(old('link_descriptions.0') ? '' : 'selected'); ?>>Select Account</option>
+                    <option value="Facebook" <?php echo e(old('link_descriptions.0') == 'Facebook' ? 'selected' : ''); ?>>Facebook</option>
+                    <option value="Twitter" <?php echo e(old('link_descriptions.0') == 'Twitter' ? 'selected' : ''); ?>>Twitter</option>
+                    <option value="Others" <?php echo e(old('link_descriptions.0') == 'Others' ? 'selected' : ''); ?>>Others</option>
+                </select>
+                <button 
+                    class="btn btn-outline-primary float-end" 
+                    type="button" 
+                    style="margin-right: 8px;" 
+                    onclick="addPublicLinkField()"
+                >
+                    + Add More Links
+                </button>
+            </div>
+            <?php $__errorArgs = ['public_links.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="invalid-feedback">This Field is Required</div>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+    </div>
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <hr> -->
     <!-- Founder Details Section -->
-    <div id="founder-details-container" class="row g-1">
-    <div class="col-sm-2">
-        <h3 class="mt-4" style="font-size: 22px; font-weight: 600;">Founder Details</h3>
+    <!-- <div id="founder-details-container" class="row g-1">
+        <div class="col-sm-2">
+            <h3 class="mt-4" style="font-size: 22px; font-weight: 600;">Founder Details</h3>
+        </div>
+
+        <div class="col-md-2">
+            <label id="labelinput" for="founder_name" class="required">Name <span style="color:red;">*</span></label>
+            <input 
+                type="text" 
+                class="form-control <?php $__errorArgs = ['founder_name.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                name="founder_name[]" 
+                value="<?php echo e(old('founder_name.0')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['founder_name.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+        <div class="col-md-2">
+            <label id="labelinput" for="founder_position" class="required">Position</label>
+            <select 
+                class="form-control <?php $__errorArgs = ['founder_position.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                name="founder_position[]" 
+                required
+            >
+                    <option value="" disabled selected>Select Position <span style="color:red;"></span></option>
+                    <option value="Chief Administrative Officer">Chief Administrative Officer</option>
+                            <option value="Chief Analytics Officer">Chief Analytics Officer</option>
+                            <option value="Chief Brand Officer">Chief Brand Officer</option>
+                            <option value="Chief Business Development Officer">Chief Business Development Officer</option>
+                            <option value="Chief Business Officer">Chief Business Officer</option>
+                            <option value="Chief Commercial Officer">Chief Commercial Officer</option>
+                            <option value="Chief Communications Officer">Chief Communications Officer</option>
+                            <option value="Chief Compliance Officer">Chief Compliance Officer</option>
+                            <option value="Chief Content Officer">Chief Content Officer</option>
+                            <option value="Chief Creative Officer">Chief Creative Officer</option>
+                            <option value="Chief Customer Officer">Chief Customer Officer</option>
+                            <option value="Chief Data Officer">Chief Data Officer</option>
+                            <option value="Chief Design Officer">Chief Design Officer</option>
+                            <option value="Chief Digital Officer">Chief Digital Officer</option>
+                            <option value="Chief Diversity Officer">Chief Diversity Officer</option>
+                            <option value="Chief Executive Officer">Chief Executive Officer</option>
+                            <option value="Chief Experience Officer">Chief Experience Officer</option>
+                            <option value="Chief Financial Officer">Chief Financial Officer</option>
+                            <option value="Chief Gaming Officer">Chief Gaming Officer</option>
+                            <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
+                            <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
+                            <option value="Chief Information Officer">Chief Information Officer</option>
+                            <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
+                            <option value="Chief Information Security Officer">Chief Information Security Officer</option>
+                            <option value="Chief Innovation Officer">Chief Innovation Officer</option>
+                            <option value="Chief Investment Officer">Chief Investment Officer</option>
+                            <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
+                            <option value="Chief Learning Officer">Chief Learning Officer</option>
+                            <option value="Chief Marketing Officer">Chief Marketing Officer</option>
+                            <option value="Chief Operating Officer">Chief Operating Officer</option>
+                            <option value="Chief Privacy Officer">Chief Privacy Officer</option>
+                            <option value="Chief Process Officer">Chief Process Officer</option>
+                            <option value="Chief Product Officer">Chief Product Officer</option>
+                            <option value="Chief Reputation Officer">Chief Reputation Officer</option>
+                            <option value="Chief Research Officer">Chief Research Officer</option>
+                            <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
+                            <option value="Chief Risk Officer">Chief Risk Officer</option>
+                            <option value="Chief Science Officer">Chief Science Officer</option>
+                            <option value="Chief Scientific Officer">Chief Scientific Officer</option>
+                            <option value="Chief Security Officer">Chief Security Officer</option>
+                            <option value="Chief Services Officer">Chief Services Officer</option>
+                            <option value="Chief Strategy Officer">Chief Strategy Officer</option>
+                            <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
+                            <option value="Chief Technology Officer">Chief Technology Officer</option>
+                            <option value="Chief Visibility Officer">Chief Visibility Officer</option>
+                            <option value="Chief Visionary Officer">Chief Visionary Officer</option>
+                            <option value="Chief Web Officer">Chief Web Officer</option>
+                            <option value="General Manager">General Manager</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Others">Others</option>
+                            <option value="Secretary">Secretary</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Vice President">Vice President</option>
+                  
+                </select>
+            <?php $__errorArgs = ['founder_position.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+        <div class="col-md-2">
+            <label id="labelinput" for="founder_education" class="required">Highest Qualification <span style="color:red;">*</span></label>
+            <input 
+                type="text" 
+                class="form-control <?php $__errorArgs = ['founder_education.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                name="founder_education[]" 
+                value="<?php echo e(old('founder_education.0')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['founder_education.'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+        <div class="col-md-3">
+            <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years) <span style="color:red;">*</span></label>
+            <input 
+                type="number" 
+                class="form-control <?php $__errorArgs = ['founder_experience.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                name="founder_experience[]" 
+                value="<?php echo e(old('founder_experience.0')); ?>" 
+                required
+            >
+            <?php $__errorArgs = ['founder_experience.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <span class="text-danger">This Field is Required</span>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-info float-end mt-4" type="button" onclick="addFounderField()">+</button>
+        </div>
+    </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="founder-details-container" class="p-3 rounded-4 shadow-sm mb-4" style="background-color: #ffffff; border: 1px solid #e2e8f0;">
+        <div class="row g-3 align-items-end">
+            <div class="col-sm-12">
+                <h3 class="fs-5 fw-semibold text-dark">Founder Details</h3>
+            </div>
+
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_name" class="required">Name <span style="color:red;">*</span></label>
+                <input 
+                    type="text" 
+                    class="form-control <?php $__errorArgs = ['founder_name.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="founder_name[]" 
+                    value="<?php echo e(old('founder_name.0')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['founder_name.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger">This Field is Required</span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_position" class="required">Position</label>
+                <select 
+                    class="form-control <?php $__errorArgs = ['founder_position.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="founder_position[]" 
+                    required
+                >
+                    <option value="" disabled selected>Select Position</option>
+                    <option value="Chief Administrative Officer">Chief Administrative Officer</option>
+                    <option value="Chief Analytics Officer">Chief Analytics Officer</option>
+                    <option value="Chief Brand Officer">Chief Brand Officer</option>
+                    <option value="Chief Business Development Officer">Chief Business Development Officer</option>
+                    <option value="Chief Business Officer">Chief Business Officer</option>
+                    <option value="Chief Commercial Officer">Chief Commercial Officer</option>
+                    <option value="Chief Communications Officer">Chief Communications Officer</option>
+                    <option value="Chief Compliance Officer">Chief Compliance Officer</option>
+                    <option value="Chief Content Officer">Chief Content Officer</option>
+                    <option value="Chief Creative Officer">Chief Creative Officer</option>
+                    <option value="Chief Customer Officer">Chief Customer Officer</option>
+                    <option value="Chief Data Officer">Chief Data Officer</option>
+                    <option value="Chief Design Officer">Chief Design Officer</option>
+                    <option value="Chief Digital Officer">Chief Digital Officer</option>
+                    <option value="Chief Diversity Officer">Chief Diversity Officer</option>
+                    <option value="Chief Executive Officer">Chief Executive Officer</option>
+                    <option value="Chief Experience Officer">Chief Experience Officer</option>
+                    <option value="Chief Financial Officer">Chief Financial Officer</option>
+                    <option value="Chief Gaming Officer">Chief Gaming Officer</option>
+                    <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
+                    <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
+                    <option value="Chief Information Officer">Chief Information Officer</option>
+                    <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
+                    <option value="Chief Information Security Officer">Chief Information Security Officer</option>
+                    <option value="Chief Innovation Officer">Chief Innovation Officer</option>
+                    <option value="Chief Investment Officer">Chief Investment Officer</option>
+                    <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
+                    <option value="Chief Learning Officer">Chief Learning Officer</option>
+                    <option value="Chief Marketing Officer">Chief Marketing Officer</option>
+                    <option value="Chief Operating Officer">Chief Operating Officer</option>
+                    <option value="Chief Privacy Officer">Chief Privacy Officer</option>
+                    <option value="Chief Process Officer">Chief Process Officer</option>
+                    <option value="Chief Product Officer">Chief Product Officer</option>
+                    <option value="Chief Reputation Officer">Chief Reputation Officer</option>
+                    <option value="Chief Research Officer">Chief Research Officer</option>
+                    <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
+                    <option value="Chief Risk Officer">Chief Risk Officer</option>
+                    <option value="Chief Science Officer">Chief Science Officer</option>
+                    <option value="Chief Scientific Officer">Chief Scientific Officer</option>
+                    <option value="Chief Security Officer">Chief Security Officer</option>
+                    <option value="Chief Services Officer">Chief Services Officer</option>
+                    <option value="Chief Strategy Officer">Chief Strategy Officer</option>
+                    <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
+                    <option value="Chief Technology Officer">Chief Technology Officer</option>
+                    <option value="Chief Visibility Officer">Chief Visibility Officer</option>
+                    <option value="Chief Visionary Officer">Chief Visionary Officer</option>
+                    <option value="Chief Web Officer">Chief Web Officer</option>
+                    <option value="General Manager">General Manager</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Others">Others</option>
+                    <option value="Secretary">Secretary</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Vice President">Vice President</option>
+                </select>
+                <?php $__errorArgs = ['founder_position.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger">This Field is Required</span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_education" class="required">Highest Qualification <span style="color:red;">*</span></label>
+                <input 
+                    type="text" 
+                    class="form-control <?php $__errorArgs = ['founder_education.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="founder_education[]" 
+                    value="<?php echo e(old('founder_education.0')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['founder_education.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger">This Field is Required</span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="col-md-3">
+                <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years) <span style="color:red;">*</span></label>
+                <input 
+                    type="number" 
+                    class="form-control <?php $__errorArgs = ['founder_experience.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="founder_experience[]" 
+                    value="<?php echo e(old('founder_experience.0')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['founder_experience.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger">This Field is Required</span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="col-md-1 text-end">
+                <button 
+                    class="btn btn-success mt-2" 
+                    type="button" 
+                    onclick="addFounderField()"
+                    title="Add more founder"
+                >
+                    +
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-2">
-        <label id="labelinput" for="founder_name" class="required">Name <span style="color:red;">*</span></label>
-        <input 
-            type="text" 
-            class="form-control <?php $__errorArgs = ['founder_name.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            name="founder_name[]" 
-            value="<?php echo e(old('founder_name.0')); ?>" 
-            required
-        >
-        <?php $__errorArgs = ['founder_name.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-2">
-        <label id="labelinput" for="founder_position" class="required">Position</label>
-        <select 
-            class="form-control <?php $__errorArgs = ['founder_position.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            name="founder_position[]" 
-            required
-        >
-                <option value="" disabled selected>Select Position <span style="color:red;"></span></option>
-                <option value="Chief Administrative Officer">Chief Administrative Officer</option>
-                        <option value="Chief Analytics Officer">Chief Analytics Officer</option>
-                        <option value="Chief Brand Officer">Chief Brand Officer</option>
-                        <option value="Chief Business Development Officer">Chief Business Development Officer</option>
-                        <option value="Chief Business Officer">Chief Business Officer</option>
-                        <option value="Chief Commercial Officer">Chief Commercial Officer</option>
-                        <option value="Chief Communications Officer">Chief Communications Officer</option>
-                        <option value="Chief Compliance Officer">Chief Compliance Officer</option>
-                        <option value="Chief Content Officer">Chief Content Officer</option>
-                        <option value="Chief Creative Officer">Chief Creative Officer</option>
-                        <option value="Chief Customer Officer">Chief Customer Officer</option>
-                        <option value="Chief Data Officer">Chief Data Officer</option>
-                        <option value="Chief Design Officer">Chief Design Officer</option>
-                        <option value="Chief Digital Officer">Chief Digital Officer</option>
-                        <option value="Chief Diversity Officer">Chief Diversity Officer</option>
-                        <option value="Chief Executive Officer">Chief Executive Officer</option>
-                        <option value="Chief Experience Officer">Chief Experience Officer</option>
-                        <option value="Chief Financial Officer">Chief Financial Officer</option>
-                        <option value="Chief Gaming Officer">Chief Gaming Officer</option>
-                        <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
-                        <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
-                        <option value="Chief Information Officer">Chief Information Officer</option>
-                        <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
-                        <option value="Chief Information Security Officer">Chief Information Security Officer</option>
-                        <option value="Chief Innovation Officer">Chief Innovation Officer</option>
-                        <option value="Chief Investment Officer">Chief Investment Officer</option>
-                        <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
-                        <option value="Chief Learning Officer">Chief Learning Officer</option>
-                        <option value="Chief Marketing Officer">Chief Marketing Officer</option>
-                        <option value="Chief Operating Officer">Chief Operating Officer</option>
-                        <option value="Chief Privacy Officer">Chief Privacy Officer</option>
-                        <option value="Chief Process Officer">Chief Process Officer</option>
-                        <option value="Chief Product Officer">Chief Product Officer</option>
-                        <option value="Chief Reputation Officer">Chief Reputation Officer</option>
-                        <option value="Chief Research Officer">Chief Research Officer</option>
-                        <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
-                        <option value="Chief Risk Officer">Chief Risk Officer</option>
-                        <option value="Chief Science Officer">Chief Science Officer</option>
-                        <option value="Chief Scientific Officer">Chief Scientific Officer</option>
-                        <option value="Chief Security Officer">Chief Security Officer</option>
-                        <option value="Chief Services Officer">Chief Services Officer</option>
-                        <option value="Chief Strategy Officer">Chief Strategy Officer</option>
-                        <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
-                        <option value="Chief Technology Officer">Chief Technology Officer</option>
-                        <option value="Chief Visibility Officer">Chief Visibility Officer</option>
-                        <option value="Chief Visionary Officer">Chief Visionary Officer</option>
-                        <option value="Chief Web Officer">Chief Web Officer</option>
-                        <option value="General Manager">General Manager</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Others">Others</option>
-                        <option value="Secretary">Secretary</option>
-                        <option value="Supervisor">Supervisor</option>
-                        <option value="Vice President">Vice President</option>
-                <!-- Add other positions as required -->
-            </select>
-        <?php $__errorArgs = ['founder_position.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-2">
-        <label id="labelinput" for="founder_education" class="required">Highest Qualification <span style="color:red;">*</span></label>
-        <input 
-            type="text" 
-            class="form-control <?php $__errorArgs = ['founder_education.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            name="founder_education[]" 
-            value="<?php echo e(old('founder_education.0')); ?>" 
-            required
-        >
-        <?php $__errorArgs = ['founder_education.'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-3">
-        <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years) <span style="color:red;">*</span></label>
-        <input 
-            type="number" 
-            class="form-control <?php $__errorArgs = ['founder_experience.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-            name="founder_experience[]" 
-            value="<?php echo e(old('founder_experience.0')); ?>" 
-            required
-        >
-        <?php $__errorArgs = ['founder_experience.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger">This Field is Required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-1">
-        <button class="btn btn-info float-end mt-4" type="button" onclick="addFounderField()">+</button>
-    </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     <hr>
 
      <!-- Requirements of Fund Section -->
    <div id="funds-container" class="mb-4">
     <div class="heading-with-hr">
         <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">Requirements of Fund</h3>
-        <hr>
+        <!-- <hr> -->
     </div>
     <div class="row mb-3 align-items-end">
         <div class="col-md-3">
@@ -849,9 +1826,9 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
     </div>
-</div>
+    </div>
 
-<div class="form-floating mb-1">
+    <div class="form-floating mb-1">
     <input 
         type="text" 
         class="form-control spaced-input" 
@@ -861,15 +1838,104 @@ unset($__errorArgs, $__bag); ?>
         readonly
     >
     <label id="labelinput" for="fund_requirement" class="required">Total Fund Raised</label>
-</div>
+    </div>
 
 
 
-   <div id="previous-rounds-container" class="mb-4">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+   <!-- <div id="previous-rounds-container" class="mb-4">
     <div class="row mb-3">
         <div class="heading-with-hr">
             <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">Previous Rounds</h3>
-            <hr>
+          
         </div>
         <div class="col-md-2">
             <label id="labelinput" for="previous_rounds" class="required">Previous Round <span style="color:red;">*</span></label>
@@ -992,15 +2058,250 @@ unset($__errorArgs, $__bag); ?>
             <button class="btn btn-info float-end mt-4" type="button" onclick="addPreviousRoundField()">+</button>
         </div>
     </div>
-</div>
-<hr>
+    </div> -->
+    <!-- <hr> -->
 
-<!-- Attachments Section -->
-<div class="heading-with-hr">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="previous-rounds-container" class="mb-4 p-4 bg-white rounded-lg border shadow-sm" style="border-radius: 10px;">
+ 
+        <div class="row mb-3">
+            <div class="col-12">
+                <h3 class="mb-1 fs-5 fw-semibold text-dark">Previous Rounds</h3>
+            </div>
+        </div>
+
+    
+        <div class="row mb-3">
+            
+            <div class="col-md-2">
+                <label id="labelinput" for="previous_rounds" class="form-label required">Previous Round <span class="text-danger">*</span></label>
+                <select 
+                    class="form-select <?php $__errorArgs = ['previous_rounds.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="previous_rounds[]" 
+                    required
+                >
+                    <option value="" disabled <?php echo e(old('previous_rounds.0') ? '' : 'selected'); ?>>Select Round</option>
+                    <option value="Pre seed round" <?php echo e(old('previous_rounds.0') == 'Pre seed round' ? 'selected' : ''); ?>>Pre seed round</option>
+                    <option value="Seed Round" <?php echo e(old('previous_rounds.0') == 'Seed Round' ? 'selected' : ''); ?>>Seed Round</option>
+                    <option value="Series A round" <?php echo e(old('previous_rounds.0') == 'Series A round' ? 'selected' : ''); ?>>Series A round</option>
+                    <option value="Series B round" <?php echo e(old('previous_rounds.0') == 'Series B round' ? 'selected' : ''); ?>>Series B round</option>
+                    <option value="Series C round" <?php echo e(old('previous_rounds.0') == 'Series C round' ? 'selected' : ''); ?>>Series C round</option>
+                    <option value="Series D round" <?php echo e(old('previous_rounds.0') == 'Series D round' ? 'selected' : ''); ?>>Series D round</option>
+                    <option value="Series E and beyond" <?php echo e(old('previous_rounds.0') == 'Series E and beyond' ? 'selected' : ''); ?>>Series E and beyond</option>
+                </select>
+                <?php $__errorArgs = ['previous_rounds.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            
+            <div class="col-md-3">
+                <label id="labelinput" for="investors" class="form-label required">Investors <span class="text-danger">*</span></label>
+                <input 
+                    type="text" 
+                    class="form-control <?php $__errorArgs = ['investors.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="investors[]" 
+                    value="<?php echo e(old('investors.0')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['investors.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+           
+            <div class="col-md-3">
+                <label id="labelinput" for="amount_raised" class="form-label required">Amount Raised (in cr) <span class="text-danger">*</span></label>
+                <input 
+                    type="number" 
+                    class="form-control <?php $__errorArgs = ['amount_raised.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="amount_raised[]" 
+                    min="0" 
+                    step="0.01" 
+                    value="<?php echo e(old('amount_raised.0')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['amount_raised.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+           
+            <div class="col-md-3">
+                <label id="labelinput" for="valuation" class="form-label required">Valuation (in cr) <span class="text-danger">*</span></label>
+                <input 
+                    type="number" 
+                    class="form-control <?php $__errorArgs = ['valuation.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="valuation[]" 
+                    value="<?php echo e(old('valuation.0')); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ['valuation.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="invalid-feedback">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+          
+            <div class="col-md-1 mt-3">
+                <button class="btn btn-info float-end" type="button" onclick="addPreviousRoundField()">+</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Attachments Section -->
+    <div class="heading-with-hr">
     <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">Attachments</h3>
-    <hr>
-</div>
-<div class="mb-1">
+    <!-- <hr> -->
+    </div>
+    <div class="mb-1">
     <label id="labelinput" for="pitch_deck" class="required" style="color: red;">Pitch Deck <span style="color:red;">*</span></label>
     <input 
         type="file" 
@@ -1026,8 +2327,8 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-</div>
-<div class="mb-1">
+    </div>
+    <div class="mb-1">
     <label id="labelinput" for="financials" class="required" style="color:red;">Financials</label>
     <div id="financials-container">
         <div class="row mb-4 align-items-end">
@@ -1095,9 +2396,9 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-<div class="mb-4">
+    <div class="mb-4">
     <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment</label>
     <input 
         type="file" 
@@ -1122,14 +2423,14 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-</div>
-<hr>
+    </div>
+    <!-- <hr> -->
 
-<!-- Referral Source Section -->
-<div class="row mb-2 align-items-end bordered-row">
+    <!-- Referral Source Section -->
+    <div class="row mb-2 align-items-end bordered-row">
     <div class="heading-with-hr">
         <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">How did you hear about Investor Dekho? <span style="color:red;">*</span></h3>
-        <hr>
+        <!-- <hr> -->
     </div>
     <div class="form-floating mb-4">
         <label id="labelinput" for="referral_source" class="required"></label>
@@ -1169,49 +2470,55 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
     </div>
-</div>
+    </div>
 
 
-<div class="row g-3 mb-4 bordered-row">
+    <div class="row g-3 mb-4 bordered-row">
                         <div class="heading-with-hr">
                             <h3 class="required" style="font-size: 22px; font-weight: 600;">How can we guide you in fund raise?</h3>
-                            <hr>
+                            <!-- <hr> -->
                         </div>
                         <div class="form-group mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="capital_raise" name="guidance_needed[]" value="Capital Raise">
-                                <label class="form-check-label" for="capital_raise">Capital Raise</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="capital_raise" name="guidance_needed[]" value="Capital Raise" 
+                                <?php echo e(in_array('Capital Raise', old('guidance_needed', [])) ? 'checked' : ''); ?>>
+                            <label class="form-check-label" for="capital_raise">Capital Raise</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="valuation_modelling" name="guidance_needed[]" value="Valuation and Financial Modelling">
+                                <input class="form-check-input" type="checkbox" id="valuation_modelling" name="guidance_needed[]" value="Valuation and Financial Modelling"
+                                    <?php echo e(in_array('Valuation and Financial Modelling', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="valuation_modelling">Valuation and Financial Modelling</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="ma_advisory" name="guidance_needed[]" value="M&A Advisory">
+                                <input class="form-check-input" type="checkbox" id="ma_advisory" name="guidance_needed[]" value="M&A Advisory"
+                                    <?php echo e(in_array('M&A Advisory', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="ma_advisory">M&A Advisory</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="pitch_deck" name="guidance_needed[]" value="Pitch deck Preparation">
+                                <input class="form-check-input" type="checkbox" id="pitch_deck" name="guidance_needed[]" value="Pitch deck Preparation"
+                                    <?php echo e(in_array('Pitch deck Preparation', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="pitch_deck">Pitch deck Preparation</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="investor_pitching" name="guidance_needed[]" value="Investor Pitching">
+                                <input class="form-check-input" type="checkbox" id="investor_pitching" name="guidance_needed[]" value="Investor Pitching"
+                                    <?php echo e(in_array('Investor Pitching', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="investor_pitching">Investor Pitching</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="na" name="guidance_needed[]" value="NA">
+                                <input class="form-check-input" type="checkbox" id="na" name="guidance_needed[]" value="NA"
+                                    <?php echo e(in_array('NA', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="na">NA</label>
                             </div>
+
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="others_checkbox" name="guidance_needed[]" value="Others" onclick="toggleOtherField()">
+                                <input class="form-check-input" type="checkbox" id="others_checkbox" name="others_checkbox" <?php echo e(old('others_checkbox') ? 'checked' : ''); ?> value="Others" onclick="toggleOtherField()">
                                 <label class="form-check-label" for="others_checkbox">Others</label>
                             </div>
                         </div>
                         <div class="form-group mb-3" id="other_field" style="display: none;">
                             <label id="labelinput" for="other_guidance">Please specify (Others)</label>
-                            <div id="other_guidance" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                               
-                            </div>
+                            <input type="text" name="other_guidance" id="other_guidance_input" class="form-control" value="<?php echo e(old('other_guidance')); ?>" placeholder="Please specify your other guidance">
+
                         </div>
                     </div>
 
@@ -1261,59 +2568,107 @@ unset($__errorArgs, $__bag); ?>
     }
 });
 
+// function toggleOtherField() {
+//     const otherField = document.getElementById('other_field');
+//     const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the checkboxes
+
+//     if (document.getElementById('others_checkbox').checked) {
+       
+//         otherField.style.display = 'block';
+
+       
+//         otherGuidanceContainer.innerHTML = '';
+
+//         const serviceCategories = [
+//             'Equity Funding', 'Debt Funding', 'Mergers & Acquisitions', 'Pitchdeck Making',
+//             'Pitching to Investors', 'IPO Planning', 'IPO Listing', 'Issuance of Bonus Shares',
+//             'Issuance of Rights Issue', 'Employee Stock Options (ESOP) Planning', 'Patent', 'Trademark', 'Design Registration', 
+//             'DSC', 'Online Listing', 'Income Tax Return', 'GST, TDS, PF, ESI, PT, Customs', 'MCA & ROC Works', 
+//             'Appointment & Resignation of Directors', 'Annual Return', 'Company Registration', 'Udyog Aadhar & GST Registration', 
+//             'Importer-Exporter Code', 'Loan Proposal', 'CMA Data', 'Accounting', 'Subsidy', 'Tax Planning', 
+//             'Capital Re-Structuring', 'Project Report', 'TEV Study', 'Structured Finance', 
+//             'Preparation of Share and Warrants', 'Subscription Agreement (SWSA)', 'Preparation of Share Holders\' Agreement (SHA)', 
+//             'Due Diligence'
+//         ];
+
+//         serviceCategories.forEach(category => {
+//             const checkboxDiv = document.createElement('div');
+//             checkboxDiv.classList.add('form-check'); 
+//             const checkbox = document.createElement('input');
+//             checkbox.classList.add('form-check-input');
+//             checkbox.type = 'checkbox';
+//             checkbox.name = 'other_guidance[]';
+//             checkbox.value = category;
+//             checkbox.id = category.replace(/\s+/g, '_').toLowerCase(); 
+
+//             const label = document.createElement('label');
+//             label.classList.add('form-check-label');
+//             label.setAttribute('for', checkbox.id);
+//             label.textContent = category;
+
+            
+//             checkboxDiv.appendChild(checkbox);
+//             checkboxDiv.appendChild(label);
+
+           
+//             otherGuidanceContainer.appendChild(checkboxDiv);
+//         });
+//     } else {
+       
+//         otherField.style.display = 'none';
+//     }
+// }
 function toggleOtherField() {
     const otherField = document.getElementById('other_field');
-    const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the checkboxes
+    const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the input box
 
     if (document.getElementById('others_checkbox').checked) {
-        // Show the field
+        // Show the input field
         otherField.style.display = 'block';
 
-        // Clear previous checkboxes
+        // Clear any previous content
         otherGuidanceContainer.innerHTML = '';
 
-        // Array of service categories
-        const serviceCategories = [
-            'Equity Funding', 'Debt Funding', 'Mergers & Acquisitions', 'Pitchdeck Making',
-            'Pitching to Investors', 'IPO Planning', 'IPO Listing', 'Issuance of Bonus Shares',
-            'Issuance of Rights Issue', 'Employee Stock Options (ESOP) Planning', 'Patent', 'Trademark', 'Design Registration', 
-            'DSC', 'Online Listing', 'Income Tax Return', 'GST, TDS, PF, ESI, PT, Customs', 'MCA & ROC Works', 
-            'Appointment & Resignation of Directors', 'Annual Return', 'Company Registration', 'Udyog Aadhar & GST Registration', 
-            'Importer-Exporter Code', 'Loan Proposal', 'CMA Data', 'Accounting', 'Subsidy', 'Tax Planning', 
-            'Capital Re-Structuring', 'Project Report', 'TEV Study', 'Structured Finance', 
-            'Preparation of Share and Warrants', 'Subscription Agreement (SWSA)', 'Preparation of Share Holders\' Agreement (SHA)', 
-            'Due Diligence'
-        ];
+        // Create the input field dynamically
+        const inputDiv = document.createElement('div');
+        inputDiv.classList.add('form-group'); // Add Bootstrap styling
 
-        // Dynamically create checkboxes for each category
-        serviceCategories.forEach(category => {
-            const checkboxDiv = document.createElement('div');
-            checkboxDiv.classList.add('form-check'); // Add Bootstrap styling
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.classList.add('form-control'); // Add Bootstrap form control class
+        input.name = 'other_guidance';
+        input.id = 'other_guidance_input';
+        input.placeholder = 'Please specify your other guidance';
 
-            const checkbox = document.createElement('input');
-            checkbox.classList.add('form-check-input');
-            checkbox.type = 'checkbox';
-            checkbox.name = 'other_guidance[]';
-            checkbox.value = category;
-            checkbox.id = category.replace(/\s+/g, '_').toLowerCase(); // Replace spaces with underscores for ID
+        // Append the input field to the div
+        inputDiv.appendChild(input);
 
-            const label = document.createElement('label');
-            label.classList.add('form-check-label');
-            label.setAttribute('for', checkbox.id);
-            label.textContent = category;
-
-            // Append the checkbox and label to the div
-            checkboxDiv.appendChild(checkbox);
-            checkboxDiv.appendChild(label);
-
-            // Append the div to the container
-            otherGuidanceContainer.appendChild(checkboxDiv);
-        });
+        // Append the div to the container
+        otherGuidanceContainer.appendChild(inputDiv);
     } else {
-        // Hide the field if "Others" is unchecked
+        // Hide the input field if "Others" is unchecked
         otherField.style.display = 'none';
     }
 }
+
+// Check if "Others" checkbox was previously checked and input was filled after form reload
+window.onload = function() {
+    const othersCheckbox = document.getElementById('others_checkbox');
+    const otherField = document.getElementById('other_field');
+    const otherGuidanceContainer = document.getElementById('other_guidance');
+    
+    if (othersCheckbox.checked) {
+        otherField.style.display = 'block';
+
+        // Check if there's an existing value in the "other_guidance" input field
+        if (document.getElementById('other_guidance_input')) {
+            const input = document.getElementById('other_guidance_input');
+            input.value = "<?php echo e(old('other_guidance')); ?>"; // Retain value from old input
+        }
+    }
+};
+
+
 // Function to add a new link field
 function addPublicLinkField() {
     // Get the public links container
@@ -1397,98 +2752,96 @@ function removeLinkField(button) {
 
 
 
-// Founder Field Adding functionality
     function addFounderField() {
-    // Get the container that holds all the founder fields
-    var container = document.getElementById('founder-details-container');
+   
+        var container = document.getElementById('founder-details-container');
 
-    // Create a new row div to hold the cloned fields
-    var newRow = document.createElement('div');
-    newRow.className = 'row g-1';
+    
+        var newRow = document.createElement('div');
+        newRow.className = 'row g-1';
 
-    // Define the HTML structure for the new fields
-    newRow.innerHTML = `
-        <div class="col-sm-2">
-        <h3 class="mt-4" style="font-size: 22px; font-weight: 600;"></h3>
-        </div>
-        <div class="col-md-2">
-            <label id="labelinput" for="founder_name" class="required">Name</label>
-            <input type="text" class="form-control" name="founder_name[]" required>
-        </div>
-        <div class="col-md-2">
-            <label id="labelinput" for="founder_position" class="required">Position</label>
-            <select class="form-control" name="founder_position[]" required>
-                <option value="" disabled selected>Select Position</option>
-                <option value="Chief Administrative Officer">Chief Administrative Officer</option>
-                <option value="Chief Analytics Officer">Chief Analytics Officer</option>
-                <option value="Chief Brand Officer">Chief Brand Officer</option>
-                <option value="Chief Business Development Officer">Chief Business Development Officer</option>
-                <option value="Chief Business Officer">Chief Business Officer</option>
-                <option value="Chief Commercial Officer">Chief Commercial Officer</option>
-                <option value="Chief Communications Officer">Chief Communications Officer</option>
-                <option value="Chief Compliance Officer">Chief Compliance Officer</option>
-                <option value="Chief Content Officer">Chief Content Officer</option>
-                <option value="Chief Creative Officer">Chief Creative Officer</option>
-                <option value="Chief Customer Officer">Chief Customer Officer</option>
-                <option value="Chief Data Officer">Chief Data Officer</option>
-                <option value="Chief Design Officer">Chief Design Officer</option>
-                <option value="Chief Digital Officer">Chief Digital Officer</option>
-                <option value="Chief Diversity Officer">Chief Diversity Officer</option>
-                <option value="Chief Executive Officer">Chief Executive Officer</option>
-                <option value="Chief Experience Officer">Chief Experience Officer</option>
-                <option value="Chief Financial Officer">Chief Financial Officer</option>
-                <option value="Chief Gaming Officer">Chief Gaming Officer</option>
-                <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
-                <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
-                <option value="Chief Information Officer">Chief Information Officer</option>
-                <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
-                <option value="Chief Information Security Officer">Chief Information Security Officer</option>
-                <option value="Chief Innovation Officer">Chief Innovation Officer</option>
-                <option value="Chief Investment Officer">Chief Investment Officer</option>
-                <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
-                <option value="Chief Learning Officer">Chief Learning Officer</option>
-                <option value="Chief Marketing Officer">Chief Marketing Officer</option>
-                <option value="Chief Operating Officer">Chief Operating Officer</option>
-                <option value="Chief Privacy Officer">Chief Privacy Officer</option>
-                <option value="Chief Process Officer">Chief Process Officer</option>
-                <option value="Chief Product Officer">Chief Product Officer</option>
-                <option value="Chief Reputation Officer">Chief Reputation Officer</option>
-                <option value="Chief Research Officer">Chief Research Officer</option>
-                <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
-                <option value="Chief Risk Officer">Chief Risk Officer</option>
-                <option value="Chief Science Officer">Chief Science Officer</option>
-                <option value="Chief Scientific Officer">Chief Scientific Officer</option>
-                <option value="Chief Security Officer">Chief Security Officer</option>
-                <option value="Chief Services Officer">Chief Services Officer</option>
-                <option value="Chief Strategy Officer">Chief Strategy Officer</option>
-                <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
-                <option value="Chief Technology Officer">Chief Technology Officer</option>
-                <option value="Chief Visibility Officer">Chief Visibility Officer</option>
-                <option value="Chief Visionary Officer">Chief Visionary Officer</option>
-                <option value="Chief Web Officer">Chief Web Officer</option>
-                <option value="General Manager">General Manager</option>
-                <option value="Manager">Manager</option>
-                <option value="Others">Others</option>
-                <option value="Secretary">Secretary</option>
-                <option value="Supervisor">Supervisor</option>
-                <option value="Vice President">Vice President</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
-            <input type="text" class="form-control" name="founder_education[]" required>
-        </div>
-        <div class="col-md-3">
-            <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
-            <input type="number" class="form-control " name="founder_experience[]" required>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
-        </div>
-    `;
+    
+        newRow.innerHTML = `
+        
+          
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_name" class="required">Name</label>
+                <input type="text" class="form-control" name="founder_name[]" required>
+            </div>
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_position" class="required">Position</label>
+                <select class="form-control" name="founder_position[]" required>
+                    <option value="" disabled selected>Select Position</option>
+                    <option value="Chief Administrative Officer">Chief Administrative Officer</option>
+                    <option value="Chief Analytics Officer">Chief Analytics Officer</option>
+                    <option value="Chief Brand Officer">Chief Brand Officer</option>
+                    <option value="Chief Business Development Officer">Chief Business Development Officer</option>
+                    <option value="Chief Business Officer">Chief Business Officer</option>
+                    <option value="Chief Commercial Officer">Chief Commercial Officer</option>
+                    <option value="Chief Communications Officer">Chief Communications Officer</option>
+                    <option value="Chief Compliance Officer">Chief Compliance Officer</option>
+                    <option value="Chief Content Officer">Chief Content Officer</option>
+                    <option value="Chief Creative Officer">Chief Creative Officer</option>
+                    <option value="Chief Customer Officer">Chief Customer Officer</option>
+                    <option value="Chief Data Officer">Chief Data Officer</option>
+                    <option value="Chief Design Officer">Chief Design Officer</option>
+                    <option value="Chief Digital Officer">Chief Digital Officer</option>
+                    <option value="Chief Diversity Officer">Chief Diversity Officer</option>
+                    <option value="Chief Executive Officer">Chief Executive Officer</option>
+                    <option value="Chief Experience Officer">Chief Experience Officer</option>
+                    <option value="Chief Financial Officer">Chief Financial Officer</option>
+                    <option value="Chief Gaming Officer">Chief Gaming Officer</option>
+                    <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
+                    <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
+                    <option value="Chief Information Officer">Chief Information Officer</option>
+                    <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
+                    <option value="Chief Information Security Officer">Chief Information Security Officer</option>
+                    <option value="Chief Innovation Officer">Chief Innovation Officer</option>
+                    <option value="Chief Investment Officer">Chief Investment Officer</option>
+                    <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
+                    <option value="Chief Learning Officer">Chief Learning Officer</option>
+                    <option value="Chief Marketing Officer">Chief Marketing Officer</option>
+                    <option value="Chief Operating Officer">Chief Operating Officer</option>
+                    <option value="Chief Privacy Officer">Chief Privacy Officer</option>
+                    <option value="Chief Process Officer">Chief Process Officer</option>
+                    <option value="Chief Product Officer">Chief Product Officer</option>
+                    <option value="Chief Reputation Officer">Chief Reputation Officer</option>
+                    <option value="Chief Research Officer">Chief Research Officer</option>
+                    <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
+                    <option value="Chief Risk Officer">Chief Risk Officer</option>
+                    <option value="Chief Science Officer">Chief Science Officer</option>
+                    <option value="Chief Scientific Officer">Chief Scientific Officer</option>
+                    <option value="Chief Security Officer">Chief Security Officer</option>
+                    <option value="Chief Services Officer">Chief Services Officer</option>
+                    <option value="Chief Strategy Officer">Chief Strategy Officer</option>
+                    <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
+                    <option value="Chief Technology Officer">Chief Technology Officer</option>
+                    <option value="Chief Visibility Officer">Chief Visibility Officer</option>
+                    <option value="Chief Visionary Officer">Chief Visionary Officer</option>
+                    <option value="Chief Web Officer">Chief Web Officer</option>
+                    <option value="General Manager">General Manager</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Others">Others</option>
+                    <option value="Secretary">Secretary</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Vice President">Vice President</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
+                <input type="text" class="form-control" name="founder_education[]" required>
+            </div>
+            <div class="col-md-3">
+                <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
+                <input type="number" class="form-control " name="founder_experience[]" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
+            </div>
+        `;
 
-    // Append the new row to the container
-    container.appendChild(newRow);
+        
+        container.appendChild(newRow);
 }
 
 // Function to remove founder fields
