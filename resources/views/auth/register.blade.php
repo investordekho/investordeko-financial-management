@@ -153,7 +153,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
-                <h2 class="text-center">Signup Now</h2>
+                <h2 class="text-center" style="bold; color:blue;">Hello there!</h2>
+                <h3 class="text-center">Let's create an account</h3>
                 <!-- Display Success or Error Messages -->
                 @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -172,7 +173,7 @@
                 </div>
                 @endif
                 <!-- Registration Form -->
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ route('register') }}" style="background-color: #f8f9fa; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     @csrf
                     <!-- Full Name and Email Fields on the Same Line -->
                     <div class="row g-3">
@@ -211,7 +212,7 @@
                     </div>
 
                     <!-- Password and Password Confirmation Fields on the Same Line -->
-                    <div class="row g-3">
+                    <div class="row g-3" style="margin-top: 3px;">
                         <div class="col-md-6 form-auto mb-1">
                             <label id="Ctext" for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
@@ -281,7 +282,7 @@
                 </form>
 
                 <!-- Already have an account -->
-                <h3 class="text-center mt-4">Already have an account? <a href="{{ route('login') }}">Login</a></h3>
+                <h4 class="text-center mt-4">Already have an account? <a href="{{ route('login') }}">Login</a></h4>
             </div>
         </div>
     </div>

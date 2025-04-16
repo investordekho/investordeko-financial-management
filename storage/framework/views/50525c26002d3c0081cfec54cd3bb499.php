@@ -1,4 +1,4 @@
-<?php if($investees->count()): ?> 
+<?php if($investees->count()): ?>
     <?php
         $isSubscribed = $subscriber && $subscriber->is_subscribed;
         $visibleInvesteeCount = $isSubscribed ? $investees->count() : min($investees->count(), 3);
@@ -8,8 +8,6 @@
         <div class="col-md-12 mb-4">
             <div class="investee-card p-4">
                 <div class="row align-items-center">
-                    
-                    
                     <div class="col-md-2 text-center">
                         <div class="profile-wrapper">
                             <img src="<?php echo e($investee->profile_image ? asset('storage/profile_image/' . $investee->profile_image) : asset('img/default_profile.png')); ?>" 
@@ -19,7 +17,6 @@
                         </div>
                     </div>
 
-               
                     <div class="col-md-6">
                         <h4 class="fw-bold name-text <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
                             <?php echo e($investee->company_name ?? 'Unknown User'); ?>
@@ -28,15 +25,12 @@
                         <p class="text-muted details-text <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
                             <i class="bi bi-geo-alt-fill text-primary"></i> <?php echo e($investee->address); ?>  
                             &nbsp;|&nbsp;
-                          
                             <i class="bi bi-person-badge text-success"></i> 
                             Founded by <?php echo e($investee->founders->first()->name ?? 'N/A'); ?>
 
                         </p>
                     </div>
 
-             
-                 
                     <div class="col-md-4 text-end">
                         <a href="<?php echo e(route('investordashboard.investeelistdetail', ['id' => $investee->id])); ?>" 
                         class="btn btn-primary btn-sm">🔍 View Profile</a>
@@ -63,7 +57,6 @@
 
                 <hr class="divider">
 
-          
                 <div class="row">
                     <div class="col-md-12">
                         <h5 class="fw-bold"><i class="bi bi-graph-up text-primary"></i> Previous Investments</h5>
@@ -88,7 +81,7 @@
         </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-    <?php if(!$isSubscribed && $investees->count() > 3): ?>
+    <?php if(!$isSubscribed && $investees->count() == 3): ?>
         <div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
@@ -97,12 +90,14 @@
             </div>
         </div>
     <?php endif; ?>
+
+    
 <?php else: ?>
-    <div class="col-md-12 text-center">
-        <p class="text-muted">No investees found matching your criteria.</p>
+    <div class="container mt-5 <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
+        <h2 class="text-center mb-4 fw-bold text-dark">No Investees Found</h2>
+        <p class="text-center">Please check back later or consider subscribing for more options.</p>
     </div>
 <?php endif; ?>
-
 
 <style>
     .investee-card {

@@ -4,7 +4,7 @@
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
                     <h2 class="text-white mb-4">Our Office</h2>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>4V67+824, Dr. Charat Singh Colony Signal, Chakala, Andheri East, Guru Hargovindji Rd, Chakala, Andheri East, Mumbai, Maharashtra 400093</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>201, 2nd Floor, Rajveer Royals, Andheri Ghatkopar Link Road, Next to Jyoti Dwellings, Near JB Nagar/Chakala Metro Station, Andheri East, Mumbai – 400093</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 2231561436</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@financialmindss.com</p>
                     <div class="d-flex pt-2">

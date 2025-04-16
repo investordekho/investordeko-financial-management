@@ -48,10 +48,19 @@
         @endforeach
 
         @if (!$isSubscribed && $investors->count() == 3)
+        <div class="col-md-12 text-center mt-4">
+            <div class="alert subscription-box">
+                <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+                <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
+                <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+            </div>
+        </div>
+    @endif
+        <!-- @if (!$isSubscribed && $investors->count() == 3)
             <div class="col-md-12 text-center">
                 <a href="{{ route('subscription') }}" class="btn btn-secondary">🔒 Unlock More Investors</a>
             </div>
-        @endif
+        @endif -->
 
     </div>
 </div>
