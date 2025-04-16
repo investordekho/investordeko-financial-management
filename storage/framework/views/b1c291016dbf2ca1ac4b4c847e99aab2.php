@@ -247,6 +247,10 @@ unset($__errorArgs, $__bag); ?>
             type="checkbox" 
             class="form-check-input" 
             id="concerned_person_is_me" 
+            name="concerned_person_is_me"
+            value="1"
+            <?php echo e(old('concerned_person_is_me') ? 'checked' : ''); ?>
+
             onclick="fillConcernedPersonDetails()"
         >
         <label class="form-check-label" for="concerned_person_is_me" style="font-size: 9px; color: red;">Same as registered person</label>
@@ -974,7 +978,7 @@ function removePublicLinkField(button) {
             nameField.value = "<?php echo e(Auth::user()->name); ?>";
             emailField.value = "<?php echo e(Auth::user()->email); ?>";
             phoneField.value = "<?php echo e(Auth::user()->phone); ?>";
-            designationField.value = "<?php echo e(Auth::user()->designation ?? ''); ?>";  // Assuming user model has these fields
+            designationField.value = "<?php echo e(Auth::user()->designation ?? ''); ?>";  // Assuming user model has these field
 
             nameField.readOnly = true;
             designationField.readOnly = false;

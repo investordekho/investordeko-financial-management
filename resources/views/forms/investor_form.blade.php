@@ -739,7 +739,7 @@ function removePublicLinkField(button) {
             nameField.value = "{{ Auth::user()->name }}";
             emailField.value = "{{ Auth::user()->email }}";
             phoneField.value = "{{ Auth::user()->phone }}";
-            designationField.value = "{{ Auth::user()->designation ?? '' }}";  // Assuming user model has these fields
+            designationField.value = "{{ Auth::user()->designation ?? '' }}";  // Assuming user model has these field
 
             nameField.readOnly = true;
             designationField.readOnly = false;

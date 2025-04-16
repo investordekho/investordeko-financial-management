@@ -248,7 +248,7 @@
     </div>
     <hr>
 
-    <!-- Concerned Person Details Section -->
+    <!-- Concerned Person Details Section d -->
 <div class="row g-3 mb-1">
     <div class="col-sm-2">
         <h3 class="mt-2" style="font-size: 12px; font-weight: 600;">Concerned Person Details</h3>

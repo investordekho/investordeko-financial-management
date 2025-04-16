@@ -773,6 +773,7 @@
         }
     });
 }
+// changes
 
 </script>
 @endsection

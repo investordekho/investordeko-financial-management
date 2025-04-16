@@ -8,7 +8,7 @@
 <section class="hero-banner">
     <div class="container">
         <!-- <h1 class="display-4">The complete Database Platform For Discovering <span class="text-success">Startups</span> and <span class="text-primary">Investors</span></h1> -->
-         <h1>The All-in-One Platform to Discover <span class="text-success">Startups</span> and <span class="text-primary">Investors</span></h1>
+         <h1>The All-in-One Platform to Discover<span class="text-success">Startups</span> and <span class="text-primary">Investors</span></h1>
         <p class="lead">Connect with Startups, Angel Investors, and VCs</p>
 
         
@@ -32,7 +32,8 @@
                 <input type="radio" name="user-type" class="me-1" value="Bankers"> Investment Banker
             </label>
         </div> -->
-        <!-- @else -->
+        @else 
+     
        
         <div class="d-flex justify-content-center mt-3">
             <a href="
