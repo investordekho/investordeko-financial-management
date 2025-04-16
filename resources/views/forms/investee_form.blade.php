@@ -723,6 +723,7 @@
                 <label id="labelinput" for="financials" class="required">Choose file <span style="color:red;">*</span></label>
                 <input 
                     type="file" 
+                    id="financials"
                     class="form-control spaced-input @error('financials.0') is-invalid @enderror" 
                     name="financials[]" 
                     accept=".pdf,.doc,.docx" 
@@ -786,6 +787,49 @@
 </div>
 
 
+<div class="row g-3 mb-4 bordered-row">
+                        <div class="heading-with-hr">
+                            <h3 class="required" style="font-size: 22px; font-weight: 600;">How can we guide you in fund raise?</h3>
+                            <hr>
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="capital_raise" name="guidance_needed[]" value="Capital Raise">
+                                <label class="form-check-label" for="capital_raise">Capital Raise</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="valuation_modelling" name="guidance_needed[]" value="Valuation and Financial Modelling">
+                                <label class="form-check-label" for="valuation_modelling">Valuation and Financial Modelling</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ma_advisory" name="guidance_needed[]" value="M&A Advisory">
+                                <label class="form-check-label" for="ma_advisory">M&A Advisory</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pitch_deck" name="guidance_needed[]" value="Pitch deck Preparation">
+                                <label class="form-check-label" for="pitch_deck">Pitch deck Preparation</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="investor_pitching" name="guidance_needed[]" value="Investor Pitching">
+                                <label class="form-check-label" for="investor_pitching">Investor Pitching</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="na" name="guidance_needed[]" value="NA">
+                                <label class="form-check-label" for="na">NA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="others_checkbox" name="guidance_needed[]" value="Others" onclick="toggleOtherField()">
+                                <label class="form-check-label" for="others_checkbox">Others</label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3" id="other_field" style="display: none;">
+                            <label id="labelinput" for="other_guidance">Please specify (Others)</label>
+                            <div id="other_guidance" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                               
+                            </div>
+                        </div>
+                    </div>
+
     <!-- CAPTCHA Section -->
    
     <!-- Terms and Conditions Section -->
@@ -793,6 +837,8 @@
         <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
         <label class="form-check-label" for="terms">I agree to the <a href="{{ route('terms') }}">Terms and Conditions</a></label>
     </div>
+
+    
 
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
@@ -830,7 +876,59 @@
     }
 });
 
+function toggleOtherField() {
+    const otherField = document.getElementById('other_field');
+    const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the checkboxes
 
+    if (document.getElementById('others_checkbox').checked) {
+        // Show the field
+        otherField.style.display = 'block';
+
+        // Clear previous checkboxes
+        otherGuidanceContainer.innerHTML = '';
+
+        // Array of service categories
+        const serviceCategories = [
+            'Equity Funding', 'Debt Funding', 'Mergers & Acquisitions', 'Pitchdeck Making',
+            'Pitching to Investors', 'IPO Planning', 'IPO Listing', 'Issuance of Bonus Shares',
+            'Issuance of Rights Issue', 'Employee Stock Options (ESOP) Planning', 'Patent', 'Trademark', 'Design Registration', 
+            'DSC', 'Online Listing', 'Income Tax Return', 'GST, TDS, PF, ESI, PT, Customs', 'MCA & ROC Works', 
+            'Appointment & Resignation of Directors', 'Annual Return', 'Company Registration', 'Udyog Aadhar & GST Registration', 
+            'Importer-Exporter Code', 'Loan Proposal', 'CMA Data', 'Accounting', 'Subsidy', 'Tax Planning', 
+            'Capital Re-Structuring', 'Project Report', 'TEV Study', 'Structured Finance', 
+            'Preparation of Share and Warrants', 'Subscription Agreement (SWSA)', 'Preparation of Share Holders\' Agreement (SHA)', 
+            'Due Diligence'
+        ];
+
+        // Dynamically create checkboxes for each category
+        serviceCategories.forEach(category => {
+            const checkboxDiv = document.createElement('div');
+            checkboxDiv.classList.add('form-check'); // Add Bootstrap styling
+
+            const checkbox = document.createElement('input');
+            checkbox.classList.add('form-check-input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'other_guidance[]';
+            checkbox.value = category;
+            checkbox.id = category.replace(/\s+/g, '_').toLowerCase(); // Replace spaces with underscores for ID
+
+            const label = document.createElement('label');
+            label.classList.add('form-check-label');
+            label.setAttribute('for', checkbox.id);
+            label.textContent = category;
+
+            // Append the checkbox and label to the div
+            checkboxDiv.appendChild(checkbox);
+            checkboxDiv.appendChild(label);
+
+            // Append the div to the container
+            otherGuidanceContainer.appendChild(checkboxDiv);
+        });
+    } else {
+        // Hide the field if "Others" is unchecked
+        otherField.style.display = 'none';
+    }
+}
 // Function to add a new link field
 function addPublicLinkField() {
     // Get the public links container

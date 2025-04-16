@@ -15,7 +15,7 @@ class InvestorDashboardController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function indexe()
 {
     // Get the logged-in user's ID
     $userId = auth()->user()->id;
@@ -33,7 +33,23 @@ class InvestorDashboardController extends Controller
     // Pass investees, sectors, locations, and subscriber to the view
     return view('dashboards.investordashboard', compact('investees', 'sectors', 'locations', 'subscriber'));
 }
+   public function index()
+   {
+       $userId = auth()->user()->id;
+       $subscriber = Subscriber::where('user_id',$userId)->first();
+       $investeesQuery = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource']);
+       $sectors = SectorDetail::all();
+       $locations =LocationDetail::all();
 
+       if($subscriber && $subscriber->is_subscribed){
+            $investees = $investeesQuery->limit(10)->get();
+       }
+       else
+       {
+            $investees = $investeesQuery->limit(3)->get();
+       }
+       return view('dashboards.investordashboard',compact('subscriber','investees','sectors','locations'));
+   }
     /**
      * Search function for filtering investees.
      */
@@ -51,8 +67,19 @@ class InvestorDashboardController extends Controller
         $incorporated_in = $request->input('incorporated_in', null);
         $fund_usage = $request->input('fund_usage', null);
 
+        $searchbox = $request->input('searchBox',[]);
+
         // Start building the query
         $query = Company::query();
+
+        // Apply searchbox filter
+        if (!empty($searchbox)){
+            $query->where(function ($q) use ($searchbox){
+                $q->where('company_name', 'LIKE', '%' . $searchbox . '%')
+                    ->orwhere('address', 'LIKE', '%'. $searchbox . '%')
+                    ->orwhere('nature_of_business' , 'LIKE' , '%'. $searchbox . '%');
+            });
+        }
 
         // Apply filters
         if (!empty($address)) {
@@ -70,13 +97,34 @@ class InvestorDashboardController extends Controller
         if (!empty($fund_usage)) {
             $query->whereHas('fundRequirements', function ($q) use ($fund_usage) {
                 $q->where('usage', $fund_usage); // Filter by usage of funds
-            });
+            }); 
         }
 
         // Fetch the filtered results
-        $investees = $query->with(['user', 'fundRequirements', 'previousRounds'])->get();
+        $investeesdata = $query->with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])->get();
 
+        
+       if($subscriber && $subscriber->is_subscribed){
+                $investees = $investeesdata->take(10)->values();
+        }
+        else
+        {
+                $investees = $investeesdata->take(3)->values();
+        }
         // Pass investees and subscriber to the partial view
         return view('partials.investee_list', compact('investees', 'subscriber'))->render();
+    }
+
+
+    public function investordetaildashboard($id)
+    {
+        // $id = $request->input('id');
+
+        $investee = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])->find($id);
+        
+        if(!$investee){
+            abort(404,'investee not found');
+        }
+        return view('partials.investee_list_detail',compact('investee'));
     }
 }

@@ -32,19 +32,49 @@
 .text-danger{
     font-size: 12px;
 }
+#investorForm h3 {
+    font-size: 24px; /* Moderate font size */
+    font-weight: 400; /* Regular weight for a clean look */
+    color: #555; /* Dark gray for a neutral tone */
+    text-transform: none; /* Remove uppercase transformation */
+    letter-spacing: 0.5px; /* Slight spacing for readability */
+    margin-bottom: 15px; /* Space between heading and content */
+    font-family: 'Arial', sans-serif; /* Simple, modern font */
 }
+
+
+
 
                 </style>
 <div class="container">
     <div class="col-sm-12">
                     
 
-                <form id="investorForm" action="{{ route('form.investor.submit') }}" method="POST" enctype="multipart/form-data" class="bg-light p-5 rounded shadow-sm" novalidate>
-                    @csrf
+    <form id="investorForm"
+      action="{{ route('form.investor.submit') }}"
+      method="POST"
+      enctype="multipart/form-data"
+      style="background: linear-gradient(135deg, #ffffff, #f0f0f0); 
+             color: #2e2e2e; 
+             padding: 40px; 
+             border-radius: 16px; 
+             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);"
+      novalidate>
+    @csrf
+
 
                     <!-- Investor Profile Section -->
 
             <div class="row g-3 mb-1">
+            <label style="font-size: 20px; font-weight: 600; color: #2C3E50; display: inline-block; padding: 8px 16px; background-color: #ECF0F1; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.1); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease-in-out; text-align: center;" 
+    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1)';"
+    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.1)';">
+    Investor Registration Form
+</label>
+
+
+
+
                     <div class="col-sm-2">
                         <label></label>
                         <h3 style="font-size: 22px; font-weight: 600;">Investor Profile</h3>
@@ -484,7 +514,7 @@
                     </div>
 
                     <!-- Guidance Needed Section -->
-                    <div class="row g-3 mb-4 bordered-row">
+                    <!-- <div class="row g-3 mb-4 bordered-row">
                         <div class="heading-with-hr">
                             <h3 class="required" style="font-size: 22px; font-weight: 600;">How can we guide you in fund raise?</h3>
                             <hr>
@@ -520,12 +550,12 @@
                             </div>
                         </div>
                         <div class="form-group mb-3" id="other_field" style="display: none;">
-    <label id="labelinput" for="other_guidance">Please specify (Others)</label>
-    <div id="other_guidance" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-        <!-- Checkboxes will be dynamically added here -->
-    </div>
-</div>
-</div>
+                            <label id="labelinput" for="other_guidance">Please specify (Others)</label>
+                            <div id="other_guidance" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                               
+                            </div>
+                        </div>
+                    </div> -->
 
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
@@ -572,7 +602,7 @@
     // Create a new public link field without changing the + button to - button
     const newField = `
         <div class="public-link-row d-flex align-items-end">
-            <div class="form-group flex-grow-1 mr-2">
+            <div class="form-group flex-grow-1 mr-2" style="max-width: 522px;">
                 <label for="public_links" class=""></label>
                 <input type="url" class="form-control spaced-input" name="public_links[]" placeholder="Enter URL" required>
             </div>
@@ -587,8 +617,12 @@
                 </select>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-danger remove-btn" onclick="removePublicLinkField(this)">-</button>
-            </div>
+    <button type="button"
+            class="btn btn-danger remove-btn"
+            style="font-size: 20px; padding: 5px 15px;"
+            onclick="removePublicLinkField(this)">-</button>
+</div>
+
         </div>`;
 
     // Append the new field to the container

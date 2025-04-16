@@ -169,8 +169,11 @@
 
     </style>
 </head>
-<body>
-   
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -221,6 +224,29 @@
         <div class="col-md-9 d-flex justify-content-end">
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
+
+                <?php if(auth()->guard()->check()): ?>
+                    <!-- <li class="nav-item">
+                        <span class="nav-link">Role: <?php echo e(auth()->user()->roles->pluck('name')); ?></span>
+                    </li> -->
+
+                    <?php if(auth()->user()->hasRole('Admin')): ?>
+                        <li class="nav-item">
+                            <a class="nav-link " href="<?php echo e(route('admin.dashboard')); ?>">Admin Dashboard</a>
+                        </li>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logoeffect">Logo</a>
+                    </li>
+                    <?php if(auth()->guard()->check()): ?>
+                    <?php if(auth()->user() && auth()->user()->hasRole('Admin')): ?>                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo e(route('subscriptionrequest')); ?>">Subscription Requests </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php endif; ?>    
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo e(route('home')); ?>">Home</a>
                     </li>
@@ -229,7 +255,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a href="<?php echo e(route('services')); ?>" class="nav-link dropdown-toggle" id="servicesDropdown" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
-                        <div class="dropdown-menu dropdown-menu-columns border-light m-0">
+                        <div class="dropdown-menu dropdown-menu-columns border-light m-0" style="left: 50% !important; transform: translateX(-50%) !important; width: max-content; padding: 1rem;">
                             <div class="row">
                                 <div class="col-sm-3 dropdown-menu-column">
                                     <h5><a href="<?php echo e(route('services')); ?>"><i class="fa-solid fa-chart-line"></i> Fund Raising</a></h5>

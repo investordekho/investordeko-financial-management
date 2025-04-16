@@ -86,7 +86,7 @@
         document.getElementById('total_price').innerText = totalPrice;
 
         // Update checkout link dynamically
-        let checkoutLink = "{{ route('order', ['plan' => 'custom']) }}";
+        let checkoutLink = "{{ route('order') }}";
         document.getElementById('checkout_link').href = checkoutLink + '?investors=' + numInvestors + '&price=' + totalPrice;
     }
 
