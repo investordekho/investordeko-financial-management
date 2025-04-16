@@ -257,6 +257,10 @@
                 type="checkbox" 
                 class="form-check-input" 
                 id="concerned_person_is_me" 
+                name="concerned_person_is_me"
+                value="1" 
+               
+                {{ old('concerned_person_is_me') ? 'checked':''}}
                 onclick="fillConcernedPersonDetails()"
             >
             <label 
