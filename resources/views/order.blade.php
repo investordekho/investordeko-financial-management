@@ -6,10 +6,10 @@
     
     <div class="card">
         <div class="card-header">
-            <h2>You're about to subscribe to the {{ ucfirst($plan) }} plan</h2>
+            <h2>You're about to subscribe to the plan of {{ ucfirst($plan) }}</h2>
         </div>
         <div class="card-body">
-        <p>You have selected the {{ ucfirst($plan) }} plan. Total price: {{ ucfirst($totalprice) }}</p>
+        <p>You have selected the plan of {{ ucfirst($plan) }}. Total price: {{ ucfirst($totalprice) }}</p>
 
 
             @if($plan === 'basic')
