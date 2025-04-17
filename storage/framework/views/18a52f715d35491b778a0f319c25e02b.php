@@ -4,10 +4,10 @@
     
     <div class="card">
         <div class="card-header">
-            <h2>You're about to subscribe to the <?php echo e(ucfirst($plan)); ?> plan</h2>
+            <h2>You're about to subscribe to the plan of <?php echo e(ucfirst($plan)); ?></h2>
         </div>
         <div class="card-body">
-        <p>You have selected the <?php echo e(ucfirst($plan)); ?> plan. Total price: <?php echo e(ucfirst($totalprice)); ?></p>
+        <p>You have selected the plan of <?php echo e(ucfirst($plan)); ?>. Total price: <?php echo e(ucfirst($totalprice)); ?></p>
 
 
             <?php if($plan === 'basic'): ?>

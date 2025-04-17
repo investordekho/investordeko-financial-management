@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 <div class="container py-5">
     <h1 class="text-center mb-5 display-6 fw-bold">Order Confirmation</h1>
@@ -7,7 +5,18 @@
     <!-- Plan & Amount -->
     <div class="text-center mb-5">
         <p class="fs-5 mb-2">
-            <strong class="text-dark">Plan:</strong>
+          
+        <?php
+            if (Auth::user()->category_id == 1) {
+                $category = 'You are about to subscribe to the investor data :';
+            } elseif (Auth::user()->category_id == 2) {
+                $category = 'You are about to subscribe to the investee data :';
+            } else {
+                $category = 'You are about to subscribe to the investee and investor data :';
+            }
+        ?>
+          
+            <strong class="text-dark"><?php echo e($category); ?></strong>
             <span class="text-muted"><?php echo e($plan); ?></span>
         </p>
         <p class="fs-5">
