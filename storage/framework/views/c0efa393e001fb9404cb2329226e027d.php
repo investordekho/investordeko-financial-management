@@ -401,6 +401,11 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchResults();
 });
 
+document.querySelectorAll('.dropdown-menu').forEach(menu => {
+    menu.addEventListener('click', function (e) {
+        e.stopPropagation(); // Stops the dropdown from closing
+    });
+});
 
 </script>
 

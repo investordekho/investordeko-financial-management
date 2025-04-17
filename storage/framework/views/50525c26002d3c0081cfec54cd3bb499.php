@@ -1,3 +1,7 @@
+<?php
+        $isSubscribed = $subscriber && $subscriber->is_subscribed;
+      
+    ?>
 <?php if($investees->count()): ?>
     <?php
         $isSubscribed = $subscriber && $subscriber->is_subscribed;
