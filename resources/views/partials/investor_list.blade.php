@@ -1,3 +1,7 @@
+@php 
+    $isSubscribed = isset($subscriber) && $subscriber?->is_subscribed;
+@endphp
+
 @if($investors->count())
     @php 
         $isSubscribed = $subscriber && $subscriber->is_subscribed;
