@@ -7,20 +7,21 @@
 <!-- Hero Section -->
 <section class="hero-banner">
     <div class="container">
-        <h1 class="display-4">The complete Database Platform For Discovering <span class="text-success">Startups</span> and <span class="text-primary">Investors</span></h1>
-        <p class="lead">Search for Startups, Angel Investors, and VCs</p>
+        <!-- <h1 class="display-4">The complete Database Platform For Discovering <span class="text-success">Startups</span> and <span class="text-primary">Investors</span></h1> -->
+         <h1>The All-in-One Platform to Discover<span class="text-success">Startups</span> and <span class="text-primary">Investors</span></h1>
+        <p class="lead">Connect with Startups, Angel Investors, and VCs</p>
 
         
         @guest
        
-        <form class="d-flex justify-content-center search-form" id="searchForm" method="POST" action="#">
+        <!-- <form class="d-flex justify-content-center search-form" id="searchForm" method="POST" action="#">
             @csrf
             <input type="text" id="searchInput" name="search_query" placeholder="Search for Startups/Angel Investor/VC">
             <button type="submit" class="ms-2">Search</button>
-        </form>
+        </form> -->
 
       
-        <div class="d-flex justify-content-center mt-3">
+        <!-- <div class="d-flex justify-content-center mt-3">
             <label class="me-3">
                 <input type="radio" name="user-type" class="me-1" value="Investees"> Investees
             </label>
@@ -30,8 +31,9 @@
             <label class="me-3">
                 <input type="radio" name="user-type" class="me-1" value="Bankers"> Investment Banker
             </label>
-        </div>
-        @else
+        </div> -->
+        @else 
+     
        
         <div class="d-flex justify-content-center mt-3">
             <a href="
