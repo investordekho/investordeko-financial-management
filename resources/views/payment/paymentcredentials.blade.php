@@ -7,7 +7,18 @@
     <!-- Plan & Amount -->
     <div class="text-center mb-5">
         <p class="fs-5 mb-2">
-            <strong class="text-dark">Plan:</strong>
+          
+        @php
+            if (Auth::user()->category_id == 1) {
+                $category = 'You are about to subscribe to the investor data :';
+            } elseif (Auth::user()->category_id == 2) {
+                $category = 'You are about to subscribe to the investee data :';
+            } else {
+                $category = 'You are about to subscribe to the investee and investor data :';
+            }
+        @endphp
+          
+            <strong class="text-dark">{{$category}}</strong>
             <span class="text-muted">{{ $plan }}</span>
         </p>
         <p class="fs-5">

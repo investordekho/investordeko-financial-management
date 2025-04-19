@@ -31,7 +31,7 @@ use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\ExcelUploadController;
 use App\Http\Controllers\NewBankController;
 use App\Http\Controllers\SubscriptionRequestController;
-
+use App\Http\Controllers\Auth\New\ForgetPasswordController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -95,7 +95,6 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [CustomRegistrationController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [CustomRegistrationController::class, 'register']);
-
 
 // Subscription Routes
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');
@@ -169,10 +168,10 @@ Route::get('/logoeffect', function () {
 })->name('logo');
 
 
-
-
-
-
+Route::get('/forgetpassword',[ForgetPasswordController::class,'showForgetPasswordForm'])->name('forgetpassword');
+Route::post('/sendmail',[ForgetPasswordController::class,'sendCodeToEmail'])->name('sendmail');
+Route::post('/verifycode',[ForgetPasswordController::class,'verifyCode'])->name('verifycode');
+Route::post('/resetpassword',[ForgetPasswordController::class,'resetPassword'])->name('resetpassword');
 
 
 

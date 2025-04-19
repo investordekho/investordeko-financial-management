@@ -632,6 +632,13 @@ function filterinvestorType(){
 }
 
 document.getElementById('investorTypeSearch').addEventListener('keyup',filterinvestorType);
+
+document.querySelectorAll('.dropdown-menu').forEach(menu => {
+    menu.addEventListener('click', function (e) {
+        e.stopPropagation(); // Stops the dropdown from closing
+    });
+});
+
 </script>
 
  <!-- jQuery (necessary for various plugins like Owl Carousel, WOW.js, and others) -->

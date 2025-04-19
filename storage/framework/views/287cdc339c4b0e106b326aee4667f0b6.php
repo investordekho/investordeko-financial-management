@@ -156,6 +156,10 @@ unset($__errorArgs, $__bag); ?>
                 type="checkbox" 
                 class="form-check-input" 
                 id="concerned_person_is_me" 
+                name="concerned_person_is_me"
+                value="1" 
+                <?php echo e(old('concerned_person_is_me') ? 'checked' : ''); ?>
+
                 onclick="fillConcernedPersonDetails()"
             >
             <label class="form-check-label text-danger small" for="concerned_person_is_me">
@@ -986,24 +990,27 @@ unset($__errorArgs, $__bag); ?>
     function fillConcernedPersonDetails() {
     const phoneField = document.getElementById('phone_number');
     const emailField = document.getElementById('email');
-
-    if (document.getElementById('concerned_person_is_me').checked) {
-        // Fill phone and email with the authenticated user's data
-        phoneField.value = "<?php echo e(Auth::user()->phone); ?>";
-        emailField.value = "<?php echo e(Auth::user()->email); ?>";
-
-        // Make the fields read-only
-        phoneField.readOnly = true;
-        emailField.readOnly = true;
-    } else {
-        // Clear the fields and make them editable again
-        phoneField.value = '';
-        emailField.value = '';
-        
-        phoneField.readOnly = false;
-        emailField.readOnly = false;
-    }
+        const checkedbox = document.getElementById('concerned_person_is_me');
+  
+    checkedbox.addEventListener('change',function(){ 
+               if(this.checked){
+            <?php if(Auth::check()): ?>
+                phoneField.value = "<?php echo e(Auth::user()->phone); ?>";
+                emailField.value = "<?php echo e(Auth::user()->email); ?>";
+             <?php else: ?>
+              alert('Please login to fill the details');
+                <?php endif; ?>           
+            phoneField.readOnly = true;
+            emailField.readOnly = true;
+        }else{
+            phoneField.value = '';
+            emailField.value = '';
+            phoneField.readOnly = false;
+            emailField.readOnly = false;
+        }
+    });
 }
+// changes
 
 </script>
 <?php $__env->stopSection(); ?>
