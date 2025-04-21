@@ -9,6 +9,7 @@ use App\Models\payment_detail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Subscriber;
 class SubscriptionRequestController extends Controller
 {
     //
@@ -95,6 +96,8 @@ class SubscriptionRequestController extends Controller
  
     public function updatesubScriptionRequest(Request $request)
     {
+        // $isSubscripbed_data = Subscriber::where('user_id', Auth::user()->id)->first();
+
         $updat_data_id = $request->input('id');
         $SubscriptionRequest = SubscriptionRequest::find($update_data_id);
         if($SubscriptionRequest)
@@ -111,11 +114,30 @@ class SubscriptionRequestController extends Controller
                 $SubscriptionRequest->plan = 999;
             }
             $SubscriptionRequest->plan_amount = $request->input('plan_amount');
-            $SubscriptionRequest->subscription_start = $request->input('subscription_start');
-            $SubscriptionRequest->subscription_end = $request->input('subscription_end');
+            $SubscriptionRequest->subscription_start = now();
+            // $SubscriptionRequest->subscription_end = $request->input('subscription_end');
             $SubscriptionRequest->created_at = now();
             $SubscriptionRequest->updated_at = now();
             $SubscriptionRequest->save();
+            if($SubscriptionRequest->status == 'approved'){
+                $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+                if($subscriber)
+                {
+                    $subscriber->is_subscribed = 1;
+                    $subscriber->subscription_start = $SubscriptionRequest->subscription_start;
+                    // $subscriber->subscription_end = $SubscriptionRequest->subscription_end;
+                    $subscriber->save();
+                }
+                else
+                {
+                    $subscriber = new Subscriber();
+                    $subscriber->user_id = Auth::user()->id;
+                    $subscriber->is_subscribed = 1;
+                    $subscriber->subscription_start = $SubscriptionRequest->subscription_start;
+                    // $subscriber->subscription_end = $SubscriptionRequest->subscription_end;
+                    $subscriber->save();
+                }
+            }
             return redirect()->back()->with('success', 'Subscription request updated successfully!');
         }
     }
@@ -133,7 +155,25 @@ class SubscriptionRequestController extends Controller
             // Update the status of the subscription request
             $subscriptionRequest->status = $request->input('status');
             $subscriptionRequest->save();
-
+            if($subscriptionRequest->status == 'approved'){
+                $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+                if($subscriber)
+                {
+                    $subscriber->is_subscribed = 1;
+                    $subscriber->subscription_start = $subscriptionRequest->subscription_start;
+                    // $subscriber->subscription_end = $subscriptionRequest->subscription_end;
+                    $subscriber->save();
+                }
+                else
+                {
+                    $subscriber = new Subscriber();
+                    $subscriber->user_id = Auth::user()->id;
+                    $subscriber->is_subscribed = 1;
+                    $subscriber->subscription_start = $subscriptionRequest->subscription_start;
+                    // $subscriber->subscription_end = $subscriptionRequest->subscription_end;
+                    $subscriber->save();
+                }
+            }
             // Redirect back with a success message
             return redirect()->back()->with('success', 'Subscription request status updated successfully!');
         } else {
