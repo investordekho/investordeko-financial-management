@@ -36,6 +36,7 @@ class InvesteeDashboardController extends Controller
     public function index()
 {
     $userId = auth()->user()->id;
+    $category_id = auth()->user()->category_id;
     $subscriber = Subscriber::where('user_id', $userId)->first();
 
     // Fetch investors with related data
@@ -51,6 +52,16 @@ class InvesteeDashboardController extends Controller
                     
                     if($subscriber_data->status== 'approved'){
                         $count = $subscriber_data->no_of_data;
+                        if($category_id== '3' || $category_id=='4'){
+
+                            $halfcount = $count%2;
+                            if($halfcount==0){
+                                $count = $count/2;
+                            }
+                            else{
+                                $count = ($count/2)+0.5;
+                            }
+                        }
                         $investors = $investorsQuery->take($count)->get(); 
                     }
                     else{
@@ -162,6 +173,7 @@ class InvesteeDashboardController extends Controller
 public function search(Request $request)
 {
     $userId = auth()->user()->id;
+    $category_id = auth()->user()->category_id;
     $subscriber = Subscriber::where('user_id', $userId)->first();
 
     // Get the first 10 (or 3 if not subscribed) investors from the database
@@ -177,6 +189,16 @@ public function search(Request $request)
                 
                 if($subscriber_data->status== 'approved'){
                     $count = $subscriber_data->no_of_data;
+                    if($category_id== '3' || $category_id=='4'){
+
+                        $halfcount = $count%2;
+                        if($halfcount==0){
+                            $count = $count/2;
+                        }
+                        else{
+                            $count = ($count/2)+0.5;
+                        }
+                    }
                     // $investors = $investorsQuery->take($count)->get(); 
                 }
                 else{
