@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Investor;
 use App\Models\Subscriber;
 use App\Models\User;
-
+use App\Models\SubscriptionRequest;
+use App\Models\Payment_detail;
 class InvesteeDashboardController extends Controller
 {
     /**
@@ -20,8 +21,6 @@ class InvesteeDashboardController extends Controller
         // Check if the user is subscribed
         $subscriber = Subscriber::where('user_id', $userId)->first();
 
-        // Fetch investors with their related public links and previous investments
-        // $investorsQuery = Investor::with(['publicLinks', 'previousInvestments', 'investmentDetails']);
         $investorsQuery = Investor::with(['contactDetails','publicLinks', 'previousInvestments', 'investmentDetails','referrals','guidanceNeeds','public_links','investorAddresses']);
         // Apply limits based on subscription status
         if ($subscriber && $subscriber->is_subscribed) {
@@ -31,21 +30,7 @@ class InvesteeDashboardController extends Controller
             // Fetch 3 results for unsubscribed users
             $investors = $investorsQuery->take(3)->get();
         }
-        // foreach ($investors as $investor) {
-        //     if ($investor->investmentDetails) {
-        //         dd($investor->investmentDetails->investment_size);
-        //     }
-        // }
-        
-        // dd($investors);        
-        
-        // foreach ($investors as $investor) {
-        //     if (!$investor->contactDetails) {
-        //         \Log::info("Investor {$investor->investor_name} has no contact details.");
-        //     }
-        // }
-        
-        // Return the investee dashboard view with investors and subscriber data
+
         return view('dashboards.investee', compact('investors', 'subscriber'));
     }
     public function index()
@@ -59,9 +44,27 @@ class InvesteeDashboardController extends Controller
         'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
     ]);
 
-    $investors = ($subscriber && $subscriber->is_subscribed) ? 
-        $investorsQuery->take(10)->get() : 
-        $investorsQuery->take(3)->get();
+        $subscriber_data = SubscriptionRequest::where('user_id', $userId)->first();
+        if($subscriber && $subscriber->is_subscribed==1)
+            {
+                if($subscriber_data && $subscriber_data->status){
+                    
+                    if($subscriber_data->status== 'approved'){
+                        $count = $subscriber_data->no_of_data;
+                        $investors = $investorsQuery->take($count)->get(); 
+                    }
+                    else{
+                        $investors = $investorsQuery->take(3)->get();
+                    }
+                
+                }
+                else{
+                        $investors = $investorsQuery->take(3)->get();
+                }
+            }
+        else{
+                $investors = $investorsQuery->take(3)->get();
+            }
 
     return view('dashboards.investee', compact('investors', 'subscriber'));
 }
@@ -162,8 +165,38 @@ public function search(Request $request)
     $subscriber = Subscriber::where('user_id', $userId)->first();
 
     // Get the first 10 (or 3 if not subscribed) investors from the database
-    $limit = $subscriber && $subscriber->is_subscribed ? 10 : 3;
     
+    // $limit = $subscriber && $subscriber->is_subscribed ? 10 : 3;
+    
+    
+    $count=0;
+    $subscriber_data = SubscriptionRequest::where('user_id', $userId)->first();
+    if($subscriber && $subscriber->is_subscribed==1)
+        {
+            if($subscriber_data && $subscriber_data->status){
+                
+                if($subscriber_data->status== 'approved'){
+                    $count = $subscriber_data->no_of_data;
+                    // $investors = $investorsQuery->take($count)->get(); 
+                }
+                else{
+                    $count=3;
+                    // $investors = $investorsQuery->take(3)->get();
+                }
+            
+            }
+            else{
+                $count=3;
+                    // $investors = $investorsQuery->take(3)->get();
+            }
+        }
+    else{
+            $count=3;
+            // $investors = $investorsQuery->take(3)->get();
+        }
+
+    // $limit = $subscriber && $subscriber->is_subscribed ? 10 : 3;
+    $limit = $count;
     // Fetch limited investors first
     $investorsQuery = Investor::query()
         ->with('investmentDetails')
@@ -225,25 +258,6 @@ public function search(Request $request)
              }
 
 
-
-
-            // $investmentTenures = $request->input('investment_tenure', []);
-            // $normalizedTenure = $this->normalizeTenure($investmentDetails->investment_tenure);
-
-            // if (!empty($investmentTenures)) {
-            //     $actualMatch = collect($investmentTenures)->contains(function ($selectedTenure) use ($normalizedTenure) {
-            //         return $this->isOverlappingTenure($selectedTenure, $normalizedTenure);
-            //     });
-
-            //     // ✅ Ensure we print the final, updated value
-            //     dd([
-            //         'Selected Tenures' => $investmentTenures,
-            //         'Database Tenure' => $investmentDetails->investment_tenure,
-            //         'Normalized Tenure' => $normalizedTenure,
-            //         'Matches?' => $actualMatch, // ✅ Should now be "true"
-            //     ]);
-            // }
-
             
             $investorTypes = $request->input('investor_type', []);
             if (!empty($investorTypes) && $investmentDetails) {
@@ -252,8 +266,6 @@ public function search(Request $request)
                 });
             }
             
-            
-
             
 
         }
