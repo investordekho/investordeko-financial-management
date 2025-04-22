@@ -38,6 +38,9 @@ class InvestorDashboardController extends Controller
    public function index()
    {
        $userId = auth()->user()->id;
+
+       $category_id = auth()->user()->category_id;
+
        $subscriber = Subscriber::where('user_id',$userId)->first();
        $investeesQuery = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource']);
        $sectors = SectorDetail::all();
@@ -56,6 +59,16 @@ class InvestorDashboardController extends Controller
             if($subscriptionRequestData && $subscriptionRequestData->status=='approved'){
                 if($subscriptionRequestData->status=='approved'){
                     $count = $subscriptionRequestData->no_of_data;
+                    if($category_id== '3' || $category_id=='4'){
+
+                        $halfcount = $count%2;
+                        if($halfcount==0){
+                            $count = $count/2;
+                        }
+                        else{
+                            $count = ($count/2)-0.5;
+                        }
+                    }
                     $investees = $investeesQuery->limit($count)->get();
                 }
                 else{
@@ -214,7 +227,7 @@ class InvestorDashboardController extends Controller
     public function search(Request $request)
     {
         $userId = auth()->user()->id;
-    
+        $category_id = auth()->user()->category_id;
         $subscriber = Subscriber::where('user_id', $userId)->first();
     
         $address = $request->input('location', []);
@@ -234,7 +247,16 @@ class InvestorDashboardController extends Controller
         if ($subscriber && $subscriber->is_subscribed && $subscription_request && $subscription_request->status == 'approved') {
             $limit = $subscription_request->no_of_data;
         }
-    
+        if($category_id== '3' || $category_id=='4'){
+
+            $halfcount = $limit%2;
+            if($halfcount==0){
+                $limit = $limit/2;
+            }
+            else{
+                $limit = ($limit/2)-0.5;
+            }
+        }
         // 1. Get the first N records only
         $limitedCompanies = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])
             ->orderBy('id') // make sure the order is deterministic
