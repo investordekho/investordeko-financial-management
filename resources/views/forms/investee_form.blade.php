@@ -902,6 +902,7 @@
                     name="public_links[]" 
                     placeholder="URL" 
                     value="{{ old('public_links.0') }}"
+                    style="width: 425px; flex: 0 0 auto;"
                 >
                 <select 
                     class="form-control @error('link_descriptions.0') is-invalid @enderror" 
