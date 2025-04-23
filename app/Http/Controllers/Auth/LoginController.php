@@ -71,7 +71,7 @@ class LoginController extends Controller
             case 3: // Banker
                 return redirect()->route('banker.dashboard');
             case 4: // Other
-                return redirect()->route('other.dashboard');
+                return redirect()->route('banker.dashboard');
             default:
                 return redirect()->route('dashboard'); // General dashboard
         }
