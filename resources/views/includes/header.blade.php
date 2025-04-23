@@ -237,7 +237,7 @@
                     @endif
                 @endauth
 
-                    <li class="nav-item">
+                    <li class="nav-item" style="display:none;">
                         <a class="nav-link" href="/logoeffect">Logo</a>
                     </li>
                     @auth
