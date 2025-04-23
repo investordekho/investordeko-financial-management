@@ -25,6 +25,29 @@
                     }
                 </style>
                 <div class="container">
+                <div class="row" style="margin-top: 10px;">
+    <div class="col-md-12 text-center" style="background: linear-gradient(to right, #003366, #4a90e2); padding: 8px 15px; border-radius: 8px 8px 0 0; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); color: white;">
+        <h2 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 5px; letter-spacing: 0.5px; text-transform: uppercase;">
+            Personal Information Submission Form
+        </h2>
+        <p style="font-size: 0.75rem; font-weight: 400; margin-bottom: 5px;">
+            Kindly provide your details below to complete the submission process.
+        </p>
+        <div style="width: 40px; height: 2px; background-color: white; margin: 0 auto; border-radius: 5px;"></div>
+    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <form id="othersForm" action="{{ route('form.other.submit') }}" method="POST" enctype="multipart/form-data" class="bg-light p-5 rounded shadow-sm">
     @csrf
