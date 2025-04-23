@@ -14,6 +14,7 @@ class Other extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'full_name',
         'email',
         'phone_number',
@@ -24,5 +25,10 @@ class Other extends Model
         'referral_source',
         'agreed_to_terms',
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
 
