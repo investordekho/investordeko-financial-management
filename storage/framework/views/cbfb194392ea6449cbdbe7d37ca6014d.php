@@ -237,7 +237,7 @@
                     <?php endif; ?>
                 <?php endif; ?>
 
-                    <li class="nav-item">
+                    <li class="nav-item" style="display:none;">
                         <a class="nav-link" href="/logoeffect">Logo</a>
                     </li>
                     <?php if(auth()->guard()->check()): ?>
