@@ -65,7 +65,7 @@ class BankerController extends Controller
             'previous_deal_year.*' => 'required|integer|min:1900|max:' . date('Y'),
             'previous_deal_company.*' => 'required|string',
             'previous_deal_sector.*' => 'required|string',
-            'previous_deal_type.*' => 'required|string',
+            'previous_deal_type.*' => 'required|string|in:M&A,Fundraising,IPO,Others',
             'referral_source' => 'required|string',
         ]);
 

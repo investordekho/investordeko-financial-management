@@ -707,15 +707,64 @@ unset($__errorArgs, $__bag); ?>
                 <option value="2023">2023</option>
                 <option value="2022">2022</option>
                 <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>
+                <option value="2006">2006</option>
+                <option value="2005">2005</option>
+                <option value="2004">2004</option>
+                <option value="2003">2003</option>
+                <option value="2002">2002</option>
+                <option value="2001">2001</option>
+                <option value="2000">2000</option>
+                <option value="1999">1999</option>
+                <option value="1998">1998</option>
+                <option value="1997">1997</option>
+                <option value="1996">1996</option>
+                <option value="1995">1995</option>
+                <option value="1994">1994</option>
+                <option value="1993">1993</option>
+                <option value="1992">1992</option>
+                <option value="1991">1991</option>
+                <option value="1990">1990</option>
             </select>
         </div>
-        
         <div class="col-md-3 form-group">
-            <label for="previous_deal_company" class="form-label">
-                Company <span class="text-danger">*</span>
-            </label>
-            <input type="text" class="form-control" name="previous_deal_company[]" placeholder="Company" required>
-        </div>
+    <label for="previous_deal_company" class="form-label">
+        Company <span class="text-danger">*</span>
+    </label>
+    <input type="text" class="form-control <?php $__errorArgs = ['previous_deal_company'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="previous_deal_company[]" placeholder="Company" required>
+    <?php $__errorArgs = ['previous_deal_company.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+    <span class="text-danger small">This field is required</span>
+<?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+</div>
+
         
         <div class="col-md-3 form-group">
             <label for="previous_deal_sector" class="form-label">
@@ -873,7 +922,18 @@ unset($__errorArgs, $__bag); ?>
                                         <option value="Wireless">Wireless</option>
                                         <option value="Writing/Editing">Writing/Editing</option>
                     </datalist>
+                     <?php $__errorArgs = ['previous_deal_sector.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger small">This field is required</span>
+                     <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
+               
                 <div class="col-md-2  mt-2 p-1">
                     <label for="previous_deal_type" class="required">Deal Type<span class="text-danger">*</span></label>
                     <select class="form-control" name="previous_deal_type[]" required>
@@ -882,8 +942,7 @@ unset($__errorArgs, $__bag); ?>
                         <option value="Fundraising">Fundraising</option>
                         <option value="IPO">IPO</option>
                         <option value="Others">Others</option>
-                    </select>
-                    
+                    </select>                    
                 </div>
                 <div class="col-md-1 form-floating mt-2 p-1">
                     <button type="button" class="btn btn-info mt-4" onclick="addPreviousDealField()">+</button>
@@ -976,7 +1035,42 @@ unset($__errorArgs, $__bag); ?>
                 <label for="previous_deal_year" class="required">Year</label>
                     <select class="form-control" name="previous_deal_year[]" required>
                         <option value="" disabled selected>Select Year</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
                         <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                        <option value="2014">2014</option>
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                        <option value="2009">2009</option>
+                        <option value="2008">2008</option>
+                        <option value="2007">2007</option>
+                        <option value="2006">2006</option>
+                        <option value="2005">2005</option>
+                        <option value="2004">2004</option>
+                        <option value="2003">2003</option>
+                        <option value="2002">2002</option>
+                        <option value="2001">2001</option>
+                        <option value="2000">2000</option>
+                        <option value="1999">1999</option>
+                        <option value="1998">1998</option>
+                        <option value="1997">1997</option>
+                        <option value="1996">1996</option>
+                        <option value="1995">1995</option>
+                        <option value="1994">1994</option>
+                        <option value="1993">1993</option>
+                        <option value="1992">1992</option>
+                        <option value="1991">1991</option>
+                        <option value="1990">1990</option>
                         <!-- Add more years -->
                     </select>
                     
