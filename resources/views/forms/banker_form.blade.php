@@ -3,14 +3,41 @@
 @section('content')
 
 
-<div class="container p-2 bg-light">
+<!-- <div class="container p-2 bg-light">
     
      <div class="row p-2"  style="">
        
-    
+     -->
+     <!-- <div class="container my-5">
+    <div class="p-4 bg-white border rounded shadow-sm"> -->
+    <div class="container" style="padding-top: 4rem; margin-bottom: 4rem;">
+    <div style="
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.3s ease-in-out, transform 0.3s ease;
+    " onmouseover="this.style.boxShadow='0 18px 36px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.08)'; this.style.transform='translateY(-5px)'" onmouseout="this.style.boxShadow='0 12px 24px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.05)'; this.style.transform='translateY(0)'">
+        
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 style="
+                    font-size: 1.8rem;
+                    font-weight: 700;
+                    color: #2f2f2f;
+                    /* text-transform: uppercase; */
+                    letter-spacing: 1px;
+                    padding-left: 20px;
+                    border-left: 5px solid #007bff;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.2)'; this.style.color='#0056b3'" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)'; this.style.color='#2f2f2f'">
+                    Investment Banker Submission Form
+                </h2>
+            </div>
+        </div>
 
-
-    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('form.bank.submit') }}" method="POST" enctype="multipart/form-data" novalidate>
+    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('form.bank.submit') }}" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;" novalidate>
 
         @csrf
      <!-- Company Details Section -->
