@@ -273,9 +273,9 @@
 
                             <!-- Display investor results -->
                             <div id="investorList">
-                                <!-- @include('partials.investor_list', ['investors' => $investors]) -->
+                                @include('partials.investor_list', ['investors' => $investors]) 
                             
-                                <!-- // echo $investors; -->
+                                <!--  echo $investors; -->
                             
                                 <!-- <pre>{{ print_r($investors, true) }}</pre> -->
                             </div>
