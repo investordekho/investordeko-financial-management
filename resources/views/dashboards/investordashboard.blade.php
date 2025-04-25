@@ -402,7 +402,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('investee.dashboard') }}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Search Results</li>
-                <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here -->
+                <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here -------------------------------------------------------------------------------------------------------------------->
             </ol>
         </nav>
     </div>
@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to update breadcrumb with selected filters
     function updateBreadcrumb() {
         const container = document.getElementById('selected-filters-container');
-        container.innerHTML = ''; // Clear the breadcrumb
+        container.innerHTML = ''; // Clear the breadcrumb ---------------------------------------------------------------------------------------------------------------------------
 
         // Add each selected filter to the breadcrumb
         Object.keys(selectedFilters).forEach(key => {
@@ -465,16 +465,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Add searchBox value to the breadcrumb if it's not empty
         let searchBoxValue = document.getElementById('searchBox').value;
-        if (searchBoxValue && searchBoxValue.trim() !== '') {
-            addFilterToBreadcrumb('searchBox', searchBoxValue); // Add searchBox filter
-        }
+        // if (searchBoxValue && searchBoxValue.trim() !== '') {
+        //     addFilterToBreadcrumb('searchBox', searchBoxValue); // Add searchBox filter
+        // }
     }
 
     // Function to add filter to the breadcrumb
     function addFilterToBreadcrumb(name, label) {
         const container = document.getElementById('selected-filters-container');
 
-        // Create a span element for the filter
+        // Create a span element for the filter -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         const filterElement = document.createElement('span');
         filterElement.className = 'badge bg-secondary me-2';
         filterElement.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
