@@ -17,7 +17,7 @@
                            <li class="nav-item">
                               <a class="nav-link" id="investee-exceldownload-tab" data-toggle="tab" href="#investee-excel-download" role="tab" aria-controls="investee-excel-download" aria-selected="false">Investee/Company Excel Download</a>
                            </li>
-                           <li class="nav-item">
+                           <li class="nav-item d-none">
                               <a class="nav-link" id="employee-management-tab" data-toggle="tab" href="#employee-management" role="tab" aria-controls="employee-management" aria-selected="false">Employee Management</a>
                            </li>
                         </ul>
