@@ -1,22 +1,59 @@
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
-   <!-- <div class="container">
-        <h1 class="display-3 mb-4 animated slideInDown">Pricing</h1>
-    </div> -->
 </div>
 
 <style>
     #small-center {
-    width: 100px;
-    margin: 0 auto;
-    text-align: center;
-}
+        width: 100px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .pricing-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        border-bottom: 2px solid #ddd;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    .price-slab {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .price-slab h5 {
+        margin: 0;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .btn-outline-primary {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
 </style>
+
 <div class="container">
     <h2 class="text-center mb-5">Choose Your Subscription Plan</h2>
-    <div class="row g-4">
+    <div class="row justify-content-center">
         <!-- Investor Plan (Customizable) -->
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6">
             <div class="card pricing-card shadow-sm text-center">
                 <div class="card-header bg-primary text-white">
                     <h1 class="mb-0" style="color:white;">Custom Plan</h1>
@@ -24,29 +61,30 @@
                 <div class="card-body">
                     <p class="card-text">Choose the number of investors to manage.</p>
 
-                    <!-- Input for number of investors and price text in a single line -->
+                    <!-- Input for number of investors -->
                     <div class="form-group d-flex justify-content-center align-items-center mb-3">
-                        <label for="num_investors" class="form-label me-3" style="margin-bottom: 0;">
-                            <strong>Number of Investors:</strong>
+                        <label for="num_investors" class="form-label me-3">
+                            Number of Investors:
                         </label>
                         <input 
                             type="number" 
                             id="num_investors" 
                             style="width: 100px; text-align: center;" 
-                            class="form-control d-inline-block" 
+                            class="form-control" 
                             min="1" 
                             value="1" 
                             onchange="calculatePrice()" 
                             required>
                     </div>
-                    <div style="width: auto; background: #e6e1e1; padding: 10px; margin: 4px; border: 1px #e6e1e1 solid;">
-                        <!-- Static Pricing Slabs -->
-                        <h5 class="my-1" id="price_slab_up_to_10">Up to 10 Investors: ₹999 / investor</h5>
-                        <h5 class="my-1" id="price_slab_above_10">Above 10 Investors: ₹499 / investor</h5>
+
+                    <!-- Pricing Slabs -->
+                    <div class="price-slab">
+                        <h5 id="price_slab_up_to_10">Up to 10 Investors: ₹999 / investor</h5>
+                        <h5 id="price_slab_above_10" style="display: none;">Above 10 Investors: ₹499 / investor</h5>
                     </div>
 
-                    <!-- Checkout Button with Dynamic Total Price -->
-                    <a href="#" id="checkout_link" class="btn btn-outline-primary btn-lg w-100 mt-2" onclick="redirectToCheckout()">
+                    <!-- Checkout Button -->
+                    <a href="#" id="checkout_link" class="btn btn-outline-primary btn-lg w-100 mt-3" onclick="redirectToCheckout()">
                         Pay ₹<span id="total_price">999</span>
                     </a>
                 </div>
@@ -54,50 +92,31 @@
         </div>
     </div>
 </div>
-
+<div style="height: 20px;"></div>
 <script>
     function calculatePrice() {
-        // Get the number of investors
         let numInvestors = parseInt(document.getElementById('num_investors').value);
-
-        // Pricing details
-        let priceFirst10 = 999; // Price per investor for up to 10 investors
-        let priceAbove10 = 499; // Price per investor for above 10 investors
-
-        // Calculate total price
+        let priceFirst10 = 999;
+        let priceAbove10 = 499;
         let totalPrice = 0;
+
         if (numInvestors <= 10) {
-            totalPrice = numInvestors * priceFirst10; // ₹999 per investor for 10 or fewer investors
-
-            // Display both slabs
+            totalPrice = numInvestors * priceFirst10;
             document.getElementById('price_slab_up_to_10').style.display = "block";
-            document.getElementById('price_slab_above_10').style.display = "block";
+            document.getElementById('price_slab_above_10').style.display = "none";
         } else {
-            totalPrice = numInvestors * priceAbove10; // ₹499 per investor for more than 10 investors
-
-            // Display only the "Above 10" slab
+            totalPrice = numInvestors * priceAbove10;
             document.getElementById('price_slab_up_to_10').style.display = "none";
             document.getElementById('price_slab_above_10').style.display = "block";
         }
 
-        // Update the total price on the button
         document.getElementById('total_price').innerText = totalPrice;
-
-        // Update checkout link dynamically
         let checkoutLink = "<?php echo e(route('order')); ?>";
         document.getElementById('checkout_link').href = checkoutLink + '?investors=' + numInvestors + '&price=' + totalPrice;
     }
 
-    function redirectToCheckout() {
-        // Additional checkout logic can be implemented here
-        return true; // Proceed to checkout
-    }
-
-    // Initialize price calculation on page load
     document.addEventListener('DOMContentLoaded', calculatePrice);
 </script>
-
-
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/subscription.blade.php ENDPATH**/ ?>

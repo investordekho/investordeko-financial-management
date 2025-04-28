@@ -70,19 +70,23 @@
             <input type="hidden" name="plan_amount" value="<?php echo e($totalprice); ?>">
             <div class="mb-3">
                 <label class="form-label">Payment Method</label>
-                <select name="payment_method" class="form-select" required>
+                <select name="payment_method" class="form-select" id="payment_method" required>
                     <option value="">Select...</option>
                     <option value="bank">Bank Transfer</option>
                     <option value="upi">UPI / QR</option>
                 </select>
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="transaction_id_div">
                 <label for="transaction_id" class="form-label">Transaction ID</label>
                 <input type="text" class="form-control" id="transaction_id" name="transaction_id" required placeholder="Enter Transaction ID or UTR">
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="reference_id_div" style="display: none;">
                 <label for="reference_id" class="form-label">Reference Id</label>
-                <input type="text" class="form-control" id="reference_id" name="reference_id" required placeholder="Enter Referance Id or UTR">
+                <input type="text" class="form-control" id="reference_id" name="reference_id" required placeholder="Enter Reference Id or UTR">
+            </div>
+            <div class="mb-3" id="upi_id_div" style="display: none;">
+                <label for="amount" class="form-label">UPI Id(Optional)</label>
+                <input type="text" class="form-control" id="upi_id" name="upi_id" placeholder="Enter UPI Id(Optional)">
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
@@ -97,7 +101,7 @@
                 <input type="file" class="form-control" id="screenshot" name="screenshot" accept="image/*" required>
             </div>           
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary rounded-pill py-2 shadow-sm">
+                <button type="submit" class="btn btn-primary rounded-pill py-2 shadow-sm" id="submitbutton">
                     Confirm Payment & Request For the Access
                 </button>
             </div>  
@@ -120,6 +124,58 @@
 
    
 </div>
+<script>
+    //still all requred fields not filled submit button will be disabled
+    document.addEventListener('DOMContentLoaded', function(){
+        const form = document.getElementById('payment_detail');
+        const submitButton = document.getElementById('submitbutton');
+        submitButton.disabled = true;
+        
+        const submitbuttonvisiblity = () => { 
+            let allFilled = true;
+            const inputs = form.querySelectorAll('input[required], select[required]');
+            inputs.forEach(input => {
+                if(input.offsetParent === null){
+                    return;
+                }
+                if(!input.value.trim()){
+                    allFilled = false;
+                }
+            });
+      
+        
+            submitButton.disabled = !allFilled;
+            if(!allFilled){
+                submitButton.classList.add('blur');
+            }
+            else{
+                submitButton.disabled = false;
+                submitButton.classList.remove('blur');
+            }
+        }
+        form.addEventListener('input', submitbuttonvisiblity);
+        form.addEventListener('change', submitbuttonvisiblity);
+    });
+</script>
+<script>
+    const paymentmethod = document.getElementById('payment_method');
+
+    paymentmethod.addEventListener('change', function(){
+        if(paymentmethod.value === 'bank'){
+            document.getElementById('upi_id_div').style.display = 'none';
+            document.getElementById('reference_id_div').style.display = 'block';
+            document.getElementById('upi_id').required = false;
+            document.getElementById('reference_id').required = true;
+        }else if(paymentmethod.value === 'upi'){
+            document.getElementById('upi_id_div').style.display = 'block';
+            document.getElementById('reference_id_div').style.display = 'none';
+            document.getElementById('upi_id').required = true;
+            document.getElementById('reference_id').required = false;
+        }
+        
+    })
+</script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/payment/paymentcredentials.blade.php ENDPATH**/ ?>
