@@ -85,8 +85,8 @@
                 <input type="text" class="form-control" id="reference_id" name="reference_id" required placeholder="Enter Reference Id or UTR">
             </div>
             <div class="mb-3" id="upi_id_div" style="display: none;">
-                <label for="amount" class="form-label">UPI Id(Optional)</label>
-                <input type="text" class="form-control" id="upi_id" name="upi_id" placeholder="Enter UPI Id(Optional)">
+                <label for="amount" class="form-label">UPI Id</label>
+                <input type="text" class="form-control" id="upi_id" name="upi_id" placeholder="Enter UPI Id">
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
@@ -174,6 +174,22 @@
         }
         
     })
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('payment_detail');
+        const submitButton = document.getElementById('submitbutton');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent immediate form submission
+            
+            // Show popup
+            alert('🎉 Congratulations! Your request has been submitted.');
+
+            // After the alert closes, actually submit the form
+            form.submit();
+        });
+    });
 </script>
 
 <?php $__env->stopSection(); ?>
