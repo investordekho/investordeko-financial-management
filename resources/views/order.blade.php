@@ -7,10 +7,18 @@
     
     <div class="card shadow-lg">
         <div class="card-header text-white" style="background-color:#d6d6c2;">
-            <h2 class="mb-0 text-center" style="background-color:#d6d6c2;">Subscription Plan: {{ ucfirst($plan) }}</h2>
+            <h2 class="mb-0 text-center" style="background-color:#d6d6c2;">Subscription Plan</h2>
         </div>
         <div class="card-body">
-            <p class="lead text-center">You have selected the <strong>{{ ucfirst($plan) }}</strong> plan.</p>
+            <p class="lead text-center">You have selected the <strong>{{ ucfirst($plan) }}</strong> 
+            @if(Auth::user()->category_id == 1)
+                <span>Investors Data plan</span>
+            @elseif(Auth::user()->category_id == 2)
+                <span>Investee Data plan</span>
+            @else
+                <span>Investors and Investee Data plan</span>
+            @endif
+            </p>
             <p class="text-center">Total Price: <strong>₹{{ number_format($totalprice, 2) }}</strong></p>
 
             <div class="mt-4 text-center">

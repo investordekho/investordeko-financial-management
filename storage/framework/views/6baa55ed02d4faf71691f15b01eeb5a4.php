@@ -1212,6 +1212,7 @@ unset($__errorArgs, $__bag); ?>"
                     name="public_links[]" 
                     placeholder="URL" 
                     value="<?php echo e(old('public_links.0')); ?>"
+                    style="width: 425px; flex: 0 0 auto;"
                 >
                 <select 
                     class="form-control <?php $__errorArgs = ['link_descriptions.0'];

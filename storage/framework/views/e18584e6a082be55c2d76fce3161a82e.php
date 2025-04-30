@@ -64,7 +64,14 @@
                     <!-- Input for number of investors -->
                     <div class="form-group d-flex justify-content-center align-items-center mb-3">
                         <label for="num_investors" class="form-label me-3">
+                            <?php if(Auth::user()->category_id == 1): ?>
                             Number of Investors:
+                            <?php elseif(Auth::user()->category_id == 2): ?>
+                            Nomber of Investee 
+                            <?php else: ?>
+                            Number of Investor and Investee:
+                            <?php endif; ?>
+
                         </label>
                         <input 
                             type="number" 
