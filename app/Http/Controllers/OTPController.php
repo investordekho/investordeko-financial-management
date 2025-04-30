@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Validation\ValidatesRequests; // Add this line
-use App\Services\OtpService;
+// use App\Services\OtpService;
 class OTPController extends Controller
 {
     // use ValidatesRequests; // Include this trait to enable validation
