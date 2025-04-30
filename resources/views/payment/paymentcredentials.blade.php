@@ -83,11 +83,11 @@
                 <input type="text" class="form-control" id="transaction_id" name="transaction_id" required placeholder="Enter Transaction ID or UTR">
             </div>
             <div class="mb-3" id="reference_id_div" style="display: none;">
-                <label for="reference_id" class="form-label">Reference Id</label>
+                <label for="reference_id" class="form-label">Reference ID</label>
                 <input type="text" class="form-control" id="reference_id" name="reference_id" required placeholder="Enter Reference Id or UTR">
             </div>
             <div class="mb-3" id="upi_id_div" style="display: none;">
-                <label for="amount" class="form-label">UPI Id</label>
+                <label for="amount" class="form-label">UPI ID</label>
                 <input type="text" class="form-control" id="upi_id" name="upi_id" placeholder="Enter UPI Id">
             </div>
             <div class="mb-3">
