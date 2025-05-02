@@ -1803,7 +1803,7 @@ unset($__errorArgs, $__bag); ?>"
          
 
         <div class="col-md-1 mt-3">
-            <button class="btn btn-info float-end" type="button" onclick="addFundField()">+ </button>
+            <button id="addfundButton" class="btn btn-info float-end" type="button" onclick="addFundField()">+ </button>
         </div>
        
            <?php $__errorArgs = ['fund_requirement.0'];
@@ -2851,21 +2851,27 @@ function removeFounderField(button) {
     button.closest('.row').remove();
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
-    // Attach the event listener to the existing fund fields
-    document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
-        input.addEventListener('input', calculateTotalFund);
+    document.querySelector('input[name="fund_requirement[]"]').addEventListener('input',calculateTotalFund);
+    document.querySelectorAll('input[name="fund_requirement[]"]').forEach(input => {
+        input.addEventListener('input',calculateTotalFund);
     });
-
     // Function to calculate total fund raised
     function calculateTotalFund() {
         let total = 0;
+        const fundRows = document.querySelectorAll('#funds-container .row');
 
-        // Sum all values from fund_requirement[] inputs
-        document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
+        fundRows.forEach(row => {
+            const input = row.querySelector('input[name="fund_requirement[]"]');
+            const unitSelect = row.querySelector('select[name="fund_unit[]"]');
+
             let value = parseFloat(input.value);
+            let unit = unitSelect.value;
+
             if (!isNaN(value)) {
+                if (unit === "lakhs") {
+                    value = value / 100;
+                }
                 total += value;
             }
         });
@@ -2874,7 +2880,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('total_fund_raised').value = total.toFixed(2) + ' Cr';
     }
 
-    // Add new fund fields dynamically with event listener
+    // Initial calculation on unit change or button click
+    document.querySelectorAll('select[name="fund_unit[]"]').forEach(select => {
+        select.addEventListener('change', calculateTotalFund);
+    });
+    document.getElementById('addfundButton').addEventListener('click', calculateTotalFund);
+    
+    // Add new fund fields dynamically
     window.addFundField = function () {
         const container = document.getElementById('funds-container');
         const newRow = document.createElement('div');
@@ -2909,68 +2921,161 @@ document.addEventListener('DOMContentLoaded', function () {
 
         container.appendChild(newRow);
 
-        // Attach event listener to the new fund_requirement input
+        // Attach event listeners to new fields
         newRow.querySelector('input[name="fund_requirement[]"]').addEventListener('input', calculateTotalFund);
+        newRow.querySelector('select[name="fund_unit[]"]').addEventListener('change', calculateTotalFund);
     };
 
-    // Function to remove fund field and recalculate total
+    // Remove fund field and recalculate
     window.removeFundField = function (button) {
         const row = button.closest('.row');
         row.remove();
-        calculateTotalFund(); // Recalculate after removal
+        calculateTotalFund();
     };
 });
 
 
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Attach the event listener to the existing fund fields
+//     document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
+//         input.addEventListener('input', calculateTotalFund);
+//     });
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Function to add a new previous round field set
-    window.addPreviousRoundField = function () {
-        const container = document.getElementById('previous-rounds-container');
-        const newRow = document.createElement('div');
-        newRow.className = 'row mb-3 align-items-end bordered-row';
+//     // document.querySelector('select[name="fund_unit[]"]').addEventListener('change', calculateTotalFund);
+//     // Attach an event listener to the label with id 'labelinput'
+//     document.getElementById('addfundButton').addEventListener('click', calculateTotalFund);
+    
+//     // Function to calculate total fund raised
+//     function calculateTotalFund() {
+//         let total = 0;
+//         // Sum all values from fund_requirement[] inputs
+//         const row = document.querySelectorAll('input[name="fund_requirement[]"]');
 
-        newRow.innerHTML = `
-            <div class="col-md-2">
-                <label id="labelinput" for="previous_rounds" class="required">Previous Round</label>
-                <select class="form-control spaced-input" name="previous_rounds[]" required>
-                    <option value="" disabled selected>Select Round</option>
-                    <option value="Pre seed round">Pre seed round</option>
-                    <option value="Seed Round">Seed Round</option>
-                    <option value="Series A round">Series A round</option>
-                    <option value="Series B round">Series B round</option>
-                    <option value="Series C round">Series C round</option>
-                    <option value="Series D round">Series D round</option>
-                    <option value="Series E and beyond">Series E and beyond</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label id="labelinput" for="investors" class="required">Investors</label>
-                <input type="text" class="form-control spaced-input" name="investors[]" required>
-            </div>
-            <div class="col-md-3">
-                <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0" step="0.01" required>
+//         row.forEach(input,index)=>{
+//             let value = parseFloat(input.value);
+//             const unitSelect= document.querySelector('select[name="fund_unit[]"]').value;
+//             const unit = unitSelect[index]?.value;
+//             if(!isNaN(value)){
+//                 if(unit=="lakhs"){
+//                     value = value/100;
+//                 }
+//                 total +=value;
+//             }
 
-            </div>
-            <div class="col-md-3">
-                <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="valuation[]" required>
-            </div>
-            <div class="col-md-1">
-                <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">×</button>
-            </div>
-        `;
+//         }
+//         // document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
+//         //     let value = parseFloat(input.value);
 
-        container.appendChild(newRow);
-    };
+//         //     if (!isNaN(value))
+//         //     if(unit=="lakhs"){
+//         //         value = value /100;
+//         //      }              
+//         //         total += value;
+            
+//         // });
 
-    // Function to remove a previous round field set
-    window.removePreviousRoundField = function (button) {
-        const row = button.closest('.row');
-        row.remove();
-    };
-});
+//         // Update the total fund raised field
+//         document.getElementById('total_fund_raised').value = total.toFixed(2) + ' Cr';
+//     }
+
+//     // Add new fund fields dynamically with event listener
+//     window.addFundField = function () {
+//         const container = document.getElementById('funds-container');
+//         const newRow = document.createElement('div');
+//         newRow.className = 'row mb-3 align-items-end';
+
+//         newRow.innerHTML = `
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="fund_usage" class="required">Usage of Fund</label>
+//                 <select class="form-control spaced-input" name="fund_usage[]" required>
+//                     <option value="" disabled selected>Select Usage</option>
+//                     <option value="Capex">Capex</option>
+//                     <option value="Opex">Opex</option>
+//                     <option value="Acquisition">Acquisition</option>
+//                     <option value="Debt Requirement">Debt Requirement</option>
+//                     <option value="Others">Others</option>
+//                 </select>
+//             </div>
+//             <div class="col-md-8">
+//                 <label id="labelinput" for="fund_requirement" class="required">Fund Requirement</label>
+//                 <div class="input-group">
+//                     <input class="form-control spaced-input" type="number" name="fund_requirement[]" required>
+//                     <select id="newfundAdd" class="form-select spaced-input" name="fund_unit[]" required>
+//                         <option value="crores">Cr</option>
+//                         <option value="lakhs">Lakh</option>
+//                     </select>
+//                 </div>
+//             </div>
+//             <div class="col-md-1 mt-3">
+//                 <button class="btn btn-danger float-end" type="button" onclick="removeFundField(this)">×</button>
+//             </div>
+//         `;
+
+//         container.appendChild(newRow);
+
+//         // Attach event listener to the new fund_requirement input
+//         newRow.querySelector('input[name="fund_requirement[]"]').addEventListener('input', calculateTotalFund);
+//         newRow.querySelector('select[name="fund_unit[]"]').addEventListener('input', calculateTotalFund);
+//     };
+
+//     // Function to remove fund field and recalculate total
+//     window.removeFundField = function (button) {
+//         const row = button.closest('.row');
+//         row.remove();
+//         calculateTotalFund(); // Recalculate after removal
+//     };
+// });
+
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Function to add a new previous round field set
+//     window.addPreviousRoundField = function () {
+//         const container = document.getElementById('previous-rounds-container');
+//         const newRow = document.createElement('div');
+//         newRow.className = 'row mb-3 align-items-end bordered-row';
+
+//         newRow.innerHTML = `
+//             <div class="col-md-2">
+//                 <label id="labelinput" for="previous_rounds" class="required">Previous Round</label>
+//                 <select class="form-control spaced-input" name="previous_rounds[]" required>
+//                     <option value="" disabled selected>Select Round</option>
+//                     <option value="Pre seed round">Pre seed round</option>
+//                     <option value="Seed Round">Seed Round</option>
+//                     <option value="Series A round">Series A round</option>
+//                     <option value="Series B round">Series B round</option>
+//                     <option value="Series C round">Series C round</option>
+//                     <option value="Series D round">Series D round</option>
+//                     <option value="Series E and beyond">Series E and beyond</option>
+//                 </select>
+//             </div>
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="investors" class="required">Investors</label>
+//                 <input type="text" class="form-control spaced-input" name="investors[]" required>
+//             </div>
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
+//                 <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0" step="0.01" required>
+
+//             </div>
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
+//                 <input type="number" class="form-control spaced-input" name="valuation[]" required>
+//             </div>
+//             <div class="col-md-1">
+//                 <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">×</button>
+//             </div>
+//         `;
+
+//         container.appendChild(newRow);
+//     };
+
+//     // Function to remove a previous round field set
+//     window.removePreviousRoundField = function (button) {
+//         const row = button.closest('.row');
+//         row.remove();
+//     };
+// });
 
 
 document.addEventListener('DOMContentLoaded', function () {
