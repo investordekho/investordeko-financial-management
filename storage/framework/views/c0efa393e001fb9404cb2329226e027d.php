@@ -400,7 +400,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Search Results</li>
-                <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here --s------------------------------------------------------------------------------------------------------------------>
+                <li class="breadcrumb-item" id="selected-filters-container"></li> <!-- Dynamic filter labels will go here -------------------------------------------------------------------------------------------------------------------->
             </ol>
         </nav>
     </div>

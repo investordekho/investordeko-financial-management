@@ -36,6 +36,7 @@ class SubscriptionRequestController extends Controller
             'payment_method' => 'required|string',
             'transaction_id' => 'required|string',
             'reference_id' => 'nullable|string',
+            'upi_id' => 'nullable|string',
             'plan_amount' => 'required|numeric',
             'no_of_data' => 'required|numeric',
             'screenshot' => 'required|image|max:2048', // <-- image file validation
@@ -68,7 +69,17 @@ class SubscriptionRequestController extends Controller
         $paymentDetails->amount = $request->input('plan_amount');
         $paymentDetails->currency = "INR";
         $paymentDetails->transaction_id = $request->input('transaction_id');
-        $paymentDetails->reference_id = $request->input('reference_id');
+        if($paymentDetails->payment_method == 'upi')
+        {
+            $paymentDetails->upi_id = $request->input('upi_id');
+            $paymentDetails->reference_id = null;
+        }
+        else
+        {
+            $paymentDetails->upi_id = null;
+            $paymentDetails->reference_id = $request->input('reference_id');
+        }
+    
         $paymentDetails->phone = $request->input('phone');
         
         if ($request->hasFile('screenshot')) {

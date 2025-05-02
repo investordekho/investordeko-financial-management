@@ -94,7 +94,7 @@ class RegisterController extends Controller
     $otp = rand(100000, 999999);
     session(['otp' => $otp, 'user_id' => $user->id]);
 
-    $this->otpService->sendOtp($request->phone, $otp);
+    // $this->otpService->sendOtp($request->phone, $otp);
     // Redirect to OTP verification page
     return redirect()->route('otp.form')->with('success', 'Registration successful! Please verify your mobile number using the OTP sent.');
 }

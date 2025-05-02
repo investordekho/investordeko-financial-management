@@ -907,7 +907,7 @@
                 <select 
                     class="form-control @error('link_descriptions.0') is-invalid @enderror" 
                     name="link_descriptions[]" 
-                    required
+                    
                 >
                     <option value="" disabled {{ old('link_descriptions.0') ? '' : 'selected' }}>Select Account</option>
                     <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
@@ -1339,7 +1339,7 @@
          
 
         <div class="col-md-1 mt-3">
-            <button class="btn btn-info float-end" type="button" onclick="addFundField()">+ </button>
+            <button id="addfundButton" class="btn btn-info float-end" type="button" onclick="addFundField()">+ </button>
         </div>
        
            @error('fund_requirement.0')
@@ -1713,7 +1713,7 @@
     <!-- <hr> -->
     </div>
     <div class="mb-1">
-    <label id="labelinput" for="pitch_deck" class="required" style="color: red;">Pitch Deck <span style="color:red;">*</span></label>
+    <label id="labelinput" for="pitch_deck" class="required" style="color: red;">Pitch Deck<small> (ppt, pptx, pdf, doc, docx)</small> <span style="color:red;">*</span></label>
     <input 
         type="file" 
         class="form-control spaced-input @error('pitch_deck') is-invalid @enderror" 
@@ -1730,7 +1730,7 @@
     <div id="financials-container">
         <div class="row mb-4 align-items-end">
             <div class="col-md-3">
-                <label id="labelinput" for="fiscal_year" class="required">Fiscal Year <span style="color:red;">*</span></label>
+                <label id="labelinput" for="fiscal_year" class="required">Fiscal Year<span style="color:red;">*</span></label>
                 <select 
                     class="form-control spaced-input @error('fiscal_year.0') is-invalid @enderror" 
                     name="fiscal_year[]" 
@@ -1747,7 +1747,7 @@
                 @enderror
             </div>
             <div class="col-md-8">
-                <label id="labelinput" for="financials" class="required">Choose file <span style="color:red;">*</span></label>
+                <label id="labelinput" for="financials" class="required">Choose file<small> (pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
                 <input 
                     type="file" 
                     id="financials"
@@ -1768,7 +1768,7 @@
     </div>
 
     <div class="mb-4">
-    <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment</label>
+    <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment<small> (pdf, doc, docx, xls, xlsx, ppt, pptx)</small></label>
     <input 
         type="file" 
         class="form-control spaced-input @error('other_attachment') is-invalid @enderror" 
@@ -1880,6 +1880,43 @@
 </div>
 
 <!-- Script for Auto-Fill Functionality -->
+ <script>
+    // Prevent form submission without filling required fields
+    document.getElementById('investeeForm').addEventListener('submit', function(event) {
+    const requiredFields = document.querySelectorAll('#investeeForm [required]:not([disabled]):not([type="hidden"])');
+    let isValid = true;
+
+    requiredFields.forEach(field => {
+        if(field.type === 'checkbox'){
+            if(!field.checked){
+                 isValid = false;
+                 field.classList.add('is-invalid');
+                 field.scrollIntoView({behavior:'smooth', block:'center'});
+                 console.log(`Missing checkbox: ${field.name}`);
+            }
+        }
+        else{
+            const value = field.value.trim();
+        if (!value) {
+            isValid = false;
+            field.classList.add('is-invalid');
+            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            console.log(`Missing field: ${field.name}`);
+        } else {
+            field.classList.remove('is-invalid');
+        }
+        }
+        
+    });
+
+    if (!isValid) {
+        event.preventDefault();
+        alert('Please fill all required fields before submitting the form.');
+    }
+});
+
+
+ </script>
 <script>
    document.getElementById('concerned_person_is_me').addEventListener('change', function() {
     const nameField = document.getElementById('concerned_person_name');
@@ -2093,97 +2130,97 @@ function removeLinkField(button) {
 
 
 
-    function addFounderField() {
+//     function addFounderField() {
    
-        var container = document.getElementById('founder-details-container');
+//         var container = document.getElementById('founder-details-container');
 
     
-        var newRow = document.createElement('div');
-        newRow.className = 'row g-1';
+//         var newRow = document.createElement('div');
+//         newRow.className = 'row g-1';
 
     
-        newRow.innerHTML = `
+//         newRow.innerHTML = `
         
           
-            <div class="col-md-2">
-                <label id="labelinput" for="founder_name" class="required">Name</label>
-                <input type="text" class="form-control" name="founder_name[]" required>
-            </div>
-            <div class="col-md-2">
-                <label id="labelinput" for="founder_position" class="required">Position</label>
-                <select class="form-control" name="founder_position[]" required>
-                    <option value="" disabled selected>Select Position</option>
-                    <option value="Chief Administrative Officer">Chief Administrative Officer</option>
-                    <option value="Chief Analytics Officer">Chief Analytics Officer</option>
-                    <option value="Chief Brand Officer">Chief Brand Officer</option>
-                    <option value="Chief Business Development Officer">Chief Business Development Officer</option>
-                    <option value="Chief Business Officer">Chief Business Officer</option>
-                    <option value="Chief Commercial Officer">Chief Commercial Officer</option>
-                    <option value="Chief Communications Officer">Chief Communications Officer</option>
-                    <option value="Chief Compliance Officer">Chief Compliance Officer</option>
-                    <option value="Chief Content Officer">Chief Content Officer</option>
-                    <option value="Chief Creative Officer">Chief Creative Officer</option>
-                    <option value="Chief Customer Officer">Chief Customer Officer</option>
-                    <option value="Chief Data Officer">Chief Data Officer</option>
-                    <option value="Chief Design Officer">Chief Design Officer</option>
-                    <option value="Chief Digital Officer">Chief Digital Officer</option>
-                    <option value="Chief Diversity Officer">Chief Diversity Officer</option>
-                    <option value="Chief Executive Officer">Chief Executive Officer</option>
-                    <option value="Chief Experience Officer">Chief Experience Officer</option>
-                    <option value="Chief Financial Officer">Chief Financial Officer</option>
-                    <option value="Chief Gaming Officer">Chief Gaming Officer</option>
-                    <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
-                    <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
-                    <option value="Chief Information Officer">Chief Information Officer</option>
-                    <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
-                    <option value="Chief Information Security Officer">Chief Information Security Officer</option>
-                    <option value="Chief Innovation Officer">Chief Innovation Officer</option>
-                    <option value="Chief Investment Officer">Chief Investment Officer</option>
-                    <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
-                    <option value="Chief Learning Officer">Chief Learning Officer</option>
-                    <option value="Chief Marketing Officer">Chief Marketing Officer</option>
-                    <option value="Chief Operating Officer">Chief Operating Officer</option>
-                    <option value="Chief Privacy Officer">Chief Privacy Officer</option>
-                    <option value="Chief Process Officer">Chief Process Officer</option>
-                    <option value="Chief Product Officer">Chief Product Officer</option>
-                    <option value="Chief Reputation Officer">Chief Reputation Officer</option>
-                    <option value="Chief Research Officer">Chief Research Officer</option>
-                    <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
-                    <option value="Chief Risk Officer">Chief Risk Officer</option>
-                    <option value="Chief Science Officer">Chief Science Officer</option>
-                    <option value="Chief Scientific Officer">Chief Scientific Officer</option>
-                    <option value="Chief Security Officer">Chief Security Officer</option>
-                    <option value="Chief Services Officer">Chief Services Officer</option>
-                    <option value="Chief Strategy Officer">Chief Strategy Officer</option>
-                    <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
-                    <option value="Chief Technology Officer">Chief Technology Officer</option>
-                    <option value="Chief Visibility Officer">Chief Visibility Officer</option>
-                    <option value="Chief Visionary Officer">Chief Visionary Officer</option>
-                    <option value="Chief Web Officer">Chief Web Officer</option>
-                    <option value="General Manager">General Manager</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Others">Others</option>
-                    <option value="Secretary">Secretary</option>
-                    <option value="Supervisor">Supervisor</option>
-                    <option value="Vice President">Vice President</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
-                <input type="text" class="form-control" name="founder_education[]" required>
-            </div>
-            <div class="col-md-3">
-                <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
-                <input type="number" class="form-control " name="founder_experience[]" required>
-            </div>
-            <div class="col-md-1">
-                <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
-            </div>
-        `;
+//             <div class="col-md-2">
+//                 <label id="labelinput" for="founder_name" class="required">Name</label>
+//                 <input type="text" class="form-control" name="founder_name[]" required>
+//             </div>
+//             <div class="col-md-2">
+//                 <label id="labelinput" for="founder_position" class="required">Position</label>
+//                 <select class="form-control" name="founder_position[]" required>
+//                     <option value="" disabled selected>Select Position</option>
+//                     <option value="Chief Administrative Officer">Chief Administrative Officer</option>
+//                     <option value="Chief Analytics Officer">Chief Analytics Officer</option>
+//                     <option value="Chief Brand Officer">Chief Brand Officer</option>
+//                     <option value="Chief Business Development Officer">Chief Business Development Officer</option>
+//                     <option value="Chief Business Officer">Chief Business Officer</option>
+//                     <option value="Chief Commercial Officer">Chief Commercial Officer</option>
+//                     <option value="Chief Communications Officer">Chief Communications Officer</option>
+//                     <option value="Chief Compliance Officer">Chief Compliance Officer</option>
+//                     <option value="Chief Content Officer">Chief Content Officer</option>
+//                     <option value="Chief Creative Officer">Chief Creative Officer</option>
+//                     <option value="Chief Customer Officer">Chief Customer Officer</option>
+//                     <option value="Chief Data Officer">Chief Data Officer</option>
+//                     <option value="Chief Design Officer">Chief Design Officer</option>
+//                     <option value="Chief Digital Officer">Chief Digital Officer</option>
+//                     <option value="Chief Diversity Officer">Chief Diversity Officer</option>
+//                     <option value="Chief Executive Officer">Chief Executive Officer</option>
+//                     <option value="Chief Experience Officer">Chief Experience Officer</option>
+//                     <option value="Chief Financial Officer">Chief Financial Officer</option>
+//                     <option value="Chief Gaming Officer">Chief Gaming Officer</option>
+//                     <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
+//                     <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
+//                     <option value="Chief Information Officer">Chief Information Officer</option>
+//                     <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
+//                     <option value="Chief Information Security Officer">Chief Information Security Officer</option>
+//                     <option value="Chief Innovation Officer">Chief Innovation Officer</option>
+//                     <option value="Chief Investment Officer">Chief Investment Officer</option>
+//                     <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
+//                     <option value="Chief Learning Officer">Chief Learning Officer</option>
+//                     <option value="Chief Marketing Officer">Chief Marketing Officer</option>
+//                     <option value="Chief Operating Officer">Chief Operating Officer</option>
+//                     <option value="Chief Privacy Officer">Chief Privacy Officer</option>
+//                     <option value="Chief Process Officer">Chief Process Officer</option>
+//                     <option value="Chief Product Officer">Chief Product Officer</option>
+//                     <option value="Chief Reputation Officer">Chief Reputation Officer</option>
+//                     <option value="Chief Research Officer">Chief Research Officer</option>
+//                     <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
+//                     <option value="Chief Risk Officer">Chief Risk Officer</option>
+//                     <option value="Chief Science Officer">Chief Science Officer</option>
+//                     <option value="Chief Scientific Officer">Chief Scientific Officer</option>
+//                     <option value="Chief Security Officer">Chief Security Officer</option>
+//                     <option value="Chief Services Officer">Chief Services Officer</option>
+//                     <option value="Chief Strategy Officer">Chief Strategy Officer</option>
+//                     <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
+//                     <option value="Chief Technology Officer">Chief Technology Officer</option>
+//                     <option value="Chief Visibility Officer">Chief Visibility Officer</option>
+//                     <option value="Chief Visionary Officer">Chief Visionary Officer</option>
+//                     <option value="Chief Web Officer">Chief Web Officer</option>
+//                     <option value="General Manager">General Manager</option>
+//                     <option value="Manager">Manager</option>
+//                     <option value="Others">Others</option>
+//                     <option value="Secretary">Secretary</option>
+//                     <option value="Supervisor">Supervisor</option>
+//                     <option value="Vice President">Vice President</option>
+//                 </select>
+//             </div>
+//             <div class="col-md-2">
+//                 <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
+//                 <input type="text" class="form-control" name="founder_education[]" required>
+//             </div>
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
+//                 <input type="number" class="form-control " name="founder_experience[]" required>
+//             </div>
+//             <div class="col-md-1">
+//                 <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
+//             </div>
+//         `;
 
         
-        container.appendChild(newRow);
-}
+//         container.appendChild(newRow);
+// }
 
 // Function to remove founder fields
 function removeFounderField(button) {
@@ -2191,21 +2228,27 @@ function removeFounderField(button) {
     button.closest('.row').remove();
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
-    // Attach the event listener to the existing fund fields
-    document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
-        input.addEventListener('input', calculateTotalFund);
+    document.querySelector('input[name="fund_requirement[]"]').addEventListener('input',calculateTotalFund);
+    document.querySelectorAll('input[name="fund_requirement[]"]').forEach(input => {
+        input.addEventListener('input',calculateTotalFund);
     });
-
     // Function to calculate total fund raised
     function calculateTotalFund() {
         let total = 0;
+        const fundRows = document.querySelectorAll('#funds-container .row');
 
-        // Sum all values from fund_requirement[] inputs
-        document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
+        fundRows.forEach(row => {
+            const input = row.querySelector('input[name="fund_requirement[]"]');
+            const unitSelect = row.querySelector('select[name="fund_unit[]"]');
+
             let value = parseFloat(input.value);
+            let unit = unitSelect.value;
+
             if (!isNaN(value)) {
+                if (unit === "lakhs") {
+                    value = value / 100;
+                }
                 total += value;
             }
         });
@@ -2214,7 +2257,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('total_fund_raised').value = total.toFixed(2) + ' Cr';
     }
 
-    // Add new fund fields dynamically with event listener
+    // Initial calculation on unit change or button click
+    document.querySelectorAll('select[name="fund_unit[]"]').forEach(select => {
+        select.addEventListener('change', calculateTotalFund);
+    });
+    document.getElementById('addfundButton').addEventListener('click', calculateTotalFund);
+    
+    // Add new fund fields dynamically
     window.addFundField = function () {
         const container = document.getElementById('funds-container');
         const newRow = document.createElement('div');
@@ -2249,68 +2298,161 @@ document.addEventListener('DOMContentLoaded', function () {
 
         container.appendChild(newRow);
 
-        // Attach event listener to the new fund_requirement input
+        // Attach event listeners to new fields
         newRow.querySelector('input[name="fund_requirement[]"]').addEventListener('input', calculateTotalFund);
+        newRow.querySelector('select[name="fund_unit[]"]').addEventListener('change', calculateTotalFund);
     };
 
-    // Function to remove fund field and recalculate total
+    // Remove fund field and recalculate
     window.removeFundField = function (button) {
         const row = button.closest('.row');
         row.remove();
-        calculateTotalFund(); // Recalculate after removal
+        calculateTotalFund();
     };
 });
 
 
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Attach the event listener to the existing fund fields
+//     document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
+//         input.addEventListener('input', calculateTotalFund);
+//     });
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Function to add a new previous round field set
-    window.addPreviousRoundField = function () {
-        const container = document.getElementById('previous-rounds-container');
-        const newRow = document.createElement('div');
-        newRow.className = 'row mb-3 align-items-end bordered-row';
+//     // document.querySelector('select[name="fund_unit[]"]').addEventListener('change', calculateTotalFund);
+//     // Attach an event listener to the label with id 'labelinput'
+//     document.getElementById('addfundButton').addEventListener('click', calculateTotalFund);
+    
+//     // Function to calculate total fund raised
+//     function calculateTotalFund() {
+//         let total = 0;
+//         // Sum all values from fund_requirement[] inputs
+//         const row = document.querySelectorAll('input[name="fund_requirement[]"]');
 
-        newRow.innerHTML = `
-            <div class="col-md-2">
-                <label id="labelinput" for="previous_rounds" class="required">Previous Round</label>
-                <select class="form-control spaced-input" name="previous_rounds[]" required>
-                    <option value="" disabled selected>Select Round</option>
-                    <option value="Pre seed round">Pre seed round</option>
-                    <option value="Seed Round">Seed Round</option>
-                    <option value="Series A round">Series A round</option>
-                    <option value="Series B round">Series B round</option>
-                    <option value="Series C round">Series C round</option>
-                    <option value="Series D round">Series D round</option>
-                    <option value="Series E and beyond">Series E and beyond</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label id="labelinput" for="investors" class="required">Investors</label>
-                <input type="text" class="form-control spaced-input" name="investors[]" required>
-            </div>
-            <div class="col-md-3">
-                <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0" step="0.01" required>
+//         row.forEach(input,index)=>{
+//             let value = parseFloat(input.value);
+//             const unitSelect= document.querySelector('select[name="fund_unit[]"]').value;
+//             const unit = unitSelect[index]?.value;
+//             if(!isNaN(value)){
+//                 if(unit=="lakhs"){
+//                     value = value/100;
+//                 }
+//                 total +=value;
+//             }
 
-            </div>
-            <div class="col-md-3">
-                <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="valuation[]" required>
-            </div>
-            <div class="col-md-1">
-                <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">×</button>
-            </div>
-        `;
+//         }
+//         // document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
+//         //     let value = parseFloat(input.value);
 
-        container.appendChild(newRow);
-    };
+//         //     if (!isNaN(value))
+//         //     if(unit=="lakhs"){
+//         //         value = value /100;
+//         //      }              
+//         //         total += value;
+            
+//         // });
 
-    // Function to remove a previous round field set
-    window.removePreviousRoundField = function (button) {
-        const row = button.closest('.row');
-        row.remove();
-    };
-});
+//         // Update the total fund raised field
+//         document.getElementById('total_fund_raised').value = total.toFixed(2) + ' Cr';
+//     }
+
+//     // Add new fund fields dynamically with event listener
+//     window.addFundField = function () {
+//         const container = document.getElementById('funds-container');
+//         const newRow = document.createElement('div');
+//         newRow.className = 'row mb-3 align-items-end';
+
+//         newRow.innerHTML = `
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="fund_usage" class="required">Usage of Fund</label>
+//                 <select class="form-control spaced-input" name="fund_usage[]" required>
+//                     <option value="" disabled selected>Select Usage</option>
+//                     <option value="Capex">Capex</option>
+//                     <option value="Opex">Opex</option>
+//                     <option value="Acquisition">Acquisition</option>
+//                     <option value="Debt Requirement">Debt Requirement</option>
+//                     <option value="Others">Others</option>
+//                 </select>
+//             </div>
+//             <div class="col-md-8">
+//                 <label id="labelinput" for="fund_requirement" class="required">Fund Requirement</label>
+//                 <div class="input-group">
+//                     <input class="form-control spaced-input" type="number" name="fund_requirement[]" required>
+//                     <select id="newfundAdd" class="form-select spaced-input" name="fund_unit[]" required>
+//                         <option value="crores">Cr</option>
+//                         <option value="lakhs">Lakh</option>
+//                     </select>
+//                 </div>
+//             </div>
+//             <div class="col-md-1 mt-3">
+//                 <button class="btn btn-danger float-end" type="button" onclick="removeFundField(this)">×</button>
+//             </div>
+//         `;
+
+//         container.appendChild(newRow);
+
+//         // Attach event listener to the new fund_requirement input
+//         newRow.querySelector('input[name="fund_requirement[]"]').addEventListener('input', calculateTotalFund);
+//         newRow.querySelector('select[name="fund_unit[]"]').addEventListener('input', calculateTotalFund);
+//     };
+
+//     // Function to remove fund field and recalculate total
+//     window.removeFundField = function (button) {
+//         const row = button.closest('.row');
+//         row.remove();
+//         calculateTotalFund(); // Recalculate after removal
+//     };
+// });
+
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Function to add a new previous round field set
+//     window.addPreviousRoundField = function () {
+//         const container = document.getElementById('previous-rounds-container');
+//         const newRow = document.createElement('div');
+//         newRow.className = 'row mb-3 align-items-end bordered-row';
+
+//         newRow.innerHTML = `
+//             <div class="col-md-2">
+//                 <label id="labelinput" for="previous_rounds" class="required">Previous Round</label>
+//                 <select class="form-control spaced-input" name="previous_rounds[]" required>
+//                     <option value="" disabled selected>Select Round</option>
+//                     <option value="Pre seed round">Pre seed round</option>
+//                     <option value="Seed Round">Seed Round</option>
+//                     <option value="Series A round">Series A round</option>
+//                     <option value="Series B round">Series B round</option>
+//                     <option value="Series C round">Series C round</option>
+//                     <option value="Series D round">Series D round</option>
+//                     <option value="Series E and beyond">Series E and beyond</option>
+//                 </select>
+//             </div>
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="investors" class="required">Investors</label>
+//                 <input type="text" class="form-control spaced-input" name="investors[]" required>
+//             </div>
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
+//                 <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0" step="0.01" required>
+
+//             </div>
+//             <div class="col-md-3">
+//                 <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
+//                 <input type="number" class="form-control spaced-input" name="valuation[]" required>
+//             </div>
+//             <div class="col-md-1">
+//                 <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">×</button>
+//             </div>
+//         `;
+
+//         container.appendChild(newRow);
+//     };
+
+//     // Function to remove a previous round field set
+//     window.removePreviousRoundField = function (button) {
+//         const row = button.closest('.row');
+//         row.remove();
+//     };
+// });
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -2355,7 +2497,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById('pitch_deck').addEventListener('change', function() {
         var file = this.files[0];
-        var allowedExtensions = /(\.pdf|\.doc|\.docx)$/i;
+        var allowedExtensions = /(\.pdf|\.doc|\.docx|\.ppt|\.pptx)$/i;
         
         if (!allowedExtensions.exec(file.name)) {
             document.getElementById('file-error').innerText = 'Invalid file type. Only PDF, DOC, or DOCX files are allowed.';

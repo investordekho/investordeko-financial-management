@@ -338,90 +338,90 @@
         </div>
 
         <!-- Right Section: Login/Profile -->
-      <!-- Right Section: Login/Profile -->
-<div class="col-md-1 d-flex justify-content-end">
-    <ul id="profileMenu" class="navbar-nav">
-        <?php if(auth()->guard()->guest()): ?>
-            <!-- Show Login Link if not authenticated -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo e(route('login')); ?>">Login</a>
-            </li>
-        <?php else: ?>
-            <!-- Show User Dropdown if authenticated -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- Display Profile Image if exists, otherwise show default image -->
-                    <?php if(Auth::user()->profile_image): ?>
-                        <img src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
-                    <?php else: ?>
-                        <img src="<?php echo e(asset('img/default_profile.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
-                    <?php endif; ?>
-                    <span class="ms-2"><?php echo e(Auth::user()->name); ?></span>
-                </a>
-                <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                    <!-- Dashboard Link -->
-                    <li>
-                        <a class="dropdown-item" href="
-                            <?php if(Auth::user()->form_filled == 0): ?>
-                                <?php if(Auth::user()->category_id == 1): ?>
-                                    <?php echo e(route('form.investee')); ?>  
-                                <?php elseif(Auth::user()->category_id == 2): ?>
-                                    <?php echo e(route('form.investor')); ?>  
-                                <?php elseif(Auth::user()->category_id == 3): ?>
-                                    <?php echo e(route('form.banker.form')); ?> 
-                                <?php elseif(Auth::user()->category_id == 4): ?>
-                                    <?php echo e(route('form.other')); ?>     
-                                <?php else: ?>
-                                    <?php echo e(route('home')); ?> <!-- Fallback if no valid category -->
-                                <?php endif; ?>
+        <!-- Right Section: Login/Profile -->
+        <div class="col-auto d-flex justify-content-end">
+            <ul id="profileMenu" class="navbar-nav">
+                <?php if(auth()->guard()->guest()): ?>
+                    <!-- Show Login Link if not authenticated -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo e(route('login')); ?>">Login</a>
+                    </li>
+                <?php else: ?>
+                    <!-- Show User Dropdown if authenticated -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <!-- Display Profile Image if exists, otherwise show default image -->
+                            <?php if(Auth::user()->profile_image): ?>
+                                <img src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             <?php else: ?>
-                                <?php if(Auth::user()->category_id == 1): ?>
-                                    <?php echo e(route('investee.dashboard')); ?>
-
-                                <?php elseif(Auth::user()->category_id == 2): ?>
-                                    <?php echo e(route('investor.dashboard')); ?>
-
-                                <?php elseif(Auth::user()->category_id == 3): ?>
-                                    <?php echo e(route('banker.dashboard')); ?>
-
-                                <?php elseif(Auth::user()->category_id == 4): ?>
-                                    <?php echo e(route('banker.dashboard')); ?>
-
-                                <?php else: ?>
-                                    <?php echo e(route('home')); ?>
-
-                                <?php endif; ?>
+                                <img src="<?php echo e(asset('img/default_profile.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
                             <?php endif; ?>
-                        ">
-                            <i class="bi bi-house-door-fill me-2"></i> Dashboard
+                            <span class="ms-2"><?php echo e(Auth::user()->name); ?></span>
                         </a>
+                        <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <!-- Dashboard Link -->
+                            <li>
+                                <a class="dropdown-item" href="
+                                    <?php if(Auth::user()->form_filled == 0): ?>
+                                        <?php if(Auth::user()->category_id == 1): ?>
+                                            <?php echo e(route('form.investee')); ?>  
+                                        <?php elseif(Auth::user()->category_id == 2): ?>
+                                            <?php echo e(route('form.investor')); ?>  
+                                        <?php elseif(Auth::user()->category_id == 3): ?>
+                                            <?php echo e(route('form.banker.form')); ?> 
+                                        <?php elseif(Auth::user()->category_id == 4): ?>
+                                            <?php echo e(route('form.other')); ?>     
+                                        <?php else: ?>
+                                            <?php echo e(route('home')); ?> <!-- Fallback if no valid category -->
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <?php if(Auth::user()->category_id == 1): ?>
+                                            <?php echo e(route('investee.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 2): ?>
+                                            <?php echo e(route('investor.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 3): ?>
+                                            <?php echo e(route('banker.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 4): ?>
+                                            <?php echo e(route('banker.dashboard')); ?>
+
+                                        <?php else: ?>
+                                            <?php echo e(route('home')); ?>
+
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                ">
+                                    <i class="bi bi-house-door-fill me-2"></i> Dashboard
+                                </a>
+                            </li>
+                            
+                            <!-- Profile Settings Link -->
+                            <li>
+                                <a class="dropdown-item" href="<?php echo e(route('profile.settings')); ?>">
+                                    <i class="bi bi-gear-fill me-2"></i> Profile Settings
+                                </a>
+                            </li>
+                            
+                            <!-- Divider -->
+                            <li><hr class="dropdown-divider"></li>
+                            
+                            <!-- Logout Link -->
+                            <li>
+                                <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                </a>
+                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
+                                    <?php echo csrf_field(); ?>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
-                    
-                    <!-- Profile Settings Link -->
-                    <li>
-                        <a class="dropdown-item" href="<?php echo e(route('profile.settings')); ?>">
-                            <i class="bi bi-gear-fill me-2"></i> Profile Settings
-                        </a>
-                    </li>
-                    
-                    <!-- Divider -->
-                    <li><hr class="dropdown-divider"></li>
-                    
-                    <!-- Logout Link -->
-                    <li>
-                        <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="bi bi-box-arrow-right me-2"></i> Logout
-                        </a>
-                        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
-                            <?php echo csrf_field(); ?>
-                        </form>
-                    </li>
-                </ul>
-            </li>
-        <?php endif; ?>
-    </ul>
-</div>
+                <?php endif; ?>
+            </ul>
+        </div>
 
 
 

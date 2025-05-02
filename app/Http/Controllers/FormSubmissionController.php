@@ -38,14 +38,15 @@ class FormSubmissionController extends Controller
         'investors.*' => 'required|string',
         'amount_raised.*' => 'required|numeric',
         'valuation.*' => 'required|numeric',
-        'public_links.*' => 'required|url',
-        'link_descriptions.*' => 'required|string',
-        'pitch_deck' => 'required|file|mimes:pdf,doc,docx|max:2048',
+        'public_links.*' => 'nullable|url',
+        'link_descriptions.*' => 'nullable|string',
+        'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx|max:2048',
         'referral_source' => 'required|string',
         'website' => 'required|url',
         'linkedin' => 'required|url',
         'fiscal_year.*' => 'required|integer|digits:4',
-        'financials.*' => 'required|file|mimes:pdf,doc,docx|max:2048',
+        'financials.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
+        'other_attachment'=>'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2028',
     ]);
 
     // Store company details
@@ -102,13 +103,16 @@ class FormSubmissionController extends Controller
     }
 
     // Store other links
-    foreach ($request->public_links as $index => $link) {
-        OtherLink::create([
-            'company_id' => $company->id,
-            'link_url' => $link,
-            'link_description' => $request->link_descriptions[$index],
-        ]);
+    if($request->public_links){
+        foreach ($request->public_links as $index => $link) {
+            OtherLink::create([
+                'company_id' => $company->id,
+                'link_url' => $link,
+                'link_description' => isSet($request->link_descriptions[$index]) ? $request->link_descriptions[$index]:'other',
+            ]);
+        }
     }
+    
 
     // Store attachments (Pitch Deck)
     if ($request->hasFile('pitch_deck')) {
@@ -139,6 +143,15 @@ class FormSubmissionController extends Controller
                 'file_path' => $path,
             ]);
         }
+    }
+
+    if($request->hasFile('other_attachment')){
+        $path = $request->file('other_attachment')->store('attachments','public');
+        Attachment::create([
+            'company_id'=>$company_id,
+            'type'=>'other_attachment',
+            'file_path'=>$path,
+        ]);
     }
 
     // Store referral source
@@ -168,23 +181,27 @@ public function store(Request $request)
         'concerned_person_name' => 'required|string',
         'concerned_person_email' => 'required|email',
         'concerned_person_designation' => 'required|string',
-        'concerned_person_phone' => 'required|string',
-        'founder_name.*' => 'required|string',
-        'fund_usage.*' => 'required|string',
-        'fund_requirement.*' => 'required|numeric',
-        'previous_rounds.*' => 'required|string',
-        'investors.*' => 'required|string',
-        'amount_raised.*' => 'required|numeric',
-        'valuation.*' => 'required|numeric',
-        'public_links.*' => 'required|url',
-        'link_descriptions.*' => 'required|string',
-        'pitch_deck' => 'required|file|mimes:pdf,doc,docx|max:2048',
-        'referral_source' => 'required|string',
-        'website' => 'required|url',
-        'linkedin' => 'required|url',
-        'fiscal_year.*' => 'required|integer|digits:4',
-        'financials.*' => 'required|file|mimes:pdf,doc,docx|max:2048',
-        'guidance_needed.*' => 'nullable|string',
+        'concerned_person_phone' => 'required|string', //
+        'founder_name.*' => 'required|string', //
+        'founder_position.*'=>'required|string', //
+        'founder_education.*'=>'required|string', //
+        'founder_experience.*'=>'required|integer',//
+        'fund_usage.*' => 'required|string', //
+        'fund_requirement.*' => 'required|numeric', //
+        'previous_rounds.*' => 'required|string', //
+        'investors.*' => 'required|string', //
+        'amount_raised.*' => 'required|numeric', //
+        'valuation.*' => 'required|numeric', //
+        'public_links.*' => 'nullable|url', //
+        'link_descriptions.*' => 'nullable|string', //
+        'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx|max:2048', //
+        'referral_source' => 'required|string', //
+        'website' => 'required|url', //
+        'linkedin' => 'required|url', //
+        'fiscal_year.*' => 'required|integer|digits:4', //
+        'financials.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:2048', //
+        'guidance_needed.*' => 'nullable|string', //
+        'other_attachment'=>'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048', //
     ]);
 
     // Store company details
@@ -241,12 +258,16 @@ public function store(Request $request)
     }
 
     // Store other links
-    foreach ($request->public_links as $index => $link) {
-        OtherLink::create([
-            'company_id' => $company->id,
-            'link_url' => $link,
-            'link_description' => $request->link_descriptions[$index],
-        ]);
+    if($request->public_links){
+        foreach ($request->public_links as $index => $link) {
+            if(!empty($link)){
+                OtherLink::create([
+                    'company_id' => $company->id,
+                    'link_url' => $link,
+                    'link_description' => isSet($request->link_descriptions[$index]) ? $request->link_descriptions[$index]:'other',
+                ]);
+            }
+        }
     }
 
     // Store attachments (Pitch Deck)
@@ -278,6 +299,15 @@ public function store(Request $request)
                 'file_path' => $path,
             ]);
         }
+    }
+
+    if($request->hasFile('other_attachment')){
+        $path = $request->file('other_attachment')->store('attachments','public');
+        Attachment::create([
+            'company_id'=>$company->id,
+            'type'=>'other',
+            'file_path'=>$path,
+        ]);
     }
 
     // Store referral source

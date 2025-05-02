@@ -139,7 +139,7 @@
     }
 
     .locked-content {
-        filter: blur(3px);
+        filter: blur(5px);
         opacity: 0.6;
     }
     
