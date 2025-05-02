@@ -38,8 +38,8 @@ class FormSubmissionController extends Controller
         'investors.*' => 'required|string',
         'amount_raised.*' => 'required|numeric',
         'valuation.*' => 'required|numeric',
-        'public_links.*' => 'required|url',
-        'link_descriptions.*' => 'required|string',
+        'public_links.*' => 'nullable|url',
+        'link_descriptions.*' => 'nullable|string',
         'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx|max:2048',
         'referral_source' => 'required|string',
         'website' => 'required|url',
@@ -103,13 +103,16 @@ class FormSubmissionController extends Controller
     }
 
     // Store other links
-    foreach ($request->public_links as $index => $link) {
-        OtherLink::create([
-            'company_id' => $company->id,
-            'link_url' => $link,
-            'link_description' => $request->link_descriptions[$index],
-        ]);
+    if($request->public_links){
+        foreach ($request->public_links as $index => $link) {
+            OtherLink::create([
+                'company_id' => $company->id,
+                'link_url' => $link,
+                'link_description' => isSet($request->link_descriptions[$index]) ? $request->link_descriptions[$index]:'other',
+            ]);
+        }
     }
+    
 
     // Store attachments (Pitch Deck)
     if ($request->hasFile('pitch_deck')) {
@@ -190,7 +193,7 @@ public function store(Request $request)
         'amount_raised.*' => 'required|numeric', //
         'valuation.*' => 'required|numeric', //
         'public_links.*' => 'nullable|url', //
-        'link_descriptions.*' => 'required|string', //
+        'link_descriptions.*' => 'nullable|string', //
         'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx|max:2048', //
         'referral_source' => 'required|string', //
         'website' => 'required|url', //
@@ -255,12 +258,16 @@ public function store(Request $request)
     }
 
     // Store other links
-    foreach ($request->public_links as $index => $link) {
-        OtherLink::create([
-            'company_id' => $company->id,
-            'link_url' => $link,
-            'link_description' => $request->link_descriptions[$index],
-        ]);
+    if($request->public_links){
+        foreach ($request->public_links as $index => $link) {
+            if(!empty($link)){
+                OtherLink::create([
+                    'company_id' => $company->id,
+                    'link_url' => $link,
+                    'link_description' => isSet($request->link_descriptions[$index]) ? $request->link_descriptions[$index]:'other',
+                ]);
+            }
+        }
     }
 
     // Store attachments (Pitch Deck)
@@ -298,7 +305,7 @@ public function store(Request $request)
         $path = $request->file('other_attachment')->store('attachments','public');
         Attachment::create([
             'company_id'=>$company->id,
-            'type'=>'other_attachment',
+            'type'=>'other',
             'file_path'=>$path,
         ]);
     }
