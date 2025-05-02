@@ -338,85 +338,85 @@
         </div>
 
         <!-- Right Section: Login/Profile -->
-      <!-- Right Section: Login/Profile -->
-<div class="col-md-1 d-flex justify-content-end">
-    <ul id="profileMenu" class="navbar-nav">
-        @guest
-            <!-- Show Login Link if not authenticated -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">Login</a>
-            </li>
-        @else
-            <!-- Show User Dropdown if authenticated -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- Display Profile Image if exists, otherwise show default image -->
-                    @if (Auth::user()->profile_image)
-                        <img src="{{ asset('storage/profile_image/' . Auth::user()->profile_image) }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
-                    @else
-                        <img src="{{ asset('img/default_profile.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
-                    @endif
-                    <span class="ms-2">{{ Auth::user()->name }}</span>
-                </a>
-                <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                    <!-- Dashboard Link -->
-                    <li>
-                        <a class="dropdown-item" href="
-                            @if(Auth::user()->form_filled == 0)
-                                @if(Auth::user()->category_id == 1)
-                                    {{ route('form.investee') }}  
-                                @elseif(Auth::user()->category_id == 2)
-                                    {{ route('form.investor') }}  
-                                @elseif(Auth::user()->category_id == 3)
-                                    {{ route('form.banker.form') }} 
-                                @elseif(Auth::user()->category_id == 4)
-                                    {{ route('form.other') }}     
-                                @else
-                                    {{ route('home') }} <!-- Fallback if no valid category -->
-                                @endif
+        <!-- Right Section: Login/Profile -->
+        <div class="col-auto d-flex justify-content-end">
+            <ul id="profileMenu" class="navbar-nav">
+                @guest
+                    <!-- Show Login Link if not authenticated -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                @else
+                    <!-- Show User Dropdown if authenticated -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <!-- Display Profile Image if exists, otherwise show default image -->
+                            @if (Auth::user()->profile_image)
+                                <img src="{{ asset('storage/profile_image/' . Auth::user()->profile_image) }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             @else
-                                @if(Auth::user()->category_id == 1)
-                                    {{ route('investee.dashboard') }}
-                                @elseif(Auth::user()->category_id == 2)
-                                    {{ route('investor.dashboard') }}
-                                @elseif(Auth::user()->category_id == 3)
-                                    {{ route('banker.dashboard') }}
-                                @elseif(Auth::user()->category_id == 4)
-                                    {{ route('banker.dashboard') }}
-                                @else
-                                    {{ route('home') }}
-                                @endif
+                                <img src="{{ asset('img/default_profile.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
                             @endif
-                        ">
-                            <i class="bi bi-house-door-fill me-2"></i> Dashboard
+                            <span class="ms-2">{{ Auth::user()->name }}</span>
                         </a>
+                        <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <!-- Dashboard Link -->
+                            <li>
+                                <a class="dropdown-item" href="
+                                    @if(Auth::user()->form_filled == 0)
+                                        @if(Auth::user()->category_id == 1)
+                                            {{ route('form.investee') }}  
+                                        @elseif(Auth::user()->category_id == 2)
+                                            {{ route('form.investor') }}  
+                                        @elseif(Auth::user()->category_id == 3)
+                                            {{ route('form.banker.form') }} 
+                                        @elseif(Auth::user()->category_id == 4)
+                                            {{ route('form.other') }}     
+                                        @else
+                                            {{ route('home') }} <!-- Fallback if no valid category -->
+                                        @endif
+                                    @else
+                                        @if(Auth::user()->category_id == 1)
+                                            {{ route('investee.dashboard') }}
+                                        @elseif(Auth::user()->category_id == 2)
+                                            {{ route('investor.dashboard') }}
+                                        @elseif(Auth::user()->category_id == 3)
+                                            {{ route('banker.dashboard') }}
+                                        @elseif(Auth::user()->category_id == 4)
+                                            {{ route('banker.dashboard') }}
+                                        @else
+                                            {{ route('home') }}
+                                        @endif
+                                    @endif
+                                ">
+                                    <i class="bi bi-house-door-fill me-2"></i> Dashboard
+                                </a>
+                            </li>
+                            
+                            <!-- Profile Settings Link -->
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile.settings') }}">
+                                    <i class="bi bi-gear-fill me-2"></i> Profile Settings
+                                </a>
+                            </li>
+                            
+                            <!-- Divider -->
+                            <li><hr class="dropdown-divider"></li>
+                            
+                            <!-- Logout Link -->
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
                     </li>
-                    
-                    <!-- Profile Settings Link -->
-                    <li>
-                        <a class="dropdown-item" href="{{ route('profile.settings') }}">
-                            <i class="bi bi-gear-fill me-2"></i> Profile Settings
-                        </a>
-                    </li>
-                    
-                    <!-- Divider -->
-                    <li><hr class="dropdown-divider"></li>
-                    
-                    <!-- Logout Link -->
-                    <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="bi bi-box-arrow-right me-2"></i> Logout
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-            </li>
-        @endguest
-    </ul>
-</div>
+                @endguest
+            </ul>
+        </div>
 
 
 
