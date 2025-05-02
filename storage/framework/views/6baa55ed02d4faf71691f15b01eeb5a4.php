@@ -2303,7 +2303,7 @@ unset($__errorArgs, $__bag); ?>
     <!-- <hr> -->
     </div>
     <div class="mb-1">
-    <label id="labelinput" for="pitch_deck" class="required" style="color: red;">Pitch Deck <span style="color:red;">*</span></label>
+    <label id="labelinput" for="pitch_deck" class="required" style="color: red;">Pitch Deck<small> (ppt, pptx, pdf, doc, docx)</small> <span style="color:red;">*</span></label>
     <input 
         type="file" 
         class="form-control spaced-input <?php $__errorArgs = ['pitch_deck'];
@@ -2334,7 +2334,7 @@ unset($__errorArgs, $__bag); ?>
     <div id="financials-container">
         <div class="row mb-4 align-items-end">
             <div class="col-md-3">
-                <label id="labelinput" for="fiscal_year" class="required">Fiscal Year <span style="color:red;">*</span></label>
+                <label id="labelinput" for="fiscal_year" class="required">Fiscal Year<span style="color:red;">*</span></label>
                 <select 
                     class="form-control spaced-input <?php $__errorArgs = ['fiscal_year.0'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -2365,7 +2365,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
             </div>
             <div class="col-md-8">
-                <label id="labelinput" for="financials" class="required">Choose file <span style="color:red;">*</span></label>
+                <label id="labelinput" for="financials" class="required">Choose file<small> (pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
                 <input 
                     type="file" 
                     id="financials"
@@ -2400,7 +2400,7 @@ unset($__errorArgs, $__bag); ?>
     </div>
 
     <div class="mb-4">
-    <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment</label>
+    <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment<small> (pdf, doc, docx, xls, xlsx, ppt, pptx)</small></label>
     <input 
         type="file" 
         class="form-control spaced-input <?php $__errorArgs = ['other_attachment'];
@@ -2540,6 +2540,29 @@ unset($__errorArgs, $__bag); ?>
 </div>
 
 <!-- Script for Auto-Fill Functionality -->
+ <script>
+    // Prevent form submission without filling required fields
+    document.getElementById('investeeForm').addEventListener('submit', function(event) {
+        const requiredFields = document.querySelectorAll('#investeeForm [required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                field.classList.remove('is-invalid');
+            }
+        });
+
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission
+            alert('Please fill all required fields before submitting the form.');
+        }
+    });
+
+ </script>
 <script>
    document.getElementById('concerned_person_is_me').addEventListener('change', function() {
     const nameField = document.getElementById('concerned_person_name');
