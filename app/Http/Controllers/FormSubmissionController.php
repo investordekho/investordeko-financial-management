@@ -201,7 +201,7 @@ public function store(Request $request)
         'fiscal_year.*' => 'required|integer|digits:4', //
         'financials.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:2048', //
         'guidance_needed.*' => 'nullable|string', //
-        'other_attachment'=>'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048', //
+        'other_attachment'=>'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048', //
     ]);
 
     // Store company details

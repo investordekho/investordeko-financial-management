@@ -109,7 +109,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="investmentSizeDropdown">
                                             <div class="px-3 py-2">
-                                                <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size">
+                                                <!-- <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size"> -->
                                                 <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
@@ -150,7 +150,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="investmentTenureDropdown">
                                             <div class="px-3 py-2">
-                                                <input type="text" class="form-control mb-2" id="investmentTenureSearch" placeholder="Search tenure">
+                                                <!-- <input type="text" class="form-control mb-2" id="investmentTenureSearch" placeholder="Search tenure"> -->
                                                 <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
@@ -427,28 +427,40 @@ let filterdata = [];
 
 
 
-// Render Sectors Dropdown
 // function populateSectors() {
-//     const sectorList = document.getElementById('sectorList');
-//     const selectedSectors = new Set([...new FormData(document.getElementById('searchForm')).getAll('sector[]')]);
-//     sectorList.innerHTML = '';
 
-//     sectors.forEach((sector, index) => {
-//         const listItem = document.createElement('li');
-//         listItem.classList.add('dropdown-item');
-//         listItem.innerHTML = `
-//             <div class="form-check">
-//                 <input class="form-check-input" type="checkbox" name="sector[]" value="${sector}" id="sector_${index}" ${selectedSectors.has(sector) ? 'checked' : ''}>
-//                 <label class="form-check-label" for="sector_${index}">${sector}</label>
-//             </div>
-//         `;
-//         sectorList.appendChild(listItem);
+//     const sectorList = document.getElementById('sectorList');
+//     sectors.forEach(sector => {
+//         const li = document.createElement('li');
+//         li.classList.add('dropdown-item');
+
+//         const checkbox = document.createElement('input');
+//         checkbox.type = 'checkbox';
+//         checkbox.name = 'sector[]';
+//         checkbox.value = sector;
+//         checkbox.id = `sector_${sector}`;
+
+//         checkbox.classList.add('form-check-input');
+
+//         const label = document.createElement('label');
+//         label.classList.add('form-check-label');
+//         label.setAttribute('for', `sector_${sector}`);
+//         label.textContent = sector;
+//         li.appendChild(checkbox);
+//         li.appendChild(label);
+
+//         sectorList.appendChild(li);
 //     });
+//     // filterSectors();
 // }
 
-function populateSectors() {
 
+function populateSectors() {
     const sectorList = document.getElementById('sectorList');
+    const selectedSectors = new Set([...new FormData(document.getElementById('searchForm')).getAll('sector[]')]);
+
+    sectorList.innerHTML = ''; // clear existing
+
     sectors.forEach(sector => {
         const li = document.createElement('li');
         li.classList.add('dropdown-item');
@@ -458,20 +470,21 @@ function populateSectors() {
         checkbox.name = 'sector[]';
         checkbox.value = sector;
         checkbox.id = `sector_${sector}`;
-
         checkbox.classList.add('form-check-input');
+        if (selectedSectors.has(sector)) checkbox.checked = true;
 
         const label = document.createElement('label');
         label.classList.add('form-check-label');
         label.setAttribute('for', `sector_${sector}`);
         label.textContent = sector;
+
         li.appendChild(checkbox);
         li.appendChild(label);
-
         sectorList.appendChild(li);
     });
-    filterSectors();
 }
+
+
 
 function filterSectors() {
     const input =document.getElementById('sectorSearch').value.toLowerCase();
@@ -487,9 +500,9 @@ function filterSectors() {
     });
 }
 
-document.getElementById('sectorSearch').addEventListener('keyup',filterSectors);
+// document.getElementById('sectorSearch').addEventListener('keyup',filterSectors);
 
-filterSectors();
+// filterSectors();
 // Filter Sectors
 // function filterSectors() {
 //     const input = document.getElementById('sectorSearch').value.toLowerCase();
