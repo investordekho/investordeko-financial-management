@@ -32,7 +32,7 @@ class SubscriptionRequestController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|max:25',
             'payment_method' => 'required|string',
             'transaction_id' => 'required|string',
             'reference_id' => 'nullable|string',
