@@ -2408,54 +2408,54 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     // Function to add a new previous round field set
-//     window.addPreviousRoundField = function () {
-//         const container = document.getElementById('previous-rounds-container');
-//         const newRow = document.createElement('div');
-//         newRow.className = 'row mb-3 align-items-end bordered-row';
+document.addEventListener('DOMContentLoaded', function () {
+    // Function to add a new previous round field set
+    window.addPreviousRoundField = function () {
+        const container = document.getElementById('previous-rounds-container');
+        const newRow = document.createElement('div');
+        newRow.className = 'row mb-3 align-items-end bordered-row';
 
-//         newRow.innerHTML = `
-//             <div class="col-md-2">
-//                 <label id="labelinput" for="previous_rounds" class="required">Previous Round</label>
-//                 <select class="form-control spaced-input" name="previous_rounds[]" required>
-//                     <option value="" disabled selected>Select Round</option>
-//                     <option value="Pre seed round">Pre seed round</option>
-//                     <option value="Seed Round">Seed Round</option>
-//                     <option value="Series A round">Series A round</option>
-//                     <option value="Series B round">Series B round</option>
-//                     <option value="Series C round">Series C round</option>
-//                     <option value="Series D round">Series D round</option>
-//                     <option value="Series E and beyond">Series E and beyond</option>
-//                 </select>
-//             </div>
-//             <div class="col-md-3">
-//                 <label id="labelinput" for="investors" class="required">Investors</label>
-//                 <input type="text" class="form-control spaced-input" name="investors[]" required>
-//             </div>
-//             <div class="col-md-3">
-//                 <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
-//                 <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0" step="0.01" required>
+        newRow.innerHTML = `
+            <div class="col-md-2">
+                <label id="labelinput" for="previous_rounds" class="required">Previous Round</label>
+                <select class="form-control spaced-input" name="previous_rounds[]" required>
+                    <option value="" disabled selected>Select Round</option>
+                    <option value="Pre seed round">Pre seed round</option>
+                    <option value="Seed Round">Seed Round</option>
+                    <option value="Series A round">Series A round</option>
+                    <option value="Series B round">Series B round</option>
+                    <option value="Series C round">Series C round</option>
+                    <option value="Series D round">Series D round</option>
+                    <option value="Series E and beyond">Series E and beyond</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label id="labelinput" for="investors" class="required">Investors</label>
+                <input type="text" class="form-control spaced-input" name="investors[]" required>
+            </div>
+            <div class="col-md-3">
+                <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
+                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0" step="0.01" required>
 
-//             </div>
-//             <div class="col-md-3">
-//                 <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
-//                 <input type="number" class="form-control spaced-input" name="valuation[]" required>
-//             </div>
-//             <div class="col-md-1">
-//                 <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">×</button>
-//             </div>
-//         `;
+            </div>
+            <div class="col-md-3">
+                <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
+                <input type="number" class="form-control spaced-input" name="valuation[]" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">×</button>
+            </div>
+        `;
 
-//         container.appendChild(newRow);
-//     };
+        container.appendChild(newRow);
+    };
 
-//     // Function to remove a previous round field set
-//     window.removePreviousRoundField = function (button) {
-//         const row = button.closest('.row');
-//         row.remove();
-//     };
-// });
+    // Function to remove a previous round field set
+    window.removePreviousRoundField = function (button) {
+        const row = button.closest('.row');
+        row.remove();
+    };
+});
 
 
 document.addEventListener('DOMContentLoaded', function () {
