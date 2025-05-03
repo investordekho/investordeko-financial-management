@@ -96,7 +96,7 @@
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone Number Used for Payment</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required placeholder="e.g. +91 9876543210" oninput="this.value = this.value.replace(/[^0-9+]/g, '')">
+                <input type="tel" class="form-control" id="phone" name="phone" required placeholder="e.g. +91 9876543210"   pattern="^\+\d{10,18}$" maxlength=19 oninput="this.value = this.value.replace(/[^0-9+]/g, '')">
             </div>
             <div class="mb-3">
                 <label for="screenshot" class="form-label">Upload Screenshot</label>
