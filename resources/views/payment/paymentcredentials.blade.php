@@ -107,12 +107,6 @@
                     Confirm Payment & Request For the Access
                 </button>
             </div>  
-            
-            <!-- <div class="text-center mt-4">
-                <a href="{{ route('home') }}" class="btn btn-success rounded-pill px-5 py-2 shadow-sm">
-                    Confirm & Go to Home
-                </a>
-            </div> -->
         </form>
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -188,7 +182,7 @@
             // Show popup
             alert('🎉 Congratulations! Your request has been submitted.');
 
-            // After the alert closes, actually submit the form
+            // After the alert closes, actually submit the form 
             form.submit();
         });
     });
