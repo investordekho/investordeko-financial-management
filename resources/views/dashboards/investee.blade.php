@@ -110,7 +110,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="investmentSizeDropdown">
                                             <div class="px-3 py-2">
-                                                <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size">
+                                                <!-- <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size"> -->
                                                 <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
@@ -151,7 +151,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="investmentTenureDropdown">
                                             <div class="px-3 py-2">
-                                                <input type="text" class="form-control mb-2" id="investmentTenureSearch" placeholder="Search tenure">
+                                                <!-- <input type="text" class="form-control mb-2" id="investmentTenureSearch" placeholder="Search tenure"> -->
                                                 <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
