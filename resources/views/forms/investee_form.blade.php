@@ -1143,60 +1143,60 @@
                     name="founder_position[]" 
                     required
                 >
-                    <option value="" disabled selected>Select Position</option>
-                    <option value="Chief Administrative Officer">Chief Administrative Officer</option>
-                    <option value="Chief Analytics Officer">Chief Analytics Officer</option>
-                    <option value="Chief Brand Officer">Chief Brand Officer</option>
-                    <option value="Chief Business Development Officer">Chief Business Development Officer</option>
-                    <option value="Chief Business Officer">Chief Business Officer</option>
-                    <option value="Chief Commercial Officer">Chief Commercial Officer</option>
-                    <option value="Chief Communications Officer">Chief Communications Officer</option>
-                    <option value="Chief Compliance Officer">Chief Compliance Officer</option>
-                    <option value="Chief Content Officer">Chief Content Officer</option>
-                    <option value="Chief Creative Officer">Chief Creative Officer</option>
-                    <option value="Chief Customer Officer">Chief Customer Officer</option>
-                    <option value="Chief Data Officer">Chief Data Officer</option>
-                    <option value="Chief Design Officer">Chief Design Officer</option>
-                    <option value="Chief Digital Officer">Chief Digital Officer</option>
-                    <option value="Chief Diversity Officer">Chief Diversity Officer</option>
-                    <option value="Chief Executive Officer">Chief Executive Officer</option>
-                    <option value="Chief Experience Officer">Chief Experience Officer</option>
-                    <option value="Chief Financial Officer">Chief Financial Officer</option>
-                    <option value="Chief Gaming Officer">Chief Gaming Officer</option>
-                    <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
-                    <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
-                    <option value="Chief Information Officer">Chief Information Officer</option>
-                    <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
-                    <option value="Chief Information Security Officer">Chief Information Security Officer</option>
-                    <option value="Chief Innovation Officer">Chief Innovation Officer</option>
-                    <option value="Chief Investment Officer">Chief Investment Officer</option>
-                    <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
-                    <option value="Chief Learning Officer">Chief Learning Officer</option>
-                    <option value="Chief Marketing Officer">Chief Marketing Officer</option>
-                    <option value="Chief Operating Officer">Chief Operating Officer</option>
-                    <option value="Chief Privacy Officer">Chief Privacy Officer</option>
-                    <option value="Chief Process Officer">Chief Process Officer</option>
-                    <option value="Chief Product Officer">Chief Product Officer</option>
-                    <option value="Chief Reputation Officer">Chief Reputation Officer</option>
-                    <option value="Chief Research Officer">Chief Research Officer</option>
-                    <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
-                    <option value="Chief Risk Officer">Chief Risk Officer</option>
-                    <option value="Chief Science Officer">Chief Science Officer</option>
-                    <option value="Chief Scientific Officer">Chief Scientific Officer</option>
-                    <option value="Chief Security Officer">Chief Security Officer</option>
-                    <option value="Chief Services Officer">Chief Services Officer</option>
-                    <option value="Chief Strategy Officer">Chief Strategy Officer</option>
-                    <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
-                    <option value="Chief Technology Officer">Chief Technology Officer</option>
-                    <option value="Chief Visibility Officer">Chief Visibility Officer</option>
-                    <option value="Chief Visionary Officer">Chief Visionary Officer</option>
-                    <option value="Chief Web Officer">Chief Web Officer</option>
-                    <option value="General Manager">General Manager</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Others">Others</option>
-                    <option value="Secretary">Secretary</option>
-                    <option value="Supervisor">Supervisor</option>
-                    <option value="Vice President">Vice President</option>
+                    <option value="" {{ old('founder_position.0') ?'' :'selected'}} disabled>Select Position</option>
+                    <option value="Chief Administrative Officer" {{ old('founder_position.0') == 'Chief Administrative Officer' ? 'selected' : '' }}>Chief Administrative Officer</option>
+                    <option value="Chief Analytics Officer" {{ old('founder_position.0')== 'Chief Analytics Officer' ? 'selected' : ''}}>Chief Analytics Officer</option>
+                    <option value="Chief Brand Officer" {{ old('founder_position.0') == 'Chief Brand Officer' ? 'selected' : ''}}>Chief Brand Officer</option>
+                    <option value="Chief Business Development Officer" {{ old('founder_position.0') == 'Chief Business Development Officer'? 'selected' : ''}}>Chief Business Development Officer</option>
+                    <option value="Chief Business Officer" {{ old('founder_position.0') == 'Chief Business Officer' ? 'selected':''}}>Chief Business Officer</option>
+                    <option value="Chief Commercial Officer" {{ old('founder_position.0') == 'Chief Commercial Officer' ? 'selected':''}}>Chief Commercial Officer</option>
+                    <option value="Chief Communications Officer" {{ old('founder_position.0') == 'Chief Communications Officer' ? 'selected':''}}>Chief Communications Officer</option>
+                    <option value="Chief Compliance Officer" {{ old('founder_position.0') == 'Chief Compliance Officer'? 'selected':''}}>Chief Compliance Officer</option>
+                    <option value="Chief Content Officer" {{ old('founder_position.0')== 'Chief Content Officer'? 'selected':''}}>Chief Content Officer</option>
+                    <option value="Chief Creative Officer" {{ old('founder_position.0') == 'Chief Creative Officer' ? 'selected':''}}>Chief Creative Officer</option>
+                    <option value="Chief Customer Officer" {{ old('founder_position.0') == 'Chief Customer Officer' ? 'selected':''}}>Chief Customer Officer</option>
+                    <option value="Chief Data Officer"{{ old('founder_position.0') == 'Chief Data Officer'? 'selected':''}}>Chief Data Officer</option>
+                    <option value="Chief Design Officer" {{ old('founder_position.0') == 'Chief Design Officer'? 'selected':''}}>Chief Design Officer</option>
+                    <option value="Chief Digital Officer" {{ old('founder_position.0') == 'Chief Digital Officer'? 'selected':''}}>Chief Digital Officer</option>
+                    <option value="Chief Diversity Officer" {{ old('founder_position.0') == 'Chief Diversity Officer'? 'selected':''}}>Chief Diversity Officer</option>
+                    <option value="Chief Executive Officer" {{ old('founder_position.0') == 'Chief Executive Officer'? 'selected':''}}>Chief Executive Officer</option>
+                    <option value="Chief Experience Officer" {{ old('founder_position.0') == 'Chief Experience Officer'? 'selected':''}}>Chief Experience Officer</option>
+                    <option value="Chief Financial Officer" {{ old('founder_position.0') == 'Chief Financial Officer'? 'selected':''}}>Chief Financial Officer</option>
+                    <option value="Chief Gaming Officer" {{ old('founder_position.0') == 'Chief Gaming Officer'? 'selected':''}}>Chief Gaming Officer</option>
+                    <option value="Chief Genealogical Officer" {{ old('founder_position.0') == 'Chief Genealogical Officer'? 'selected':''}}>Chief Genealogical Officer</option>
+                    <option value="Chief Human Resources Officer" {{ old('founder_position.0') == 'Chief Human Resources Officer'? 'selected':''}}>Chief Human Resources Officer</option>
+                    <option value="Chief Information Officer" {{ old('founder_position.0') == 'Chief Information Officer'? 'selected':''}}>Chief Information Officer</option>
+                    <option value="Chief Information Officer (Higher Education)" {{ old('founder_position.0') == 'Chief Information Officer (Higher Education)'? 'selected':''}}>Chief Information Officer (Higher Education)</option>
+                    <option value="Chief Information Security Officer" {{ old('founder_position.0') == 'Chief Information Security Officer'? 'selected':''}}>Chief Information Security Officer</option>
+                    <option value="Chief Innovation Officer" {{ old('founder_position.0') == 'Chief Innovation Officer'? 'selected':''}}>Chief Innovation Officer</option>
+                    <option value="Chief Investment Officer" {{ old('founder_position.0') == 'Chief Investment Officer'? 'selected':''}}>Chief Investment Officer</option>
+                    <option value="Chief Knowledge Officer" {{ old('founder_position.0') == 'Chief Knowledge Officer'? 'selected':''}}>Chief Knowledge Officer</option>
+                    <option value="Chief Learning Officer" {{ old('founder_position.0') == 'Chief Learning Officer'? 'selected':''}}>Chief Learning Officer</option>
+                    <option value="Chief Marketing Officer" {{ old('founder_position.0') == 'Chief Marketing Officer'? 'selected':''}}>Chief Marketing Officer</option>
+                    <option value="Chief Operating Officer" {{ old('founder_position.0') == 'Chief Operating Officer'? 'selected':''}}>Chief Operating Officer</option>
+                    <option value="Chief Privacy Officer" {{ old('founder_position.0') == 'Chief Privacy Officer'? 'selected':''}}>Chief Privacy Officer</option>
+                    <option value="Chief Process Officer" {{ old('founder_position.0') == 'Chief Process Officer'? 'selected':''}}>Chief Process Officer</option>
+                    <option value="Chief Product Officer" {{ old('founder_position.0') == 'Chief Product Officer'? 'selected':''}}>Chief Product Officer</option>
+                    <option value="Chief Reputation Officer" {{ old('founder_position.0') == 'Chief Reputation Officer'? 'selected':''}}>Chief Reputation Officer</option>
+                    <option value="Chief Research Officer" {{ old('founder_position.0') == 'Chief Research Officer'? 'selected':''}}>Chief Research Officer</option>
+                    <option value="Chief Restructuring Officer" {{ old('founder_position.0') == 'Chief Restructuring Officer'? 'selected':''}}>Chief Restructuring Officer</option>
+                    <option value="Chief Risk Officer" {{ old('founder_position.0') == 'Chief Risk Officer'? 'selected':''}}>Chief Risk Officer</option>
+                    <option value="Chief Science Officer" {{ old('founder_position.0') == 'Chief Science Officer'? 'selected':''}}>Chief Science Officer</option>
+                    <option value="Chief Scientific Officer" {{ old('founder_position.0') == 'Chief Scientific Officer'? 'selected':''}}>Chief Scientific Officer</option>
+                    <option value="Chief Security Officer" {{ old('founder_position.0') == 'Chief Security Officer'? 'selected':''}}>Chief Security Officer</option>
+                    <option value="Chief Services Officer" {{ old('founder_position.0') == 'Chief Services Officer'? 'selected':''}}>Chief Services Officer</option>
+                    <option value="Chief Strategy Officer" {{ old('founder_position.0') == 'Chief Strategy Officer'? 'selected':''}}>Chief Strategy Officer</option>
+                    <option value="Chief Sustainability Officer" {{ old('founder_position.0') == 'Chief Sustainability Officer'? 'selected':''}}>Chief Sustainability Officer</option>
+                    <option value="Chief Technology Officer" {{ old('founder_position.0') == 'Chief Technology Officer'? 'selected':''}}>Chief Technology Officer</option>
+                    <option value="Chief Visibility Officer" {{ old('founder_position.0') == 'Chief Visibility Officer'? 'selected':''}}>Chief Visibility Officer</option>
+                    <option value="Chief Visionary Officer" {{ old('founder_position.0') == 'Chief Visionary Officer'? 'selected':''}}>Chief Visionary Officer</option>
+                    <option value="Chief Web Officer" {{ old('founder_position.0') == 'Chief Web Officer'? 'selected':''}}>Chief Web Officer</option>
+                    <option value="General Manager" {{ old('founder_position.0') == 'General Manager'? 'selected':''}}>General Manager</option>
+                    <option value="Manager" {{ old('founder_position.0') == 'Manager'? 'selected':''}}>Manager</option>
+                    <option value="Others" {{ old('founder_position.0') == 'Others'? 'selected':''}}>Others</option>
+                    <option value="Secretary" {{ old('founder_position.0') == 'Secretary'? 'selected':''}}>Secretary</option>
+                    <option value="Supervisor" {{ old('founder_position.0') == 'Supervisor'? 'selected':''}}>Supervisor</option>
+                    <option value="Vice President" {{ old('founder_position.0') == 'Vice President'? 'selected':''}}>Vice President</option>
                 </select>
                 @error('founder_position.0')
                     <span class="text-danger">This Field is Required</span>
@@ -1719,6 +1719,8 @@
         class="form-control spaced-input @error('pitch_deck') is-invalid @enderror" 
         id="pitch_deck" 
         name="pitch_deck" 
+        value="{{ old('pitch_deck.0')}}"
+        accept=".ppt,.pptx,.pdf,.doc,.docx" 
         required
     >
     @error('pitch_deck')
@@ -1753,7 +1755,7 @@
                     id="financials"
                     class="form-control spaced-input @error('financials.0') is-invalid @enderror" 
                     name="financials[]" 
-                    accept=".pdf,.doc,.docx" 
+                    accept=".pdf,.doc,.docx,.xls,.xlsx" 
                     required
                 >
                 @error('financials.0')
@@ -1774,6 +1776,7 @@
         class="form-control spaced-input @error('other_attachment') is-invalid @enderror" 
         id="other_attachment" 
         name="other_attachment"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" 
     >
     @error('other_attachment')
         <span class="text-danger">This Field is Required</span>
@@ -1816,7 +1819,7 @@
 
     <div class="row g-3 mb-4 bordered-row">
                         <div class="heading-with-hr">
-                            <h3 class="required" style="font-size: 22px; font-weight: 600;">How can we guide you in fund raise?</h3>
+                            <h3 class="required" style="font-size: 22px; font-weight: 600;" >How can we guide you in fund raise?</h3>
                             <!-- <hr> -->
                         </div>
                         <div class="form-group mb-3">
@@ -1867,7 +1870,7 @@
    
     <!-- Terms and Conditions Section -->
     <div class="form-check mb-4">
-        <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+        <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
         <label class="form-check-label" for="terms">I agree to the <a href="{{ route('terms') }}">Terms and Conditions</a></label>
     </div>
 
