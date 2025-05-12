@@ -146,7 +146,7 @@ class ExcelUploadController extends Controller
 
                     // Store Contact Details
                     // $mobile = $getValue('mobile') ?: $this->getRandomValue('mobile');
-                    $mobile = $getValue('mobile') ?: "000000000";
+                    $mobile = $getValue('mobile') ?: "null";
                     // foreach (explode(',', $mobile) as $number) {
                     //     ContactDetails::firstOrCreate(
                     //         ['investors_id' => $investor->id, 'concerned_person_phone' => trim($number)],
@@ -171,7 +171,7 @@ class ExcelUploadController extends Controller
                                 [
                                     'concerned_person_name' => $investorData['investor_name'],
                                     'concerned_person_designation' => 'N/A',
-                                    'email' => $getValue('email') ?: 'Not Provided' // Default if missing
+                                    'email' => $getValue('email') ?: 'null' // Default if missing
                                 ]
                             );
                         }
