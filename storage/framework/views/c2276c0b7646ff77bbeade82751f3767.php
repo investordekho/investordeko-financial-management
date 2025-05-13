@@ -34,12 +34,47 @@
 
                             </h4> 
                             <p class="text-muted details-text <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
-                                <i class="bi bi-geo-alt-fill text-primary"></i> <?php echo e($investor['address']); ?>  
-                                &nbsp;|&nbsp;
-                                <i class="bi bi-cash-coin text-success"></i> 
-                                Sectors: <?php echo e($investor['sectors_preferred'] ?? 'N/A'); ?>
+                                <i class="bi bi-geo-alt-fill text-primary me-1"></i> <?php echo e($investor['address']); ?>  
+                                <br>
+                                <!-- <i class="bi bi-cash-coin text-success me-1"></i> -->
+                                <!-- <strong>Sectors:</strong>
+                                <?php echo e(!empty($investor['sectors_preferred']) 
+                                    ? str_replace(',', ' |', $investor['sectors_preferred']) 
+                                    : 'N/A'); ?> -->
 
+                                    <?php
+                                        $sectors = str_replace([', and', 'and'],',', $investor['sectors_preferred']);    
+                                        $sectors = array_map('trim', explode(',', $sectors));
+                                    ?>
+                                   
+                                    <?php if( count($sectors) > 0): ?>
+                                       <ul class="list-inline">
+                                         <h7 class="text-muted">Sectors:</h7>
+                                            <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="list-inline-item text-muted" style="border: 1px solid #ddd; padding: 5px; border-radius: 5px; margin-right: 5px; margin-bottom: 5px; background-color: #f8f9fa;">
+                                                    <!-- <i class="bi bi-check-circle-fill text-success me-1"></i> -->
+                                                    <?php echo e($sector); ?>
+
+                                                </li>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                    <!-- <?php if( count($sectors) > 0): ?>
+                                       <ul class="list-unstyled">
+                                            <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="text-muted">
+                                                    <i class="bi bi-check-circle-fill text-success me-1"></i>
+                                                    <?php echo e($sector); ?>
+
+                                                </li>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </ul>
+                                    <?php else: ?>
+                                        <p class="text-muted">No sectors available.</p>
+                                    <?php endif; ?> -->
                             </p>
+
+
                         </div>
 
                         <!-- View Profile Button (Navigates to Details Page) -->
