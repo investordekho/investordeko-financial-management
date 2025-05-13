@@ -516,7 +516,13 @@ h2, h4 {
             <i class="fas fa-envelope" style="color: #ffc107; font-size: 14px;"></i>
             <strong style="color: #2c3e50; font-size: 14px;">ZIP Code</strong>
         </div>
+        <?php if(isset($address->zip_code)): ?>
+         <?php if($address->zip_code == 0): ?>
+        <p style="font-size: 14px; font-weight: 500; color: #555; margin: 5px 0;">null</p>
+        <?php else: ?>
         <p style="font-size: 14px; font-weight: 500; color: #555; margin: 5px 0;"><?php echo e($address->zip_code); ?></p>
+        <?php endif; ?>
+        <?php endif; ?>
     </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
