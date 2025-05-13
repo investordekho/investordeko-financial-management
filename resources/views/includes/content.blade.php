@@ -5,122 +5,107 @@
 @endif
 
 <!-- Hero Section -->
-<section class="hero-banner">
+<section class="hero-banner" style="background: linear-gradient(135deg, #6c757d, #0dcaf0); color: white; padding: 60px 0;">
     <div class="container">
-        <!-- <h1 class="display-4">The complete Database Platform For Discovering <span class="text-success">Startups</span> and <span class="text-primary">Investors</span></h1> -->
-         <h1>The All-in-One Platform to Discover <span class="text-success">Startups</span> and <span class="text-primary">Investors</span></h1>
-        <p class="lead">Connect with Startups, Angel Investors, and VCs</p>
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px;">Connect with <span style="color: #28a745;">Investors</span> and <span style="color: #ffc107;">Startups</span></h1>
+                <p style="font-size: 18px; margin-bottom: 30px;">Unlock opportunities for growth and innovation</p>
+            </div>
+            <div class="col-md-6 text-center">
+                @guest
+                <div class="d-flex justify-content-center justify-content-md-start mt-4">
+                    <label class="me-3">
+                        <input type="radio" name="user-type" class="me-1" value="Investees"> Investees
+                    </label>
+                    <label class="me-3">
+                        <input type="radio" name="user-type" class="me-1" value="Investors"> Investors
+                    </label>
+                    <label class="me-3">
+                        <input type="radio" name="user-type" class="me-1" value="Bankers"> Investment Banker
+                    </label>
+                </div>
 
-        
-        @guest
-       
-        <!-- <form class="d-flex justify-content-center search-form" id="searchForm" method="POST" action="#">
-            @csrf
-            <input type="text" id="searchInput" name="search_query" placeholder="Search for Startups/Angel Investor/VC">
-            <button type="submit" class="ms-2">Search</button>
-        </form> -->
-
-      
-        <!-- <div class="d-flex justify-content-center mt-3">
-            <label class="me-3">
-                <input type="radio" name="user-type" class="me-1" value="Investees"> Investees
-            </label>
-            <label class="me-3">
-                <input type="radio" name="user-type" class="me-1" value="Investors"> Investors
-            </label>
-            <label class="me-3">
-                <input type="radio" name="user-type" class="me-1" value="Bankers"> Investment Banker
-            </label>
-        </div> -->
-        @else 
-     
-       
-        <div class="d-flex justify-content-center mt-3">
-            <a href="
-                @if(Auth::user()->category_id == 1)
-                    {{ route('investee.dashboard') }}
-                @elseif(Auth::user()->category_id == 2)
-                    {{ route('investor.dashboard') }}
-                @elseif(Auth::user()->category_id == 3)
-                    {{ route('banker.dashboard') }}
-                @elseif(Auth::user()->category_id == 4)
-                    {{ route('banker.dashboard') }}
+                <form class="d-flex justify-content-center justify-content-md-start mt-4" id="searchForm" method="POST" action="#" style="max-width: 600px;">
+                    @csrf
+                    <input type="text" id="searchInput" name="search_query" placeholder="Search for Startups/Angel Investor/VC" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px 0 0 5px;">
+                    <button type="submit" style="padding: 10px 20px; background-color: #ffc107; border: none; border-radius: 0 5px 5px 0; color: white; font-weight: bold;">Search</button>
+                </form>
                 @else
-                    {{ route('home') }}
-                @endif
-            " class="btn btn-primary">
-                Browse Dashboard
-            </a>
+                <div class="mt-4">
+                    <a href="
+                        @if(Auth::user()->category_id == 1)
+                            {{ route('investee.dashboard') }}
+                        @elseif(Auth::user()->category_id == 2)
+                            {{ route('investor.dashboard') }}
+                        @elseif(Auth::user()->category_id == 3)
+                            {{ route('banker.dashboard') }}
+                        @elseif(Auth::user()->category_id == 4)
+                            {{ route('banker.dashboard') }}
+                        @else
+                            {{ route('home') }}
+                        @endif
+                    " class="btn btn-light" style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; background-color: #28a745; color: white;">Go to Dashboard</a>
+                </div>
+                @endguest
+            </div>
         </div>
-        @endguest
     </div>
-</section> 
+</section>
 
+<!-- 
+<section class="hero-banner" style="background: linear-gradient(135deg, #6c757d, #0dcaf0); color: white; padding: 60px 0;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px;">Connect with <span style="color: #28a745;">Investors</span> and <span style="color: #ffc107;">Startups</span></h1>
+                <p style="font-size: 18px; margin-bottom: 30px;">Unlock opportunities for growth and innovation</p>
 
-<!-- <section style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(45deg, #ced4da, #adb5bd, #dee2e6); background-size: 300% 300%; animation: gradientShift 15s ease infinite; position: relative; font-family: 'Segoe UI', sans-serif; overflow: hidden; width: 100%; box-sizing: border-box;">
-    
-   
-    <div style="position: absolute; top: 5%; left: 0; width: 300px; height: 300px; background-color: rgba(13, 202, 240, 0.08); border-radius: 50%; animation: moveUp 14s ease-in-out infinite;"></div>
-    <div style="position: absolute; bottom: 10%; right: 0; width: 400px; height: 400px; background-color: rgba(108,117,125, 0.06); border-radius: 50%; animation: moveDown 14s ease-in-out infinite;"></div>
-    <div style="position: absolute; top: 30%; left: 30%; width: 250px; height: 250px; background-color: rgba(13, 202, 240, 0.07); border-radius: 50%; animation: moveRight 14s ease-in-out infinite;"></div>
+             
+            </div>
+            <div class="col-md-6 text-center">
 
-   
-    <div style="z-index: 2; text-align: center; background: rgba(33, 37, 41, 0.3); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 20px; padding: 50px 40px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15); max-width: 850px; width: 100%; margin: 0 20px; border: 1px solid rgba(255,255,255,0.08);">
+                   @guest
+                <div class="d-flex justify-content-center justify-content-md-start mt-4">
+                    <label class="me-3">
+                        <input type="radio" name="user-type" class="me-1" value="Investees"> Investees
+                    </label>
+                    <label class="me-3">
+                        <input type="radio" name="user-type" class="me-1" value="Investors"> Investors
+                    </label>
+                    <label class="me-3">
+                        <input type="radio" name="user-type" class="me-1" value="Bankers"> Investment Banker
+                    </label>
+                </div>
 
-       
-        <h1 style="font-size: 56px; font-weight: 800; color: #e3f2fd; margin-bottom: 20px; font-family: 'Segoe UI', sans-serif; line-height: 1.2; letter-spacing: 1.2px; text-align: center;">
-            Entrepreneurs & Investors <br>
-            <span style="color: #ffffff; font-weight: 900;">United for Growth</span>
-        </h1>
-
-        
-        <p style="font-size: 19px; color: #dee2e6; max-width: 780px; margin: 0 auto 40px auto; font-weight: 400; line-height: 1.6; font-family: 'Segoe UI', sans-serif; text-align: center;">
-            Discover meaningful connections and unlock capital for innovation. We unite visionaries and investors to build a better future.
-        </p>
-
-        
-        @guest
-            <a href="{{ route('register') }}" 
-               style="padding: 16px 42px; font-size: 17px; background-color: #0dcaf0; color: #fff; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(13,202,240, 0.2);"
-               onmouseover="this.style.boxShadow='0 6px 18px rgba(13,202,240, 0.3)'"
-               onmouseout="this.style.boxShadow='0 4px 10px rgba(13,202,240, 0.2)'">
-               Get Started
-            </a>
-        @else
-            <a href="@if(Auth::user()->category_id == 1){{ route('investee.dashboard') }}
-                      @elseif(Auth::user()->category_id == 2){{ route('investor.dashboard') }}
-                      @elseif(Auth::user()->category_id == 3){{ route('banker.dashboard') }}
-                      @elseif(Auth::user()->category_id == 4){{ route('other.dashboard') }}
-                      @else{{ route('home') }}@endif"
-               style="padding: 16px 42px; font-size: 17px; background-color: #6c757d; color: white; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(108,117,125, 0.2);"
-               onmouseover="this.style.boxShadow='0 6px 18px rgba(108,117,125, 0.3)'"
-               onmouseout="this.style.boxShadow='0 4px 10px rgba(108,117,125, 0.2)'">
-               Go to Dashboard
-            </a>
-        @endguest
+                <form class="d-flex justify-content-center justify-content-md-start mt-4" id="searchForm" method="POST" action="#" style="max-width: 600px;">
+                    @csrf
+                    <input type="text" id="searchInput" name="search_query" placeholder="Search for Startups/Angel Investor/VC" style="flex: 1; padding: 10px; border: none; border-radius: 5px 0 0 5px;">
+                    <button type="submit" style="padding: 10px 20px; background-color: #ffc107; border: none; border-radius: 0 5px 5px 0; color: white; font-weight: bold;">Search</button>
+                </form>
+                @else
+                <div class="mt-4">
+                    <a href="
+                        @if(Auth::user()->category_id == 1)
+                            {{ route('investee.dashboard') }}
+                        @elseif(Auth::user()->category_id == 2)
+                            {{ route('investor.dashboard') }}
+                        @elseif(Auth::user()->category_id == 3)
+                            {{ route('banker.dashboard') }}
+                        @elseif(Auth::user()->category_id == 4)
+                            {{ route('banker.dashboard') }}
+                        @else
+                            {{ route('home') }}
+                        @endif
+                    " class="btn btn-light" style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; background-color: #28a745; color: white;">Go to Dashboard</a>
+                </div>
+                @endguest
+                
+              
+            </div>
+        </div>
     </div>
-
-    <style>
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes moveUp {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-40px); }
-        }
-        @keyframes moveDown {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(40px); }
-        }
-        @keyframes moveRight {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(40px); }
-        }
-    </style>
 </section> -->
-
 
 
 
