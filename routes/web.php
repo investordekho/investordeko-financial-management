@@ -142,6 +142,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/subscriptionrequest',[SubscriptionRequestController::class,'allrequests'])->name('subscriptionrequest');
     Route ::put('/updatestatus/{id}',[SubscriptionRequestController::class,'updatestatus'])->name('subscriptionrequest.updatestatus');
     Route::get('/downloadcompanyexcel',[ExcelUploadController::class,'downloadInvesteeDataExcel'])->name('investee.exceldownload');
+    Route::get('/getprofileverificationcode',[ProfileController::class,'getemailverificationcode'])->name('getprofileverificationcode');
+    Route::post('/verifyemailforupdateprofile',[ProfileController::class,'verifyemailupdateprofile'])->name('verifyemailforupdateprofle');
 });
 
 // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
