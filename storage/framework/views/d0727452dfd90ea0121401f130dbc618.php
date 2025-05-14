@@ -195,20 +195,8 @@
                                                 <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="investor_type[]" value="PE" id="type_private_equity">
-                                                            <label class="form-check-label" for="type_private_equity">Private Equity</label>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel" id="type_angel_investor">
                                                             <label class="form-check-label" for="type_angel_investor">Angel Investor</label>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="investor_type[]" value="VC" id="type_venture_capitalist">
-                                                            <label class="form-check-label" for="type_venture_capitalist">Venture Capitalist</label>
                                                         </div>
                                                     </li>
                                                     <li class="dropdown-item">
@@ -219,10 +207,22 @@
                                                     </li>
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="investor_type[]" value="PE" id="type_private_equity">
+                                                            <label class="form-check-label" for="type_private_equity">Private Equity</label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investor_type[]" value="Seed" id="type_Seed_investor">
                                                             <label class="form-check-label" for="type_Seed_investor">Seed Investor</label>
                                                         </div>
                                                     </li>
+                                                    <li class="dropdown-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="investor_type[]" value="VC" id="type_venture_capitalist">
+                                                            <label class="form-check-label" for="type_venture_capitalist">Venture Capitalist</label>
+                                                        </div>
+                                                    </li>                                                    
                                                 </div>
                                             </div>
                                         </ul>
@@ -290,137 +290,64 @@
 <script>
 // Sector data array
 const sectors = [
-    'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion',
-    'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech',
-    'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity',
-    'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 'Computer Hardware',
-    'Computer Networking', 'Computer Software/Engineering', 'Construction', 'Consumer Goods', 'Education Management', 'Financial Services',
-    'Food/Beverages', 'Fundraising', 'Government Administration', 'Health/Fitness', 'Hospital/Health Care', 'Human Resources/HR', 
-    'Import/Export', 'Information Technology/IT', 'Insurance', 'Legal Services', 'Logistics/Procurement', 'Marketing/Advertising/Sales',
-    'Media Production', 'Medical Equipment', 'Medical Practice', 'Mining/Metals', 'Non-Profit/Volunteering', 'Oil/Energy/Solar/Greentech',
-    'Public Relations/PR', 'Real Estate/Mortgage', 'Retail Industry', 'Telecommunications', 'Transportation', 'Utilities', 'Warehousing', 'AI and ML',
-    'Fin-Tech',
-    'Food and Beverage',
-    'Agriculture',
-    'Healthcare & Life Sciences',
-    'Sustainable Sectors',
-    'IT',
-    'Pharmaceuticals',
-    'Mechanical Engineering',
-    'Minerals Business',
-    'Automotive',
-    'Cosmetics',
-    'SaaS',
-    'Marketplaces',
-    'HealthTech',
-    'eCommerce',
-    'EdTech',
-    'Deep Tech',
-    'Web3',
-    'Extended Reality (XR)',
-    'Augmented Reality (AR)',
-    'Space',
-    'IoT',
-    'Analytics',
-    'ClimateTech/CleanTech',
-    'Hardware',
-    'Financial Services',
-    'Start-ups',
-    'Alternative Investment Funds',
-    'Consumer',
-    'Enterprise Applications',
-    'High Tech',
-    'Transportation and Logistics Tech',
-    'Environment Tech',
-    'Crypto',
-    'B2B2C',
-    'Mobile Technology',
-    'Insurtech',
-    'Media and Entertainment',
-    'Biotech',
-    'Life Sciences',
-    'Smart Hardware',
-    'B2B Marketplaces',
-    'vSaaS',
-    'Software',
-    'Digital Media',
-    'APIs',
-    'Blockchain',
-    'Platforms',
-    'Sustainability',
-    'Community and Lifestyle',
-    'Content and Publishing',
-    'Design',
-    'Technology',
-    'Real Estate and Construction',
-    'Aerospace',
-    'Proptech',
-    'Consumer Internet',
-    'Social Media',
-    'Virtual Reality',
-    'Digital Health',
-    'Chemicals',
-    'NBFC',
-    'BFSI',
-    'Banks',
-    'Building Materials',
-    'Infra',
-    'Capital Goods',
-    'Adtech',
-    'Apps',
-    'Natural Health Products',
-    'Retail',
-    'Blockchain Startups',
-    'Science and Engineering',
-    'Energy',
-    'Internet',
-    'Mobile',
-    'Big Data',
-    'Cloud Computing',
-    'Enterprise Software',
-    'Advanced Manufacturing',
-    'Autonomous Vehicles',
-    'Semiconductor',
-    'Personal Finance',
-    'Micro Lending',
-    'Agritech and Farming',
-    'Digital Assets',
-    'B2B Software',
-    'Deep Tech and Fintech',
-    'Gaming',
-    'Hospitality Investment',
-    'Business Support Services',
-    'Data and Analytics',
-    'Industrial Goods and Manufacturing',
-    'Cyber Security',
-    'Web3 + Gaming',
-    'Cleantech',
-    'Hydrogen',
-    'Green Molecules',
-    'CCUS',
-    'Biosciences (Therapeutics, Diagnostics, Devices)',
-    'Creative Economy',
-    'Vertical SaaS',
-    'Web3-focused Startups',
-    'Logistics',
-    'Financial Exchanges',
-    'Trading Platform',
-    'Nonprofits'
+  'Accounting', 'Adtech', 'Advanced Manufacturing', 'Aerospace', 'Agriculture',
+  'Agritech and Farming', 'AI and ML', 'Airlines/Aviation', 'Alternative Dispute Resolution',
+  'Alternative Investment Funds', 'Alternative Medicine', 'Analytics', 'Animation',
+  'APIs', 'Apparel/Fashion', 'Apps', 'Architecture/Planning', 'Arts/Crafts', 'Augmented Reality (AR)',
+  'Autonomous Vehicles', 'Automotive', 'Aviation/Aerospace', 'B2B Marketplaces', 'B2B Software',
+  'B2B2C', 'Banks', 'Banking/Mortgage', 'BFSI', 'Big Data', 'Biotech', 'Biotechnology/Greentech',
+  'Blockchain', 'Blockchain Startups', 'Broadcast Media', 'Building Materials',
+  'Business Support Services', 'Business Supplies/Equipment', 'Capital Goods',
+  'Capital Markets/Hedge Fund/Private Equity', 'CCUS', 'Chemicals', 'Civic/Social Organization',
+  'Civil Engineering', 'Cleantech', 'ClimateTech/CleanTech', 'Cloud Computing',
+  'Commercial Real Estate', 'Community and Lifestyle', 'Computer Games', 'Computer Hardware',
+  'Computer Networking', 'Computer Software/Engineering', 'Consumer', 'Consumer Goods',
+  'Consumer Internet', 'Content and Publishing', 'Cosmetics', 'Creative Economy',
+  'Crypto', 'Cyber Security', 'Data and Analytics', 'Deep Tech', 'Deep Tech and Fintech',
+  'Design', 'Digital Assets', 'Digital Health', 'Digital Media', 'eCommerce', 'EdTech',
+  'Education Management', 'Energy', 'Enterprise Applications', 'Enterprise Software',
+  'Environment Tech', 'Extended Reality (XR)', 'Fashion', 'Fin-Tech', 'Financial Exchanges',
+  'Financial Services', 'Food and Beverage', 'Food/Beverages', 'Fundraising', 'Gaming',
+  'Government Administration', 'Green Molecules', 'Hardware', 'Health/Fitness',
+  'Healthcare & Life Sciences', 'HealthTech', 'High Tech', 'Hospital/Health Care',
+  'Hospitality Investment', 'Human Resources/HR', 'Hydrogen', 'Import/Export',
+  'Industrial Goods and Manufacturing', 'Information Technology/IT', 'Infra',
+  'Insurtech', 'Insurance', 'Internet', 'IoT', 'IT', 'Legal Services', 'Life Sciences',
+  'Logistics', 'Logistics/Procurement', 'Marketing/Advertising/Sales', 'Marketplaces',
+  'Mechanical Engineering', 'Media and Entertainment', 'Media Production',
+  'Medical Equipment', 'Medical Practice', 'Micro Lending', 'Minerals Business',
+  'Mining/Metals', 'Mobile', 'Mobile Technology', 'NBFC', 'Natural Health Products',
+  'Non-Profit/Volunteering', 'Nonprofits', 'Oil/Energy/Solar/Greentech',
+  'Personal Finance', 'Pharmaceuticals', 'Platforms', 'Proptech', 'Public Relations/PR',
+  'Real Estate and Construction', 'Real Estate/Mortgage', 'Retail', 'Retail Industry',
+  'SaaS', 'Science and Engineering', 'Semiconductor', 'Smart Hardware', 'Social Media',
+  'Software', 'Space', 'Start-ups', 'Sustainability', 'Sustainable Sectors',
+  'Technology', 'Telecommunications', 'Trading Platform', 'Transportation',
+  'Transportation and Logistics Tech', 'Utilities', 'vSaaS', 'Vertical SaaS',
+  'Virtual Reality', 'Warehousing', 'Web3', 'Web3 + Gaming', 'Web3-focused Startups'
 ];
+
 
 // Locations array
 // const locations = [
 //     'Adilabad', 'Agra', 'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Gurgaon', 'Hyderabad', 'Kolkata', 'Mumbai', 'Noida', 'Pune', 'Surat'
 // ];
 const locations = [
-    'Adilabad', 'Agra', 'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Gurgaon', 'Hyderabad', 'Kolkata', 'Mumbai', 'Noida', 'Pune', 'Surat',
-    'Bhopal', 'Jaipur', 'Lucknow', 'Indore', 'Nagpur', 'Kanpur', 'Varanasi', 'Ludhiana', 'Chandigarh', 'Coimbatore', 'Visakhapatnam', 'Rajkot',
-    'Vadodara', 'Madurai', 'Mysuru', 'Bhubaneswar', 'Patna', 'Jammu', 'Kochi', 'Gwalior', 'Ranchi', 'Shimla', 'Dehradun', 'Kozhikode', 'Agartala',
-    'Imphal', 'Srinagar', 'Shillong', 'Bokaro', 'Jamshedpur', 'Faridabad', 'Ambala', 'Udaipur', 'Jodhpur', 'Navi Mumbai', 'Dhanbad', 'Kolhapur',
-    'Solapur', 'Tiruchirappalli', 'Mangalore', 'Thiruvananthapuram', 'Aligarh', 'Karnal', 'Haldwani', 'Raipur', 'Bilaspur', 'Hosur', 'Belgaum',
-    'Chandrapur', 'Siliguri', 'Satna', 'Firozabad', 'Agraharam', 'Nanded', 'Rae Bareli', 'Kochi', 'Warangal', 'Bareilly', 'Guwahati', 'Nashik',
-    'Bhubaneshwar', 'Jammu', 'Bikaner', 'Ajmer', 'Bihar Sharif', 'Sangli', 'Patiala', 'Vellore', 'Gurugram', 'Alappuzha', 'Tumkur', 'Karnataka'
+  'Adilabad', 'Agra', 'Agraharam', 'Ahmedabad', 'Ajmer', 'Alappuzha', 'Aligarh',
+  'Ambala', 'Bangalore', 'Bareilly', 'Belgaum', 'Bhopal', 'Bhubaneswar',
+  'Bhubaneshwar', 'Bihar Sharif', 'Bilaspur', 'Bikaner', 'Bokaro', 'Chandigarh',
+  'Chandrapur', 'Chennai', 'Coimbatore', 'Dehradun', 'Delhi', 'Dhanbad',
+  'Faridabad', 'Firozabad', 'Gurgaon', 'Gurugram', 'Guwahati', 'Gwalior',
+  'Haldwani', 'Hosur', 'Hyderabad', 'Imphal', 'Indore', 'Jaipur', 'Jammu',
+  'Jamshedpur', 'Jodhpur', 'Kanpur', 'Karnal', 'Karnataka', 'Kochi', 'Kolhapur',
+  'Kolkata', 'Kozhikode', 'Lucknow', 'Ludhiana', 'Madurai', 'Mangalore', 'Mumbai',
+  'Mysuru', 'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'Noida', 'Patiala',
+  'Patna', 'Pune', 'Raipur', 'Rae Bareli', 'Rajkot', 'Ranchi', 'Sangli', 'Satna',
+  'Shimla', 'Shillong', 'Siliguri', 'Solapur', 'Srinagar', 'Surat',
+  'Thiruvananthapuram', 'Tiruchirappalli', 'Tumkur', 'Udaipur', 'Vadodara',
+  'Varanasi', 'Vellore', 'Visakhapatnam', 'Warangal'
 ];
+
 
 let filterdata = [];
 
@@ -467,6 +394,7 @@ function populateSectors() {
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
+        checkbox.style.marginRight = '10px';
         checkbox.name = 'sector[]';
         checkbox.value = sector;
         checkbox.id = `sector_${sector}`;

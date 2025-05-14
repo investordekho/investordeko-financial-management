@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use Illuminate\Support\Str;
 class ProfileController extends Controller
 {
     /**
@@ -14,12 +19,13 @@ class ProfileController extends Controller
     public function showProfileSettings()
     {
         $user = Auth::user();
-        return view('profile.settings', compact('user'));
+        return view('profile.settings', compact('user'), ['hide' => 'true']);
     }
 
     /**
      * Update profile settings.
      */
+    
     public function updateProfileSettings(Request $request)
     {
         $user = Auth::user();
@@ -61,5 +67,29 @@ class ProfileController extends Controller
 
         // Redirect back with success message
         return redirect()->route('profile.settings')->with('success_message', 'Profile updated successfully.');
+    }
+
+    public function getemailverificationcode(){
+        $user =Auth::user();
+        $email = $user->email;
+
+        // <!-- Send verification email to the user on email -->
+        $code = rand(100000, 999999);
+        session(['verify_code_email' => $code]);
+        Mail::to($email)->send(new ResetPasswordMail($code));
+         return view('auth.new.updateprofile', ['email' => $email])->with('success', 'Verification code sent to your email.');
+    }
+    public function verifyemailupdateprofile(Request $request){
+
+        $request->validate([
+            'code' => 'required',
+            'email' => 'required|email|exists:users,email'
+        ]);
+        $user = Auth::user();
+        // Check if the code matches the one stored in the session
+        if($request->code == session('verify_code_email'))
+        {
+            return redirect()->route('profile.settings')->with(['user' => $user,'hide' => 'false','success_message'=>'Verification code is correct. You can now update your profile.']);
+        }
     }
 }

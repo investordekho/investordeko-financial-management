@@ -32,12 +32,46 @@
                             <h4 class="fw-bold name-text {{ !$isSubscribed ? 'locked-content' : ''}}">
                                 {{ $investor['investor_name'] ?? 'Unknown Investor' }}
                             </h4> 
-                            <p class="text-muted details-text {{ !$isSubscribed ? 'locked-content' : ''}}">
-                                <i class="bi bi-geo-alt-fill text-primary"></i> {{ $investor['address'] }}  
-                                &nbsp;|&nbsp;
-                                <i class="bi bi-cash-coin text-success"></i> 
-                                Sectors: {{ $investor['sectors_preferred'] ?? 'N/A' }}
+                            <p class="text-muted details-text {{ !$isSubscribed ? 'locked-content' : '' }}">
+                                <i class="bi bi-geo-alt-fill text-primary me-1"></i> {{ $investor['address'] }}  
+                                <br>
+                                <!-- <i class="bi bi-cash-coin text-success me-1"></i> -->
+                                <!-- <strong>Sectors:</strong>
+                                {{ !empty($investor['sectors_preferred']) 
+                                    ? str_replace(',', ' |', $investor['sectors_preferred']) 
+                                    : 'N/A' }} -->
+
+                                    <?php
+                                        $sectors = str_replace([', and', 'and'],',', $investor['sectors_preferred']);    
+                                        $sectors = array_map('trim', explode(',', $sectors));
+                                    ?>
+                                   
+                                    @if( count($sectors) > 0)
+                                       <ul class="list-inline">
+                                         <h7 class="text-muted">Sectors:</h7>
+                                            @foreach($sectors as $sector)
+                                                <li class="list-inline-item text-muted" style="border: 1px solid #ddd; padding: 5px; border-radius: 5px; margin-right: 5px; margin-bottom: 5px; background-color: #f8f9fa;">
+                                                    <!-- <i class="bi bi-check-circle-fill text-success me-1"></i> -->
+                                                    {{ $sector }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                    <!-- @if( count($sectors) > 0)
+                                       <ul class="list-unstyled">
+                                            @foreach($sectors as $sector)
+                                                <li class="text-muted">
+                                                    <i class="bi bi-check-circle-fill text-success me-1"></i>
+                                                    {{ $sector }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="text-muted">No sectors available.</p>
+                                    @endif -->
                             </p>
+
+
                         </div>
 
                         <!-- View Profile Button (Navigates to Details Page) -->

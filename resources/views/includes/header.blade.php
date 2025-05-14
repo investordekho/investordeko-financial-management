@@ -354,7 +354,7 @@
                             @if (Auth::user()->profile_image)
                                 <img src="{{ asset('storage/profile_image/' . Auth::user()->profile_image) }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             @else
-                                <img src="{{ asset('img/default_profile.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
+                                <img src="{{ asset('storage/profile_image/default_profile_image.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
                             @endif
                             <span class="ms-2">{{ Auth::user()->name }}</span>
                         </a>
