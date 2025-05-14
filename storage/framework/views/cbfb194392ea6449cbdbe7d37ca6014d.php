@@ -354,7 +354,7 @@
                             <?php if(Auth::user()->profile_image): ?>
                                 <img src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             <?php else: ?>
-                                <img src="<?php echo e(asset('img/default_profile.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
+                                <img src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
                             <?php endif; ?>
                             <span class="ms-2"><?php echo e(Auth::user()->name); ?></span>
                         </a>

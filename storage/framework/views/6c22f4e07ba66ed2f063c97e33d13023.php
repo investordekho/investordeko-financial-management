@@ -71,47 +71,47 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
-<!-- Profile Image Section -->
-<div class="row align-items-center mb-4">
-    <!-- Profile Image Display -->
-    <div class="col-md-3 d-flex justify-content-center">
-        <?php if(Auth::user()->profile_image): ?>
-            <img 
-                src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" 
-                alt="Profile Image" 
-                style="width: 150px; height: 150px; object-fit: cover;" 
-                class="rounded"
-            >
-        <?php else: ?>
-            <img 
-                src="<?php echo e(asset('images/default_profile.png')); ?>" 
-                alt="Default Profile Image" 
-                style="width: 150px; height: 150px; object-fit: cover;" 
-                class="rounded"
-            >
-        <?php endif; ?>
-    </div>
-
-    <!-- Profile Image Upload -->
-    <div class="col-md-9">
-        <label for="profile_image" class="form-label">Upload Profile Image</label>
-        <input type="file" class="form-control" id="profile_image" name="profile_image">
-        <p class="text-muted mt-2 small">Recommended size: 150 x 150 px. Supported formats: JPG, PNG.</p>
-    </div>
-</div>
-            <div class="form-group mb-3 d-flex justify-content-between">
-                <!-- Edit Button -->
-                <!-- <button type="button" class="btn btn-secondary me-2 flex-grow-1" onclick="fetchProfileVerificationCode()">Update</button> -->
-                <a href="<?php echo e(route('getprofileverificationcode')); ?>" class="btn btn-secondary me-2 flex-grow-1">Update Profile</a>
-
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary flex-grow-1">Save</button>
+    <!-- Profile Image Section -->
+        <div class="row align-items-center mb-4">
+            <!-- Profile Image Display -->
+            <div class="col-md-3 d-flex justify-content-center">
+                <?php if(Auth::user()->profile_image): ?>
+                    <img 
+                        src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" 
+                        alt="Profile Image" 
+                        style="width: 150px; height: 150px; object-fit: cover;" 
+                        class="rounded"
+                    >
+                <?php else: ?>
+                    <img 
+                        src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" 
+                        alt="Default Profile Image" 
+                        style="width: 150px; height: 150px; object-fit: cover;" 
+                        class="rounded"
+                    >
+                <?php endif; ?>
             </div>
-            </form>
+
+            <!-- Profile Image Upload -->
+            <div class="col-md-9">
+                <label for="profile_image" class="form-label">Upload Profile Image</label>
+                <input type="file" class="form-control" id="profile_image" name="profile_image">
+                <p class="text-muted mt-2 small">Recommended size: 150 x 150 px. Supported formats: JPG, PNG.</p>
+            </div>
         </div>
-    </div>
-</div>
+                    <div class="form-group mb-3 d-flex justify-content-between">
+                        <!-- Edit Button -->
+                        <!-- <button type="button" class="btn btn-secondary me-2 flex-grow-1" onclick="fetchProfileVerificationCode()">Update</button> -->
+                        <a href="<?php echo e(route('getprofileverificationcode')); ?>" class="btn btn-secondary me-2 flex-grow-1">Update Profile</a>
+
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary flex-grow-1">Save</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 
 <script>
@@ -134,27 +134,7 @@ unset($__errorArgs, $__bag); ?>
         }
     };
 </script>
-<!-- <script>
-    window.onload = function() {
-        var hide = <?php echo json_encode(session('hide'), 15, 512) ?>;
 
-        var $inputname = document.getElementById('name');
-        var $inputemail = document.getElementById('email');
-        var $inputphone = document.getElementById('phone_number');
-
-        // This line always removes readonly (debug/test purpose)
-        $inputname.removeAttribute('readonly');
-        $inputemail.removeAttribute('readonly');
-        $inputphone.removeAttribute('readonly');
-
-        // Optional: conditionally remove readonly if session('hide') == false
-        if (hide === false || hide === "false") {
-            $inputname.removeAttribute('readonly');
-            $inputemail.removeAttribute('readonly');
-            $inputphone.removeAttribute('readonly');
-        }
-    };
-</script> -->
 
 <?php $__env->stopSection(); ?>
 

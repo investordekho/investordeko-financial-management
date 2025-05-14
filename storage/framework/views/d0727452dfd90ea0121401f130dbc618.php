@@ -394,6 +394,7 @@ function populateSectors() {
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
+        checkbox.style.marginRight = '10px';
         checkbox.name = 'sector[]';
         checkbox.value = sector;
         checkbox.id = `sector_${sector}`;
