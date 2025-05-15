@@ -410,6 +410,7 @@ function populateSectors() {
         li.appendChild(checkbox);
         li.appendChild(label);
         sectorList.appendChild(li);
+
     });
 }
 
@@ -459,6 +460,7 @@ function populateLocations() {
         `;
         locationList.appendChild(listItem);
     });
+    
 }
 
 // Filter Locations

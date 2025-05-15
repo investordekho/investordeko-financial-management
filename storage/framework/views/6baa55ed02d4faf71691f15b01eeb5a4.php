@@ -2793,97 +2793,97 @@ function removeLinkField(button) {
 
 
 
-//     function addFounderField() {
+    function addFounderField() {
    
-//         var container = document.getElementById('founder-details-container');
+        var container = document.getElementById('founder-details-container');
 
     
-//         var newRow = document.createElement('div');
-//         newRow.className = 'row g-1';
+        var newRow = document.createElement('div');
+        newRow.className = 'row g-1';
 
     
-//         newRow.innerHTML = `
+        newRow.innerHTML = `
         
           
-//             <div class="col-md-2">
-//                 <label id="labelinput" for="founder_name" class="required">Name</label>
-//                 <input type="text" class="form-control" name="founder_name[]" required>
-//             </div>
-//             <div class="col-md-2">
-//                 <label id="labelinput" for="founder_position" class="required">Position</label>
-//                 <select class="form-control" name="founder_position[]" required>
-//                     <option value="" disabled selected>Select Position</option>
-//                     <option value="Chief Administrative Officer">Chief Administrative Officer</option>
-//                     <option value="Chief Analytics Officer">Chief Analytics Officer</option>
-//                     <option value="Chief Brand Officer">Chief Brand Officer</option>
-//                     <option value="Chief Business Development Officer">Chief Business Development Officer</option>
-//                     <option value="Chief Business Officer">Chief Business Officer</option>
-//                     <option value="Chief Commercial Officer">Chief Commercial Officer</option>
-//                     <option value="Chief Communications Officer">Chief Communications Officer</option>
-//                     <option value="Chief Compliance Officer">Chief Compliance Officer</option>
-//                     <option value="Chief Content Officer">Chief Content Officer</option>
-//                     <option value="Chief Creative Officer">Chief Creative Officer</option>
-//                     <option value="Chief Customer Officer">Chief Customer Officer</option>
-//                     <option value="Chief Data Officer">Chief Data Officer</option>
-//                     <option value="Chief Design Officer">Chief Design Officer</option>
-//                     <option value="Chief Digital Officer">Chief Digital Officer</option>
-//                     <option value="Chief Diversity Officer">Chief Diversity Officer</option>
-//                     <option value="Chief Executive Officer">Chief Executive Officer</option>
-//                     <option value="Chief Experience Officer">Chief Experience Officer</option>
-//                     <option value="Chief Financial Officer">Chief Financial Officer</option>
-//                     <option value="Chief Gaming Officer">Chief Gaming Officer</option>
-//                     <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
-//                     <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
-//                     <option value="Chief Information Officer">Chief Information Officer</option>
-//                     <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
-//                     <option value="Chief Information Security Officer">Chief Information Security Officer</option>
-//                     <option value="Chief Innovation Officer">Chief Innovation Officer</option>
-//                     <option value="Chief Investment Officer">Chief Investment Officer</option>
-//                     <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
-//                     <option value="Chief Learning Officer">Chief Learning Officer</option>
-//                     <option value="Chief Marketing Officer">Chief Marketing Officer</option>
-//                     <option value="Chief Operating Officer">Chief Operating Officer</option>
-//                     <option value="Chief Privacy Officer">Chief Privacy Officer</option>
-//                     <option value="Chief Process Officer">Chief Process Officer</option>
-//                     <option value="Chief Product Officer">Chief Product Officer</option>
-//                     <option value="Chief Reputation Officer">Chief Reputation Officer</option>
-//                     <option value="Chief Research Officer">Chief Research Officer</option>
-//                     <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
-//                     <option value="Chief Risk Officer">Chief Risk Officer</option>
-//                     <option value="Chief Science Officer">Chief Science Officer</option>
-//                     <option value="Chief Scientific Officer">Chief Scientific Officer</option>
-//                     <option value="Chief Security Officer">Chief Security Officer</option>
-//                     <option value="Chief Services Officer">Chief Services Officer</option>
-//                     <option value="Chief Strategy Officer">Chief Strategy Officer</option>
-//                     <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
-//                     <option value="Chief Technology Officer">Chief Technology Officer</option>
-//                     <option value="Chief Visibility Officer">Chief Visibility Officer</option>
-//                     <option value="Chief Visionary Officer">Chief Visionary Officer</option>
-//                     <option value="Chief Web Officer">Chief Web Officer</option>
-//                     <option value="General Manager">General Manager</option>
-//                     <option value="Manager">Manager</option>
-//                     <option value="Others">Others</option>
-//                     <option value="Secretary">Secretary</option>
-//                     <option value="Supervisor">Supervisor</option>
-//                     <option value="Vice President">Vice President</option>
-//                 </select>
-//             </div>
-//             <div class="col-md-2">
-//                 <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
-//                 <input type="text" class="form-control" name="founder_education[]" required>
-//             </div>
-//             <div class="col-md-3">
-//                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
-//                 <input type="number" class="form-control " name="founder_experience[]" required>
-//             </div>
-//             <div class="col-md-1">
-//                 <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
-//             </div>
-//         `;
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_name" class="required">Name</label>
+                <input type="text" class="form-control" name="founder_name[]" required>
+            </div>
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_position" class="required">Position</label>
+                <select class="form-control" name="founder_position[]" required>
+                    <option value="" disabled selected>Select Position</option>
+                    <option value="Chief Administrative Officer">Chief Administrative Officer</option>
+                    <option value="Chief Analytics Officer">Chief Analytics Officer</option>
+                    <option value="Chief Brand Officer">Chief Brand Officer</option>
+                    <option value="Chief Business Development Officer">Chief Business Development Officer</option>
+                    <option value="Chief Business Officer">Chief Business Officer</option>
+                    <option value="Chief Commercial Officer">Chief Commercial Officer</option>
+                    <option value="Chief Communications Officer">Chief Communications Officer</option>
+                    <option value="Chief Compliance Officer">Chief Compliance Officer</option>
+                    <option value="Chief Content Officer">Chief Content Officer</option>
+                    <option value="Chief Creative Officer">Chief Creative Officer</option>
+                    <option value="Chief Customer Officer">Chief Customer Officer</option>
+                    <option value="Chief Data Officer">Chief Data Officer</option>
+                    <option value="Chief Design Officer">Chief Design Officer</option>
+                    <option value="Chief Digital Officer">Chief Digital Officer</option>
+                    <option value="Chief Diversity Officer">Chief Diversity Officer</option>
+                    <option value="Chief Executive Officer">Chief Executive Officer</option>
+                    <option value="Chief Experience Officer">Chief Experience Officer</option>
+                    <option value="Chief Financial Officer">Chief Financial Officer</option>
+                    <option value="Chief Gaming Officer">Chief Gaming Officer</option>
+                    <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
+                    <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
+                    <option value="Chief Information Officer">Chief Information Officer</option>
+                    <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
+                    <option value="Chief Information Security Officer">Chief Information Security Officer</option>
+                    <option value="Chief Innovation Officer">Chief Innovation Officer</option>
+                    <option value="Chief Investment Officer">Chief Investment Officer</option>
+                    <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
+                    <option value="Chief Learning Officer">Chief Learning Officer</option>
+                    <option value="Chief Marketing Officer">Chief Marketing Officer</option>
+                    <option value="Chief Operating Officer">Chief Operating Officer</option>
+                    <option value="Chief Privacy Officer">Chief Privacy Officer</option>
+                    <option value="Chief Process Officer">Chief Process Officer</option>
+                    <option value="Chief Product Officer">Chief Product Officer</option>
+                    <option value="Chief Reputation Officer">Chief Reputation Officer</option>
+                    <option value="Chief Research Officer">Chief Research Officer</option>
+                    <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
+                    <option value="Chief Risk Officer">Chief Risk Officer</option>
+                    <option value="Chief Science Officer">Chief Science Officer</option>
+                    <option value="Chief Scientific Officer">Chief Scientific Officer</option>
+                    <option value="Chief Security Officer">Chief Security Officer</option>
+                    <option value="Chief Services Officer">Chief Services Officer</option>
+                    <option value="Chief Strategy Officer">Chief Strategy Officer</option>
+                    <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
+                    <option value="Chief Technology Officer">Chief Technology Officer</option>
+                    <option value="Chief Visibility Officer">Chief Visibility Officer</option>
+                    <option value="Chief Visionary Officer">Chief Visionary Officer</option>
+                    <option value="Chief Web Officer">Chief Web Officer</option>
+                    <option value="General Manager">General Manager</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Others">Others</option>
+                    <option value="Secretary">Secretary</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Vice President">Vice President</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
+                <input type="text" class="form-control" name="founder_education[]" required>
+            </div>
+            <div class="col-md-3">
+                <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
+                <input type="number" class="form-control " name="founder_experience[]" required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
+            </div>
+        `;
 
         
-//         container.appendChild(newRow);
-// }
+        container.appendChild(newRow);
+}
 
 // Function to remove founder fields
 function removeFounderField(button) {

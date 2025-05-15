@@ -392,6 +392,10 @@ function populateSectors() {
         const li = document.createElement('li');
         li.classList.add('dropdown-item');
 
+        li.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent dropdown from closing
+        });
+        
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.style.marginRight = '10px';
@@ -409,6 +413,7 @@ function populateSectors() {
         li.appendChild(checkbox);
         li.appendChild(label);
         sectorList.appendChild(li);
+
     });
 }
 
@@ -458,6 +463,7 @@ function populateLocations() {
         `;
         locationList.appendChild(listItem);
     });
+    
 }
 
 // Filter Locations
