@@ -182,14 +182,15 @@
                                 <!-- Investor Type Multi-select Dropdown -->
                                 <div class="col-md-3 mb-3">
                                     <label for="investor_type"></label>
-                                    <div class="dropdown">
+                                    <div class="dropdown" data-bs-auto-close="outside">
                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investorTypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             Select Investor Type
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="investorTypeDropdown">
-                                            <div class="px-3 py-2">
-                                                <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type">
-                                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
+                                        <ul class="dropdown-menu px-3 py-2" aria-labelledby="investorTypeDropdown">
+
+                                                   <li class="dropdown-item p-0 m-0">                                                        
+                                                        <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type">
+                                                    </li>
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel" id="type_angel_investor">
@@ -220,8 +221,8 @@
                                                             <label class="form-check-label" for="type_venture_capitalist">Venture Capitalist</label>
                                                         </div>
                                                     </li>                                                    
-                                                </div>
-                                            </div>
+                                                
+                                          
                                         </ul>
                                     </div>
                                 </div>
@@ -397,7 +398,16 @@ document.addEventListener('DOMContentLoaded', function (){
         });
     })
 })
-/
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Prevent Bootstrap from closing the dropdown on checkbox or input click
+    document.querySelectorAll('.dropdown-menu').forEach(function (dropdownMenu) {
+        dropdownMenu.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    });
+});
 
 function populateSectors() {
     const sectorList = document.getElementById('sectorList');
