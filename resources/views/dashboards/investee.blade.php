@@ -108,10 +108,10 @@
                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investmentSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             Select Investment Size
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="investmentSizeDropdown">
-                                            <div class="px-3 py-2">
+                                        <ul class="dropdown-menu px-3 py-2 scrollable-menu" aria-labelledby="investmentSizeDropdown">
+                                            
                                                 <!-- <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size"> -->
-                                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
+                                                
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investment_size[]" value="Below 10 Lakh" id="investment_size_10">
@@ -136,8 +136,8 @@
                                                             <label class="form-check-label" for="investment_size_100_plus">Above 1 Crore</label>
                                                         </div>
                                                     </li>
-                                                </div>
-                                            </div>
+                                                
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -383,6 +383,27 @@ let filterdata = [];
 // }
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownMenu = document.querySelector('#investmentSizeDropdown + .dropdown-menu');
+
+    dropdownMenu.querySelectorAll('input, label').forEach(el => {
+        el.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    });
+});
+
+
+// document.addEventListener('DOMcontentLoaded', function () {
+//     const dropdownMenu = document.querySelector('#investmentSizeDropdown + .dropdown-menu');
+
+//     dropdownMenu.querySelectorAll('input, label').forEach(el => {
+//         el.addEventListener('click', function (e) => {
+//             e.stopPropagation();
+//         }):
+//     });
+// });
+
 function populateSectors() {
     const sectorList = document.getElementById('sectorList');
     const selectedSectors = new Set([...new FormData(document.getElementById('searchForm')).getAll('sector[]')]);
@@ -406,7 +427,11 @@ function populateSectors() {
         label.classList.add('form-check-label');
         label.setAttribute('for', `sector_${sector}`);
         label.textContent = sector;
-
+        
+        checkbox.addEventListener('click', e => e.stopPropagation());
+        label.addEventListener('click', e => e.stopPropagation());
+        li.addEventListener('click', e => e.stopPropagation());
+        
         li.appendChild(checkbox);
         li.appendChild(label);
         sectorList.appendChild(li);
@@ -459,6 +484,12 @@ function populateLocations() {
             </div>
         `;
         locationList.appendChild(listItem);
+
+        // Add event listener to stop propagation
+        listItem.querySelector('input').addEventListener('click', e => e.stopPropagation());
+        listItem.querySelector('label').addEventListener('click', e => e.stopPropagation());
+        listItem.addEventListener('click', e => e.stopPropagation());   
+        
     });
     
 }
