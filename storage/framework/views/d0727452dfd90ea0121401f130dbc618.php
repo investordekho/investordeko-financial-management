@@ -148,10 +148,8 @@
                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investmentTenureDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             Select Tenure
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="investmentTenureDropdown">
-                                            <div class="px-3 py-2">
-                                                <!-- <input type="text" class="form-control mb-2" id="investmentTenureSearch" placeholder="Search tenure"> -->
-                                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
+                                        <ul class="dropdown-menu px-3 py-2 scrollable-menu" aria-labelledby="investmentTenureDropdown">
+                                           
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="0-1 years" id="tenure_less_1">
@@ -176,8 +174,7 @@
                                                             <label class="form-check-label" for="tenure_5_plus">More than 5 years</label>
                                                         </div>
                                                     </li>
-                                                </div>
-                                            </div>
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -392,16 +389,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-// document.addEventListener('DOMcontentLoaded', function () {
-//     const dropdownMenu = document.querySelector('#investmentSizeDropdown + .dropdown-menu');
-
-//     dropdownMenu.querySelectorAll('input, label').forEach(el => {
-//         el.addEventListener('click', function (e) => {
-//             e.stopPropagation();
-//         }):
-//     });
-// });
+document.addEventListener('DOMContentLoaded', function (){
+    const investmenttenuareDropDown = document.querySelector('#investmentTenureDropdown + .dropdown-menu');
+    investmenttenuareDropDown.querySelectorAll('input,label').forEach(el => {
+        el.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    })
+})
+/
 
 function populateSectors() {
     const sectorList = document.getElementById('sectorList');
