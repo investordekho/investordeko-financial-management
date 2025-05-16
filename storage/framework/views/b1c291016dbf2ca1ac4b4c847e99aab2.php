@@ -118,6 +118,87 @@ unset($__errorArgs, $__bag); ?>
 
 
 
+<div class="col-sm-3 form-group">
+    <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
+    <input
+        type="text"
+        class="form-control spaced-input <?php echo e($errors->has('sectors_preferred') ? 'is-invalid' : ''); ?>"
+        id="sectors_preferred_input"
+        placeholder="Select sectors"
+        readonly
+        onclick="toggleDropdown()"
+        value="<?php echo e(old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : ''); ?>"
+    >
+    
+    <?php $__errorArgs = ['sectors_preferred'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+        <span class="text-danger" style="font-size: 13px;"><?php echo e($message); ?></span>
+    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+    <div id="sectors_preferred_list" class="dropdown-list"
+        style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 0px; max-width: 95%; background-color: white; z-index: 10; position: absolute;">
+        <?php
+            $sectors = [
+                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+                            ];
+        ?>
+
+        <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <label>
+                <input
+                    type="checkbox"
+                    class="sector-checkbox"
+                    value="<?php echo e($sector); ?>"
+                    <?php echo e(old('sectors_preferred') && in_array($sector, old('sectors_preferred')) ? 'checked' : ''); ?>
+
+                > 
+                <?php echo e($sector); ?>
+
+            </label><br>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </div>
+
+    
+    <div id="sectors_preferred_hidden_container">
+        <?php if(old('sectors_preferred')): ?>
+            <?php $__currentLoopData = old('sectors_preferred'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <input type="hidden" name="sectors_preferred[]" value="<?php echo e($sector); ?>">
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php endif; ?>
+    </div>
+</div>
 
 
 
@@ -128,19 +209,12 @@ unset($__errorArgs, $__bag); ?>
 
 
 
-
+<!-- 
                    <div class="col-sm-3 form-group">
                     <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
                     <input
                         type="text"
-                        class="form-control spaced-input <?php $__errorArgs = ['sectors_preferred'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>"
+                        class="form-control spaced-input <?php echo e($errors->has('sectors_preferred') ? 'is-invalid' : ''); ?>""
                         id="sectors_preferred_input"
                         placeholder="Select sectors"
                         readonly
@@ -203,10 +277,16 @@ unset($__errorArgs, $__bag); ?>
                             </label><br>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
-                    <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred[]" value="<?php echo e(old('sectors_preferred') ? implode(',', old('sectors_preferred')) : ''); ?>">
+                    <input type="hidden" id="sectors_preferred_hidden" class="" name="sectors_preferred[]" value="<?php echo e(old('sectors_preferred') ? implode(',', old('sectors_preferred')) : ''); ?>">
+
+                  
+
+                     <?php if($errors->has('sectors_preferred')): ?>
+                            <span class="text-danger" style="font-size: 13px;"><?php echo e($errors->first('sectors_preferred')); ?></span>
+                     <?php endif; ?>
                    </div>
 
-
+ -->
 
 
 
@@ -1266,29 +1346,48 @@ unset($__errorArgs, $__bag); ?>
 
 <script>
    
-   function toggleDropdown() {
+
+    function toggleDropdown() {
         const dropdown = document.getElementById('sectors_preferred_list');
         dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'block' : 'none';
     }
 
-    // To handle checkbox selection and show selected sectors in the input field
-    const checkboxes = document.querySelectorAll('.sector-checkbox');
-    const selectedSectorsInput = document.getElementById('sectors_preferred_input');
-    const hiddenSectorsField = document.getElementById('sectors_preferred_hidden');
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkboxes = document.querySelectorAll('.sector-checkbox');
+        const selectedInput = document.getElementById('sectors_preferred_input');
+        const hiddenContainer = document.getElementById('sectors_preferred_hidden_container');
 
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            const selectedSectors = Array.from(checkboxes)
+        function updateSelections() {
+            const selected = Array.from(checkboxes)
                 .filter(checkbox => checkbox.checked)
                 .map(checkbox => checkbox.value);
 
-            // Display selected sectors in the input field
-            selectedSectorsInput.value = selectedSectors.join(', ');
+            // Show in the readonly input
+            selectedInput.value = selected.join(', ');
 
-            // Update the hidden input for form submission
-            hiddenSectorsField.value = selectedSectors.join(',');
+            // Remove previous hidden inputs
+            hiddenContainer.innerHTML = '';
+
+            // Create new hidden inputs
+            selected.forEach(value => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'sectors_preferred[]';
+                input.value = value;
+                hiddenContainer.appendChild(input);
+            });
+        }
+
+        // Attach change listener to all checkboxes
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelections);
         });
+
+        // Run on page load (e.g. old values restored)
+        updateSelections();
     });
+
+
 
     // Close dropdown if clicking outside
     document.addEventListener('click', function (e) {

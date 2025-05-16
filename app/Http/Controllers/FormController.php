@@ -238,7 +238,7 @@ public function submitInvesteeForm(Request $request)
         // Step 1: Validate form input
         $validatedData = $request->validate([
             'investor_name' => 'required|string',
-            'sectors_preferred' => 'required|array',
+            'sectors_preferred' => 'required|array|min:1',
             'sectors_preferred.*' => 'string',
             'address' => 'required|string',
             'investor_profile' => 'nullable|file|mimes:jpg,png,pdf', // Optional file upload
