@@ -106,11 +106,15 @@ endif;
 unset($__errorArgs, $__bag); ?>
 </div>
 
-                   <div class="col-sm-3 form-group">
-    <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
-    <input
-        type="text"
-        class="form-control spaced-input <?php $__errorArgs = ['sectors_preferred'];
+
+
+
+
+                   <!-- <div class="col-sm-3 form-group">
+                    <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
+                    <input
+                        type="text"
+                        class="form-control spaced-input <?php $__errorArgs = ['sectors_preferred'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -118,70 +122,198 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-        id="sectors_preferred_input"
-        placeholder="Select sectors"
-        readonly
-        onclick="toggleDropdown()"
-        value="<?php echo e(old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : ''); ?>"
-    >
-    <?php $__errorArgs = ['sectors_preferred'];
+                        id="sectors_preferred_input"
+                        placeholder="Select sectors"
+                        readonly
+                        onclick="toggleDropdown()"
+                        value="<?php echo e(old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : ''); ?>"
+                    >
+                    <?php $__errorArgs = ['sectors_preferred'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-        <span class="text-danger">This field is required</span>
-    <?php unset($message);
+                        <span class="text-danger">This field is required</span>
+                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    <div id="sectors_preferred_list" class="dropdown-list" style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
-        <?php
-            $sectors = [
-                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
-                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
-                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
-                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
-                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
-                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
-                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
-                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
-                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
-                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
-                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
-                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
-                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
-                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
-                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
-                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
-                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
-                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
-                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
-                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
-                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
-                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
-                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
-                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
-                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
-                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
-                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
-            ];
-        ?>
-        <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <label>
+                    <div id="sectors_preferred_list" class="dropdown-list" style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+                        <?php
+                            $sectors = [
+                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+                            ];
+                        ?>
+                        <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    class="sector-checkbox"
+                                    value="<?php echo e($sector); ?>"
+                                    <?php echo e(old('sectors_preferred') && in_array($sector, old('sectors_preferred')) ? 'checked' : ''); ?>
+
+                                > 
+                                <?php echo e($sector); ?>
+
+                            </label><br>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
+                    <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred[]" value="<?php echo e(old('sectors_preferred') ? implode(',', old('sectors_preferred')) : ''); ?>">
+                   </div> -->
+
+                   <div class="col-sm-3 form-group position-relative">
+                <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
+                
+                <!-- Visible input -->
                 <input
-                    type="checkbox"
-                    class="sector-checkbox"
-                    value="<?php echo e($sector); ?>"
-                    <?php echo e(old('sectors_preferred') && in_array($sector, old('sectors_preferred')) ? 'checked' : ''); ?>
+                    type="text"
+                    class="form-control"
+                    id="sectors_preferred_input"
+                    placeholder="Select sectors"
+                    readonly
+                    onclick="toggleDropdown()"
+                    value="<?php echo e(old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : ''); ?>"
+                >
 
-                > 
-                <?php echo e($sector); ?>
+                <?php $__errorArgs = ['sectors_preferred'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger">This field is required</span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
-            </label><br>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </div>
-    <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred[]" value="<?php echo e(old('sectors_preferred') ? implode(',', old('sectors_preferred')) : ''); ?>">
-</div>
+                <!-- Dropdown -->
+                <div id="sectors_preferred_list" class="custom-dropdown shadow-sm">
+                    <input type="text" id="sector_search" class="form-control mb-2" placeholder="Search...">
+
+                    <div class="scrollable-menu">
+                        <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="form-check">
+                                <input
+                                    type="checkbox"
+                                    class="form-check-input sector-checkbox"
+                                    value="<?php echo e($sector); ?>"
+                                    id="sector_<?php echo e(\Illuminate\Support\Str::slug($sector, '_')); ?>"
+                                    <?php echo e(old('sectors_preferred') && in_array($sector, old('sectors_preferred')) ? 'checked' : ''); ?>
+
+                                >
+                                <label class="form-check-label" for="sector_<?php echo e(\Illuminate\Support\Str::slug($sector, '_')); ?>"><?php echo e($sector); ?></label>
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
+                </div>
+
+                <!-- Hidden input to submit values -->
+                <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred" value="<?php echo e(old('sectors_preferred') ? implode(',', old('sectors_preferred')) : ''); ?>">
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <div class="col-sm-2">
@@ -376,7 +508,8 @@ unset($__errorArgs, $__bag); ?>
         <label></label>
         <h3 style="font-size: 22px; font-weight: 600;">Public Links</h3>
     </div>
-    <div id="public-links-container" class="col-sm-10">
+
+    <!-- <div id="public-links-container" class="col-sm-10">
         <div class="public-link-row d-flex align-items-start">
             <div class="form-group flex-grow-1 mr-2">
                 <label for="public_links" class="required">URL</label>
@@ -449,7 +582,87 @@ unset($__errorArgs, $__bag); ?>
                 <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <div id="public-links-container" class="col-sm-10">
+    <?php
+        $publicLinks = old('public_links', []);
+        $linkDescriptions = old('link_descriptions', []);
+        $count = max(count($publicLinks), 1);
+    ?>
+
+    <?php for($i = 0; $i < $count; $i++): ?>
+        <div class="public-link-row d-flex align-items-start mb-2">
+            <div class="form-group flex-grow-1 mr-2">
+                <label for="public_links" class="<?php echo e($i == 0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'URL' : ''); ?></label>
+                <input 
+                    type="url" 
+                    class="form-control spaced-input <?php $__errorArgs = ["public_links.$i"];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="public_links[]" 
+                    placeholder="Enter URL" 
+                    value="<?php echo e($publicLinks[$i] ?? ''); ?>" 
+                    required
+                >
+                <?php $__errorArgs = ["public_links.$i"];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger">This field is required</span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="form-group flex-grow-1 mr-2">
+                <label for="link_descriptions" class="<?php echo e($i == 0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'Select Account' : ''); ?></label>
+                <select 
+                    class="form-control spaced-input <?php $__errorArgs = ["link_descriptions.$i"];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                    name="link_descriptions[]" 
+                    required
+                >
+                    <?php $__currentLoopData = ['Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'Others']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($option); ?>" <?php echo e(($linkDescriptions[$i] ?? '') == $option ? 'selected' : ''); ?>><?php echo e($option); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+                <?php $__errorArgs = ["link_descriptions.$i"];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="text-danger">This field is required</span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="form-group">
+                <?php if($i == 0): ?>
+                    <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
+                <?php else: ?>
+                    <button type="button" class="btn btn-danger remove-btn mt-4" onclick="removePublicLinkField(this)">-</button>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endfor; ?>
+</div>
+
 </div>
 
 
