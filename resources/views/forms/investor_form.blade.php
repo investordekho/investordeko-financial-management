@@ -98,7 +98,26 @@
 
 
 
-                   <!-- <div class="col-sm-3 form-group">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   <div class="col-sm-3 form-group">
                     <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
                     <input
                         type="text"
@@ -112,7 +131,7 @@
                     @error('sectors_preferred')
                         <span class="text-danger">This field is required</span>
                     @enderror
-                    <div id="sectors_preferred_list" class="dropdown-list" style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+                    <div id="sectors_preferred_list" class="dropdown-list" style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 0px; max-width: 95%; background-color: white; z-index: 10;">
                         @php
                             $sectors = [
                                 'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
@@ -157,107 +176,7 @@
                         @endforeach
                     </div>
                     <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred[]" value="{{ old('sectors_preferred') ? implode(',', old('sectors_preferred')) : '' }}">
-                   </div> -->
-
-                   <div class="col-sm-3 form-group position-relative">
-                <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
-                
-                <!-- Visible input -->
-                <input
-                    type="text"
-                    class="form-control"
-                    id="sectors_preferred_input"
-                    placeholder="Select sectors"
-                    readonly
-                    onclick="toggleDropdown()"
-                    value="{{ old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : '' }}"
-                >
-
-                @error('sectors_preferred')
-                    <span class="text-danger">This field is required</span>
-                @enderror
-
-                <!-- Dropdown -->
-                <div id="sectors_preferred_list" class="custom-dropdown shadow-sm">
-                    <input type="text" id="sector_search" class="form-control mb-2" placeholder="Search...">
-
-                    <div class="scrollable-menu">
-                        @foreach($sectors as $sector)
-                            <div class="form-check">
-                                <input
-                                    type="checkbox"
-                                    class="form-check-input sector-checkbox"
-                                    value="{{ $sector }}"
-                                    id="sector_{{ \Illuminate\Support\Str::slug($sector, '_') }}"
-                                    {{ old('sectors_preferred') && in_array($sector, old('sectors_preferred')) ? 'checked' : '' }}
-                                >
-                                <label class="form-check-label" for="sector_{{ \Illuminate\Support\Str::slug($sector, '_') }}">{{ $sector }}</label>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- Hidden input to submit values -->
-                <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred" value="{{ old('sectors_preferred') ? implode(',', old('sectors_preferred')) : '' }}">
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                   </div>
 
 
 

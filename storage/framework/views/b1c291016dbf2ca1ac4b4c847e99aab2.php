@@ -110,7 +110,26 @@ unset($__errorArgs, $__bag); ?>
 
 
 
-                   <!-- <div class="col-sm-3 form-group">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   <div class="col-sm-3 form-group">
                     <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
                     <input
                         type="text"
@@ -138,7 +157,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    <div id="sectors_preferred_list" class="dropdown-list" style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+                    <div id="sectors_preferred_list" class="dropdown-list" style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 0px; max-width: 95%; background-color: white; z-index: 10;">
                         <?php
                             $sectors = [
                                 'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
@@ -185,115 +204,7 @@ unset($__errorArgs, $__bag); ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                     <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred[]" value="<?php echo e(old('sectors_preferred') ? implode(',', old('sectors_preferred')) : ''); ?>">
-                   </div> -->
-
-                   <div class="col-sm-3 form-group position-relative">
-                <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
-                
-                <!-- Visible input -->
-                <input
-                    type="text"
-                    class="form-control"
-                    id="sectors_preferred_input"
-                    placeholder="Select sectors"
-                    readonly
-                    onclick="toggleDropdown()"
-                    value="<?php echo e(old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : ''); ?>"
-                >
-
-                <?php $__errorArgs = ['sectors_preferred'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <span class="text-danger">This field is required</span>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-
-                <!-- Dropdown -->
-                <div id="sectors_preferred_list" class="custom-dropdown shadow-sm">
-                    <input type="text" id="sector_search" class="form-control mb-2" placeholder="Search...">
-
-                    <div class="scrollable-menu">
-                        <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="form-check">
-                                <input
-                                    type="checkbox"
-                                    class="form-check-input sector-checkbox"
-                                    value="<?php echo e($sector); ?>"
-                                    id="sector_<?php echo e(\Illuminate\Support\Str::slug($sector, '_')); ?>"
-                                    <?php echo e(old('sectors_preferred') && in_array($sector, old('sectors_preferred')) ? 'checked' : ''); ?>
-
-                                >
-                                <label class="form-check-label" for="sector_<?php echo e(\Illuminate\Support\Str::slug($sector, '_')); ?>"><?php echo e($sector); ?></label>
-                            </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </div>
-                </div>
-
-                <!-- Hidden input to submit values -->
-                <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred" value="<?php echo e(old('sectors_preferred') ? implode(',', old('sectors_preferred')) : ''); ?>">
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                   </div>
 
 
 
