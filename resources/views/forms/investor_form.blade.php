@@ -566,109 +566,401 @@
 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- Previous Investments Section -->
                   <div class="row g-3 bordered-row">
-    <div class="heading-with-hr">
-        <h3 style="font-size: 22px; font-weight: 600;">Previous Investments</h3>
-        <hr>
-    </div>
-    <!-- Previous Investments Section -->
-    <div id="previous-investments-container">
-        @if (old('previous_investment_year') && is_array(old('previous_investment_year')))
-            @foreach (old('previous_investment_year') as $index => $year)
-                <div class="row g-3 previous-investment-row">
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="previous_investment_year" class="required">Year</label>
-                        <select 
-                            class="form-control spaced-input @error('previous_investment_year.' . $index) is-invalid @enderror" 
-                            id="previous_investment_year" 
-                            name="previous_investment_year[]"
-                            required
-                        >
-                            @for ($yr = 2000; $yr <= 2024; $yr++)
-                                <option value="{{ $yr }}" {{ $year == $yr ? 'selected' : '' }}>{{ $yr }}</option>
-                            @endfor
-                        </select>
-                        @error('previous_investment_year.' . $index)
-                            <span class="text-danger">This field is required</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="previous_investment_company" class="required">Company</label>
-                        <input 
-                            type="text" 
-                            class="form-control spaced-input @error('previous_investment_company.' . $index) is-invalid @enderror" 
-                            id="previous_investment_company" 
-                            name="previous_investment_company[]" 
-                            value="{{ old('previous_investment_company.' . $index) }}" 
-                            required
-                        >
-                        @error('previous_investment_company.' . $index)
-                            <span class="text-danger">This field is required</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="sector" class="required">Sector</label>
-                        <input 
-                            type="text" 
-                            class="form-control spaced-input @error('sector.' . $index) is-invalid @enderror" 
-                            id="sector" 
-                            name="sector[]" 
-                            value="{{ old('sector.' . $index) }}" 
-                            required
-                        >
-                        @error('sector.' . $index)
-                            <span class="text-danger">This field is required</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
-                    </div>
-                </div>
-            @endforeach
-        @else
-            <!-- Default Empty Row -->
-            <div class="row g-3 previous-investment-row">
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="previous_investment_year" class="required">Year</label>
-                    <select 
-                        class="form-control spaced-input" 
-                        id="previous_investment_year" 
-                        name="previous_investment_year[]"
-                        required
-                    >
-                        @for ($year = 2000; $year <= 2024; $year++)
-                            <option value="{{ $year }}">{{ $year }}</option>
+                        <div class="heading-with-hr">
+                            <h3 style="font-size: 22px; font-weight: 600;">Previous Investments</h3>
+                            <hr>
+                        </div>
+                        <!-- Previous Investments Section -->
+                        <div id="previous-investments-container">
+
+                        @php
+                            $previousInvestmentYears = old('previous_investment_year', []);
+                            $previousInvestmentCompanies = old('previous_investment_company', []);
+                            $sectors = old('sector', []);
+                            $count = max(count($previousInvestmentCompanies), 1);
+                        @endphp
+                            
+                           @for( $i =0; $i< $count; $i++)
+                            <div class="row g-3 previous-investment-row">
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="previous_investment_year" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Year' : ''}}</label>
+                                     <select 
+                                        class="form-control spaced-input @error('previous_investment_year.' . $i) is-invalid @enderror" 
+                                        id="previous_investment_year" 
+                                        name="previous_investment_year[]" 
+                                        required
+                                        value="{{ $previousInvestmentYears[$i] ?? '' }}"
+                                        >
+                                        @for ($year = 2000; $year <= 2024; $year++)
+                                            <option value="{{ $year }}" {{ ($previousInvestmentYears[$i] ?? '') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                        @endfor
+                                    </select>
+
+                                    @error('previous_investment_year.' . $i)
+                                        <span class="text-danger">This field is required</span>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="previous_investment_company" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Company' : ''}}</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control spaced-input @error('previous_investment_company.' . $i) is-invalid @enderror" 
+                                        id="previous_investment_company" 
+                                        name="previous_investment_company[]" 
+                                        value="{{ $previousInvestmentCompanies[$i] ?? '' }}" 
+                                        required
+                                    >
+                                    @error('previous_investment_company.' . $i)
+                                        <span class="text-danger">This field is required</span>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="sector" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Sector' : ''}}</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control spaced-input @error('sector.' . $i) is-invalid @enderror" 
+                                        id="sector" 
+                                        name="sector[]" 
+                                        value="{{ $sectors[$i] ?? '' }}" 
+                                        required
+                                    >
+                                    @error('sector.' . $i)
+                                        <span class="text-danger">This field is required</span>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    @if ($i == 0)
+                                        <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
+                                    @else
+                                        <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
+                                    @endif
+                                </div>
+                            </div>
                         @endfor
-                    </select>
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="previous_investment_company" class="required">Company</label>
-                    <input 
-                        type="text" 
-                        class="form-control spaced-input" 
-                        id="previous_investment_company" 
-                        name="previous_investment_company[]" 
-                        required
-                    >
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="sector" class="required">Sector</label>
-                    <input 
-                        type="text" 
-                        class="form-control spaced-input" 
-                        id="sector" 
-                        name="sector[]" 
-                        required
-                    >
-                </div>
-                <div class="col-sm-3 form-group">
-                    <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
-                </div>
-            </div>
-        @endif
-    </div>
-</div>
+                    </div>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+                            @if (old('previous_investment_year') && is_array(old('previous_investment_year')))
+                                @foreach (old('previous_investment_year') as $index => $year)
+                                    <div class="row g-3 previous-investment-row">
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="previous_investment_year" class="required">Year</label>
+                                            <select 
+                                                class="form-control spaced-input @error('previous_investment_year.' . $index) is-invalid @enderror" 
+                                                id="previous_investment_year" 
+                                                name="previous_investment_year[]"
+                                                required
+                                            >
+                                                @for ($yr = 2000; $yr <= 2024; $yr++)
+                                                    <option value="{{ $yr }}" {{ $year == $yr ? 'selected' : '' }}>{{ $yr }}</option>
+                                                @endfor
+                                            </select>
+                                            @error('previous_investment_year.' . $index)
+                                                <span class="text-danger">This field is required</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="previous_investment_company" class="required">Company</label>
+                                            <input 
+                                                type="text" 
+                                                class="form-control spaced-input @error('previous_investment_company.' . $index) is-invalid @enderror" 
+                                                id="previous_investment_company" 
+                                                name="previous_investment_company[]" 
+                                                value="{{ old('previous_investment_company.' . $index) }}" 
+                                                required
+                                            >
+                                            @error('previous_investment_company.' . $index)
+                                                <span class="text-danger">This field is required</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="sector" class="required">Sector</label>
+                                            <input 
+                                                type="text" 
+                                                class="form-control spaced-input @error('sector.' . $index) is-invalid @enderror" 
+                                                id="sector" 
+                                                name="sector[]" 
+                                                value="{{ old('sector.' . $index) }}" 
+                                                required
+                                            >
+                                            @error('sector.' . $index)
+                                                <span class="text-danger">This field is required</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                              
+                                <div class="row g-3 previous-investment-row">
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="previous_investment_year" class="required">Year</label>
+                                        <select 
+                                            class="form-control spaced-input" 
+                                            id="previous_investment_year" 
+                                            name="previous_investment_year[]"
+                                            required
+                                        >
+                                            @for ($year = 2000; $year <= 2024; $year++)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="previous_investment_company" class="required">Company</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control spaced-input" 
+                                            id="previous_investment_company" 
+                                            name="previous_investment_company[]" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="sector" class="required">Sector</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control spaced-input" 
+                                            id="sector" 
+                                            name="sector[]" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- Referral and Guidance Section -->
                     <div class="row g-3">
                         <div class="heading-with-hr">
@@ -935,6 +1227,17 @@ function removePublicLinkField(button) {
         }
     }
     
+    function removePreviousInvestmentField(button) {
+    const container = document.getElementById('previous-investments-container');
+    const allRows = container.querySelectorAll('.previous-investment-row');
+
+    if (allRows.length > 1) {
+        button.closest('.previous-investment-row').remove();
+    } else {
+        alert('At least one entry is required.');
+    }
+}
+
     
 </script>
 @endsection

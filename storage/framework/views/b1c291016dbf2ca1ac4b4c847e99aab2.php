@@ -799,21 +799,135 @@ unset($__errorArgs, $__bag); ?>
 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- Previous Investments Section -->
                   <div class="row g-3 bordered-row">
-    <div class="heading-with-hr">
-        <h3 style="font-size: 22px; font-weight: 600;">Previous Investments</h3>
-        <hr>
-    </div>
-    <!-- Previous Investments Section -->
-    <div id="previous-investments-container">
-        <?php if(old('previous_investment_year') && is_array(old('previous_investment_year'))): ?>
-            <?php $__currentLoopData = old('previous_investment_year'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $year): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="row g-3 previous-investment-row">
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="previous_investment_year" class="required">Year</label>
-                        <select 
-                            class="form-control spaced-input <?php $__errorArgs = ['previous_investment_year.' . $index];
+                        <div class="heading-with-hr">
+                            <h3 style="font-size: 22px; font-weight: 600;">Previous Investments</h3>
+                            <hr>
+                        </div>
+                        <!-- Previous Investments Section -->
+                        <div id="previous-investments-container">
+
+                        <?php
+                            $previousInvestmentYears = old('previous_investment_year', []);
+                            $previousInvestmentCompanies = old('previous_investment_company', []);
+                            $sectors = old('sector', []);
+                            $count = max(count($previousInvestmentCompanies), 1);
+                        ?>
+                            
+                           <?php for( $i =0; $i< $count; $i++): ?>
+                            <div class="row g-3 previous-investment-row">
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="previous_investment_year" class="<?php echo e($i==0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'Year' : ''); ?></label>
+                                     <select 
+                                        class="form-control spaced-input <?php $__errorArgs = ['previous_investment_year.' . $i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -821,30 +935,32 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" 
-                            id="previous_investment_year" 
-                            name="previous_investment_year[]"
-                            required
-                        >
-                            <?php for($yr = 2000; $yr <= 2024; $yr++): ?>
-                                <option value="<?php echo e($yr); ?>" <?php echo e($year == $yr ? 'selected' : ''); ?>><?php echo e($yr); ?></option>
-                            <?php endfor; ?>
-                        </select>
-                        <?php $__errorArgs = ['previous_investment_year.' . $index];
+                                        id="previous_investment_year" 
+                                        name="previous_investment_year[]" 
+                                        required
+                                        value="<?php echo e($previousInvestmentYears[$i] ?? ''); ?>"
+                                        >
+                                        <?php for($year = 2000; $year <= 2024; $year++): ?>
+                                            <option value="<?php echo e($year); ?>" <?php echo e(($previousInvestmentYears[$i] ?? '') == $year ? 'selected' : ''); ?>><?php echo e($year); ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+
+                                    <?php $__errorArgs = ['previous_investment_year.' . $i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                            <span class="text-danger">This field is required</span>
-                        <?php unset($message);
+                                        <span class="text-danger">This field is required</span>
+                                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="previous_investment_company" class="required">Company</label>
-                        <input 
-                            type="text" 
-                            class="form-control spaced-input <?php $__errorArgs = ['previous_investment_company.' . $index];
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="previous_investment_company" class="<?php echo e($i==0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'Company' : ''); ?></label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control spaced-input <?php $__errorArgs = ['previous_investment_company.' . $i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -852,27 +968,27 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" 
-                            id="previous_investment_company" 
-                            name="previous_investment_company[]" 
-                            value="<?php echo e(old('previous_investment_company.' . $index)); ?>" 
-                            required
-                        >
-                        <?php $__errorArgs = ['previous_investment_company.' . $index];
+                                        id="previous_investment_company" 
+                                        name="previous_investment_company[]" 
+                                        value="<?php echo e($previousInvestmentCompanies[$i] ?? ''); ?>" 
+                                        required
+                                    >
+                                    <?php $__errorArgs = ['previous_investment_company.' . $i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                            <span class="text-danger">This field is required</span>
-                        <?php unset($message);
+                                        <span class="text-danger">This field is required</span>
+                                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="sector" class="required">Sector</label>
-                        <input 
-                            type="text" 
-                            class="form-control spaced-input <?php $__errorArgs = ['sector.' . $index];
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="sector" class="<?php echo e($i==0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'Sector' : ''); ?></label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control spaced-input <?php $__errorArgs = ['sector.' . $i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -880,70 +996,288 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" 
-                            id="sector" 
-                            name="sector[]" 
-                            value="<?php echo e(old('sector.' . $index)); ?>" 
-                            required
-                        >
-                        <?php $__errorArgs = ['sector.' . $index];
+                                        id="sector" 
+                                        name="sector[]" 
+                                        value="<?php echo e($sectors[$i] ?? ''); ?>" 
+                                        required
+                                    >
+                                    <?php $__errorArgs = ['sector.' . $i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                            <span class="text-danger">This field is required</span>
-                        <?php unset($message);
+                                        <span class="text-danger">This field is required</span>
+                                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
-                    </div>
-                </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php else: ?>
-            <!-- Default Empty Row -->
-            <div class="row g-3 previous-investment-row">
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="previous_investment_year" class="required">Year</label>
-                    <select 
-                        class="form-control spaced-input" 
-                        id="previous_investment_year" 
-                        name="previous_investment_year[]"
-                        required
-                    >
-                        <?php for($year = 2000; $year <= 2024; $year++): ?>
-                            <option value="<?php echo e($year); ?>"><?php echo e($year); ?></option>
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <?php if($i == 0): ?>
+                                        <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
+                                    <?php else: ?>
+                                        <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         <?php endfor; ?>
-                    </select>
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="previous_investment_company" class="required">Company</label>
-                    <input 
-                        type="text" 
-                        class="form-control spaced-input" 
-                        id="previous_investment_company" 
-                        name="previous_investment_company[]" 
-                        required
-                    >
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="sector" class="required">Sector</label>
-                    <input 
-                        type="text" 
-                        class="form-control spaced-input" 
-                        id="sector" 
-                        name="sector[]" 
-                        required
-                    >
-                </div>
-                <div class="col-sm-3 form-group">
-                    <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
-</div>
+                    </div>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+                            <?php if(old('previous_investment_year') && is_array(old('previous_investment_year'))): ?>
+                                <?php $__currentLoopData = old('previous_investment_year'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $year): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="row g-3 previous-investment-row">
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="previous_investment_year" class="required">Year</label>
+                                            <select 
+                                                class="form-control spaced-input <?php $__errorArgs = ['previous_investment_year.' . $index];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                                                id="previous_investment_year" 
+                                                name="previous_investment_year[]"
+                                                required
+                                            >
+                                                <?php for($yr = 2000; $yr <= 2024; $yr++): ?>
+                                                    <option value="<?php echo e($yr); ?>" <?php echo e($year == $yr ? 'selected' : ''); ?>><?php echo e($yr); ?></option>
+                                                <?php endfor; ?>
+                                            </select>
+                                            <?php $__errorArgs = ['previous_investment_year.' . $index];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <span class="text-danger">This field is required</span>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="previous_investment_company" class="required">Company</label>
+                                            <input 
+                                                type="text" 
+                                                class="form-control spaced-input <?php $__errorArgs = ['previous_investment_company.' . $index];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                                                id="previous_investment_company" 
+                                                name="previous_investment_company[]" 
+                                                value="<?php echo e(old('previous_investment_company.' . $index)); ?>" 
+                                                required
+                                            >
+                                            <?php $__errorArgs = ['previous_investment_company.' . $index];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <span class="text-danger">This field is required</span>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="sector" class="required">Sector</label>
+                                            <input 
+                                                type="text" 
+                                                class="form-control spaced-input <?php $__errorArgs = ['sector.' . $index];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                                                id="sector" 
+                                                name="sector[]" 
+                                                value="<?php echo e(old('sector.' . $index)); ?>" 
+                                                required
+                                            >
+                                            <?php $__errorArgs = ['sector.' . $index];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <span class="text-danger">This field is required</span>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
+                                        </div>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php else: ?>
+                              
+                                <div class="row g-3 previous-investment-row">
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="previous_investment_year" class="required">Year</label>
+                                        <select 
+                                            class="form-control spaced-input" 
+                                            id="previous_investment_year" 
+                                            name="previous_investment_year[]"
+                                            required
+                                        >
+                                            <?php for($year = 2000; $year <= 2024; $year++): ?>
+                                                <option value="<?php echo e($year); ?>"><?php echo e($year); ?></option>
+                                            <?php endfor; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="previous_investment_company" class="required">Company</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control spaced-input" 
+                                            id="previous_investment_company" 
+                                            name="previous_investment_company[]" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="sector" class="required">Sector</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control spaced-input" 
+                                            id="sector" 
+                                            name="sector[]" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- Referral and Guidance Section -->
                     <div class="row g-3">
                         <div class="heading-with-hr">
@@ -1210,6 +1544,17 @@ function removePublicLinkField(button) {
         }
     }
     
+    function removePreviousInvestmentField(button) {
+    const container = document.getElementById('previous-investments-container');
+    const allRows = container.querySelectorAll('.previous-investment-row');
+
+    if (allRows.length > 1) {
+        button.closest('.previous-investment-row').remove();
+    } else {
+        alert('At least one entry is required.');
+    }
+}
+
     
 </script>
 <?php $__env->stopSection(); ?>
