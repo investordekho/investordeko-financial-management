@@ -51,7 +51,7 @@
                             <?php echo e(route('home')); ?>
 
                         <?php endif; ?>
-                    " class="btn btn-light" style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; background-color: #28a745; color: white;">Go to Dashboard</a>
+                    " class="btn btn-light" style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; background-color:rgb(112, 107, 18); color: white;">Go to Dashboard</a>
                 </div>
                 <?php endif; ?>
             </div>

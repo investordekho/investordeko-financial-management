@@ -34,8 +34,13 @@
                     </div>
 
                     <div class="col-md-4 text-end">
+                        @if($isSubscribed)
                         <a href="{{ route('investordashboard.investeelistdetail', ['id' => $investee->id]) }}" 
                         class="btn btn-primary btn-sm">🔍 View Profile</a>
+                        @else
+                        <a href="{{ route('investordashboard.investeelistdetail', ['id' => $investee->id]) }}"
+                        class="btn btn-primary btn-sm locked-content">🔒 View Profile</a>
+                        @endif
                     </div>
 
                 </div>
