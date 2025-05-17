@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 text-center text-md-start">
-                <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px;">Connect with <span style="color: #28a745;">Investors</span> and <span style="color: #ffc107;">Startups</span></h1>
+                <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px;">Connect with <span style="color:rgb(234, 221, 75);">Investors</span> and <span style="color: #ffc107;">Startups</span></h1>
                 <p style="font-size: 18px; margin-bottom: 30px;">Unlock opportunities for growth and innovation</p>
             </div>
             <div class="col-md-6 text-center">
@@ -51,7 +51,7 @@
                             <?php echo e(route('home')); ?>
 
                         <?php endif; ?>
-                    " class="btn btn-light" style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; background-color:rgb(112, 107, 18); color: white;">Go to Dashboard</a>
+                    " class="btn btn-light" style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; background-color: #28a745; color: white;">Go to Dashboard</a>
                 </div>
                 <?php endif; ?>
             </div>
