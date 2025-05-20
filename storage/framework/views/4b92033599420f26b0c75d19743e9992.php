@@ -330,6 +330,9 @@
     <a href="https://www.linkedin.com/in/investor-dekho-327689338/" target="_blank" class="social-icon linkedin d-flex align-items-center justify-content-center">
         <i class="fab fa-linkedin-in"></i><span class="text ms-2">LinkedIn</span>
     </a>
+     <a href="https://www.youtube.com/@InvestorDekho" target="_blank" class="social-icon linkedin d-flex align-item-center justify-content-center">
+         <i class="bi bi-youtube"></i><span class="text ms-2">Youtube</span>
+     </a>
 </div>
 
 </div>

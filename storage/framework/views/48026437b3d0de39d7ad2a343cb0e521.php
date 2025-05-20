@@ -60,7 +60,7 @@
                 <div style="background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: 30px auto; text-align: left; border-left: 5px solid #007bff;">
 
                 <!-- Title -->
-                <h2 style="margin-bottom: 20px; font-size: 20px; font-weight: 600; color: #333; letter-spacing: 0.5px;" class="section">
+                <h2 id="company-detail" style="margin-bottom: 20px; font-size: 20px; font-weight: 600; color: #333; letter-spacing: 0.5px;" class="section">
                     Company Details
                 </h2>
 
