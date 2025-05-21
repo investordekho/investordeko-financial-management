@@ -26,12 +26,27 @@
                 <div class="card-header bg-primary text-white text-center" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                     <h3>Submit Your Support Request</h3>
                 </div>
-                <div class="card-body p-4">
-                    
-                    <!-- Message Display (hidden by default) -->
-                    <div id="alertMessage" class="alert" style="display: none;" role="alert"></div>
+              
+                        <div class="card-body p-4">
+                    <!-- Laravel Session Messages -->
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
-                    <form id="supportForm" action="submit_support.php" method="POST">
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    <!-- Your form starts here -->
+                    <form id="supportForm" action="{{ route('submit_support')}}" method="POST">
+
+                        @csrf
                         <!-- Step 1: Name and Email -->
                         <div class="row g-3">
                             <div class="col-md-12">
