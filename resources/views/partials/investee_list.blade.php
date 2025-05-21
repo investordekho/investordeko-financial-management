@@ -9,6 +9,21 @@
     @endphp
 
     @foreach ($investees->take($visibleInvesteeCount) as $investee)
+
+    <style>
+    .locked-content {
+        filter: blur(5px);
+        opacity: 0.6;
+
+        /* preventing user select */
+
+        user-select: none;
+        pointer-events: none;
+        cursor: not-allowed;
+        
+    }
+
+</style>
         <div class="col-md-12 mb-4">
             <div class="investee-card p-4">
                 <div class="row align-items-center">
@@ -38,8 +53,9 @@
                         <a href="{{ route('investordashboard.investeelistdetail', ['id' => $investee->id]) }}" 
                         class="btn btn-primary btn-sm">🔍 View Profile</a>
                         @else
-                        <a href="{{ route('investordashboard.investeelistdetail', ['id' => $investee->id]) }}"
-                        class="btn btn-primary btn-sm locked-content">🔒 View Profile</a>
+                          <span class="btn btn-primary btn-sm disabled" style="cursor: not-allowed; pointer-events: none;">
+                                    🔒 View Profile
+                                </span>
                         @endif
                     </div>
 

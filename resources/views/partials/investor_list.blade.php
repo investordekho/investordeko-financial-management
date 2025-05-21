@@ -7,7 +7,20 @@
         $isSubscribed = $subscriber && $subscriber->is_subscribed;
         $visibleInvestorCount = $isSubscribed ? $investors->count() : min($investors->count(), 3);
     @endphp
+<style>
+    .locked-content {
+        filter: blur(5px);
+        opacity: 0.6;
 
+        /* preventing user select */
+
+        user-select: none;
+        pointer-events: none;
+        cursor: not-allowed;
+        
+    }
+
+</style>
 <div class="container mt-5">
     <!-- <h2 class="text-center mb-4 fw-bold text-dark">Investors List</h2> -->
 
@@ -35,11 +48,6 @@
                             <p class="text-muted details-text {{ !$isSubscribed ? 'locked-content' : '' }}">
                                 <i class="bi bi-geo-alt-fill text-primary me-1"></i> {{ $investor['address'] }}  
                                 <br>
-                                <!-- <i class="bi bi-cash-coin text-success me-1"></i> -->
-                                <!-- <strong>Sectors:</strong>
-                                {{ !empty($investor['sectors_preferred']) 
-                                    ? str_replace(',', ' |', $investor['sectors_preferred']) 
-                                    : 'N/A' }} -->
 
                                     <?php
                                         $sectors = str_replace([', and', 'and'],',', $investor['sectors_preferred']);    
@@ -57,28 +65,23 @@
                                             @endforeach
                                         </ul>
                                     @endif
-                                    <!-- @if( count($sectors) > 0)
-                                       <ul class="list-unstyled">
-                                            @foreach($sectors as $sector)
-                                                <li class="text-muted">
-                                                    <i class="bi bi-check-circle-fill text-success me-1"></i>
-                                                    {{ $sector }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p class="text-muted">No sectors available.</p>
-                                    @endif -->
+                                   
                             </p>
 
 
                         </div>
 
-                        <!-- View Profile Button (Navigates to Details Page) -->
                         <div class="col-md-4 text-end {{ !$isSubscribed ? 'locked-content' : ''}}">
-                            <a href="{{ route('investeedashboard.investorlistdetail',['id' => $investor['id']])}}" 
-                               class="btn btn-primary btn-sm">🔍 View Details</a>
+                            @if($isSubscribed)
+                                <a href="{{ route('investeedashboard.investorlistdetail',['id' => $investor['id']])}}" 
+                                class="btn btn-primary btn-sm">🔍 View Details</a>
+                            @else
+                                <span class="btn btn-primary btn-sm disabled" style="cursor: not-allowed; pointer-events: none;">
+                                    🔍 View Details
+                                </span>
+                            @endif
                         </div>
+
 
                     </div>
                 </div>
