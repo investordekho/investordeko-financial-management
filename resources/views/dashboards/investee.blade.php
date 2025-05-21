@@ -108,10 +108,10 @@
                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investmentSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             Select Investment Size
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="investmentSizeDropdown">
-                                            <div class="px-3 py-2">
+                                        <ul class="dropdown-menu px-3 py-2 scrollable-menu" aria-labelledby="investmentSizeDropdown">
+                                            
                                                 <!-- <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size"> -->
-                                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
+                                                
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investment_size[]" value="Below 10 Lakh" id="investment_size_10">
@@ -136,8 +136,8 @@
                                                             <label class="form-check-label" for="investment_size_100_plus">Above 1 Crore</label>
                                                         </div>
                                                     </li>
-                                                </div>
-                                            </div>
+                                                
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -149,10 +149,8 @@
                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investmentTenureDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             Select Tenure
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="investmentTenureDropdown">
-                                            <div class="px-3 py-2">
-                                                <!-- <input type="text" class="form-control mb-2" id="investmentTenureSearch" placeholder="Search tenure"> -->
-                                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
+                                        <ul class="dropdown-menu px-3 py-2 scrollable-menu" aria-labelledby="investmentTenureDropdown">
+                                           
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investment_tenure[]" value="0-1 years" id="tenure_less_1">
@@ -177,8 +175,7 @@
                                                             <label class="form-check-label" for="tenure_5_plus">More than 5 years</label>
                                                         </div>
                                                     </li>
-                                                </div>
-                                            </div>
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -186,14 +183,15 @@
                                 <!-- Investor Type Multi-select Dropdown -->
                                 <div class="col-md-3 mb-3">
                                     <label for="investor_type"></label>
-                                    <div class="dropdown">
+                                    <div class="dropdown" data-bs-auto-close="outside">
                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investorTypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             Select Investor Type
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="investorTypeDropdown">
-                                            <div class="px-3 py-2">
-                                                <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type">
-                                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
+                                        <ul class="dropdown-menu px-3 py-2" aria-labelledby="investorTypeDropdown">
+
+                                                   <li class="dropdown-item p-0 m-0">                                                        
+                                                        <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type">
+                                                    </li>
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel" id="type_angel_investor">
@@ -224,8 +222,8 @@
                                                             <label class="form-check-label" for="type_venture_capitalist">Venture Capitalist</label>
                                                         </div>
                                                     </li>                                                    
-                                                </div>
-                                            </div>
+                                                
+                                          
                                         </ul>
                                     </div>
                                 </div>
@@ -383,6 +381,35 @@ let filterdata = [];
 // }
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownMenu = document.querySelector('#investmentSizeDropdown + .dropdown-menu');
+
+    dropdownMenu.querySelectorAll('input, label').forEach(el => {
+        el.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function (){
+    const investmenttenuareDropDown = document.querySelector('#investmentTenureDropdown + .dropdown-menu');
+    investmenttenuareDropDown.querySelectorAll('input,label').forEach(el => {
+        el.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    })
+})
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Prevent Bootstrap from closing the dropdown on checkbox or input click
+    document.querySelectorAll('.dropdown-menu').forEach(function (dropdownMenu) {
+        dropdownMenu.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    });
+});
+
 function populateSectors() {
     const sectorList = document.getElementById('sectorList');
     const selectedSectors = new Set([...new FormData(document.getElementById('searchForm')).getAll('sector[]')]);
@@ -406,10 +433,15 @@ function populateSectors() {
         label.classList.add('form-check-label');
         label.setAttribute('for', `sector_${sector}`);
         label.textContent = sector;
-
+        
+        checkbox.addEventListener('click', e => e.stopPropagation());
+        label.addEventListener('click', e => e.stopPropagation());
+        li.addEventListener('click', e => e.stopPropagation());
+        
         li.appendChild(checkbox);
         li.appendChild(label);
         sectorList.appendChild(li);
+
     });
 }
 
@@ -458,7 +490,14 @@ function populateLocations() {
             </div>
         `;
         locationList.appendChild(listItem);
+
+        // Add event listener to stop propagation
+        listItem.querySelector('input').addEventListener('click', e => e.stopPropagation());
+        listItem.querySelector('label').addEventListener('click', e => e.stopPropagation());
+        listItem.addEventListener('click', e => e.stopPropagation());   
+        
     });
+    
 }
 
 // Filter Locations

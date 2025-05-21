@@ -36,8 +36,13 @@
                     </div>
 
                     <div class="col-md-4 text-end">
+                        <?php if($isSubscribed): ?>
                         <a href="<?php echo e(route('investordashboard.investeelistdetail', ['id' => $investee->id])); ?>" 
                         class="btn btn-primary btn-sm">🔍 View Profile</a>
+                        <?php else: ?>
+                        <a href="<?php echo e(route('investordashboard.investeelistdetail', ['id' => $investee->id])); ?>"
+                        class="btn btn-primary btn-sm locked-content">🔒 View Profile</a>
+                        <?php endif; ?>
                     </div>
 
                 </div>

@@ -94,52 +94,68 @@
     @enderror
 </div>
 
-                   <div class="col-sm-3 form-group">
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-sm-3 form-group">
     <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
     <input
         type="text"
-        class="form-control spaced-input @error('sectors_preferred') is-invalid @enderror"
+        class="form-control spaced-input {{ $errors->has('sectors_preferred') ? 'is-invalid' : '' }}"
         id="sectors_preferred_input"
         placeholder="Select sectors"
         readonly
         onclick="toggleDropdown()"
         value="{{ old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : '' }}"
     >
+    
     @error('sectors_preferred')
-        <span class="text-danger">This field is required</span>
+        <span class="text-danger" style="font-size: 13px;">{{ $message }}</span>
     @enderror
-    <div id="sectors_preferred_list" class="dropdown-list" style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+
+    <div id="sectors_preferred_list" class="dropdown-list"
+        style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 0px; max-width: 95%; background-color: white; z-index: 10; position: absolute;">
         @php
             $sectors = [
-                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
-                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
-                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
-                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
-                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
-                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
-                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
-                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
-                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
-                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
-                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
-                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
-                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
-                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
-                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
-                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
-                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
-                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
-                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
-                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
-                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
-                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
-                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
-                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
-                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
-                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
-                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
-            ];
+                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+                            ];
         @endphp
+
         @foreach($sectors as $sector)
             <label>
                 <input
@@ -152,8 +168,113 @@
             </label><br>
         @endforeach
     </div>
-    <input type="hidden" id="sectors_preferred_hidden" name="sectors_preferred[]" value="{{ old('sectors_preferred') ? implode(',', old('sectors_preferred')) : '' }}">
+
+    {{-- Container for dynamic hidden inputs --}}
+    <div id="sectors_preferred_hidden_container">
+        @if(old('sectors_preferred'))
+            @foreach(old('sectors_preferred') as $sector)
+                <input type="hidden" name="sectors_preferred[]" value="{{ $sector }}">
+            @endforeach
+        @endif
+    </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+<!-- 
+                   <div class="col-sm-3 form-group">
+                    <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
+                    <input
+                        type="text"
+                        class="form-control spaced-input {{ $errors->has('sectors_preferred') ? 'is-invalid' : '' }}""
+                        id="sectors_preferred_input"
+                        placeholder="Select sectors"
+                        readonly
+                        onclick="toggleDropdown()"
+                        value="{{ old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : '' }}"
+                    >
+                    @error('sectors_preferred')
+                        <span class="text-danger">This field is required</span>
+                    @enderror
+                    <div id="sectors_preferred_list" class="dropdown-list" style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 0px; max-width: 95%; background-color: white; z-index: 10;">
+                        @php
+                            $sectors = [
+                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+                            ];
+                        @endphp
+                        @foreach($sectors as $sector)
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    class="sector-checkbox"
+                                    value="{{ $sector }}"
+                                    {{ old('sectors_preferred') && in_array($sector, old('sectors_preferred')) ? 'checked' : '' }}
+                                > 
+                                {{ $sector }}
+                            </label><br>
+                        @endforeach
+                    </div>
+                    <input type="hidden" id="sectors_preferred_hidden" class="" name="sectors_preferred[]" value="{{ old('sectors_preferred') ? implode(',', old('sectors_preferred')) : '' }}">
+
+                  
+
+                     @if($errors->has('sectors_preferred'))
+                            <span class="text-danger" style="font-size: 13px;">{{ $errors->first('sectors_preferred') }}</span>
+                     @endif
+                   </div>
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <div class="col-sm-2">
@@ -263,7 +384,8 @@
         <label></label>
         <h3 style="font-size: 22px; font-weight: 600;">Public Links</h3>
     </div>
-    <div id="public-links-container" class="col-sm-10">
+
+    <!-- <div id="public-links-container" class="col-sm-10">
         <div class="public-link-row d-flex align-items-start">
             <div class="form-group flex-grow-1 mr-2">
                 <label for="public_links" class="required">URL</label>
@@ -308,7 +430,59 @@
                 <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <div id="public-links-container" class="col-sm-10">
+    @php
+        $publicLinks = old('public_links', []);
+        $linkDescriptions = old('link_descriptions', []);
+        $count = max(count($publicLinks), 1);
+    @endphp
+
+    @for ($i = 0; $i < $count; $i++)
+        <div class="public-link-row d-flex align-items-start mb-2">
+            <div class="form-group flex-grow-1 mr-2">
+                <label for="public_links" class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'URL' : '' }}</label>
+                <input 
+                    type="url" 
+                    class="form-control spaced-input @error("public_links.$i") is-invalid @enderror" 
+                    name="public_links[]" 
+                    placeholder="Enter URL" 
+                    value="{{ $publicLinks[$i] ?? '' }}" 
+                    required
+                >
+                @error("public_links.$i")
+                    <span class="text-danger">This field is required</span>
+                @enderror
+            </div>
+
+            <div class="form-group flex-grow-1 mr-2">
+                <label for="link_descriptions" class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'Select Account' : '' }}</label>
+                <select 
+                    class="form-control spaced-input @error("link_descriptions.$i") is-invalid @enderror" 
+                    name="link_descriptions[]" 
+                    required
+                >
+                    @foreach(['Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'Others'] as $option)
+                        <option value="{{ $option }}" {{ ($linkDescriptions[$i] ?? '') == $option ? 'selected' : '' }}>{{ $option }}</option>
+                    @endforeach
+                </select>
+                @error("link_descriptions.$i")
+                    <span class="text-danger">This field is required</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                @if ($i == 0)
+                    <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
+                @else
+                    <button type="button" class="btn btn-danger remove-btn mt-4" onclick="removePublicLinkField(this)">-</button>
+                @endif
+            </div>
+        </div>
+    @endfor
+</div>
+
 </div>
 
 
@@ -389,109 +563,401 @@
 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- Previous Investments Section -->
                   <div class="row g-3 bordered-row">
-    <div class="heading-with-hr">
-        <h3 style="font-size: 22px; font-weight: 600;">Previous Investments</h3>
-        <hr>
-    </div>
-    <!-- Previous Investments Section -->
-    <div id="previous-investments-container">
-        @if (old('previous_investment_year') && is_array(old('previous_investment_year')))
-            @foreach (old('previous_investment_year') as $index => $year)
-                <div class="row g-3 previous-investment-row">
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="previous_investment_year" class="required">Year</label>
-                        <select 
-                            class="form-control spaced-input @error('previous_investment_year.' . $index) is-invalid @enderror" 
-                            id="previous_investment_year" 
-                            name="previous_investment_year[]"
-                            required
-                        >
-                            @for ($yr = 2000; $yr <= 2024; $yr++)
-                                <option value="{{ $yr }}" {{ $year == $yr ? 'selected' : '' }}>{{ $yr }}</option>
-                            @endfor
-                        </select>
-                        @error('previous_investment_year.' . $index)
-                            <span class="text-danger">This field is required</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="previous_investment_company" class="required">Company</label>
-                        <input 
-                            type="text" 
-                            class="form-control spaced-input @error('previous_investment_company.' . $index) is-invalid @enderror" 
-                            id="previous_investment_company" 
-                            name="previous_investment_company[]" 
-                            value="{{ old('previous_investment_company.' . $index) }}" 
-                            required
-                        >
-                        @error('previous_investment_company.' . $index)
-                            <span class="text-danger">This field is required</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <label id="labelinput" for="sector" class="required">Sector</label>
-                        <input 
-                            type="text" 
-                            class="form-control spaced-input @error('sector.' . $index) is-invalid @enderror" 
-                            id="sector" 
-                            name="sector[]" 
-                            value="{{ old('sector.' . $index) }}" 
-                            required
-                        >
-                        @error('sector.' . $index)
-                            <span class="text-danger">This field is required</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
-                    </div>
-                </div>
-            @endforeach
-        @else
-            <!-- Default Empty Row -->
-            <div class="row g-3 previous-investment-row">
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="previous_investment_year" class="required">Year</label>
-                    <select 
-                        class="form-control spaced-input" 
-                        id="previous_investment_year" 
-                        name="previous_investment_year[]"
-                        required
-                    >
-                        @for ($year = 2000; $year <= 2024; $year++)
-                            <option value="{{ $year }}">{{ $year }}</option>
+                        <div class="heading-with-hr">
+                            <h3 style="font-size: 22px; font-weight: 600;">Previous Investments</h3>
+                            <hr>
+                        </div>
+                        <!-- Previous Investments Section -->
+                        <div id="previous-investments-container">
+
+                        @php
+                            $previousInvestmentYears = old('previous_investment_year', []);
+                            $previousInvestmentCompanies = old('previous_investment_company', []);
+                            $sectors = old('sector', []);
+                            $count = max(count($previousInvestmentCompanies), 1);
+                        @endphp
+                            
+                           @for( $i =0; $i< $count; $i++)
+                            <div class="row g-3 previous-investment-row">
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="previous_investment_year" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Year' : ''}}</label>
+                                     <select 
+                                        class="form-control spaced-input @error('previous_investment_year.' . $i) is-invalid @enderror" 
+                                        id="previous_investment_year" 
+                                        name="previous_investment_year[]" 
+                                        required
+                                        value="{{ $previousInvestmentYears[$i] ?? '' }}"
+                                        >
+                                        @for ($year = 2000; $year <= 2024; $year++)
+                                            <option value="{{ $year }}" {{ ($previousInvestmentYears[$i] ?? '') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                        @endfor
+                                    </select>
+
+                                    @error('previous_investment_year.' . $i)
+                                        <span class="text-danger">This field is required</span>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="previous_investment_company" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Company' : ''}}</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control spaced-input @error('previous_investment_company.' . $i) is-invalid @enderror" 
+                                        id="previous_investment_company" 
+                                        name="previous_investment_company[]" 
+                                        value="{{ $previousInvestmentCompanies[$i] ?? '' }}" 
+                                        required
+                                    >
+                                    @error('previous_investment_company.' . $i)
+                                        <span class="text-danger">This field is required</span>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    <label id="labelinput" for="sector" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Sector' : ''}}</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control spaced-input @error('sector.' . $i) is-invalid @enderror" 
+                                        id="sector" 
+                                        name="sector[]" 
+                                        value="{{ $sectors[$i] ?? '' }}" 
+                                        required
+                                    >
+                                    @error('sector.' . $i)
+                                        <span class="text-danger">This field is required</span>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3 form-group">
+                                    @if ($i == 0)
+                                        <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
+                                    @else
+                                        <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
+                                    @endif
+                                </div>
+                            </div>
                         @endfor
-                    </select>
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="previous_investment_company" class="required">Company</label>
-                    <input 
-                        type="text" 
-                        class="form-control spaced-input" 
-                        id="previous_investment_company" 
-                        name="previous_investment_company[]" 
-                        required
-                    >
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label id="labelinput" for="sector" class="required">Sector</label>
-                    <input 
-                        type="text" 
-                        class="form-control spaced-input" 
-                        id="sector" 
-                        name="sector[]" 
-                        required
-                    >
-                </div>
-                <div class="col-sm-3 form-group">
-                    <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
-                </div>
-            </div>
-        @endif
-    </div>
-</div>
+                    </div>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+                            @if (old('previous_investment_year') && is_array(old('previous_investment_year')))
+                                @foreach (old('previous_investment_year') as $index => $year)
+                                    <div class="row g-3 previous-investment-row">
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="previous_investment_year" class="required">Year</label>
+                                            <select 
+                                                class="form-control spaced-input @error('previous_investment_year.' . $index) is-invalid @enderror" 
+                                                id="previous_investment_year" 
+                                                name="previous_investment_year[]"
+                                                required
+                                            >
+                                                @for ($yr = 2000; $yr <= 2024; $yr++)
+                                                    <option value="{{ $yr }}" {{ $year == $yr ? 'selected' : '' }}>{{ $yr }}</option>
+                                                @endfor
+                                            </select>
+                                            @error('previous_investment_year.' . $index)
+                                                <span class="text-danger">This field is required</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="previous_investment_company" class="required">Company</label>
+                                            <input 
+                                                type="text" 
+                                                class="form-control spaced-input @error('previous_investment_company.' . $index) is-invalid @enderror" 
+                                                id="previous_investment_company" 
+                                                name="previous_investment_company[]" 
+                                                value="{{ old('previous_investment_company.' . $index) }}" 
+                                                required
+                                            >
+                                            @error('previous_investment_company.' . $index)
+                                                <span class="text-danger">This field is required</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <label id="labelinput" for="sector" class="required">Sector</label>
+                                            <input 
+                                                type="text" 
+                                                class="form-control spaced-input @error('sector.' . $index) is-invalid @enderror" 
+                                                id="sector" 
+                                                name="sector[]" 
+                                                value="{{ old('sector.' . $index) }}" 
+                                                required
+                                            >
+                                            @error('sector.' . $index)
+                                                <span class="text-danger">This field is required</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3 form-group">
+                                            <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                              
+                                <div class="row g-3 previous-investment-row">
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="previous_investment_year" class="required">Year</label>
+                                        <select 
+                                            class="form-control spaced-input" 
+                                            id="previous_investment_year" 
+                                            name="previous_investment_year[]"
+                                            required
+                                        >
+                                            @for ($year = 2000; $year <= 2024; $year++)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="previous_investment_company" class="required">Company</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control spaced-input" 
+                                            id="previous_investment_company" 
+                                            name="previous_investment_company[]" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="sector" class="required">Sector</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control spaced-input" 
+                                            id="sector" 
+                                            name="sector[]" 
+                                            required
+                                        >
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- Referral and Guidance Section -->
                     <div class="row g-3">
                         <div class="heading-with-hr">
@@ -569,29 +1035,48 @@
 
 <script>
    
-   function toggleDropdown() {
+
+    function toggleDropdown() {
         const dropdown = document.getElementById('sectors_preferred_list');
         dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'block' : 'none';
     }
 
-    // To handle checkbox selection and show selected sectors in the input field
-    const checkboxes = document.querySelectorAll('.sector-checkbox');
-    const selectedSectorsInput = document.getElementById('sectors_preferred_input');
-    const hiddenSectorsField = document.getElementById('sectors_preferred_hidden');
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkboxes = document.querySelectorAll('.sector-checkbox');
+        const selectedInput = document.getElementById('sectors_preferred_input');
+        const hiddenContainer = document.getElementById('sectors_preferred_hidden_container');
 
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            const selectedSectors = Array.from(checkboxes)
+        function updateSelections() {
+            const selected = Array.from(checkboxes)
                 .filter(checkbox => checkbox.checked)
                 .map(checkbox => checkbox.value);
 
-            // Display selected sectors in the input field
-            selectedSectorsInput.value = selectedSectors.join(', ');
+            // Show in the readonly input
+            selectedInput.value = selected.join(', ');
 
-            // Update the hidden input for form submission
-            hiddenSectorsField.value = selectedSectors.join(',');
+            // Remove previous hidden inputs
+            hiddenContainer.innerHTML = '';
+
+            // Create new hidden inputs
+            selected.forEach(value => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'sectors_preferred[]';
+                input.value = value;
+                hiddenContainer.appendChild(input);
+            });
+        }
+
+        // Attach change listener to all checkboxes
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelections);
         });
+
+        // Run on page load (e.g. old values restored)
+        updateSelections();
     });
+
+
 
     // Close dropdown if clicking outside
     document.addEventListener('click', function (e) {
@@ -758,6 +1243,17 @@ function removePublicLinkField(button) {
         }
     }
     
+    function removePreviousInvestmentField(button) {
+    const container = document.getElementById('previous-investments-container');
+    const allRows = container.querySelectorAll('.previous-investment-row');
+
+    if (allRows.length > 1) {
+        button.closest('.previous-investment-row').remove();
+    } else {
+        alert('At least one entry is required.');
+    }
+}
+
     
 </script>
 @endsection
