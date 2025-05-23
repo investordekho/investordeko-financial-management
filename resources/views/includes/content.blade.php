@@ -316,6 +316,17 @@
     </div>
 </section>
 <style>
+/* Prevent body shift when modal opens by always showing vertical scrollbar */
+body {
+    overflow-y: scroll !important;
+}
+
+/* Ensure fixed elements like navbar and social-media stay above modals/popups */
+.navbar,
+.social-media {
+    z-index: 1100 !important;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(40px);}
     to { opacity: 1; transform: translateY(0);}
@@ -558,6 +569,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
    <div class="container my-5">
+    
     <div class="row">
         <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
             <h5 class="service-title  mb-3"><i class="fa-solid fa-hands-holding-circle me-2"></i> Fund Raising</h5>
@@ -590,6 +602,12 @@ document.addEventListener('DOMContentLoaded', function() {
             </ul>
         </div>
     </div>
+
+
+
+
+
+    
     <div class="row mt-4">
         <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
             <h5 class="service-title  mb-3"><i class="fa-solid fa-file-alt me-2"></i> Compliance and Regulatory Services</h5>
