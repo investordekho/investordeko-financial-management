@@ -206,34 +206,236 @@
                     redirectUrl = '/login';
                 }
 
-                // Redirect to the constructed URL
+                // Redirect to the constructed URL feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 window.location.href = redirectUrl;
             });
         }
     });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Services Section -->
-<section class="services-section">
-    <div class="container text-center">
+<section class="services-section py-5" style="background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%); animation: fadeIn 1.2s;">
+    <div class="container">
         <?php if(auth()->guard()->guest()): ?>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="service-card">
-                    <h5>Browse Investors</h5>
-                    <a href="<?php echo e(route('register')); ?>">View Investors</a>
+        <div class="row justify-content-center">
+            <div class="col-md-5 mb-4">
+                <div class="card h-100 border-0 shadow-lg text-center service-flap animate-flap flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front card-body">
+                            <i class="fa-solid fa-user-tie fa-2x mb-3 text-primary"></i>
+                            <h5 class="card-title mb-2 fw-bold">Find Investors</h5>
+                            <p class="card-text mb-3 text-muted">Connect with verified angel investors, VCs, and funding partners to accelerate your startup's growth.</p>
+                            <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-primary px-4 fw-semibold">Browse Investors</a>
+                        </div>
+                        <div class="flip-card-back card-body">
+                            <i class="fa-solid fa-handshake fa-2x mb-3 text-primary"></i>
+                            <h5 class="card-title mb-2 fw-bold">Why Join?</h5>
+                            <p class="card-text mb-3 text-muted">Access a curated investor network and receive expert fundraising guidance for your business.</p>
+                            <a href="<?php echo e(route('register')); ?>" class="btn btn-primary px-4 fw-semibold">Join Now</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="service-card">
-                    <h5>Browse Startups</h5>
-                    <a href="<?php echo e(route('register')); ?>">View Startups</a>
+            <div class="col-md-5 mb-4">
+                <div class="card h-100 border-0 shadow-lg text-center service-flap animate-flap flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front card-body">
+                            <i class="fa-solid fa-lightbulb fa-2x mb-3 text-success"></i>
+                            <h5 class="card-title mb-2 fw-bold">Find Startups</h5>
+                            <p class="card-text mb-3 text-muted">Discover innovative startups and unlock exclusive investment opportunities tailored for you.</p>
+                            <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-success px-4 fw-semibold">Browse Startups</a>
+                        </div>
+                        <div class="flip-card-back card-body">
+                            <i class="fa-solid fa-rocket fa-2x mb-3 text-success"></i>
+                            <h5 class="card-title mb-2 fw-bold">Why Invest?</h5>
+                            <p class="card-text mb-3 text-muted">Diversify your portfolio and support high-growth ventures with verified business insights.</p>
+                            <a href="<?php echo e(route('register')); ?>" class="btn btn-success px-4 fw-semibold">Get Started</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <?php endif; ?>
     </div>
 </section>
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+.service-flap {
+    background: #fff;
+    border-radius: 18px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    perspective: 1000px;
+    overflow: hidden;
+    height: 240px;
+    min-height: 240px;
+    max-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+.service-flap .card-body {
+    padding: 1.5rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.service-flap:hover {
+    transform: translateY(-8px) scale(1.04) rotate(-1deg);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+}
+.animate-flap {
+    animation: fadeIn 1.2s;
+}
+.flip-card {
+    perspective: 1200px;
+    height: 100%;
+}
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    transition: transform 0.8s cubic-bezier(.4,2,.6,1);
+    transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    backface-visibility: hidden;
+    border-radius: 18px;
+    top: 0;
+    left: 0;
+}
+.flip-card-back {
+    transform: rotateY(180deg);
+    background: #f8fafc;
+}
+@media (max-width: 767px) {
+    .service-flap {
+        height: 180px;
+        min-height: 180px;
+        max-height: 180px;
+    }
+    .service-flap .card-body {
+        padding: 0.7rem 0.5rem;
+    }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const flipCards = document.querySelectorAll('.flip-card');
+    setInterval(() => {
+        flipCards.forEach(card => card.classList.toggle('flipped'));
+    }, 4500);
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- scrolling text  related to services -zm,xxxxxxxxxxxxxxxxxxxxxxxxxxxsf dnsjuiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizncfp[00yyyyyyyyyyyyyyyyyyyyyyyyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh-->
+<!-- Professional Scrolling Info Bar -->
+<div class="container-fluid py-2" style="background: linear-gradient(90deg, #0dcaf0 0%, #6c757d 100%); box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+    <div class="row">
+        <div class="col text-center">
+            <div class="d-inline-block w-100" style="overflow: hidden; position: relative;">
+                <span id="scrolling-text" style="display: inline-block; min-width: 100%; color: #fff; font-size: 1.1rem; letter-spacing: 0.5px; font-weight: 500; animation: scroll-left 45s linear infinite;">
+                    <i class="fa-solid fa-circle-info me-2 text-warning"></i>
+                    <strong>InvestorDekho:</strong>
+                    India's trusted platform for <span class="text-warning">Startup Discovery</span>, <span class="text-info">Investor Connections</span>, and <span class="text-success">Deal Flow</span>. 
+                    Access verified data on <span class="text-warning">Startups</span>, <span class="text-info">Angel Investors</span>, <span class="text-success">VCs</span>, and <span class="text-primary">Bankers</span>. 
+                    <span class="d-none d-md-inline">Get expert support for <span class="text-warning">Fundraising</span>, <span class="text-info">Due Diligence</span>, <span class="text-success">Compliance</span>, and <span class="text-primary">Growth Advisory</span>. 
+                    <span class="text-light">Empowering innovation, connecting opportunities.</span></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+@keyframes scroll-left {
+    0% { transform: translateX(100%);}
+    100% { transform: translateX(-100%);}
+}
+#scrolling-text {
+    white-space: nowrap;
+    /* Optional: pause on hover for better UX */
+    animation-play-state: running;
+}
+#scrolling-text:hover {
+    animation-play-state: paused;
+    cursor: pointer;
+}
+</style>
+
+
 
 
 

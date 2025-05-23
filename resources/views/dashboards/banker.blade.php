@@ -187,21 +187,21 @@
                                         <div class="col-md-3 mb-3">
                                             <label for="sector"></label>
                                         <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="sectorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Startup Sector
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="sectorDropdown">
-                                    <div class="px-3 py-2">
-                                        <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
-                                        <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
-                                            <ul id="sectorList">
-                                                <div id="selected-filters-container2" class="mb-3"></div>                      
-                                                <!-- Sectors will be populated here by JavaScript -->
-                                            </ul>
-                                        </div>
+                                        <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="sectorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Startup Sector
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="sectorDropdown">
+                                            <div class="px-3 py-2">
+                                                <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
+                                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
+                                                    <ul id="sectorList">
+                                                        <div id="selected-filters-container2" class="mb-3"></div>                      
+                                                        <!-- Sectors will be populated here by JavaScript -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </ul>
                                     </div>
-                                </ul>
-                            </div>
 
                                         </div>
 
@@ -544,7 +544,7 @@
                                             </button>
                                             <ul id="incorporatedList" class="dropdown-menu scrollable-menu">
                                                 <div class="px-3 py-2">
-                                                    <input type="text" class="form-control mb-2" id="incorporatedSearch" placeholder="Search year">
+                                                    <!-- <input type="text" class="form-control mb-2" id="incorporatedSearch" placeholder="Search year"> -->
                                                     <ul>
                                                     <li class="dropdown-item">
                                                                 <div class="form-check">
@@ -576,6 +576,187 @@
                                                                     <label class="form-check-label" for="incorporated_2020">2020</label>
                                                                 </div>
                                                             </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2019" id="incorporated_2019">   
+                                                                    <label class="form-check-label" for="incorporated_2019">2019</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2018" id="incorporated_2018">
+                                                                    <label class="form-check-label" for="incorporated_2018">2018</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2017" id="incorporated_2017">
+                                                                    <label class="form-check-label" for="incorporated_2017">2017</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2016" id="incorporated_2016">
+                                                                    <label class="form-check-label" for="incorporated_2016">2016</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2015" id="incorporated_2015">
+                                                                    <label class="form-check-label" for="incorporated_2015">2015</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2014" id="incorporated_2014">
+                                                                    <label class="form-check-label" for="incorporated_2014">2014</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2013" id="incorporated_2013">
+                                                                    <label class="form-check-label" for="incorporated_2013">2013</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2012" id="incorporated_2012">
+                                                                    <label class="form-check-label" for="incorporated_2012">2012</label>
+                                                                </div>  
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2011" id="incorporated_2011">
+                                                                    <label class="form-check-label" for="incorporated_2011">2011</label>    
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2010" id="incorporated_2010">
+                                                                    <label class="form-check-label" for="incorporated_2010">2010</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2009" id="incorporated_2009">
+                                                                    <label class="form-check-label" for="incorporated_2009">2009</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2008" id="incorporated_2008">
+                                                                    <label class="form-check-label" for="incorporated_2008">2008</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2007" id="incorporated_2007">
+                                                                    <label class="form-check-label" for="incorporated_2007">2007</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2006" id="incorporated_2006">
+                                                                    <label class="form-check-label" for="incorporated_2006">2006</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2005" id="incorporated_2005">
+                                                                    <label class="form-check-label" for="incorporated_2005">2005</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2004" id="incorporated_2004">
+                                                                    <label class="form-check-label" for="incorporated_2004">2004</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2003" id="incorporated_2003">
+                                                                    <label class="form-check-label" for="incorporated_2003">2003</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2002" id="incorporated_2002">
+                                                                    <label class="form-check-label" for="incorporated_2002">2002</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2001" id="incorporated_2001">
+                                                                    <label class="form-check-label" for="incorporated_2001">2001</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="2000" id="incorporated_2000">
+                                                                    <label class="form-check-label" for="incorporated_2000">2000</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1999" id="incorporated_1999">
+                                                                    <label class="form-check-label" for="incorporated_1999">1999</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1998" id="incorporated_1998">
+                                                                    <label class="form-check-label" for="incorporated_1998">1998</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1997" id="incorporated_1997">
+                                                                    <label class="form-check-label" for="incorporated_1997">1997</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1996" id="incorporated_1996">
+                                                                    <label class="form-check-label" for="incorporated_1996">1996</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1995" id="incorporated_1995">
+                                                                    <label class="form-check-label" for="incorporated_1995">1995</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1994" id="incorporated_1994">
+                                                                    <label class="form-check-label" for="incorporated_1994">1994</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1993" id="incorporated_1993">
+                                                                    <label class="form-check-label" for="incorporated_1993">1993</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1992" id="incorporated_1992">
+                                                                    <label class="form-check-label" for="incorporated_1992">1992</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1991" id="incorporated_1991">
+                                                                    <label class="form-check-label" for="incorporated_1991">1991</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="incorporated_in[]" value="1990" id="incorporated_1990">
+                                                                    <label class="form-check-label" for="incorporated_1990">1990</label>
+                                                                </div>
+                                                            </li>
+                                                            
 
                                                         <!-- Add more years similarly -->
                                                     </ul>
@@ -595,7 +776,7 @@
                                             </button>
                                             <ul id="fundUsageList" class="dropdown-menu scrollable-menu">
                                                 <div class="px-3 py-2">
-                                                    <input type="text" class="form-control mb-2" id="fundUsageSearch" placeholder="Search fund usage">
+                                                    <!-- <input type="text" class="form-control mb-2" id="fundUsageSearch" placeholder="Search fund usage"> -->
                                                     <ul style="padding-left: 0px;">
                                                         <li class="dropdown-item">
                                                             <div class="form-check">
@@ -887,7 +1068,7 @@
         });
     }
 
-    document.getElementById('sectorSearch').addEventListener('keyup',filterSectors);
+    //document.getElementById('sectorSearch').addEventListener('keyup',filterSectors);
 
     filterSectors();
     // Filter Sectors
@@ -958,8 +1139,7 @@
 
     // Attach Events
     document.addEventListener('DOMContentLoaded', function () {
-        // populateSectors();
-        populateSectors();
+       
         populateLocations();
         fetchResults1();
         document.getElementById('sectorSearch').addEventListener('keyup', filterSectors);
