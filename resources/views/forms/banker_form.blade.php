@@ -187,61 +187,60 @@
     <div class="col-md-3">
         <label for="concerned_person_designation" class="form-label">Designation</label>
         <select class="form-select" id="concerned_person_designation" name="concerned_person_designation" required>
-            <option value="" disabled selected>Select Designation</option>
-             <option value="Chief Administrative Officer">Chief Administrative Officer</option>
-                <option value="Chief Analytics Officer">Chief Analytics Officer</option>
-        <option value="Chief Brand Officer">Chief Brand Officer</option>
-        <option value="Chief Business Development Officer">Chief Business Development Officer</option>
-        <option value="Chief Business Officer">Chief Business Officer</option>
-        <option value="Chief Commercial Officer">Chief Commercial Officer</option>
-        <option value="Chief Communications Officer">Chief Communications Officer</option>
-        <option value="Chief Compliance Officer">Chief Compliance Officer</option>
-        <option value="Chief Content Officer">Chief Content Officer</option>
-        <option value="Chief Creative Officer">Chief Creative Officer</option>
-        <option value="Chief Customer Officer">Chief Customer Officer</option>
-        <option value="Chief Data Officer">Chief Data Officer</option>
-        <option value="Chief Design Officer">Chief Design Officer</option>
-        <option value="Chief Digital Officer">Chief Digital Officer</option>
-        <option value="Chief Diversity Officer">Chief Diversity Officer</option>
-        <option value="Chief Executive Officer">Chief Executive Officer</option>
-        <option value="Chief Experience Officer">Chief Experience Officer</option>
-        <option value="Chief Financial Officer">Chief Financial Officer</option>
-        <option value="Chief Gaming Officer">Chief Gaming Officer</option>
-        <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
-        <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
-        <option value="Chief Information Officer">Chief Information Officer</option>
-        <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
-        <option value="Chief Information Security Officer">Chief Information Security Officer</option>
-        <option value="Chief Innovation Officer">Chief Innovation Officer</option>
-        <option value="Chief Investment Officer">Chief Investment Officer</option>
-        <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
-        <option value="Chief Learning Officer">Chief Learning Officer</option>
-        <option value="Chief Marketing Officer">Chief Marketing Officer</option>
-        <option value="Chief Operating Officer">Chief Operating Officer</option>
-        <option value="Chief Privacy Officer">Chief Privacy Officer</option>
-        <option value="Chief Process Officer">Chief Process Officer</option>
-        <option value="Chief Product Officer">Chief Product Officer</option>
-        <option value="Chief Reputation Officer">Chief Reputation Officer</option>
-        <option value="Chief Research Officer">Chief Research Officer</option>
-        <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
-        <option value="Chief Risk Officer">Chief Risk Officer</option>
-        <option value="Chief Science Officer">Chief Science Officer</option>
-        <option value="Chief Scientific Officer">Chief Scientific Officer</option>
-        <option value="Chief Security Officer">Chief Security Officer</option>
-        <option value="Chief Services Officer">Chief Services Officer</option>
-        <option value="Chief Strategy Officer">Chief Strategy Officer</option>
-        <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
-        <option value="Chief Technology Officer">Chief Technology Officer</option>
-        <option value="Chief Visibility Officer">Chief Visibility Officer</option>
-        <option value="Chief Visionary Officer">Chief Visionary Officer</option>
-        <option value="Chief Web Officer">Chief Web Officer</option>
-       
-        <option value="General Manager">General Manager</option>
-        <option value="Manager">Manager</option>
-        <option value="Others">Others</option>
-        <option value="Secretary">Secretary</option>
-        <option value="Supervisor">Supervisor</option>
-        <option value="Vice President">Vice President</option>
+            <option value="" disabled {{ old('concerned_person_designation') ? '' : 'selected' }}>Select Designation</option>
+            <option value="Chief Administrative Officer" {{ old('concerned_person_designation') == 'Chief Administrative Officer' ? 'selected' : '' }}>Chief Administrative Officer</option>
+            <option value="Chief Analytics Officer" {{ old('concerned_person_designation') == 'Chief Analytics Officer' ? 'selected' : '' }}>Chief Analytics Officer</option>
+            <option value="Chief Brand Officer" {{ old('concerned_person_designation') == 'Chief Brand Officer' ? 'selected' : '' }}>Chief Brand Officer</option>
+            <option value="Chief Business Development Officer" {{ old('concerned_person_designation') == 'Chief Business Development Officer' ? 'selected' : '' }}>Chief Business Development Officer</option>
+            <option value="Chief Business Officer" {{ old('concerned_person_designation') == 'Chief Business Officer' ? 'selected' : '' }}>Chief Business Officer</option>
+            <option value="Chief Commercial Officer" {{ old('concerned_person_designation') == 'Chief Commercial Officer' ? 'selected' : '' }}>Chief Commercial Officer</option>
+            <option value="Chief Communications Officer" {{ old('concerned_person_designation') == 'Chief Communications Officer' ? 'selected' : '' }}>Chief Communications Officer</option>
+            <option value="Chief Compliance Officer" {{ old('concerned_person_designation') == 'Chief Compliance Officer' ? 'selected' : '' }}>Chief Compliance Officer</option>
+            <option value="Chief Content Officer" {{ old('concerned_person_designation') == 'Chief Content Officer' ? 'selected' : '' }}>Chief Content Officer</option>
+            <option value="Chief Creative Officer" {{ old('concerned_person_designation') == 'Chief Creative Officer' ? 'selected' : '' }}>Chief Creative Officer</option>
+            <option value="Chief Customer Officer" {{ old('concerned_person_designation') == 'Chief Customer Officer' ? 'selected' : '' }}>Chief Customer Officer</option>
+            <option value="Chief Data Officer" {{ old('concerned_person_designation') == 'Chief Data Officer' ? 'selected' : '' }}>Chief Data Officer</option>
+            <option value="Chief Design Officer" {{ old('concerned_person_designation') == 'Chief Design Officer' ? 'selected' : '' }}>Chief Design Officer</option>
+            <option value="Chief Digital Officer" {{ old('concerned_person_designation') == 'Chief Digital Officer' ? 'selected' : '' }}>Chief Digital Officer</option>
+            <option value="Chief Diversity Officer" {{ old('concerned_person_designation') == 'Chief Diversity Officer' ? 'selected' : '' }}>Chief Diversity Officer</option>
+            <option value="Chief Executive Officer" {{ old('concerned_person_designation') == 'Chief Executive Officer' ? 'selected' : '' }}>Chief Executive Officer</option>
+            <option value="Chief Experience Officer" {{ old('concerned_person_designation') == 'Chief Experience Officer' ? 'selected' : '' }}>Chief Experience Officer</option>
+            <option value="Chief Financial Officer" {{ old('concerned_person_designation') == 'Chief Financial Officer' ? 'selected' : '' }}>Chief Financial Officer</option>
+            <option value="Chief Gaming Officer" {{ old('concerned_person_designation') == 'Chief Gaming Officer' ? 'selected' : '' }}>Chief Gaming Officer</option>
+            <option value="Chief Genealogical Officer" {{ old('concerned_person_designation') == 'Chief Genealogical Officer' ? 'selected' : '' }}>Chief Genealogical Officer</option>
+            <option value="Chief Human Resources Officer" {{ old('concerned_person_designation') == 'Chief Human Resources Officer' ? 'selected' : '' }}>Chief Human Resources Officer</option>
+            <option value="Chief Information Officer" {{ old('concerned_person_designation') == 'Chief Information Officer' ? 'selected' : '' }}>Chief Information Officer</option>
+            <option value="Chief Information Officer (Higher Education)" {{ old('concerned_person_designation') == 'Chief Information Officer (Higher Education)' ? 'selected' : '' }}>Chief Information Officer (Higher Education)</option>
+            <option value="Chief Information Security Officer" {{ old('concerned_person_designation') == 'Chief Information Security Officer' ? 'selected' : '' }}>Chief Information Security Officer</option>
+            <option value="Chief Innovation Officer" {{ old('concerned_person_designation') == 'Chief Innovation Officer' ? 'selected' : '' }}>Chief Innovation Officer</option>
+            <option value="Chief Investment Officer" {{ old('concerned_person_designation') == 'Chief Investment Officer' ? 'selected' : '' }}>Chief Investment Officer</option>
+            <option value="Chief Knowledge Officer" {{ old('concerned_person_designation') == 'Chief Knowledge Officer' ? 'selected' : '' }}>Chief Knowledge Officer</option>
+            <option value="Chief Learning Officer" {{ old('concerned_person_designation') == 'Chief Learning Officer' ? 'selected' : '' }}>Chief Learning Officer</option>
+            <option value="Chief Marketing Officer" {{ old('concerned_person_designation') == 'Chief Marketing Officer' ? 'selected' : '' }}>Chief Marketing Officer</option>
+            <option value="Chief Operating Officer" {{ old('concerned_person_designation') == 'Chief Operating Officer' ? 'selected' : '' }}>Chief Operating Officer</option>
+            <option value="Chief Privacy Officer" {{ old('concerned_person_designation') == 'Chief Privacy Officer' ? 'selected' : '' }}>Chief Privacy Officer</option>
+            <option value="Chief Process Officer" {{ old('concerned_person_designation') == 'Chief Process Officer' ? 'selected' : '' }}>Chief Process Officer</option>
+            <option value="Chief Product Officer" {{ old('concerned_person_designation') == 'Chief Product Officer' ? 'selected' : '' }}>Chief Product Officer</option>
+            <option value="Chief Reputation Officer" {{ old('concerned_person_designation') == 'Chief Reputation Officer' ? 'selected' : '' }}>Chief Reputation Officer</option>
+            <option value="Chief Research Officer" {{ old('concerned_person_designation') == 'Chief Research Officer' ? 'selected' : '' }}>Chief Research Officer</option>
+            <option value="Chief Restructuring Officer" {{ old('concerned_person_designation') == 'Chief Restructuring Officer' ? 'selected' : '' }}>Chief Restructuring Officer</option>
+            <option value="Chief Risk Officer" {{ old('concerned_person_designation') == 'Chief Risk Officer' ? 'selected' : '' }}>Chief Risk Officer</option>
+            <option value="Chief Science Officer" {{ old('concerned_person_designation') == 'Chief Science Officer' ? 'selected' : '' }}>Chief Science Officer</option>
+            <option value="Chief Scientific Officer" {{ old('concerned_person_designation') == 'Chief Scientific Officer' ? 'selected' : '' }}>Chief Scientific Officer</option>
+            <option value="Chief Security Officer" {{ old('concerned_person_designation') == 'Chief Security Officer' ? 'selected' : '' }}>Chief Security Officer</option>
+            <option value="Chief Services Officer" {{ old('concerned_person_designation') == 'Chief Services Officer' ? 'selected' : '' }}>Chief Services Officer</option>
+            <option value="Chief Strategy Officer" {{ old('concerned_person_designation') == 'Chief Strategy Officer' ? 'selected' : '' }}>Chief Strategy Officer</option>
+            <option value="Chief Sustainability Officer" {{ old('concerned_person_designation') == 'Chief Sustainability Officer' ? 'selected' : '' }}>Chief Sustainability Officer</option>
+            <option value="Chief Technology Officer" {{ old('concerned_person_designation') == 'Chief Technology Officer' ? 'selected' : '' }}>Chief Technology Officer</option>
+            <option value="Chief Visibility Officer" {{ old('concerned_person_designation') == 'Chief Visibility Officer' ? 'selected' : '' }}>Chief Visibility Officer</option>
+            <option value="Chief Visionary Officer" {{ old('concerned_person_designation') == 'Chief Visionary Officer' ? 'selected' : '' }}>Chief Visionary Officer</option>
+            <option value="Chief Web Officer" {{ old('concerned_person_designation') == 'Chief Web Officer' ? 'selected' : '' }}>Chief Web Officer</option>
+            <option value="General Manager" {{ old('concerned_person_designation') == 'General Manager' ? 'selected' : '' }}>General Manager</option>
+            <option value="Manager" {{ old('concerned_person_designation') == 'Manager' ? 'selected' : '' }}>Manager</option>
+            <option value="Others" {{ old('concerned_person_designation') == 'Others' ? 'selected' : '' }}>Others</option>
+            <option value="Secretary" {{ old('concerned_person_designation') == 'Secretary' ? 'selected' : '' }}>Secretary</option>
+            <option value="Supervisor" {{ old('concerned_person_designation') == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
+            <option value="Vice President" {{ old('concerned_person_designation') == 'Vice President' ? 'selected' : '' }}>Vice President</option>
         </select>
     </div>
 </div>
@@ -875,5 +874,14 @@
 }
 // changes
 
+  document.addEventListener('DOMContentLoaded', function() {
+    const checkedbox = document.getElementById('concerned_person_is_me');
+    const phoneField = document.getElementById('phone_number');
+    const emailField = document.getElementById('email');
+    if (checkedbox && checkedbox.checked) {
+        phoneField.readOnly = true;
+        emailField.readOnly = true;
+    }
+});
 </script>
 @endsection
