@@ -51,7 +51,53 @@
                             <?php echo e(route('home')); ?>
 
                         <?php endif; ?>
-                    " class="btn btn-light" style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; background-color: #28a745; color: white;">Go to Dashboard</a>
+                    " 
+                    class="btn btn-professional"
+                    style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; color: #fff;">
+                        Go to Dashboard
+                    </a>
+                    <style>
+                    .btn-professional {
+                        background: linear-gradient(90deg, #0d6efd 0%, #343a40 100%);
+                        background-size: 200% 100%;
+                        background-position: left;
+                        transition: background-position 0.5s, box-shadow 0.3s;
+                        box-shadow: 0 4px 24px rgba(33,37,41,0.18);
+                        position: relative;
+                        overflow: hidden;
+                        z-index: 1;
+                        border: none;
+                    }
+                    .btn-professional::before {
+                        content: '';
+                        position: absolute;
+                        left: -75%;
+                        top: 0;
+                        width: 50%;
+                        height: 100%;
+                        background: linear-gradient(120deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 100%);
+                        transform: skewX(-20deg);
+                        z-index: 2;
+                        pointer-events: none;
+                        transition: left 0.5s;
+                    }
+                    .btn-professional.professional-animate {
+                        background-position: right;
+                        box-shadow: 0 8px 32px rgba(52,58,64,0.18);
+                    }
+                    .btn-professional.professional-animate::before {
+                        left: 120%;
+                    }
+                    </style>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const btn = document.querySelector('.btn-professional');
+                        setInterval(() => {
+                            btn.classList.add('professional-animate');
+                            setTimeout(() => btn.classList.remove('professional-animate'), 900);
+                        }, 2500);
+                    });
+                    </script>
                 </div>
                 <?php endif; ?>
             </div>
@@ -403,37 +449,112 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- scrolling text  related to services -zm,xxxxxxxxxxxxxxxxxxxxxxxxxxxsf dnsjuiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizncfp[00yyyyyyyyyyyyyyyyyyyyyyyyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh-->
 <!-- Professional Scrolling Info Bar -->
-<div class="container-fluid py-2" style="background: linear-gradient(90deg, #0dcaf0 0%, #6c757d 100%); box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-    <div class="row">
-        <div class="col text-center">
-            <div class="d-inline-block w-100" style="overflow: hidden; position: relative;">
-                <span id="scrolling-text" style="display: inline-block; min-width: 100%; color: #fff; font-size: 1.1rem; letter-spacing: 0.5px; font-weight: 500; animation: scroll-left 45s linear infinite;">
-                    <i class="fa-solid fa-circle-info me-2 text-warning"></i>
-                    <strong>InvestorDekho:</strong>
-                    India's trusted platform for <span class="text-warning">Startup Discovery</span>, <span class="text-info">Investor Connections</span>, and <span class="text-success">Deal Flow</span>. 
-                    Access verified data on <span class="text-warning">Startups</span>, <span class="text-info">Angel Investors</span>, <span class="text-success">VCs</span>, and <span class="text-primary">Bankers</span>. 
-                    <span class="d-none d-md-inline">Get expert support for <span class="text-warning">Fundraising</span>, <span class="text-info">Due Diligence</span>, <span class="text-success">Compliance</span>, and <span class="text-primary">Growth Advisory</span>. 
-                    <span class="text-light">Empowering innovation, connecting opportunities.</span></span>
+
+<div class="container-fluid py-2 scrolling-info-bar shadow-sm" style="background: linear-gradient(90deg, #f8fafc 0%, #e9ecef 100%); border-bottom: 1px solid #dee2e6; position: relative; z-index: 1050;">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-12 col-md-10 px-0">
+            <div class="scrolling-text-wrapper overflow-hidden position-relative" style="height: 1.7rem;">
+                <span id="scrolling-text" class="d-inline-block" style="white-space: nowrap; font-size: 0.98rem; font-weight: 500; color: #22223b; letter-spacing: 0.01em; animation: scroll-left 32s linear infinite;">
+                    <i class="fa-solid fa-circle-info me-2 text-primary"></i>
+                    <span class="fw-bold text-uppercase" style="color:#0dcaf0;">InvestorDekho</span>
+                    <span class="mx-2 text-secondary">|</span>
+                    Startup Discovery <span class="mx-2 text-secondary">|</span>
+                    Investor Connections <span class="mx-2 text-secondary">|</span>
+                    Verified: Startups, Investors, VCs <span class="mx-2 text-secondary">|</span>
+                    24x7 Support
                 </span>
             </div>
+        </div>
+        <div class="col-auto d-none d-md-flex align-items-center">
+            <a href="<?php echo e(route('contact')); ?>" class="btn btn-gradient px-3 py-1 rounded-pill shadow-sm ms-2" style="font-weight: 500; font-size: 0.98rem;">
+                <i class="fa-solid fa-headset me-2"></i>Contact Us
+            </a>
         </div>
     </div>
 </div>
 <style>
-@keyframes scroll-left {
-    0% { transform: translateX(100%);}
-    100% { transform: translateX(-100%);}
-}
-#scrolling-text {
-    white-space: nowrap;
-    /* Optional: pause on hover for better UX */
-    animation-play-state: running;
-}
-#scrolling-text:hover {
-    animation-play-state: paused;
-    cursor: pointer;
-}
+    @keyframes scroll-left {
+        0% { transform: translateX(100%);}
+        100% { transform: translateX(-100%);}
+    }
+    #scrolling-text {
+        transition: background 0.2s, color 0.2s;
+    }
+    #scrolling-text:hover {
+        animation-play-state: paused;
+        cursor: pointer;
+        color: #0dcaf0;
+        background: rgba(13,202,240,0.08);
+        border-radius: 8px;
+        padding: 0 8px;
+    }
+    .scrolling-text-wrapper {
+        height: 1.7rem;
+        display: flex;
+        align-items: center;
+        background: transparent;
+    }
+    .scrolling-info-bar {
+        font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+        font-size: 0.98rem;
+        letter-spacing: 0.01em;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        z-index: 1050 !important;
+        position: relative;
+    }
+    .btn-gradient {
+        background: linear-gradient(90deg, #0dcaf0 0%, #0d6efd 100%);
+        color: #fff;
+        border: none;
+        font-weight: 600;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 8px rgba(13,202,240,0.08);
+    }
+    .btn-gradient:hover, .btn-gradient:focus {
+        background: linear-gradient(90deg, #0d6efd 0%, #0dcaf0 100%);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(13,202,240,0.18);
+        text-decoration: none;
+    }
+    @media (max-width: 991.98px) {
+        .scrolling-info-bar {
+            font-size: 0.93rem;
+            border-radius: 0 0 8px 8px;
+        }
+        .scrolling-text-wrapper {
+            height: 1.3rem;
+        }
+    }
+    @media (max-width: 767.98px) {
+        .scrolling-info-bar .col-auto {
+            display: none !important;
+        }
+        #scrolling-text {
+            font-size: 0.89rem;
+        }
+        .scrolling-text-wrapper {
+            height: 1.1rem;
+        }
+    }
+    /* Fix social media bar z-index and position so it stays above scrolling bar */
+    .social-media {
+        z-index: 1100 !important;
+        position: fixed !important;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 </style>
+
+<!-- Suggestions:
+1. Make the scrolling text dynamic by using a PHP array and Blade to loop through messages.
+2. Add an optional dismiss/close button for user control.
+3. Consider ARIA roles for accessibility: role="status" or aria-live="polite".
+4. Add a small icon or badge for "New" or "Hot" services.
+5. If you have urgent news, allow a red/alert color variant.
+6. For mobile, consider a tap-to-pause or tap-to-expand for better UX.
+-->
 
 
 
