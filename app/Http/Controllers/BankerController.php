@@ -51,7 +51,7 @@ class BankerController extends Controller
             'incorporated_in' => 'required|integer|min:1900|max:' . date('Y'),
             'ib_team_size' => 'required|string',
             // 'company_profile' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-             'company_profile' => 'nullable|file|max:2048',
+             'company_profile' => 'required|file|max:2048',
             'address' => 'required|string|max:255',
             'location' => 'required|string|max:100',
             'state' => 'required|string|max:100',

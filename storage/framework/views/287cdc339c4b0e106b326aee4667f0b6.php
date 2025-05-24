@@ -159,14 +159,8 @@ endif;
 unset($__errorArgs, $__bag); ?>" 
             id="company_profile" 
             name="company_profile" 
-            <?php echo e(old('company_profile') ? '' : 'required'); ?>
-
+            required
         >
-        <?php if(old('company_profile')): ?>
-            <div class="mt-1">
-                <span class="text-success small">Previously selected: <?php echo e(old('company_profile')); ?></span>
-            </div>
-        <?php endif; ?>
         <?php $__errorArgs = ['company_profile'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -177,6 +171,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+       
     </div>
 </div>
 
@@ -413,8 +408,8 @@ unset($__errorArgs, $__bag); ?>
     </div>
 
     <!-- Add Button -->
-    <div class="col-md-2">
-        <button type="button" class="btn btn-info mt-4" onclick="addPublicLinkField()">+</button>
+    <div class="col-md-2 d-flex align-items-end mt-5">
+        <button type="button" class="btn btn-info w-10" style="height: 38px;" onclick="addPublicLinkField()">+</button>
     </div>
 </div>
 
@@ -425,7 +420,20 @@ unset($__errorArgs, $__bag); ?>
         <?php $__currentLoopData = old('public_links'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $public_link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php if($index > 0): ?>
                 <div class="row g-3 align-items-end mt-2">
+                       <div class="col-sm-2 mt-5">
+                            <!-- <h3 class="h5">Public Links</h3> -->
+                        </div>
                     <div class="col-md-4">
+                        <?php $__errorArgs = ['public_links.'.$index];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger small">This field is required</span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         <input 
                             type="url" 
                             class="form-control <?php $__errorArgs = ['public_links.'.$index];
@@ -441,16 +449,7 @@ unset($__errorArgs, $__bag); ?>"
                             value="<?php echo e($public_link); ?>" 
                             required
                         >
-                        <?php $__errorArgs = ['public_links.'.$index];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <span class="text-danger small">This field is required</span>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                        
                     </div>
                     <div class="col-md-4">
                         <select 
@@ -502,6 +501,16 @@ unset($__errorArgs, $__bag); ?>
         <label for="address" class="form-label">
             Address <span class="text-danger">*</span>
         </label>
+        <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+            <span class="text-danger small">This field is required</span>
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         <input 
             type="text" 
             class="form-control <?php $__errorArgs = ['address'];
@@ -517,7 +526,12 @@ unset($__errorArgs, $__bag); ?>"
             value="<?php echo e(old('address')); ?>" 
             required
         >
-        <?php $__errorArgs = ['address'];
+    </div>
+    <div class="col-md-4">
+        <label for="location" class="form-label">
+            City <span class="text-danger">*</span>
+        </label>
+        <?php $__errorArgs = ['location'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -527,11 +541,6 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-2">
-        <label for="location" class="form-label">
-            City <span class="text-danger">*</span>
-        </label>
         <input 
             type="text" 
             class="form-control <?php $__errorArgs = ['location'];
@@ -547,7 +556,15 @@ unset($__errorArgs, $__bag); ?>"
             value="<?php echo e(old('location')); ?>" 
             required
         >
-        <?php $__errorArgs = ['location'];
+    </div>
+</div>
+<div class="row g-3 align-items-end mt-2">
+    <div class="col-sm-2"></div>
+    <div class="col-md-4">
+        <label for="state" class="form-label">
+            State <span class="text-danger">*</span>
+        </label>
+        <?php $__errorArgs = ['state'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -557,11 +574,6 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-2">
-        <label for="state" class="form-label">
-            State <span class="text-danger">*</span>
-        </label>
         <input 
             type="text" 
             class="form-control <?php $__errorArgs = ['state'];
@@ -577,7 +589,12 @@ unset($__errorArgs, $__bag); ?>"
             value="<?php echo e(old('state')); ?>" 
             required
         >
-        <?php $__errorArgs = ['state'];
+    </div>
+    <div class="col-md-4">
+        <label for="country" class="form-label">
+            Country <span class="text-danger">*</span>
+        </label>
+        <?php $__errorArgs = ['country'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -587,11 +604,6 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-2">
-        <label for="country" class="form-label">
-            Country <span class="text-danger">*</span>
-        </label>
         <input 
             type="text" 
             class="form-control <?php $__errorArgs = ['country'];
@@ -607,16 +619,6 @@ unset($__errorArgs, $__bag); ?>"
             value="<?php echo e(old('country')); ?>" 
             required
         >
-        <?php $__errorArgs = ['country'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger small">This field is required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 
@@ -629,6 +631,16 @@ unset($__errorArgs, $__bag); ?>
         <label for="min_fund_raise_size" class="form-label">
             Min <span class="text-danger">*</span>
         </label>
+        <?php $__errorArgs = ['min_fund_raise_size'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+            <span class="text-danger small">This field is required</span>
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         <select 
             class="form-select <?php $__errorArgs = ['min_fund_raise_size'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -641,6 +653,7 @@ unset($__errorArgs, $__bag); ?>"
             id="min_fund_raise_size" 
             name="min_fund_raise_size" 
             required
+            onchange="validateFundRaiseSize()"
         >
             <option value="" disabled <?php echo e(old('min_fund_raise_size') ? '' : 'selected'); ?>>Min</option>
             <option value="10_lakh" <?php echo e(old('min_fund_raise_size') == '10_lakh' ? 'selected' : ''); ?>>10 lakh</option>
@@ -648,7 +661,12 @@ unset($__errorArgs, $__bag); ?>"
             <option value="1_cr" <?php echo e(old('min_fund_raise_size') == '1_cr' ? 'selected' : ''); ?>>1 cr</option>
             <option value="10_cr" <?php echo e(old('min_fund_raise_size') == '10_cr' ? 'selected' : ''); ?>>10 cr</option>
         </select>
-        <?php $__errorArgs = ['min_fund_raise_size'];
+    </div>
+    <div class="col-md-6">
+        <label for="max_fund_raise_size" class="form-label">
+            Max <span class="text-danger">*</span>
+        </label>
+        <?php $__errorArgs = ['max_fund_raise_size'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -658,11 +676,6 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    </div>
-    <div class="col-md-6">
-        <label for="max_fund_raise_size" class="form-label">
-            Max <span class="text-danger">*</span>
-        </label>
         <select 
             class="form-select <?php $__errorArgs = ['max_fund_raise_size'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -675,6 +688,7 @@ unset($__errorArgs, $__bag); ?>"
             id="max_fund_raise_size" 
             name="max_fund_raise_size" 
             required
+            onchange="validateFundRaiseSize()"
         >
             <option value="" disabled <?php echo e(old('max_fund_raise_size') ? '' : 'selected'); ?>>Max</option>
             <option value="1_cr" <?php echo e(old('max_fund_raise_size') == '1_cr' ? 'selected' : ''); ?>>1 cr</option>
@@ -682,280 +696,288 @@ unset($__errorArgs, $__bag); ?>"
             <option value="50_cr" <?php echo e(old('max_fund_raise_size') == '50_cr' ? 'selected' : ''); ?>>50 cr</option>
             <option value="100_cr" <?php echo e(old('max_fund_raise_size') == '100_cr' ? 'selected' : ''); ?>>100 cr+</option>
         </select>
-        <?php $__errorArgs = ['max_fund_raise_size'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-            <span class="text-danger small">This field is required</span>
-        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+    </div>
+    <div class="col-12">
+        <span id="fund-raise-size-error" class="text-danger small" style="display:none;">Min should not be greater than equal to Max.</span>
     </div>
 </div>
+<script>
+    function getFundRaiseValue(val) {
+        // Assign numeric values for comparison
+        switch(val) {
+            case '10_lakh': return 1;
+            case '50_lakh': return 2;
+            case '1_cr': return 3;
+            case '10_cr': return 4;
+            case '50_cr': return 5;
+            case '100_cr': return 6;
+            default: return 0;
+        }
+    }
 
+    function validateFundRaiseSize() {
+        var min = document.getElementById('min_fund_raise_size').value;
+        var max = document.getElementById('max_fund_raise_size').value;
+        var error = document.getElementById('fund-raise-size-error');
+        if (min && max && getFundRaiseValue(min) >= getFundRaiseValue(max)) {
+            error.style.display = 'inline';
+        } else {
+            error.style.display = 'none';
+        }
+    }
 
-
-
-    <!-- Previous Deals Section -->
+    // Prevent form submission if invalid
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('investmentBankerForm');
+        form.addEventListener('submit', function(e) {
+            var min = document.getElementById('min_fund_raise_size').value;
+            var max = document.getElementById('max_fund_raise_size').value;
+            var error = document.getElementById('fund-raise-size-error');
+            if (min && max && getFundRaiseValue(min) > getFundRaiseValue(max)) {
+                error.style.display = 'inline';
+                e.preventDefault();
+            }
+        });
+    });
+</script>
 <hr>
 <h3 class="h5">Previous Deals</h3>
 <div id="previous-deals-container">
+    <?php
+        $previous_deal_years = old('previous_deal_year', []);
+        $previous_deal_companies = old('previous_deal_company', []);
+        $previous_deal_sectors = old('previous_deal_sector', []);
+        $previous_deal_types = old('previous_deal_type', []);
+        $count = max(
+            count($previous_deal_years),
+            count($previous_deal_companies),
+            count($previous_deal_sectors),
+            count($previous_deal_types),
+            1
+        );
+    ?>
+    <?php for($i = 0; $i < $count; $i++): ?>
     <div class="row g-1 mb-1">
         <div class="col-md-3 form-group">
-            <label for="previous_deal_year" class="form-label">
+            <label for="previous_deal_year_<?php echo e($i); ?>" class="form-label">
                 Year <span class="text-danger">*</span>
             </label>
-            <select class="form-control" name="previous_deal_year[]" required>
-                <option value="" disabled selected>Select Year</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-                <option value="2015">2015</option>
-                <option value="2014">2014</option>
-                <option value="2013">2013</option>
-                <option value="2012">2012</option>
-                <option value="2011">2011</option>
-                <option value="2010">2010</option>
-                <option value="2009">2009</option>
-                <option value="2008">2008</option>
-                <option value="2007">2007</option>
-                <option value="2006">2006</option>
-                <option value="2005">2005</option>
-                <option value="2004">2004</option>
-                <option value="2003">2003</option>
-                <option value="2002">2002</option>
-                <option value="2001">2001</option>
-                <option value="2000">2000</option>
-                <option value="1999">1999</option>
-                <option value="1998">1998</option>
-                <option value="1997">1997</option>
-                <option value="1996">1996</option>
-                <option value="1995">1995</option>
-                <option value="1994">1994</option>
-                <option value="1993">1993</option>
-                <option value="1992">1992</option>
-                <option value="1991">1991</option>
-                <option value="1990">1990</option>
+            <select class="form-control" name="previous_deal_year[]" id="previous_deal_year_<?php echo e($i); ?>" required>
+                <option value="" disabled <?php echo e((isset($previous_deal_years[$i]) && $previous_deal_years[$i]) ? '' : 'selected'); ?>>Select Year</option>
+                <?php for($y = date('Y'); $y >= 1990; $y--): ?>
+                    <option value="<?php echo e($y); ?>" <?php echo e((isset($previous_deal_years[$i]) && $previous_deal_years[$i] == $y) ? 'selected' : ''); ?>><?php echo e($y); ?></option>
+                <?php endfor; ?>
             </select>
         </div>
         <div class="col-md-3 form-group">
-    <label for="previous_deal_company" class="form-label">
-        Company <span class="text-danger">*</span>
-    </label>
-    <input type="text" class="form-control <?php $__errorArgs = ['previous_deal_company'];
+            <label for="previous_deal_company_<?php echo e($i); ?>" class="form-label">
+                Company <span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control <?php $__errorArgs = ['previous_deal_company.'.$i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" name="previous_deal_company[]" placeholder="Company" required>
-    <?php $__errorArgs = ['previous_deal_company.0'];
+unset($__errorArgs, $__bag); ?>" name="previous_deal_company[]" id="previous_deal_company_<?php echo e($i); ?>" placeholder="Company" value="<?php echo e($previous_deal_companies[$i] ?? ''); ?>" required>
+            <?php $__errorArgs = ['previous_deal_company.'.$i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-    <span class="text-danger small">This field is required</span>
-<?php unset($message);
+            <span class="text-danger small">This field is required</span>
+            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-
-</div>
-
-        
+        </div>
         <div class="col-md-3 form-group">
-            <label for="previous_deal_sector" class="form-label">
+            <label for="previous_deal_sector_<?php echo e($i); ?>" class="form-label">
                 Sector <span class="text-danger">*</span>
             </label>
-            <input list="business-options" class="form-control spaced-input" id="previous_deal_sector" name="previous_deal_sector[]" required>
-     
-                   
-                    <datalist id="business-options">
-                    <option value="Accounting">Accounting</option>
-                                        <option value="Airlines/Aviation">Airlines/Aviation</option>
-                                        <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
-                                        <option value="Alternative Medicine">Alternative Medicine</option>
-                                        <option value="Animation">Animation</option>
-                                        <option value="Apparel/Fashion">Apparel/Fashion</option>
-                                        <option value="Architecture/Planning">Architecture/Planning</option>
-                                        <option value="Arts/Crafts">Arts/Crafts</option>
-                                        <option value="Automotive">Automotive</option>
-                                        <option value="Aviation/Aerospace">Aviation/Aerospace</option>
-                                        <option value="Banking/Mortgage">Banking/Mortgage</option>
-                                        <option value="Biotechnology/Greentech">Biotechnology/Greentech</option>
-                                        <option value="Broadcast Media">Broadcast Media</option>
-                                        <option value="Building Materials">Building Materials</option>
-                                        <option value="Business Supplies/Equipment">Business Supplies/Equipment</option>
-                                        <option value="Capital Markets/Hedge Fund/Private Equity">Capital Markets/Hedge Fund/Private Equity</option>
-                                        <option value="Chemicals">Chemicals</option>
-                                        <option value="Civic/Social Organization">Civic/Social Organization</option>
-                                        <option value="Civil Engineering">Civil Engineering</option>
-                                        <option value="Commercial Real Estate">Commercial Real Estate</option>
-                                        <option value="Computer Games">Computer Games</option>
-                                        <option value="Computer Hardware">Computer Hardware</option>
-                                        <option value="Computer Networking">Computer Networking</option>
-                                        <option value="Computer Software/Engineering">Computer Software/Engineering</option>
-                                        <option value="Computer/Network Security">Computer/Network Security</option>
-                                        <option value="Construction">Construction</option>
-                                        <option value="Consumer Electronics">Consumer Electronics</option>
-                                        <option value="Consumer Goods">Consumer Goods</option>
-                                        <option value="Consumer Services">Consumer Services</option>
-                                        <option value="Cosmetics">Cosmetics</option>
-                                        <option value="Dairy">Dairy</option>
-                                        <option value="Defense/Space">Defense/Space</option>
-                                        <option value="Design">Design</option>
-                                        <option value="E-Learning">E-Learning</option>
-                                        <option value="Education Management">Education Management</option>
-                                        <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
-                                        <option value="Entertainment/Movie Production">Entertainment/Movie Production</option>
-                                        <option value="Environmental Services">Environmental Services</option>
-                                        <option value="Events Services">Events Services</option>
-                                        <option value="Executive Office">Executive Office</option>
-                                        <option value="Facilities Services">Facilities Services</option>
-                                        <option value="Farming">Farming</option>
-                                        <option value="Financial Services">Financial Services</option>
-                                        <option value="Fine Art">Fine Art</option>
-                                        <option value="Fishery">Fishery</option>
-                                        <option value="Food Production">Food Production</option>
-                                        <option value="Food/Beverages">Food/Beverages</option>
-                                        <option value="Fundraising">Fundraising</option>
-                                        <option value="Furniture">Furniture</option>
-                                        <option value="Gambling/Casinos">Gambling/Casinos</option>
-                                        <option value="Glass/Ceramics/Concrete">Glass/Ceramics/Concrete</option>
-                                        <option value="Government Administration">Government Administration</option>
-                                        <option value="Government Relations">Government Relations</option>
-                                        <option value="Graphic Design/Web Design">Graphic Design/Web Design</option>
-                                        <option value="Health/Fitness">Health/Fitness</option>
-                                        <option value="Higher Education/Acadamia">Higher Education/Acadamia</option>
-                                        <option value="Hospital/Health Care">Hospital/Health Care</option>
-                                        <option value="Hospitality">Hospitality</option>
-                                        <option value="Human Resources/HR">Human Resources/HR</option>
-                                        <option value="Import/Export">Import/Export</option>
-                                        <option value="Individual/Family Services">Individual/Family Services</option>
-                                        <option value="Industrial Automation">Industrial Automation</option>
-                                        <option value="Information Services">Information Services</option>
-                                        <option value="Information Technology/IT">Information Technology/IT</option>
-                                        <option value="Insurance">Insurance</option>
-                                        <option value="International Affairs">International Affairs</option>
-                                        <option value="International Trade/Development">International Trade/Development</option>
-                                        <option value="Internet">Internet</option>
-                                        <option value="Investment Banking/Venture">Investment Banking/Venture</option>
-                                        <option value="Investment Management/Hedge Fund/Private Equity">Investment Management/Hedge Fund/Private Equity</option>
-                                        <option value="Judiciary">Judiciary</option>
-                                        <option value="Law Enforcement">Law Enforcement</option>
-                                        <option value="Law Practice/Law Firms">Law Practice/Law Firms</option>
-                                        <option value="Legal Services">Legal Services</option>
-                                        <option value="Legislative Office">Legislative Office</option>
-                                        <option value="Leisure/Travel">Leisure/Travel</option>
-                                        <option value="Library">Library</option>
-                                        <option value="Logistics/Procurement">Logistics/Procurement</option>
-                                        <option value="Luxury Goods/Jewelry">Luxury Goods/Jewelry</option>
-                                        <option value="Machinery">Machinery</option>
-                                        <option value="Management Consulting">Management Consulting</option>
-                                        <option value="Maritime">Maritime</option>
-                                        <option value="Market Research">Market Research</option>
-                                        <option value="Marketing/Advertising/Sales">Marketing/Advertising/Sales</option>
-                                        <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
-                                        <option value="Media Production">Media Production</option>
-                                        <option value="Medical Equipment">Medical Equipment</option>
-                                        <option value="Medical Practice">Medical Practice</option>
-                                        <option value="Mental Health Care">Mental Health Care</option>
-                                        <option value="Military Industry">Military Industry</option>
-                                        <option value="Mining/Metals">Mining/Metals</option>
-                                        <option value="Motion Pictures/Film">Motion Pictures/Film</option>
-                                        <option value="Museums/Institutions">Museums/Institutions</option>
-                                        <option value="Music">Music</option>
-                                        <option value="Nanotechnology">Nanotechnology</option>
-                                        <option value="Newspapers/Journalism">Newspapers/Journalism</option>
-                                        <option value="Non-Profit/Volunteering">Non-Profit/Volunteering</option>
-                                        <option value="Oil/Energy/Solar/Greentech">Oil/Energy/Solar/Greentech</option>
-                                        <option value="Online Publishing">Online Publishing</option>
-                                        <option value="Other Industry">Other Industry</option>
-                                        <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
-                                        <option value="Package/Freight Delivery">Package/Freight Delivery</option>
-                                        <option value="Packaging/Containers">Packaging/Containers</option>
-                                        <option value="Paper/Forest Products">Paper/Forest Products</option>
-                                        <option value="Performing Arts">Performing Arts</option>
-                                        <option value="Pharmaceuticals">Pharmaceuticals</option>
-                                        <option value="Philanthropy">Philanthropy</option>
-                                        <option value="Photography">Photography</option>
-                                        <option value="Plastics">Plastics</option>
-                                        <option value="Political Organization">Political Organization</option>
-                                        <option value="Primary/Secondary Education">Primary/Secondary Education</option>
-                                        <option value="Printing">Printing</option>
-                                        <option value="Professional Training">Professional Training</option>
-                                        <option value="Program Development">Program Development</option>
-                                        <option value="Public Relations/PR">Public Relations/PR</option>
-                                        <option value="Public Safety">Public Safety</option>
-                                        <option value="Publishing Industry">Publishing Industry</option>
-                                        <option value="Railroad Manufacture">Railroad Manufacture</option>
-                                        <option value="Ranching">Ranching</option>
-                                        <option value="Real Estate/Mortgage">Real Estate/Mortgage</option>
-                                        <option value="Recreational Facilities/Services">Recreational Facilities/Services</option>
-                                        <option value="Religious Institutions">Religious Institutions</option>
-                                        <option value="Renewables/Environment">Renewables/Environment</option>
-                                        <option value="Research Industry">Research Industry</option>
-                                        <option value="Restaurants">Restaurants</option>
-                                        <option value="Retail Industry">Retail Industry</option>
-                                        <option value="Security/Investigations">Security/Investigations</option>
-                                        <option value="Semiconductors">Semiconductors</option>
-                                        <option value="Shipbuilding">Shipbuilding</option>
-                                        <option value="Sporting Goods">Sporting Goods</option>
-                                        <option value="Sports">Sports</option>
-                                        <option value="Staffing/Recruiting">Staffing/Recruiting</option>
-                                        <option value="Supermarkets">Supermarkets</option>
-                                        <option value="Telecommunications">Telecommunications</option>
-                                        <option value="Textiles">Textiles</option>
-                                        <option value="Think Tanks">Think Tanks</option>
-                                        <option value="Tobacco">Tobacco</option>
-                                        <option value="Translation/Localization">Translation/Localization</option>
-                                        <option value="Transportation">Transportation</option>
-                                        <option value="Utilities">Utilities</option>
-                                        <option value="Venture Capital/VC">Venture Capital/VC</option>
-                                        <option value="Veterinary">Veterinary</option>
-                                        <option value="Warehousing">Warehousing</option>
-                                        <option value="Wholesale">Wholesale</option>
-                                        <option value="Wine/Spirits">Wine/Spirits</option>
-                                        <option value="Wireless">Wireless</option>
-                                        <option value="Writing/Editing">Writing/Editing</option>
-                    </datalist>
-                     <?php $__errorArgs = ['previous_deal_sector.0'];
+            <input list="business-options" class="form-control spaced-input" id="previous_deal_sector_<?php echo e($i); ?>" name="previous_deal_sector[]" value="<?php echo e($previous_deal_sectors[$i] ?? ''); ?>" required>
+            <datalist id="business-options">
+                <option value="Accounting">Accounting</option>
+                <option value="Airlines/Aviation">Airlines/Aviation</option>
+                <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
+                <option value="Alternative Medicine">Alternative Medicine</option>
+                <option value="Animation">Animation</option>
+                <option value="Apparel/Fashion">Apparel/Fashion</option>
+                <option value="Architecture/Planning">Architecture/Planning</option>
+                <option value="Arts/Crafts">Arts/Crafts</option>
+                <option value="Automotive">Automotive</option>
+                <option value="Aviation/Aerospace">Aviation/Aerospace</option>
+                <option value="Banking/Mortgage">Banking/Mortgage</option>
+                <option value="Biotechnology/Greentech">Biotechnology/Greentech</option>
+                <option value="Broadcast Media">Broadcast Media</option>
+                <option value="Building Materials">Building Materials</option>
+                <option value="Business Supplies/Equipment">Business Supplies/Equipment</option>
+                <option value="Capital Markets/Hedge Fund/Private Equity">Capital Markets/Hedge Fund/Private Equity</option>
+                <option value="Chemicals">Chemicals</option>
+                <option value="Civic/Social Organization">Civic/Social Organization</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Commercial Real Estate">Commercial Real Estate</option>
+                <option value="Computer Games">Computer Games</option>
+                <option value="Computer Hardware">Computer Hardware</option>
+                <option value="Computer Networking">Computer Networking</option>
+                <option value="Computer Software/Engineering">Computer Software/Engineering</option>
+                <option value="Computer/Network Security">Computer/Network Security</option>
+                <option value="Construction">Construction</option>
+                <option value="Consumer Electronics">Consumer Electronics</option>
+                <option value="Consumer Goods">Consumer Goods</option>
+                <option value="Consumer Services">Consumer Services</option>
+                <option value="Cosmetics">Cosmetics</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Defense/Space">Defense/Space</option>
+                <option value="Design">Design</option>
+                <option value="E-Learning">E-Learning</option>
+                <option value="Education Management">Education Management</option>
+                <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
+                <option value="Entertainment/Movie Production">Entertainment/Movie Production</option>
+                <option value="Environmental Services">Environmental Services</option>
+                <option value="Events Services">Events Services</option>
+                <option value="Executive Office">Executive Office</option>
+                <option value="Facilities Services">Facilities Services</option>
+                <option value="Farming">Farming</option>
+                <option value="Financial Services">Financial Services</option>
+                <option value="Fine Art">Fine Art</option>
+                <option value="Fishery">Fishery</option>
+                <option value="Food Production">Food Production</option>
+                <option value="Food/Beverages">Food/Beverages</option>
+                <option value="Fundraising">Fundraising</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Gambling/Casinos">Gambling/Casinos</option>
+                <option value="Glass/Ceramics/Concrete">Glass/Ceramics/Concrete</option>
+                <option value="Government Administration">Government Administration</option>
+                <option value="Government Relations">Government Relations</option>
+                <option value="Graphic Design/Web Design">Graphic Design/Web Design</option>
+                <option value="Health/Fitness">Health/Fitness</option>
+                <option value="Higher Education/Acadamia">Higher Education/Acadamia</option>
+                <option value="Hospital/Health Care">Hospital/Health Care</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Human Resources/HR">Human Resources/HR</option>
+                <option value="Import/Export">Import/Export</option>
+                <option value="Individual/Family Services">Individual/Family Services</option>
+                <option value="Industrial Automation">Industrial Automation</option>
+                <option value="Information Services">Information Services</option>
+                <option value="Information Technology/IT">Information Technology/IT</option>
+                <option value="Insurance">Insurance</option>
+                <option value="International Affairs">International Affairs</option>
+                <option value="International Trade/Development">International Trade/Development</option>
+                <option value="Internet">Internet</option>
+                <option value="Investment Banking/Venture">Investment Banking/Venture</option>
+                <option value="Investment Management/Hedge Fund/Private Equity">Investment Management/Hedge Fund/Private Equity</option>
+                <option value="Judiciary">Judiciary</option>
+                <option value="Law Enforcement">Law Enforcement</option>
+                <option value="Law Practice/Law Firms">Law Practice/Law Firms</option>
+                <option value="Legal Services">Legal Services</option>
+                <option value="Legislative Office">Legislative Office</option>
+                <option value="Leisure/Travel">Leisure/Travel</option>
+                <option value="Library">Library</option>
+                <option value="Logistics/Procurement">Logistics/Procurement</option>
+                <option value="Luxury Goods/Jewelry">Luxury Goods/Jewelry</option>
+                <option value="Machinery">Machinery</option>
+                <option value="Management Consulting">Management Consulting</option>
+                <option value="Maritime">Maritime</option>
+                <option value="Market Research">Market Research</option>
+                <option value="Marketing/Advertising/Sales">Marketing/Advertising/Sales</option>
+                <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
+                <option value="Media Production">Media Production</option>
+                <option value="Medical Equipment">Medical Equipment</option>
+                <option value="Medical Practice">Medical Practice</option>
+                <option value="Mental Health Care">Mental Health Care</option>
+                <option value="Military Industry">Military Industry</option>
+                <option value="Mining/Metals">Mining/Metals</option>
+                <option value="Motion Pictures/Film">Motion Pictures/Film</option>
+                <option value="Museums/Institutions">Museums/Institutions</option>
+                <option value="Music">Music</option>
+                <option value="Nanotechnology">Nanotechnology</option>
+                <option value="Newspapers/Journalism">Newspapers/Journalism</option>
+                <option value="Non-Profit/Volunteering">Non-Profit/Volunteering</option>
+                <option value="Oil/Energy/Solar/Greentech">Oil/Energy/Solar/Greentech</option>
+                <option value="Online Publishing">Online Publishing</option>
+                <option value="Other Industry">Other Industry</option>
+                <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
+                <option value="Package/Freight Delivery">Package/Freight Delivery</option>
+                <option value="Packaging/Containers">Packaging/Containers</option>
+                <option value="Paper/Forest Products">Paper/Forest Products</option>
+                <option value="Performing Arts">Performing Arts</option>
+                <option value="Pharmaceuticals">Pharmaceuticals</option>
+                <option value="Philanthropy">Philanthropy</option>
+                <option value="Photography">Photography</option>
+                <option value="Plastics">Plastics</option>
+                <option value="Political Organization">Political Organization</option>
+                <option value="Primary/Secondary Education">Primary/Secondary Education</option>
+                <option value="Printing">Printing</option>
+                <option value="Professional Training">Professional Training</option>
+                <option value="Program Development">Program Development</option>
+                <option value="Public Relations/PR">Public Relations/PR</option>
+                <option value="Public Safety">Public Safety</option>
+                <option value="Publishing Industry">Publishing Industry</option>
+                <option value="Railroad Manufacture">Railroad Manufacture</option>
+                <option value="Ranching">Ranching</option>
+                <option value="Real Estate/Mortgage">Real Estate/Mortgage</option>
+                <option value="Recreational Facilities/Services">Recreational Facilities/Services</option>
+                <option value="Religious Institutions">Religious Institutions</option>
+                <option value="Renewables/Environment">Renewables/Environment</option>
+                <option value="Research Industry">Research Industry</option>
+                <option value="Restaurants">Restaurants</option>
+                <option value="Retail Industry">Retail Industry</option>
+                <option value="Security/Investigations">Security/Investigations</option>
+                <option value="Semiconductors">Semiconductors</option>
+                <option value="Shipbuilding">Shipbuilding</option>
+                <option value="Sporting Goods">Sporting Goods</option>
+                <option value="Sports">Sports</option>
+                <option value="Staffing/Recruiting">Staffing/Recruiting</option>
+                <option value="Supermarkets">Supermarkets</option>
+                <option value="Telecommunications">Telecommunications</option>
+                <option value="Textiles">Textiles</option>
+                <option value="Think Tanks">Think Tanks</option>
+                <option value="Tobacco">Tobacco</option>
+                <option value="Translation/Localization">Translation/Localization</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Venture Capital/VC">Venture Capital/VC</option>
+                <option value="Veterinary">Veterinary</option>
+                <option value="Warehousing">Warehousing</option>
+                <option value="Wholesale">Wholesale</option>
+                <option value="Wine/Spirits">Wine/Spirits</option>
+                <option value="Wireless">Wireless</option>
+                <option value="Writing/Editing">Writing/Editing</option>
+            </datalist>
+            <?php $__errorArgs = ['previous_deal_sector.'.$i];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                    <span class="text-danger small">This field is required</span>
-                     <?php unset($message);
+            <span class="text-danger small">This field is required</span>
+            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                </div>
-               
-                <div class="col-md-2  mt-2 p-1">
-                    <label for="previous_deal_type" class="required">Deal Type<span class="text-danger">*</span></label>
-                    <select class="form-control" name="previous_deal_type[]" required>
-                        <option value="" disabled selected>Select Deal Type</option>
-                        <option value="M&A">M&A</option>
-                        <option value="Fundraising">Fundraising</option>
-                        <option value="IPO">IPO</option>
-                        <option value="Others">Others</option>
-                    </select>                    
-                </div>
-                <div class="col-md-1 form-floating mt-2 p-1">
-                    <button type="button" class="btn btn-info mt-4" onclick="addPreviousDealField()">+</button>
-                </div>
-            </div>
         </div>
+        <div class="col-md-2 mt-2 p-1">
+            <label for="previous_deal_type_<?php echo e($i); ?>" class="required">Deal Type<span class="text-danger">*</span></label>
+            <select class="form-control" name="previous_deal_type[]" id="previous_deal_type_<?php echo e($i); ?>" required>
+                <option value="" disabled <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i]) ? '' : 'selected'); ?>>Select Deal Type</option>
+                <option value="M&A" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : ''); ?>>M&amp;A</option>
+                <option value="Fundraising" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : ''); ?>>Fundraising</option>
+                <option value="IPO" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : ''); ?>>IPO</option>
+                <option value="Others" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : ''); ?>>Others</option>
+            </select>
+        </div>
+        <div class="col-md-1 form-floating mt-2 p-1">
+            <?php if($i == 0): ?>
+                <button type="button" class="btn btn-info mt-4" onclick="addPreviousDealField()">+</button>
+            <?php else: ?>
+                <button type="button" class="btn btn-danger mt-4" onclick="removeField(this)">-</button>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php endfor; ?>
+</div>
 <hr>
-       <!-- Referral Source Section -->
 <h3 class="h5">How did you hear about Investor Dekho?</h3>
 <div class="form-floating mb-3">
     <select 
@@ -1147,6 +1169,11 @@ unset($__errorArgs, $__bag); ?>
         emailField.readOnly = true;
     }
 });
+
+function removePublicLinkField(element) {
+    element.closest('.row').remove();
+}
+
 </script>
 <?php $__env->stopSection(); ?>
 
