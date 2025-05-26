@@ -449,59 +449,121 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- scrolling text  related to services -zm,xxxxxxxxxxxxxxxxxxxxxxxxxxxsf dnsjuiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizncfp[00yyyyyyyyyyyyyyyyyyyyyyyyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh-->
 <!-- Professional Scrolling Info Bar -->
+@php
+    // Dynamic messages for the scrolling info bar
+    $scrollingMessages = [
+        [
+            'icon' => 'fa-rocket text-primary',
+            'text' => 'Startup Discovery',
+            'badge' => 'New',
+            'badgeColor' => 'info'
+        ],
+        [
+            'icon' => 'fa-handshake-angle text-success',
+            'text' => 'Investor Connections',
+            'badge' => null,
+            'badgeColor' => null
+        ],
+        [
+            'icon' => 'fa-shield-check text-warning',
+            'text' => 'Verified: Startups, Investors, VCs',
+            'badge' => 'Verified',
+            'badgeColor' => 'success'
+        ],
+        [
+            'icon' => 'fa-headset text-secondary',
+            'text' => '24x7 Support',
+            'badge' => null,
+            'badgeColor' => null
+        ],
+        [
+            'icon' => 'fa-fire text-danger',
+            'text' => 'Hot: IPO Planning & Listing',
+            'badge' => 'Hot',
+            'badgeColor' => 'danger'
+        ],
+        [
+            'icon' => 'fa-lightbulb text-warning',
+            'text' => 'Pitchdeck & Fundraising Guidance',
+            'badge' => null,
+            'badgeColor' => null
+        ],
+        [
+            'icon' => 'fa-gavel text-primary',
+            'text' => 'Legal & Compliance Services',
+            'badge' => null,
+            'badgeColor' => null
+        ],
+    ];
+@endphp
 
 <div class="container-fluid py-2 scrolling-info-bar shadow-sm" style="background: linear-gradient(90deg, #f8fafc 0%, #e9ecef 100%); border-bottom: 1px solid #dee2e6; position: relative; z-index: 1050;">
     <div class="row align-items-center justify-content-between">
         <div class="col-12 col-md-10 px-0">
-            <div class="scrolling-text-wrapper overflow-hidden position-relative" style="height: 1.7rem;">
-                <span id="scrolling-text" class="d-inline-block" style="white-space: nowrap; font-size: 0.98rem; font-weight: 500; color: #22223b; letter-spacing: 0.01em; animation: scroll-left 32s linear infinite;">
-                    <i class="fa-solid fa-circle-info me-2 text-primary"></i>
-                    <span class="fw-bold text-uppercase" style="color:#0dcaf0;">InvestorDekho</span>
+            <div class="scrolling-text-wrapper overflow-hidden position-relative" style="height: 2.1rem;">
+                <span id="scrolling-text" class="d-inline-block" style="white-space: nowrap; font-size: 1.05rem; font-weight: 500; color: #22223b; letter-spacing: 0.01em; animation: scroll-left 32s linear infinite;">
+                    <span class="fw-bold text-uppercase me-2" style="color:#0dcaf0;">
+                        <i class="fa-solid fa-circle-info me-1"></i> InvestorDekho
+                    </span>
                     <span class="mx-2 text-secondary">|</span>
-                    Startup Discovery <span class="mx-2 text-secondary">|</span>
-                    Investor Connections <span class="mx-2 text-secondary">|</span>
-                    Verified: Startups, Investors, VCs <span class="mx-2 text-secondary">|</span>
-                    24x7 Support
+                    @foreach($scrollingMessages as $msg)
+                        <span class="me-3">
+                            <i class="fa-solid {{ $msg['icon'] }} me-1"></i>
+                            {{ $msg['text'] }}
+                            @if($msg['badge'])
+                                <span class="badge bg-{{ $msg['badgeColor'] }} ms-1" style="font-size:0.75em;vertical-align:middle;">{{ $msg['badge'] }}</span>
+                            @endif
+                        </span>
+                        <span class="mx-2 text-secondary">|</span>
+                    @endforeach
+                    <span class="me-2">
+                        <i class="fa-solid fa-bolt text-warning me-1"></i>
+                        <span class="d-none d-md-inline">Get a free consultation today!</span>
+                    </span>
                 </span>
             </div>
         </div>
         <div class="col-auto d-none d-md-flex align-items-center">
-            <a href="{{ route('contact') }}" class="btn btn-gradient px-3 py-1 rounded-pill shadow-sm ms-2" style="font-weight: 500; font-size: 0.98rem;">
+            <a href="{{ route('contact') }}" class="btn btn-gradient px-3 py-1 rounded-pill shadow-sm ms-2" style="font-weight: 500; font-size: 1.01rem;">
                 <i class="fa-solid fa-headset me-2"></i>Contact Us
             </a>
+            <button id="close-scrolling-bar" class="btn btn-link text-muted ms-2 p-0" style="font-size:1.3rem;" aria-label="Dismiss info bar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
     </div>
 </div>
 <style>
     @keyframes scroll-left {
         0% { transform: translateX(100%);}
-        100% { transform: translateX(-100%);}
+        100% { transform: translateX(-110%);}
     }
     #scrolling-text {
         transition: background 0.2s, color 0.2s;
+        cursor: pointer;
     }
     #scrolling-text:hover {
         animation-play-state: paused;
-        cursor: pointer;
         color: #0dcaf0;
         background: rgba(13,202,240,0.08);
         border-radius: 8px;
         padding: 0 8px;
     }
     .scrolling-text-wrapper {
-        height: 1.7rem;
+        height: 2.1rem;
         display: flex;
         align-items: center;
         background: transparent;
     }
     .scrolling-info-bar {
         font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-        font-size: 0.98rem;
+        font-size: 1.05rem;
         letter-spacing: 0.01em;
-        border-radius: 0 0 10px 10px;
+        border-radius: 0 0 12px 12px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         z-index: 1050 !important;
         position: relative;
+        transition: top 0.3s;
     }
     .btn-gradient {
         background: linear-gradient(90deg, #0dcaf0 0%, #0d6efd 100%);
@@ -517,13 +579,24 @@ document.addEventListener('DOMContentLoaded', function() {
         box-shadow: 0 4px 16px rgba(13,202,240,0.18);
         text-decoration: none;
     }
+    #close-scrolling-bar {
+        background: none;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        color: #adb5bd;
+        transition: color 0.2s;
+    }
+    #close-scrolling-bar:hover {
+        color: #0dcaf0;
+    }
     @media (max-width: 991.98px) {
         .scrolling-info-bar {
-            font-size: 0.93rem;
+            font-size: 0.97rem;
             border-radius: 0 0 8px 8px;
         }
         .scrolling-text-wrapper {
-            height: 1.3rem;
+            height: 1.5rem;
         }
     }
     @media (max-width: 767.98px) {
@@ -537,7 +610,6 @@ document.addEventListener('DOMContentLoaded', function() {
             height: 1.1rem;
         }
     }
-    /* Fix social media bar z-index and position so it stays above scrolling bar */
     .social-media {
         z-index: 1100 !important;
         position: fixed !important;
@@ -546,6 +618,28 @@ document.addEventListener('DOMContentLoaded', function() {
         transform: translateY(-50%);
     }
 </style>
+<script>
+    // Dismiss/close button for info bar
+    document.addEventListener('DOMContentLoaded', function() {
+        const closeBtn = document.getElementById('close-scrolling-bar');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                const bar = document.querySelector('.scrolling-info-bar');
+                if (bar) bar.style.display = 'none';
+            });
+        }
+        // Pause on hover for accessibility
+        const scrollingText = document.getElementById('scrolling-text');
+        if (scrollingText) {
+            scrollingText.addEventListener('mouseenter', () => {
+                scrollingText.style.animationPlayState = 'paused';
+            });
+            scrollingText.addEventListener('mouseleave', () => {
+                scrollingText.style.animationPlayState = 'running';
+            });
+        }
+    });
+</script>
 
 <!-- Suggestions:
 1. Make the scrolling text dynamic by using a PHP array and Blade to loop through messages.
@@ -571,34 +665,150 @@ document.addEventListener('DOMContentLoaded', function() {
    <div class="container my-5">
     
     <div class="row">
-        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
-            <h5 class="service-title  mb-3"><i class="fa-solid fa-hands-holding-circle me-2"></i> Fund Raising</h5>
-            <ul class="service-list list-unstyled">
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#equityFundingModal">Equity Funding</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#debtFundingModal">Debt Funding</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#maModal">Mergers & Acquisitions</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#piModal">Pitchdeck Making</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#piiModal">Pitching to Investors</a></li>
+        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded-4 shadow-sm d-flex flex-column align-items-center text-center" style="border-radius: 40px; position: relative;">
+            <div class="w-100 mb-3" style="
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -23px;
+                height: 160px;
+                overflow: hidden;
+                border-radius: 20px 20px 0px 0px;
+                margin-left: 0;
+                margin-right: 0;
+                z-index: 2;
+            ">
+                <img src="{{ asset('storage/screenshots/fr2.jpg') }}" alt="Fund Raising" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+            </div>
+            <div style="height: 140px;"></div> 
+            
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+                <span class="me-2"><i class="fa-solid fa-hands-holding-circle text-primary"></i></span> Fund Raising
+            </h5>
+            <ul class="service-list list-unstyled text-start w-100">
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#equityFundingModal" class="text-decoration-none text-dark">
+                        Equity Funding
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#debtFundingModal" class="text-decoration-none text-dark">
+                        Debt Funding
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#maModal" class="text-decoration-none text-dark">
+                        M&amp;A
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#piModal" class="text-decoration-none text-dark">
+                        Pitchdeck
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#piiModal" class="text-decoration-none text-dark">
+                        Pitching
+                    </a>
+                </li>
             </ul>
         </div>
-        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
-            <h5 class="service-title mb-3"><i class="fa-solid fa-chart-line me-2"></i> Public Offering</h5>
-            <ul class="service-list list-unstyled">
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#ipoPlanningModal">IPO Planning</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#ipoListingModal">IPO Listing</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#bonusSharesModal">Issuance of Bonus Shares</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#rightsIssueModal">Issuance of Rights Issue</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#esopPlanningModal">Employee Stock Options (ESOP) Planning</a></li>
+
+
+        
+        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded-4 shadow-sm d-flex flex-column align-items-center text-center" style="border-radius: 40px; position: relative;">
+            <div class="w-100 mb-3" style="
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -23px;
+                height: 160px;
+                overflow: hidden;
+                border-radius: 20px 20px 0px 0px;
+                margin-left: 0;
+                margin-right: 0;
+                z-index: 2;
+            ">
+                <img src="{{ asset('storage/screenshots/ipo5.jpg') }}" alt="Public Offering" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+            </div>
+            <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+                <span class="me-2"><i class="fa-solid fa-chart-line text-success"></i></span> Public Offering   
+            </h5>
+            <ul class="service-list list-unstyled text-start w-100">
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#ipoPlanningModal" class="text-decoration-none text-dark">
+                        IPO Planning
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#ipoListingModal" class="text-decoration-none text-dark">
+                        IPO Listing
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#bonusSharesModal" class="text-decoration-none text-dark">
+                        Issuance of Bonus Shares
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#rightsIssueModal" class="text-decoration-none text-dark">
+                        Issuance of Rights Issue
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#esopPlanningModal" class="text-decoration-none text-dark">
+                        Employee Stock Options (ESOP) Planning
+                    </a>
+                </li>
             </ul>
         </div>
-        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
-            <h5 class="service-title mb-3"><i class="fa-solid fa-file-alt me-2"></i> Intellectual Property and Legal Services</h5>
-            <ul class="service-list list-unstyled">
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#trademarkModal">Trademark</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#designRegistrationModal">Design Registration</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#dscModal">DSC</a></li>
-                <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#onlineListingModal">Online Listing</a></li>
+        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded-4 shadow-sm d-flex flex-column align-items-center text-center" style="border-radius: 40px; position: relative;">
+            <div class="w-100 mb-3" style="
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -23px;
+                height: 160px;
+                overflow: hidden;
+                border-radius: 20px 20px 0px 0px;
+                margin-left: 0;
+                margin-right: 0;
+                z-index: 2;
+            ">
+                <img src="{{ asset('storage/screenshots/rs4.jpg') }}" alt="Intellectual Property and Legal Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+            </div>
+            <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
+            
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+                <span class="me-2"><i class="fa-solid fa-gavel text-warning"></i></span> Intellectual Property and Legal Services
+            </h5>
+            <ul class="service-list list-unstyled text-start w-100">
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#patentModal" class="text-decoration-none text-dark">
+                        Patent
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#trademarkModal" class="text-decoration-none text-dark">
+                        Trademark
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#designRegistrationModal" class="text-decoration-none text-dark">
+                        Design Registration
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#dscModal" class="text-decoration-none text-dark">
+                        DSC
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#onlineListingModal" class="text-decoration-none text-dark">
+                        Online Listing
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -609,7 +819,184 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     <div class="row mt-4">
-        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
+     <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded-4 shadow-sm d-flex flex-column align-items-center text-center" style="border-radius: 40px; position: relative;">
+            <div class="w-100 mb-3" style="
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -23px;
+                height: 160px;
+                overflow: hidden;
+                border-radius: 20px 20px 0px 0px;
+                margin-left: 0;
+                margin-right: 0;
+                z-index: 2;
+            ">
+                <img src="{{ asset('storage/screenshots/compliance2.jpg') }}" alt="Compliance and Regulatory Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+            </div>
+            <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
+            
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+                <span class="me-2"><i class="fa-solid fa-file-alt text-secondary"></i></span> Compliance and Regulatory Services
+            </h5>
+            <ul class="service-list list-unstyled text-start w-100">
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#incomeTaxModal" class="text-decoration-none text-dark">
+                        Income Tax Return
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#gstCustomsModal" class="text-decoration-none text-dark">
+                        GST, TDS, PF, ESI, PT, Customs
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#mcaRocWorksModal" class="text-decoration-none text-dark">
+                        MCA & ROC Works
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#appointmentResignationModal" class="text-decoration-none text-dark">
+                        Appointment & Resignation of Directors
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#annualReturnModal" class="text-decoration-none text-dark">
+                        Annual Return
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#companyRegistrationModal" class="text-decoration-none text-dark">
+                        Company Registration
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#udyogAadhaarGstModal" class="text-decoration-none text-dark">
+                        Udyog Aadhaar & GST Registration
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#importerExporterCodeModal" class="text-decoration-none text-dark">
+                        Importer-Exporter Code
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded-4 shadow-sm d-flex flex-column align-items-center text-center" style="border-radius: 40px; position: relative;">
+            <div class="w-100 mb-3" style="
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -23px;
+                height: 160px;
+                overflow: hidden;
+                border-radius: 20px 20px 0px 0px;
+                margin-left: 0;
+                margin-right: 0;
+                z-index: 2;
+            ">
+                <img src="{{ asset('storage/screenshots/as2.jpg') }}" alt="Financial and Accounting Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+            </div>
+            <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
+            
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+                <span class="me-2"><i class="fa-solid fa-file-invoice-dollar text-success"></i></span> Financial and Accounting Services
+            </h5>
+            <ul class="service-list list-unstyled text-start w-100">
+                 <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#loanProposalModal" class="text-decoration-none text-dark">
+                        Loan Proposal
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#cmaDataModal" class="text-decoration-none text-dark">
+                        CMA Data
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#accountingModal" class="text-decoration-none text-dark">
+                        Accounting
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#subsidyModal" class="text-decoration-none text-dark">
+                        Subsidy
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#taxPlanningModal" class="text-decoration-none text-dark">
+                        Tax Planning
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#capitalReStructuringModal" class="text-decoration-none text-dark">
+                        Capital Re-Structuring
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#projectReportModal" class="text-decoration-none text-dark">
+                        Project Report
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#tevStudyModal" class="text-decoration-none text-dark">
+                        TEV Study
+                    </a>        
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded-4 shadow-sm d-flex flex-column align-items-center text-center" style="border-radius: 40px; position: relative;">
+            <div class="w-100 mb-3" style="
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -23px;
+                height: 160px;
+                overflow: hidden;
+                border-radius: 20px 20px 0px 0px;
+                margin-left: 0;
+                margin-right: 0;
+                z-index: 2;
+            ">
+                <img src="{{ asset('storage/screenshots/as5.jpg') }}" alt="Other Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+            </div>
+            <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
+            
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+                <span class="me-2"><i class="fa-solid fa-cogs text-secondary"></i></span> Other Services
+            </h5>
+            <ul class="service-list list-unstyled text-start w-100">
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#structuredFinanceModal" class="text-decoration-none text-dark">
+                        Structured Finance
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#businessValuationModal" class="text-decoration-none text-dark">
+                        Business Valuation
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#dueDiligenceModal" class="text-decoration-none text-dark">
+                        Due Diligence
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#financialModellingModal" class="text-decoration-none text-dark">
+                        Financial Modelling
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</div>
+        <!-- </div>
+        </div>
+        </div>
+        </div> -->
+
+        <!-- <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
             <h5 class="service-title  mb-3"><i class="fa-solid fa-file-alt me-2"></i> Compliance and Regulatory Services</h5>
             <ul class="service-list list-unstyled">
                   <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#incomeTaxModal">Income Tax Return</a></li>
@@ -621,8 +1008,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#udyogAadhaarGstModal">Udyog Aadhaar & GST Registration</a></li>
                 <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#importerExporterCodeModal">Importer-Exporter Code</a></li>
             </ul>
-        </div>
-        <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
+        </div> -->
+
+        <!-- <div class="col-sm-4 service-box p-4 mb-4 bg-light rounded shadow-sm">
             <h5 class="service-title mb-3"><i class="fa-solid fa-file-alt me-2"></i> Financial and Accounting Services</h5>
             <ul class="service-list list-unstyled">
                  <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#loanProposalModal">Loan Proposal</a></li>
@@ -643,7 +1031,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#shaAgreementModal">Preparation of Share Holders' Agreement (SHA)</a></li>
                 <li class="mb-2"><i class="fa-solid fa-arrow-right text-secondary me-2"></i> <a href="#" data-bs-toggle="modal" data-bs-target="#dueDiligenceModal">Due Diligence</a></li>
             </ul>
-        </div>
+        </div> -->
     </div>
 </div>
 
