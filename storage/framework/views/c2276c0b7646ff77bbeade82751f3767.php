@@ -7,7 +7,20 @@
         $isSubscribed = $subscriber && $subscriber->is_subscribed;
         $visibleInvestorCount = $isSubscribed ? $investors->count() : min($investors->count(), 3);
     ?>
+<style>
+    .locked-content {
+        filter: blur(5px);
+        opacity: 0.6;
 
+        /* preventing user select */
+
+        user-select: none;
+        pointer-events: none;
+        cursor: not-allowed;
+        
+    }
+
+</style>
 <div class="container mt-5">
     <!-- <h2 class="text-center mb-4 fw-bold text-dark">Investors List</h2> -->
 
@@ -36,11 +49,6 @@
                             <p class="text-muted details-text <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
                                 <i class="bi bi-geo-alt-fill text-primary me-1"></i> <?php echo e($investor['address']); ?>  
                                 <br>
-                                <!-- <i class="bi bi-cash-coin text-success me-1"></i> -->
-                                <!-- <strong>Sectors:</strong>
-                                <?php echo e(!empty($investor['sectors_preferred']) 
-                                    ? str_replace(',', ' |', $investor['sectors_preferred']) 
-                                    : 'N/A'); ?> -->
 
                                     <?php
                                         $sectors = str_replace([', and', 'and'],',', $investor['sectors_preferred']);    
@@ -59,29 +67,23 @@
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
                                     <?php endif; ?>
-                                    <!-- <?php if( count($sectors) > 0): ?>
-                                       <ul class="list-unstyled">
-                                            <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <li class="text-muted">
-                                                    <i class="bi bi-check-circle-fill text-success me-1"></i>
-                                                    <?php echo e($sector); ?>
-
-                                                </li>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </ul>
-                                    <?php else: ?>
-                                        <p class="text-muted">No sectors available.</p>
-                                    <?php endif; ?> -->
+                                   
                             </p>
 
 
                         </div>
 
-                        <!-- View Profile Button (Navigates to Details Page) -->
                         <div class="col-md-4 text-end <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
-                            <a href="<?php echo e(route('investeedashboard.investorlistdetail',['id' => $investor['id']])); ?>" 
-                               class="btn btn-primary btn-sm">🔍 View Details</a>
+                            <?php if($isSubscribed): ?>
+                                <a href="<?php echo e(route('investeedashboard.investorlistdetail',['id' => $investor['id']])); ?>" 
+                                class="btn btn-primary btn-sm">🔍 View Details</a>
+                            <?php else: ?>
+                                <span class="btn btn-primary btn-sm disabled" style="cursor: not-allowed; pointer-events: none;">
+                                    🔍 View Details
+                                </span>
+                            <?php endif; ?>
                         </div>
+
 
                     </div>
                 </div>

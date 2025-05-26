@@ -32,6 +32,7 @@ use App\Http\Controllers\ExcelUploadController;
 use App\Http\Controllers\NewBankController;
 use App\Http\Controllers\SubscriptionRequestController;
 use App\Http\Controllers\Auth\New\ForgetPasswordController;
+use App\Http\Controllers\SupportQueryInSubscription;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -140,10 +141,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/createsubscriptionrequest',[SubscriptionRequestController::class,'createsubscriptionrequest'])->name('createsubscriptionrequest');
     Route::get('/subscriptionrequest',[SubscriptionRequestController::class,'allrequests'])->name('subscriptionrequest');
-    Route ::put('/updatestatus/{id}',[SubscriptionRequestController::class,'updatestatus'])->name('subscriptionrequest.updatestatus');
+    Route::put('/updatestatus/{id}',[SubscriptionRequestController::class,'updatestatus'])->name('subscriptionrequest.updatestatus');
     Route::get('/downloadcompanyexcel',[ExcelUploadController::class,'downloadInvesteeDataExcel'])->name('investee.exceldownload');
     Route::get('/getprofileverificationcode',[ProfileController::class,'getemailverificationcode'])->name('getprofileverificationcode');
     Route::post('/verifyemailforupdateprofile',[ProfileController::class,'verifyemailupdateprofile'])->name('verifyemailforupdateprofle');
+
 });
 
 // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
@@ -177,7 +179,7 @@ Route::post('/resetpassword',[ForgetPasswordController::class,'resetPassword'])-
 
 
 
-
+    Route::post('/supportsubscription',[SupportQueryInSubscription::class,'submitsupportrequest'])->name('submit_support');
 
 
 
@@ -190,3 +192,4 @@ Route::post('/resetpassword',[ForgetPasswordController::class,'resetPassword'])-
 //         'path' => $path
 //     ];
 // });
+
