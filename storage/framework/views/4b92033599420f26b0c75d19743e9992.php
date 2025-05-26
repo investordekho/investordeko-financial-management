@@ -694,7 +694,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div style="height: 140px;"></div> 
             
-            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center" style="width: 100%;">
                 <span class="me-2"><i class="fa-solid fa-hands-holding-circle text-primary"></i></span> Fund Raising
             </h5>
             <ul class="service-list list-unstyled text-start w-100">
@@ -744,7 +744,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img src="<?php echo e(asset('storage/screenshots/ipo5.jpg')); ?>" alt="Public Offering" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
-            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center" style="width: 100%;">
                 <span class="me-2"><i class="fa-solid fa-chart-line text-success"></i></span> Public Offering   
             </h5>
             <ul class="service-list list-unstyled text-start w-100">
@@ -911,7 +911,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
             
-            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center" style="width: 100%;">
                 <span class="me-2"><i class="fa-solid fa-file-invoice-dollar text-success"></i></span> Financial and Accounting Services
             </h5>
             <ul class="service-list list-unstyled text-start w-100">
@@ -974,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
             
-            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center">
+            <h5 class="service-title mb-3 d-flex align-items-center justify-content-center" style="width: 100%;">
                 <span class="me-2"><i class="fa-solid fa-cogs text-secondary"></i></span> Other Services
             </h5>
             <ul class="service-list list-unstyled text-start w-100">
