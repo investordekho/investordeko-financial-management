@@ -527,9 +527,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <a href="{{ route('contact') }}" class="btn btn-gradient px-3 py-1 rounded-pill shadow-sm ms-2" style="font-weight: 500; font-size: 1.01rem;">
                 <i class="fa-solid fa-headset me-2"></i>Contact Us
             </a>
-            <button id="close-scrolling-bar" class="btn btn-link text-muted ms-2 p-0" style="font-size:1.3rem;" aria-label="Dismiss info bar">
+            <!-- <button id="close-scrolling-bar" class="btn btn-link text-muted ms-2 p-0" style="font-size:1.3rem;" aria-label="Dismiss info bar">
                 <i class="fa-solid fa-xmark"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
