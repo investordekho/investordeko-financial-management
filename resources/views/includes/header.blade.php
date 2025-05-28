@@ -168,6 +168,22 @@
 
 
     </style>
+    <style>
+      /* Ensure modal and backdrop appear above all content */
+      .modal-backdrop.show {
+          z-index: 2050 !important;
+      }
+      .modal {
+          z-index: 2060 !important;
+      }
+      body.modal-open {
+          overflow: hidden !important;
+      }
+      /* Optionally, ensure dropdown has lower z-index */
+      .dropdown-menu {
+          z-index: 2000;
+      }
+    </style>
 </head>
 
 
