@@ -253,19 +253,88 @@ public function search(Request $request)
         $investmentDetails = $investor->investmentDetails;
 
         if ($investmentDetails) {
-            $investmentSizes = $request->input('investment_size', []);
-            if (!empty($investmentSizes)) {
-                $match = $match && collect($investmentSizes)->contains(function ($size) use ($investmentDetails) {
-                    return str_contains($investmentDetails->investment_size, $size);
-                });
-            }
+            // $investmentSizes = $request->input('investment_size', []);
+            // if (!empty($investmentSizes)) {
+            //     $match = $match && collect($investmentSizes)->contains(function ($size) use ($investmentDetails) {
+            //         // Normalize the investment size to handle different formats
+            //         $size = strtolower(trim($size));
+            //         // Check if the investment size contains the specified size
 
-            // $investmentTenures = $request->input('investment_tenure', []);
-            // if (!empty($investmentTenures)) {
-            //     $match = $match && collect($investmentTenures)->contains(function ($tenure) use ($investmentDetails) {
-            //         return str_contains($investmentDetails->investment_tenure, $tenure);
-            //     });
+            //         return str_contains($investmentDetails->investment_size, $size);
+            //     }); 
             // }
+
+                $investmentSizes = $request->input('investment_size', []);
+
+                if (!empty($investmentSizes)) {
+                    $match = $match && collect($investmentSizes)->contains(function ($sizeOption) use ($investmentDetails) {
+                        $amountStr = strtolower(trim($investmentDetails->investment_size));
+                        $amountStr = str_replace(['₹', ',', ' '], '', $amountStr);
+
+                        $minAmount = null;
+                        $maxAmount = null;
+
+                        // Check if it's a range
+                        if (str_contains($amountStr, '–') || str_contains($amountStr, '-')) {
+                            $parts = preg_split('/–|-/', $amountStr);
+                            if (count($parts) == 2) {
+                                foreach ($parts as $index => $part) {
+                                    $part = trim($part);
+                                    if (str_ends_with($part, 'cr') || str_ends_with($part, 'crore')) {
+                                        $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                        $partValue = $num * 10_000_000;
+                                    } elseif (str_ends_with($part, 'm') || str_ends_with($part, 'million')) {
+                                        $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                        $partValue = $num * 1_000_000;
+                                    } elseif (str_ends_with($part, 'k') || str_ends_with($part, 'thousand')) {
+                                        $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                        $partValue = $num * 1_000;
+                                    } else {
+                                        $partValue = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                    }
+
+                                    if ($index == 0) $minAmount = $partValue;
+                                    if ($index == 1) $maxAmount = $partValue;
+                                }
+                            }
+                        } else {
+                            // Single amount
+                            $part = $amountStr;
+                            if (str_ends_with($part, 'cr') || str_ends_with($part, 'crore')) {
+                                $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                $minAmount = $maxAmount = $num * 10_000_000;
+                            } elseif (str_ends_with($part, 'm') || str_ends_with($part, 'million')) {
+                                $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                $minAmount = $maxAmount = $num * 1_000_000;
+                            } elseif (str_ends_with($part, 'k') || str_ends_with($part, 'thousand')) {
+                                $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                $minAmount = $maxAmount = $num * 1_000;
+                            } else {
+                                $minAmount = $maxAmount = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            }
+                        }
+
+                        if ($minAmount === null || $maxAmount === null) {
+                            return false;
+                        }
+
+                        switch (strtolower($sizeOption)) {
+                            case 'below 10 lakh':
+                                return $minAmount < 1_000_000 || $maxAmount < 1_000_000;
+                            case '10-50 lakh':
+                                return ($minAmount <= 5_000_000 && $maxAmount >= 1_000_000);
+                            case '50 lakh - 1 crore':
+                                return ($minAmount <= 10_000_000 && $maxAmount >= 5_000_000);
+                            case 'above 1 crore':
+                                return $maxAmount > 10_000_000;
+                            default:
+                                return false;
+                        }
+                    });
+                }
+
+
+
 
 
 
