@@ -20,7 +20,7 @@ class InvestorController extends Controller
         $request->validate([
             'investor_name' => 'required|string|max:255',
             'sectors_preferred' => 'required|array', // Make sure this is an array
-            'Address' => 'required|string',
+            'address' => 'required|string', // Should be 'address', not 'Address'
             'concerned_person_name' => 'required|string',
             'concerned_person_designation' => 'required|string',
             'concerned_person_phone' => 'required|string|max:10',
@@ -36,7 +36,7 @@ class InvestorController extends Controller
             'sector.*' => 'required|string',
             'referral_source' => 'required|string',
             'guidance_needed' => 'required|array',
-            'investor_profile' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'investor_profile' => 'nullable|file|max:2048',
         ]);
 
         // Handle file upload for investor profile
