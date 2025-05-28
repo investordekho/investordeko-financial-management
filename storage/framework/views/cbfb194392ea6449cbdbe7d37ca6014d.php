@@ -351,10 +351,20 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <!-- Display Profile Image if exists, otherwise show default image -->
-                            <?php if(Auth::user()->profile_image): ?>
+                            <!-- <?php if(Auth::user()->profile_image): ?>
                                 <img src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             <?php else: ?>
                                 <img src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
+                            <?php endif; ?> -->
+                              <?php
+                              $profileImage = Auth::user()->profile_image;
+                              $imagePath = 'storage/profile_image/' . $profileImage;
+                            ?>
+                            
+                            <?php if($profileImage && file_exists(public_path($imagePath))): ?>
+                              <img src="<?php echo e(asset($imagePath)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
+                            <?php else: ?>
+                              <img src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
                             <?php endif; ?>
                             <span class="ms-2"><?php echo e(Auth::user()->name); ?></span>
                         </a>
