@@ -49,7 +49,7 @@
 </style>
 
 <div class="container d-flex justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-8 mt-5">
         <h2 class="text-center mb-4">Contact Us for Our Services</h2>
         <form action="<?php echo e(route('service.contact.submit')); ?>" method="POST">
             <?php echo csrf_field(); ?>
@@ -453,7 +453,7 @@
             </div>
 
             <!-- Submit Button -->
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mb-5">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
