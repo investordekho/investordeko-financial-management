@@ -14,7 +14,7 @@ class BankController extends Controller
             'company_name' => 'required|string|max:255',
             'incorporated_in' => 'required|integer',
             'ib_team_size' => 'required|string',
-            'company_profile' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'company_profile' => 'nullable|file|max:2048',
             'email' => 'required|email',
             'phone_number' => 'required|string|max:10',
             'concerned_person_designation' => 'required|string',
