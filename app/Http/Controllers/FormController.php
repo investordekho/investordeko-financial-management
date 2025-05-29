@@ -85,8 +85,8 @@ public function submitInvesteeForm(Request $request)
         'amount_raised.*' => 'required|numeric',
         'valuation.*' => 'required|numeric',
         'fiscal_year.*' => 'required|string',
-        'financials.*' => 'nullable|file|mimes:pdf,doc,docx',
-        'pitch_deck' => 'required|file|mimes:pdf,doc,docx',
+        'financials.*' => 'nullable|file',
+        'pitch_deck' => 'nullable|file',
         'referral_source' => 'required|string',
         'guidance_needed.*' => 'nullable|string',
         'other_links.*' => 'nullable|url',
@@ -241,7 +241,7 @@ public function submitInvesteeForm(Request $request)
             'sectors_preferred' => 'required|array|min:1',
             'sectors_preferred.*' => 'string',
             'address' => 'required|string',
-            'investor_profile' => 'nullable|file|mimes:jpg,png,pdf', // Optional file upload
+            'investor_profile' => 'nullable|file', // Optional file upload
             'concerned_person_name' => 'required|string',
             'concerned_person_designation' => 'required|string',
             'concerned_person_phone' => 'required|string|max:10',

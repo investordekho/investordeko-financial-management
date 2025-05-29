@@ -40,13 +40,13 @@ class FormSubmissionController extends Controller
         'valuation.*' => 'required|numeric',
         'public_links.*' => 'nullable|url',
         'link_descriptions.*' => 'nullable|string',
-        'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx|max:2048',
+        'pitch_deck' => 'required|file',
         'referral_source' => 'required|string',
         'website' => 'required|url',
         'linkedin' => 'required|url',
         'fiscal_year.*' => 'required|integer|digits:4',
-        'financials.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
-        'other_attachment'=>'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2028',
+        'financials.*' => 'required|file',
+        'other_attachment'=>'nullable|file',
     ]);
 
     // Store company details
