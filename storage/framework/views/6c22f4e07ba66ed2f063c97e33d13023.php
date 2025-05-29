@@ -102,7 +102,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group mb-3 d-flex justify-content-between">
                         <!-- Edit Button -->
                         <!-- <button type="button" class="btn btn-secondary me-2 flex-grow-1" onclick="fetchProfileVerificationCode()">Update</button> -->
-                        <a href="<?php echo e(route('getprofileverificationcode')); ?>" class="btn btn-secondary me-2 flex-grow-1">Update Profile</a>
+                        <a href="<?php echo e(route('getprofileverificationcode')); ?>" class="btn btn-secondary me-2 flex-grow-1">Edit Profile</a>
 
 
                         <!-- Submit Button -->

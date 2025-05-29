@@ -168,6 +168,22 @@
 
 
     </style>
+    <style>
+      /* Ensure modal and backdrop appear above all content */
+      .modal-backdrop.show {
+          z-index: 2050 !important;
+      }
+      .modal {
+          z-index: 2060 !important;
+      }
+      body.modal-open {
+          overflow: hidden !important;
+      }
+      /* Optionally, ensure dropdown has lower z-index */
+      .dropdown-menu {
+          z-index: 2000;
+      }
+    </style>
 </head>
 
 
@@ -351,10 +367,20 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <!-- Display Profile Image if exists, otherwise show default image -->
-                            @if (Auth::user()->profile_image)
+                            <!-- @if (Auth::user()->profile_image)
                                 <img src="{{ asset('storage/profile_image/' . Auth::user()->profile_image) }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             @else
                                 <img src="{{ asset('storage/profile_image/default_profile_image.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
+                            @endif -->
+                              @php
+                              $profileImage = Auth::user()->profile_image;
+                              $imagePath = 'storage/profile_image/' . $profileImage;
+                            @endphp
+                            
+                            @if ($profileImage && file_exists(public_path($imagePath)))
+                              <img src="{{ asset($imagePath) }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
+                            @else
+                              <img src="{{ asset('storage/profile_image/default_profile_image.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
                             @endif
                             <span class="ms-2">{{ Auth::user()->name }}</span>
                         </a>

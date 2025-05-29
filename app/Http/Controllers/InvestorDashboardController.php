@@ -246,7 +246,7 @@ class InvestorDashboardController extends Controller
         $subscription_request = SubscriptionRequest::where('user_id', $userId)->first();
         if ($subscriber && $subscriber->is_subscribed && $subscription_request && $subscription_request->status == 'approved') {
             $limit = $subscription_request->no_of_data;
-        }
+        
         if($category_id== '3' || $category_id=='4'){
 
             $halfcount = $limit%2;
@@ -256,6 +256,10 @@ class InvestorDashboardController extends Controller
             else{
                 $limit = ($limit/2)-0.5;
             }
+        }
+        }
+        else {
+            $limit = 3; // default limit for non-subscribers
         }
         // 1. Get the first N records only
         $limitedCompanies = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])

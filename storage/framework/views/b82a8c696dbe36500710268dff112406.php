@@ -188,7 +188,7 @@
                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="sectorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             Startup Sector
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="sectorDropdown">
+                                        <ul class="dropdown-menu" aria-labelledby="sectorDropdown" style="width: 400px; max-height: 300px; overflow-y: auto;">
                                             <div class="px-3 py-2">
                                                 <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
                                                 <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
@@ -246,7 +246,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="investmentSizeDropdown">
                                                     <div class="px-3 py-2">
-                                                        <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size">
+                                                        <!-- <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size"> -->
                                                         <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                             <li class="dropdown-item">
                                                                 <div class="form-check">
@@ -287,7 +287,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="investmentTenureDropdown">
                                                     <div class="px-3 py-2">
-                                                        <input type="text" class="form-control mb-2" id="investmentTenureSearch" placeholder="Search tenure">
+                                                        <!-- <input type="text" class="form-control mb-2" id="investmentTenureSearch" placeholder="Search tenure"> -->
                                                         <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                             <li class="dropdown-item">
                                                                 <div class="form-check">
@@ -328,24 +328,12 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="investorTypeDropdown">
                                                     <div class="px-3 py-2">
-                                                        <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type">
+                                                        <!-- <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type"> -->
                                                         <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
-                                                            <li class="dropdown-item">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" name="investor_type[]" value="PE" id="type_private_equity">
-                                                                    <label class="form-check-label" for="type_private_equity">Private Equity</label>
-                                                                </div>
-                                                            </li>
                                                             <li class="dropdown-item">
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel" id="type_angel_investor">
                                                                     <label class="form-check-label" for="type_angel_investor">Angel Investor</label>
-                                                                </div>
-                                                            </li>
-                                                            <li class="dropdown-item">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" name="investor_type[]" value="VC" id="type_venture_capitalist">
-                                                                    <label class="form-check-label" for="type_venture_capitalist">Venture Capitalist</label>
                                                                 </div>
                                                             </li>
                                                             <li class="dropdown-item">
@@ -356,8 +344,20 @@
                                                             </li>
                                                             <li class="dropdown-item">
                                                                 <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="investor_type[]" value="PE" id="type_private_equity">
+                                                                    <label class="form-check-label" for="type_private_equity">Private Equity</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" name="investor_type[]" value="Seed" id="type_Seed_investor">
                                                                     <label class="form-check-label" for="type_Seed_investor">Seed Investor</label>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="investor_type[]" value="VC" id="type_venture_capitalist">
+                                                                    <label class="form-check-label" for="type_venture_capitalist">Venture Capitalist</label>
                                                                 </div>
                                                             </li>
                                                         </div>
@@ -479,34 +479,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Nature of Business Multi-select Dropdown -->
-                                <!-- <div class="col-md-3 mt-4">
-                                    <div class="filter-box">
-                                    
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="natureOfBusinessDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Select Sector
-                                            </button>
-                                            <ul id="sectorList2" class="dropdown-menu scrollable-menu">
-                                                <div class="px-3 py-2">
-                                                    <input type="text" class="form-control mb-2" id="sectorSearch2" placeholder="Search sector" onkeyup="filterSectors()">
-                                                    <ul>
-                                                        <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <li class="dropdown-item">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->sectors_name); ?>">
-                                                                    <label class="form-check-label" for="sector_<?php echo e($sector->sectors_name); ?>"><?php echo e($sector->sectors_name); ?></label>
-                                                                </div>
-                                                            </li>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                                    </ul>
-                                                </div>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div> -->
-
+                               
 
 
                                 <div class="col-md-3 mt-4">
@@ -515,10 +488,11 @@
                                             <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="natureOfBusinessDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Select Sector
                                             </button>
+                                            
                                             <div class="dropdown-menu p-3" aria-labelledby="natureOfBusinessDropdown" style="width: 100%; max-height: 300px; overflow-y: auto;">
                                                 <input type="text" class="form-control mb-2" id="sectorSearch2" placeholder="Search sector" onkeyup="filterSectors()">
                                                 <ul id="sectorList2" class="list-unstyled m-0">
-                                                    <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php $__currentLoopData = $sectors->sortBy(function($sector) { return strtoupper($sector->sectors_name); }); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <li class="mb-1">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->id); ?>">
@@ -850,6 +824,7 @@
 
 
 <script>
+    // const sectors = [ 'hghasdv']
     function openTab(tabId) {
         // Toggle tab button active class
         document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
@@ -859,6 +834,8 @@
         document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
     }
+
+
 </script>
 
 
@@ -868,139 +845,281 @@
 
 
 <script>
+  
     // Sector data array
     const sectors = [
-        'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion',
-        'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech',
-        'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity',
-        'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 'Computer Hardware',
-        'Computer Networking', 'Computer Software/Engineering', 'Construction', 'Consumer Goods', 'Education Management', 'Financial Services',
-        'Food/Beverages', 'Fundraising', 'Government Administration', 'Health/Fitness', 'Hospital/Health Care', 'Human Resources/HR', 
-        'Import/Export', 'Information Technology/IT', 'Insurance', 'Legal Services', 'Logistics/Procurement', 'Marketing/Advertising/Sales',
-        'Media Production', 'Medical Equipment', 'Medical Practice', 'Mining/Metals', 'Non-Profit/Volunteering', 'Oil/Energy/Solar/Greentech',
-        'Public Relations/PR', 'Real Estate/Mortgage', 'Retail Industry', 'Telecommunications', 'Transportation', 'Utilities', 'Warehousing', 'AI and ML',
-        'Fin-Tech',
-        'Food and Beverage',
+        'Accounting',
+        'Adtech',
+        'Advanced Manufacturing',
+        'Aerospace',
         'Agriculture',
-        'Healthcare & Life Sciences',
-        'Sustainable Sectors',
-        'IT',
-        'Pharmaceuticals',
-        'Mechanical Engineering',
-        'Minerals Business',
+        'Agritech and Farming',
+        'AI and ML',
+        'Airlines/Aviation',
+        'Alternative Dispute Resolution',
+        'Alternative Investment Funds',
+        'Alternative Medicine',
+        'Analytics',
+        'Animation',
+        'APIs',
+        'Apparel/Fashion',
+        'Apps',
+        'Architecture/Planning',
+        'Arts/Crafts',
+        'Augmented Reality (AR)',
         'Automotive',
+        'Autonomous Vehicles',
+        'Aviation/Aerospace',
+        'B2B Marketplaces',
+        'B2B Software',
+        'B2B2C',
+        'Banking/Mortgage',
+        'Banks',
+        'BFSI',
+        'Big Data',
+        'Biosciences (Therapeutics, Diagnostics, Devices)',
+        'Biotech',
+        'Biotechnology/Greentech',
+        'Blockchain',
+        'Blockchain Startups',
+        'Broadcast Media',
+        'Building Materials',
+        'Business Supplies/Equipment',
+        'Business Support Services',
+        'Capital Goods',
+        'Capital Markets/Hedge Fund/Private Equity',
+        'CCUS',
+        'Chemicals',
+        'Civic/Social Organization',
+        'Civil Engineering',
+        'Cleantech',
+        'ClimateTech/CleanTech',
+        'Cloud Computing',
+        'Commercial Real Estate',
+        'Community and Lifestyle',
+        'Computer Games',
+        'Computer Hardware',
+        'Computer Networking',
+        'Computer Software/Engineering',
+        'Computer/Network Security',
+        'Construction',
+        'Consumer',
+        'Consumer Electronics',
+        'Consumer Goods',
+        'Consumer Internet',
+        'Consumer Services',
+        'Content and Publishing',
         'Cosmetics',
-        'SaaS',
-        'Marketplaces',
-        'HealthTech',
+        'Creative Economy',
+        'Crypto',
+        'Cyber Security',
+        'Dairy',
+        'Data and Analytics',
+        'Deep Tech',
+        'Deep Tech and Fintech',
+        'Defense/Space',
+        'Design',
+        'Digital Assets',
+        'Digital Health',
+        'Digital Media',
+        'E-Learning',
         'eCommerce',
         'EdTech',
-        'Deep Tech',
-        'Web3',
-        'Extended Reality (XR)',
-        'Augmented Reality (AR)',
-        'Space',
-        'IoT',
-        'Analytics',
-        'ClimateTech/CleanTech',
-        'Hardware',
-        'Financial Services',
-        'Start-ups',
-        'Alternative Investment Funds',
-        'Consumer',
-        'Enterprise Applications',
-        'High Tech',
-        'Transportation and Logistics Tech',
-        'Environment Tech',
-        'Crypto',
-        'B2B2C',
-        'Mobile Technology',
-        'Insurtech',
-        'Media and Entertainment',
-        'Biotech',
-        'Life Sciences',
-        'Smart Hardware',
-        'B2B Marketplaces',
-        'vSaaS',
-        'Software',
-        'Digital Media',
-        'APIs',
-        'Blockchain',
-        'Platforms',
-        'Sustainability',
-        'Community and Lifestyle',
-        'Content and Publishing',
-        'Design',
-        'Technology',
-        'Real Estate and Construction',
-        'Aerospace',
-        'Proptech',
-        'Consumer Internet',
-        'Social Media',
-        'Virtual Reality',
-        'Digital Health',
-        'Chemicals',
-        'NBFC',
-        'BFSI',
-        'Banks',
-        'Building Materials',
-        'Infra',
-        'Capital Goods',
-        'Adtech',
-        'Apps',
-        'Natural Health Products',
-        'Retail',
-        'Blockchain Startups',
-        'Science and Engineering',
+        'Education Management',
+        'Electrical/Electronic Manufacturing',
         'Energy',
-        'Internet',
-        'Mobile',
-        'Big Data',
-        'Cloud Computing',
+        'Enterprise Applications',
         'Enterprise Software',
-        'Advanced Manufacturing',
-        'Autonomous Vehicles',
-        'Semiconductor',
-        'Personal Finance',
-        'Micro Lending',
-        'Agritech and Farming',
-        'Digital Assets',
-        'B2B Software',
-        'Deep Tech and Fintech',
-        'Gaming',
-        'Hospitality Investment',
-        'Business Support Services',
-        'Data and Analytics',
-        'Industrial Goods and Manufacturing',
-        'Cyber Security',
-        'Web3 + Gaming',
-        'Cleantech',
-        'Hydrogen',
-        'Green Molecules',
-        'CCUS',
-        'Biosciences (Therapeutics, Diagnostics, Devices)',
-        'Creative Economy',
-        'Vertical SaaS',
-        'Web3-focused Startups',
-        'Logistics',
+        'Entertainment/Movie Production',
+        'Environment Tech',
+        'Environmental Services',
+        'Events Services',
+        'Executive Office',
+        'Extended Reality (XR)',
+        'Facilities Services',
+        'Farming',
+        'Fin-Tech',
         'Financial Exchanges',
+        'Financial Services',
+        'Fine Art',
+        'Fishery',
+        'Food and Beverage',
+        'Food Production',
+        'Food/Beverages',
+        'Fundraising',
+        'Furniture',
+        'Gambling/Casinos',
+        'Gaming',
+        'Glass/Ceramics/Concrete',
+        'Government Administration',
+        'Government Relations',
+        'Graphic Design/Web Design',
+        'Green Molecules',
+        'Hardware',
+        'Health',
+        'Health/Fitness',
+        'Healthcare & Life Sciences',
+        'HealthTech',
+        'High Tech',
+        'Higher Education/Academia',
+        'Hospitality',
+        'Hospitality Investment',
+        'Human Resources/HR',
+        'Hydrogen',
+        'Import/Export',
+        'Individual/Family Services',
+        'Industrial Automation',
+        'Industrial Goods and Manufacturing',
+        'Information Services',
+        'Information Technology/IT',
+        'Infra',
+        'Insurance',
+        'Insurtech',
+        'International Affairs',
+        'International Trade/Development',
+        'Internet',
+        'Investment Banking/Venture',
+        'Investment Management/Hedge Fund/Private Equity',
+        'IoT',
+        'IT',
+        'Judiciary',
+        'Law Enforcement',
+        'Law Practice/Law Firms',
+        'Legal Services',
+        'Legislative Office',
+        'Leisure/Travel',
+        'Library',
+        'Life Sciences',
+        'Logistics',
+        'Logistics/Procurement',
+        'Luxury Goods/Jewelry',
+        'Machinery',
+        'Management Consulting',
+        'Maritime',
+        'Market Research',
+        'Marketing/Advertising/Sales',
+        'Marketplaces',
+        'Mechanical Engineering',
+        'Mechanical or Industrial Engineering',
+        'Media and Entertainment',
+        'Media Production',
+        'Medical Equipment',
+        'Medical Practice',
+        'Mental Health Care',
+        'Micro Lending',
+        'Military Industry',
+        'Minerals Business',
+        'Mining/Metals',
+        'Mobile',
+        'Mobile Technology',
+        'Motion Pictures/Film',
+        'Museums/Institutions',
+        'Music',
+        'Nanotechnology',
+        'Natural Health Products',
+        'NBFC',
+        'Newspapers/Journalism',
+        'Non-Profit/Volunteering',
+        'Nonprofits',
+        'Oil/Energy/Solar/Greentech',
+        'Online Publishing',
+        'Other Industry',
+        'Outsourcing/Offshoring',
+        'Package/Freight Delivery',
+        'Packaging/Containers',
+        'Paper/Forest Products',
+        'Performing Arts',
+        'Personal Finance',
+        'Pharmaceuticals',
+        'Philanthropy',
+        'Photography',
+        'Plastics',
+        'Platforms',
+        'Political Organization',
+        'Primary/Secondary Education',
+        'Printing',
+        'Professional Training',
+        'Program Development',
+        'Proptech',
+        'Public Relations/PR',
+        'Public Safety',
+        'Publishing Industry',
+        'Railroad Manufacture',
+        'Ranching',
+        'Real Estate and Construction',
+        'Real Estate/Mortgage',
+        'Recreational Facilities/Services',
+        'Religious Institutions',
+        'Renewables/Environment',
+        'Research Industry',
+        'Restaurants',
+        'Retail',
+        'Retail Industry',
+        'SaaS',
+        'Science and Engineering',
+        'Security/Investigations',
+        'Semiconductor',
+        'Semiconductors',
+        'Shipbuilding',
+        'Smart Hardware',
+        'Social Media',
+        'Software',
+        'Space',
+        'Sporting Goods',
+        'Sports',
+        'Staffing/Recruiting',
+        'Start-ups',
+        'Supermarkets',
+        'Sustainability',
+        'Sustainable Sectors',
+        'Technology',
+        'Telecommunications',
+        'Textiles',
+        'Think Tanks',
+        'Tobacco',
         'Trading Platform',
-        'Nonprofits'
+        'Translation/Localization',
+        'Transportation',
+        'Transportation and Logistics Tech',
+        'Utilities',
+        'Venture Capital/VC',
+        'Vertical SaaS',
+        'Veterinary',
+        'Virtual Reality',
+        'vSaaS',
+        'Warehousing',
+        'Web3',
+        'Web3 + Gaming',
+        'Web3-focused Startups',
+        'Wholesale',
+        'Wine/Spirits',
+        'Wireless',
+        'Writing/Editing'
     ];
 
     // Locations array
     // const locations = [
     //     'Adilabad', 'Agra', 'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Gurgaon', 'Hyderabad', 'Kolkata', 'Mumbai', 'Noida', 'Pune', 'Surat'
     // ];
-    const locations = [
-        'Adilabad', 'Agra', 'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Gurgaon', 'Hyderabad', 'Kolkata', 'Mumbai', 'Noida', 'Pune', 'Surat',
-        'Bhopal', 'Jaipur', 'Lucknow', 'Indore', 'Nagpur', 'Kanpur', 'Varanasi', 'Ludhiana', 'Chandigarh', 'Coimbatore', 'Visakhapatnam', 'Rajkot',
-        'Vadodara', 'Madurai', 'Mysuru', 'Bhubaneswar', 'Patna', 'Jammu', 'Kochi', 'Gwalior', 'Ranchi', 'Shimla', 'Dehradun', 'Kozhikode', 'Agartala',
-        'Imphal', 'Srinagar', 'Shillong', 'Bokaro', 'Jamshedpur', 'Faridabad', 'Ambala', 'Udaipur', 'Jodhpur', 'Navi Mumbai', 'Dhanbad', 'Kolhapur',
-        'Solapur', 'Tiruchirappalli', 'Mangalore', 'Thiruvananthapuram', 'Aligarh', 'Karnal', 'Haldwani', 'Raipur', 'Bilaspur', 'Hosur', 'Belgaum',
-        'Chandrapur', 'Siliguri', 'Satna', 'Firozabad', 'Agraharam', 'Nanded', 'Rae Bareli', 'Kochi', 'Warangal', 'Bareilly', 'Guwahati', 'Nashik',
-        'Bhubaneshwar', 'Jammu', 'Bikaner', 'Ajmer', 'Bihar Sharif', 'Sangli', 'Patiala', 'Vellore', 'Gurugram', 'Alappuzha', 'Tumkur', 'Karnataka'
-    ];
+  const locations = [
+    'Agartala', 'Agra', 'Agraharam', 'Ahmedabad', 'Ajmer', 'Alappuzha', 'Aligarh', 'Ambala',
+    'Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam',
+    'Bangalore', 'Bareilly', 'Belgaum', 'Bhopal', 'Bhubaneswar', 'Bihar', 'Bihar Sharif',
+    'Bikaner', 'Bilaspur', 'Bokaro', 'Chandigarh', 'Chandrapur', 'Chhattisgarh', 'Chennai',
+    'Coimbatore', 'Dadra and Nagar Haveli and Daman and Diu', 'Dehradun', 'Delhi', 'Dhanbad',
+    'Faridabad', 'Firozabad', 'Goa', 'Gujarat', 'Guwahati', 'Gurgaon', 'Gurugram', 'Gwalior',
+    'Haldwani', 'Haryana', 'Himachal Pradesh', 'Hosur', 'Hyderabad', 'Imphal', 'Indore',
+    'Jaipur', 'Jammu', 'Jammu and Kashmir', 'Jamshedpur', 'Jharkhand', 'Jodhpur', 'Kanpur',
+    'Karnal', 'Karnataka', 'Kerala', 'Kochi', 'Kolhapur', 'Kolkata', 'Kozhikode', 'Lucknow',
+    'Ludhiana', 'Madurai', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Mangalore',
+    'Mysuru', 'Nagaland', 'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'Noida', 'Odisha',
+    'Patiala', 'Patna', 'Puducherry', 'Punjab', 'Pune', 'Rae Bareli', 'Raipur', 'Rajasthan',
+    'Rajkot', 'Ranchi', 'Sangli', 'Satna', 'Sikkim', 'Shimla', 'Shillong', 'Siliguri',
+    'Solapur', 'Srinagar', 'Surat', 'Tamil Nadu', 'Telangana', 'Thiruvananthapuram',
+    'Tiruchirappalli', 'Tripura', 'Tumkur', 'Udaipur', 'Uttar Pradesh', 'Uttarakhand',
+    'Vadodara', 'Varanasi', 'Vellore', 'Visakhapatnam', 'Warangal', 'West Bengal'
+];
+
 
     let filterdata = [];
 
