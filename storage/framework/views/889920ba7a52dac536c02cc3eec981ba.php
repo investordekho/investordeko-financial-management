@@ -63,8 +63,8 @@
                                 <th class="py-3 px-3">Screenshot</th>
                                 <th class="py-3 px-3">Amount</th>
                                 <th class="py-3 px-3">Txn ID</th>
-                                <th class="py-3 px-3">Ref ID</th>
-                                <th class="py-3 px-3">UPI ID</th>
+                                <th class="py-3 px-3">Ref ID/UPI ID</th>
+                                <!-- <th class="py-3 px-3">UPI ID</th> -->
                                 <th class="py-3 px-3">Phone</th>
                                 <th class="py-3 px-3">Date</th>
                                 <th class="py-3 px-3">Period</th>
@@ -112,7 +112,7 @@
 
                                 <td class="text-center px-3 py-2"><?php echo e($request->paymentdetail->transaction_id ?? 'N/A'); ?></td>
                                 <td class="text-center px-3 py-2"><?php echo e($request->paymentdetail->reference_id ?? 'N/A'); ?></td>
-                                <td class="text-center px-3 py-2"><?php echo e($request->paymentdetail->upi_id ?? 'N/A'); ?></td>
+                                <!-- <td class="text-center px-3 py-2"><?php echo e($request->paymentdetail->upi_id ?? 'N/A'); ?></td> -->
                                 <td class="text-center px-3 py-2"><?php echo e($request->paymentdetail->phone ?? 'N/A'); ?></td>
 
                                 <td class="text-center px-3 py-2">

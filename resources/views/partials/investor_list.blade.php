@@ -88,7 +88,7 @@
             </div>
         @endforeach
 
-        @if (!$isSubscribed && $investors->count() == 3)
+        @if (!$isSubscribed)
         <div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>

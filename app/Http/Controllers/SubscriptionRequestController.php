@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionRequest;
-use App\Models\payment_detail;
+use App\Models\Payment_detail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -71,12 +71,12 @@ class SubscriptionRequestController extends Controller
         $paymentDetails->transaction_id = $request->input('transaction_id');
         if($paymentDetails->payment_method == 'upi')
         {
-            $paymentDetails->upi_id = $request->input('upi_id');
-            $paymentDetails->reference_id = null;
+            // $paymentDetails->upi_id = $request->input('upi_id');
+            $paymentDetails->reference_id = $request->input('upi_id');;
         }
         else
         {
-            $paymentDetails->upi_id = null;
+            // $paymentDetails->upi_id = null;
             $paymentDetails->reference_id = $request->input('reference_id');
         }
     
