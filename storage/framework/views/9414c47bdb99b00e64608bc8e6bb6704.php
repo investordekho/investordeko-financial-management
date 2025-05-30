@@ -319,7 +319,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
                         <label class="form-check-label" for="terms">
-                            By clicking to register, I agree to the <a href="<?php echo e(route('terms')); ?>">Terms of Use</a> and <a href="<?php echo e(route('privacy-policy')); ?>">Privacy Policy</a>.
+                            By clicking to register, I agree to the <a href="<?php echo e(route('terms')); ?>" target="_blank">Terms of Use</a> and <a href="<?php echo e(route('privacy-policy')); ?>" target="_blank">Privacy Policy</a>.
                         </label>
                         <?php $__errorArgs = ['terms'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -346,12 +346,7 @@ unset($__errorArgs, $__bag); ?>
 
 
 <script>
-    <!-- Select2 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-<!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    
     function refreshCaptcha() {
         // Refresh the CAPTCHA image by appending a random query string to avoid caching
         var captchaImage = document.getElementById('captchaImage');
