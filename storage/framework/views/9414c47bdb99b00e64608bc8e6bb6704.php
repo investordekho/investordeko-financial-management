@@ -176,22 +176,18 @@
                     <!-- Full Name and Email Fields on the Same Line -->
                     <div class="row g-3">
                         <div class="col-sm-6 mb-3">
-                            <label id="Ctext" for="fullName">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" name="name" value="<?php echo e(old('name')); ?>" placeholder="Enter your full name" required>                            
-                            <?php $__errorArgs = ['name'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="text-danger"><?php echo e($message); ?></div>
-                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                            <label id="Ctext" for="fullName">Full Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control<?php echo e($errors->has('name') ? ' is-invalid' : ''); ?>" id="fullName" name="name" value="<?php echo e(old('name')); ?>" placeholder="Enter your full name" required pattern="[A-Za-z\s]+" title="Full name should only contain letters and spaces">
+                            <?php if($errors->has('name')): ?>
+                                <div class="invalid-feedback">
+                                    <?php echo e($errors->first('name')); ?>
+
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <div class="col-sm-6 mb-3">
-                            <label id="Ctext" for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="Enter your email" required>                            
+                            <label id="Ctext" for="email">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control <?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" id="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="Enter your email" required>                            
                             <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -208,13 +204,18 @@ unset($__errorArgs, $__bag); ?>
                     <!-- Phone Number Field Covering Full Line -->
                     <div class="form-auto mb-1">
                         <div class="input-group" style="margin-bottom: -10px;">
-                            <!-- Country Code Dropdown -->
-                            <select class="form-select p-1" name="country_code" id="country_code" required style="max-width: 150px;">
-                                <?php echo $__env->make('partials.countryphonecode', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                                <!-- Add more country codes as needed -->
-                            </select>
+                            <div class="mr-3" style="margin-right: 10px;">
+                                <!-- Phone Label on Top -->
+                                <label for="country_code">Phone <span class="text-danger mb-4">*</span></label>
+                                <!-- Country Code Dropdown -->
+                                <div style="position: relative; width: 150px;">
+                                    <select class="form-select p-1" name="country_code" id="country_code" required style="max-width: 150px;">
+                                        <?php echo $__env->make('partials.countryphonecode', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                                    </select>
+                                </div>
+                            </div>
                             <!-- Phone Number Input -->
-                            <input type="number" class="form-control phone" id="phone" name="phone" value="<?php echo e(old('phone')); ?>" placeholder="Enter your phone number" required maxlength="10">
+                            <input type="tel" class="form-control phone mt-3" id="phone" name="phone" value="<?php echo e(old('phone')); ?>" placeholder="Enter your phone number" required pattern="[0-9]{10,14}" maxlength="14" minlength="10" oninput="validatePhoneLength(this)">
                         </div>
                         <label for="phone"></label>
                         <?php $__errorArgs = ['phone'];
@@ -233,7 +234,7 @@ unset($__errorArgs, $__bag); ?>
                     <!-- Password and Password Confirmation Fields on the Same Line -->
                     <div class="row g-3" style="margin-top: 3px;">
                         <div class="col-md-6 form-auto mb-1">
-                            <label id="Ctext" for="password">Password</label>
+                            <label id="Ctext" for="password">Password<span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                             
                             <?php $__errorArgs = ['password'];
@@ -248,7 +249,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="col-md-6 form-auto mb-1">
-                            <label id="Ctext" for="password_confirmation">Confirm Password</label>
+                            <label id="Ctext" for="password_confirmation">Confirm Password <span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password" required>
                             
                             <div id="passwordmsgid" style="display:none;">
@@ -269,7 +270,7 @@ unset($__errorArgs, $__bag); ?> -->
 
                     <!-- Category Field -->
                     <div class="form-auto mb-3">
-                         <label id="Ctext" for="category">Join as</label>
+                         <label id="Ctext" for="category">Join as <span class="text-danger">*</span></label>
                         <select class="form-select" id="category" name="category" required>
                             <option value="">Select Category</option>
                             <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -293,7 +294,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="captcha">Enter the text shown in the image:</label>
+                        <label for="captcha">Enter the text shown in the image: <span class="text-danger">*</span></label>
                         <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Enter CAPTCHA" required>
                         <br>
                         <img id="captchaImage" src="<?php echo e(url('/captcha')); ?>" alt="CAPTCHA Image">
@@ -345,6 +346,12 @@ unset($__errorArgs, $__bag); ?>
 
 
 <script>
+    <!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     function refreshCaptcha() {
         // Refresh the CAPTCHA image by appending a random query string to avoid caching
         var captchaImage = document.getElementById('captchaImage');
@@ -358,6 +365,15 @@ unset($__errorArgs, $__bag); ?>
         void refreshIcon.offsetWidth; // This forces reflow, so the animation will re-trigger
         refreshIcon.classList.add('rotate-clockwise');
     }
+
+    function validatePhoneLength(input) {
+        if (input.value.length < 10) {
+            input.setCustomValidity("Phone number must be exactly 10 digits.");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+
      let passwordinput = document.getElementById("password");
      let confirmpasswordinput = document.getElementById("password_confirmation");
      let passwordmsgdiv = document.getElementById("passwordmsgid");
@@ -375,6 +391,14 @@ unset($__errorArgs, $__bag); ?>
 
     //  passwordinput.addEventListener("input", confirmpassword);
      confirmpasswordinput.addEventListener("input", confirmpassword);
+
+     let countrycodeInput = document.getElementById("country_code_input");
+     let countrycodeSelect = document.getElementById("country_code");
+        countrycodeInput.addEventListener("input", function(){
+        // Update the select element's value based on the input
+        countrycodeSelect.value = countrycodeInput.value;
+        
+        })
 </script>
 <?php $__env->stopSection(); ?>
 
