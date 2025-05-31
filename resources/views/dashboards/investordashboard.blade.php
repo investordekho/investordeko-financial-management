@@ -97,7 +97,7 @@
             <div class="dropdown-menu p-3" style="width: 250px;" id="sectorDropdownMenu">
                 <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector">
                 <div id="sectorList" style="max-height: 200px; overflow-y: auto;">
-                    @foreach ($sectors as $sector)
+                    @foreach ($sectors->sortBy( function($sector){ return strtoupper($sector->sectors_name); }) as $sector) 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="{{ $sector->sectors_name }}" id="sector_{{ $sector->sectors_name }}">
                             <label class="form-check-label" for="sector_{{ $sector->sectors_name }}">{{ $sector->sectors_name }}</label>

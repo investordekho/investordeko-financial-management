@@ -95,7 +95,7 @@
             <div class="dropdown-menu p-3" style="width: 250px;" id="sectorDropdownMenu">
                 <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector">
                 <div id="sectorList" style="max-height: 200px; overflow-y: auto;">
-                    <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = $sectors->sortBy( function($sector){ return strtoupper($sector->sectors_name); }); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->sectors_name); ?>">
                             <label class="form-check-label" for="sector_<?php echo e($sector->sectors_name); ?>"><?php echo e($sector->sectors_name); ?></label>

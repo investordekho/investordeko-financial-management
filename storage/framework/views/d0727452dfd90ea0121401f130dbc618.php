@@ -188,9 +188,9 @@
                                         </button>
                                         <ul class="dropdown-menu px-3 py-2" aria-labelledby="investorTypeDropdown">
 
-                                                   <li class="dropdown-item p-0 m-0">                                                        
+                                                   <!-- <li class="dropdown-item p-0 m-0">                                                        
                                                         <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type">
-                                                    </li>
+                                                    </li> -->
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel" id="type_angel_investor">
