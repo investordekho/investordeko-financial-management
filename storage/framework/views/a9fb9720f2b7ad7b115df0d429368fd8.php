@@ -85,7 +85,7 @@
 
 <p>Information about subscription plans and prices will be provided on the Site while requesting a subscription to a service. You agree to pay the price for the subscription or service as per the pricing schedule indicated on the Site. At the time of account creation or subscription, you need to provide accurate information regarding your account and you must certify that you are over 18 years of age and legally able to enter into a valid and binding agreement with Investor Dekho.</p>
 
-<p>The term of your subscription shall be 90 days or as specified in the plan. Your subscription will commence on the day you enter into this Agreement by entering valid credit card or other payment information on the Site. You may not cancel your subscription following receipt of payment by Investor Dekho (unless you are otherwise able to do so in accordance with your statutory rights).</p>
+<p>The term of your subscription shall be 90 days or as specified in the plan. Your subscription will commence on the day you enter into this Agreement by entering valid payment information on the Site. You may not cancel your subscription following receipt of payment by Investor Dekho (unless you are otherwise able to do so in accordance with your statutory rights).</p>
 
 <p>You agree that Investor Dekho will not be liable for any loss caused by any unauthorized use of your credit card or any other method of payment by a third party in connection with the use of the Site. You waive your right to dispute any payment made into your account and you will bear all costs.</p>
 

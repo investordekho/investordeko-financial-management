@@ -34,7 +34,7 @@
             <!-- Main Content -->
             <div class="col-lg-9">
                 <h1 class="mb-4">Investor Dekho Private Limited Privacy Policy</h1>
-                <p>Investor Dekho Private Limited ("Investor Dekho," "us," "our," or "we") is the owner and operator of www.investordekho.com. This Privacy Policy applies to the www.investordekho.com website, any subdomains thereof, or any API integrations or widgets we offer. By using our website, you consent to our collection and use of information as explained in this Policy and agree to be bound by our Terms of Use.</p>
+                <p>Investor Dekho Private Limited ("Investor Dekho," "us," "our," or "we") is the owner and operator of www.investordekho.in This Privacy Policy applies to the www.investordekho.com website, any subdomains thereof, or any API integrations or widgets we offer. By using our website, you consent to our collection and use of information as explained in this Policy and agree to be bound by our Terms of Use.</p>
 
                 <section id="personal-information">
                     <h2 class="fw-bold mt-4">Personal Information</h2>

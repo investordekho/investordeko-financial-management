@@ -24,13 +24,18 @@
                     <a href="#security" class="list-group-item list-group-item-action">Security</a>
                     <a href="#changes-to-policy" class="list-group-item list-group-item-action">Changes to this Privacy Policy</a>
                     <a href="#applicable-law" class="list-group-item list-group-item-action">Applicable Law and Jurisdiction</a>
+                    <a href="#change-termination" class="list-group-item list-group-item-action">Change or Termination</a>
+                    <a href="#limitation-of-liability" class="list-group-item list-group-item-action">Limitation of Liability</a>
+                    <a href="#indemnification" class="list-group-item list-group-item-action">Indemnification</a>
+                    <a href="#international-use" class="list-group-item list-group-item-action">International Use</a>
+                    <a href="#general-terms" class="list-group-item list-group-item-action">General Terms</a>
                 </div>
             </div>
             
             <!-- Main Content -->
             <div class="col-lg-9">
                 <h1 class="mb-4">Investor Dekho Private Limited Privacy Policy</h1>
-                <p>Investor Dekho Private Limited ("Investor Dekho," "us," "our," or "we") is the owner and operator of www.investordekho.com. This Privacy Policy applies to the www.investordekho.com website, any subdomains thereof, or any API integrations or widgets we offer. By using our website, you consent to our collection and use of information as explained in this Policy and agree to be bound by our Terms of Use.</p>
+                <p>Investor Dekho Private Limited ("Investor Dekho," "us," "our," or "we") is the owner and operator of www.investordekho.in. This Privacy Policy applies to the www.investordekho.in website, any subdomains thereof, or any API integrations or widgets we offer. By using our website, you consent to our collection and use of information as explained in this Policy and agree to be bound by our Terms of Use.</p>
 
                 <section id="personal-information">
                     <h2 class="fw-bold mt-4">Personal Information</h2>
@@ -69,8 +74,34 @@
 
                 <section id="applicable-law">
                     <h2 class="fw-bold mt-4">Applicable Law and Jurisdiction</h2>
-                    <p>This Privacy Policy shall be governed by the laws of India, and any disputes shall be brought and heard in the courts situated in Chennai, India.</p>
+                    <p>This Privacy Policy shall be governed by the laws of India, and any disputes shall be brought and heard in the courts situated in Mumbai, India.</p>
                 </section>
+
+                <section id="change-termination">
+                    <h2 class="fw-bold mt-4">Change or Termination</h2>
+                    <p>Investor Dekho reserves the right to modify, suspend, or discontinue the website or any part of the services at any time without prior notice. We may also restrict or terminate access to the website or services without liability, for any reason, including but not limited to a breach of these Terms or applicable law.</p>
+                </section>
+
+                <section id="limitation-of-liability">
+                    <h2 class="fw-bold mt-4">Limitation of Liability</h2>
+                    <p>To the maximum extent permitted by law, Investor Dekho shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or use, arising out of or in connection with your use of the website or services, even if we have been advised of the possibility of such damages.</p>
+                </section>
+
+                <section id="indemnification">
+                    <h2 class="fw-bold mt-4">Indemnification</h2>
+                    <p>You agree to indemnify, defend, and hold harmless Investor Dekho, its affiliates, directors, officers, employees, and agents from and against any and all claims, damages, obligations, losses, liabilities, costs, or debt arising from your use of the services or your violation of these Terms or applicable laws.</p>
+                </section>
+
+                <section id="international-use">
+                    <h2 class="fw-bold mt-4">International Use</h2>
+                    <p>Investor Dekho makes no representation that the website or services are appropriate or available for use in all locations. Those who access or use the services from other jurisdictions do so at their own risk and are responsible for compliance with local laws.</p>
+                </section>
+
+                <section id="general-terms">
+                    <h2 class="fw-bold mt-4">General Terms</h2>
+                    <p>This Privacy Policy, together with our Terms of Use, constitutes the entire agreement between you and Investor Dekho regarding the services. If any provision is found to be invalid or unenforceable, the remaining provisions will remain in full force and effect. Our failure to enforce any right or provision shall not constitute a waiver of such right. We shall not be liable for any failure or delay in performance due to causes beyond our reasonable control, including acts of God, war, terrorism, labor disputes, or governmental actions.</p>
+                </section>
+
             </div>
         </div>
     </div>
