@@ -59,7 +59,7 @@
                                 <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                     <ul id="sectorList">
                                         <div id="selected-filters-container" class="mb-3"></div>                      
-                                        <!-- Sectors will be populated here by JavaScript -->
+                                     
                                     </ul>
                                 </div>
                             </div>
@@ -423,6 +423,7 @@ function populateSectors() {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.style.marginRight = '10px';
+        checkbox.style.marginLeft = '-25px';
         checkbox.name = 'sector[]';
         checkbox.value = sector;
         checkbox.id = `sector_${sector}`;
