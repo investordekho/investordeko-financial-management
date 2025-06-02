@@ -94,8 +94,8 @@ Route::post('/profile/update', [ProfileController::class, 'updateProfileSettings
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/register', [CustomRegistrationController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [CustomRegistrationController::class, 'register']);
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
 // Subscription Routes
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');

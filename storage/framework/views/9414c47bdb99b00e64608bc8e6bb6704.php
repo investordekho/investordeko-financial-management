@@ -208,7 +208,7 @@ unset($__errorArgs, $__bag); ?>
                                 <!-- Phone Label on Top -->
                                 <label for="country_code">Phone <span class="text-danger mb-4">*</span></label>
                                 <!-- Country Code Dropdown -->
-                                <div style="position: relative; width: 160px;" id="country_code_input">
+                                <div style="position: relative; width: 160px;" id="country_code_input" name="country_code_input">
                                     <select class="form-select p-1" name="country_code" id="country_code" required style="max-width: 160px;">
                                         <option value="">Select Country</option>
                                                                                               
@@ -348,7 +348,52 @@ unset($__errorArgs, $__bag); ?>
 
 
 <script>
-       const countryCodes =
+  
+
+
+    function refreshCaptcha() {
+        // Refresh the CAPTCHA image by appending a random query string to avoid caching
+        var captchaImage = document.getElementById('captchaImage');
+        captchaImage.src = '<?php echo e(url('/captcha')); ?>?' + Math.random();
+
+        // Get the refresh icon and add the rotation class to trigger the animation
+        var refreshIcon = document.getElementById('refreshIcon');
+
+        // Remove the class if it's already there, then force a reflow before adding it again.
+        refreshIcon.classList.remove('rotate-clockwise');
+        void refreshIcon.offsetWidth; // This forces reflow, so the animation will re-trigger
+        refreshIcon.classList.add('rotate-clockwise');
+    }
+
+    function validatePhoneLength(input) {
+        if (input.value.length < 10) {
+            input.setCustomValidity("Phone number must be exactly 10 digits.");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+
+     let passwordinput = document.getElementById("password");
+     let confirmpasswordinput = document.getElementById("password_confirmation");
+     let passwordmsgdiv = document.getElementById("passwordmsgid");
+
+      function confirmpassword() {
+        if(passwordinput.value !== confirmpasswordinput.value){
+            passwordmsgdiv.style.display = "block";
+            confirmpasswordinput.style.borderColor = "red";
+        }
+        else{
+            passwordmsgdiv.style.display = "none";
+            confirmpasswordinput.style.borderColor = "";
+        }
+     }
+
+    //  passwordinput.addEventListener("input", confirmpassword);
+     confirmpasswordinput.addEventListener("input", confirmpassword);
+
+   
+
+          const countryCodes =
          [
                         {
                         "name": "Afghanistan",
@@ -1567,57 +1612,16 @@ unset($__errorArgs, $__bag); ?>
       countryCodes.forEach(country => {
         const option = document.createElement("option");
         option.value = country.dial_code;
-        option.textContent = `${country.name} (${country.dial_code}) ${country.code}`;
+        option.textContent = `${country.name} (${country.dial_code})`;
         countrycodesSelect.appendChild(option);
       });
 
-    function refreshCaptcha() {
-        // Refresh the CAPTCHA image by appending a random query string to avoid caching
-        var captchaImage = document.getElementById('captchaImage');
-        captchaImage.src = '<?php echo e(url('/captcha')); ?>?' + Math.random();
-
-        // Get the refresh icon and add the rotation class to trigger the animation
-        var refreshIcon = document.getElementById('refreshIcon');
-
-        // Remove the class if it's already there, then force a reflow before adding it again.
-        refreshIcon.classList.remove('rotate-clockwise');
-        void refreshIcon.offsetWidth; // This forces reflow, so the animation will re-trigger
-        refreshIcon.classList.add('rotate-clockwise');
-    }
-
-    function validatePhoneLength(input) {
-        if (input.value.length < 10) {
-            input.setCustomValidity("Phone number must be exactly 10 digits.");
-        } else {
-            input.setCustomValidity("");
-        }
-    }
-
-     let passwordinput = document.getElementById("password");
-     let confirmpasswordinput = document.getElementById("password_confirmation");
-     let passwordmsgdiv = document.getElementById("passwordmsgid");
-
-      function confirmpassword() {
-        if(passwordinput.value !== confirmpasswordinput.value){
-            passwordmsgdiv.style.display = "block";
-            confirmpasswordinput.style.borderColor = "red";
-        }
-        else{
-            passwordmsgdiv.style.display = "none";
-            confirmpasswordinput.style.borderColor = "";
-        }
-     }
-
-    //  passwordinput.addEventListener("input", confirmpassword);
-     confirmpasswordinput.addEventListener("input", confirmpassword);
-
-     let countrycodeInput = document.getElementById("country_code_input");
-     let countrycodeSelect = document.getElementById("country_code");
-        countrycodeInput.addEventListener("input", function(){
-        // Update the select element's value based on the input
-        countrycodeSelect.value = countrycodeInput.value;
-        
-        })
+      // want to show the selected country code in the input field
+      const countryCodeInput = document.getElementById("country_code_input");
+      countrycodeSelect.addEventListener("change", function(){
+        countryCodeInput.value = countrycodeSelect.value;
+        // countrycodessdSelect.value = countrycodesSelect.valcsdue + ;
+      })
 
      
 
