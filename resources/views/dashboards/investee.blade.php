@@ -332,20 +332,31 @@ const sectors = [
 //     'Adilabad', 'Agra', 'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Gurgaon', 'Hyderabad', 'Kolkata', 'Mumbai', 'Noida', 'Pune', 'Surat'
 // ];
 const locations = [
-  'Adilabad', 'Agra', 'Agraharam', 'Ahmedabad', 'Ajmer', 'Alappuzha', 'Aligarh',
-  'Ambala', 'Bangalore', 'Bareilly', 'Belgaum', 'Bhopal', 'Bhubaneswar',
-  'Bhubaneshwar', 'Bihar Sharif', 'Bilaspur', 'Bikaner', 'Bokaro', 'Chandigarh',
-  'Chandrapur', 'Chennai', 'Coimbatore', 'Dehradun', 'Delhi', 'Dhanbad',
-  'Faridabad', 'Firozabad', 'Gurgaon', 'Gurugram', 'Guwahati', 'Gwalior',
-  'Haldwani', 'Hosur', 'Hyderabad', 'Imphal', 'Indore', 'Jaipur', 'Jammu',
-  'Jamshedpur', 'Jodhpur', 'Kanpur', 'Karnal', 'Karnataka', 'Kochi', 'Kolhapur',
-  'Kolkata', 'Kozhikode', 'Lucknow', 'Ludhiana', 'Madurai', 'Mangalore', 'Mumbai',
-  'Mysuru', 'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'Noida', 'Patiala',
-  'Patna', 'Pune', 'Raipur', 'Rae Bareli', 'Rajkot', 'Ranchi', 'Sangli', 'Satna',
-  'Shimla', 'Shillong', 'Siliguri', 'Solapur', 'Srinagar', 'Surat',
-  'Thiruvananthapuram', 'Tiruchirappalli', 'Tumkur', 'Udaipur', 'Vadodara',
-  'Varanasi', 'Vellore', 'Visakhapatnam', 'Warangal'
+    'Adilabad', 'Agartala', 'Agra', 'Agraharam', 'Ahmedabad', 'Aizawl', 'Ajmer', 'Alappuzha', 
+    'Aligarh', 'Allahabad', 'Alwar', 'Ambala', 'Amravati', 'Amritsar', 'Andaman and Nicobar Islands', 
+    'Andhra Pradesh', 'Arunachal Pradesh', 'Asansol', 'Assam', 'Aurangabad', 'Bangalore', 'Bareilly', 
+    'Belgaum', 'Bellary', 'Bhilai', 'Bhopal', 'Bhubaneswar', 'Bhubaneshwar', 'Bihar', 'Bihar Sharif', 
+    'Bilaspur', 'Bikaner', 'Bokaro', 'Calicut', 'Chandigarh', 'Chandrapur', 'Chhattisgarh', 'Chennai', 
+    'Coimbatore', 'Cuttack', 'Dadra and Nagar Haveli and Daman and Diu', 'Daman', 'Darbhanga', 'Dehradun', 
+    'Delhi', 'Dhanbad', 'Dharamshala', 'Dindigul', 'Durgapur', 'Erode', 'Faridabad', 'Firozabad', 'Goa', 
+    'Gorakhpur', 'Gujarat', 'Gulbarga', 'Guntur', 'Gurgaon', 'Gurugram', 'Guwahati', 'Gwalior', 'Haldwani', 
+    'Haryana', 'Hisar', 'Himachal Pradesh', 'Hosur', 'Hubli-Dharwad', 'Hyderabad', 'Imphal', 'Indore', 
+    'Itanagar', 'Jabalpur', 'Jaipur', 'Jalandhar', 'Jammu', 'Jammu and Kashmir', 'Jamshedpur', 'Jhansi', 
+    'Jharkhand', 'Jodhpur', 'Kakinada', 'Kalaburagi', 'Kalyan-Dombivli', 'Kanpur', 'Karnal', 'Karnataka', 
+    'Kashmir', 'Karur', 'Kerala', 'Kochi', 'Kolhapur', 'Kolkata', 'Kollam', 'Kota', 'Kozhikode', 'Ladakh', 
+    'Lakshadweep', 'Leh', 'Lucknow', 'Ludhiana', 'Madurai', 'Madhya Pradesh', 'Maharashtra', 'Malappuram', 
+    'Manipur', 'Mangalore', 'Meerut', 'Meghalaya', 'Mizoram', 'Moradabad', 'Mumbai', 'Mysuru', 'Nagaland', 
+    'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'New Delhi', 'Noida', 'Odisha', 'Panjim', 'Patiala', 
+    'Patna', 'Pimpri-Chinchwad', 'Pondicherry', 'Puducherry', 'Punjab', 'Pune', 'Raebareli', 'Raipur', 
+    'Rajahmundry', 'Rajkot', 'Ranchi', 'Rajasthan', 'Rourkela', 'Saharanpur', 'Salem', 'Sambalpur', 
+    'Sangli', 'Satna', 'Secunderabad', 'Shimla', 'Shillong', 'Siliguri', 'Solapur', 'Srinagar', 'Surat', 
+    'Tamil Nadu', 'Telangana', 'Tenali', 'Thane', 'Thanjavur', 'Thiruvananthapuram', 'Thrissur', 
+    'Tiruchirappalli', 'Tirunelveli', 'Tirupati', 'Tripura', 'Tumkur', 'Udaipur', 'Uttar Pradesh', 
+    'Uttarakhand', 'Vadodara', 'Varanasi', 'Vasai-Virar', 'Vellore', 'Vijayawada', 'Visakhapatnam', 
+    'Warangal', 'West Bengal'
 ];
+
+
 
 
 let filterdata = [];

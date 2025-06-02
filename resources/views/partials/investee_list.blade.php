@@ -120,6 +120,17 @@
         <h2 class="text-center mb-4 fw-bold text-dark">No Investees Found</h2>
         <p class="text-center">Please check back later or consider subscribing for more options.</p>
     </div>
+
+    @if (!$isSubscribed && $investees->count() == 3)
+        <div class="col-md-12 text-center mt-4">
+            <div class="alert subscription-box">
+                <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+                <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
+                <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+            </div>
+        </div>
+    @endif
+    <div class="divider height-4"></div>
 @endif
 
 <style>
