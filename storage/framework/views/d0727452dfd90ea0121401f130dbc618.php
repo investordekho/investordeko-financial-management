@@ -286,6 +286,18 @@
 
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize the selected filters object       
+    let selectedFilters = {
+        // sector: [],
+        // location: [],
+        // investment_size: [],
+        // investment_tenure: [],
+        // investor_type: [],
+        // sort: '',
+    };
+});
 // Sector data array
 const sectors = [
   'Accounting', 'Adtech', 'Advanced Manufacturing', 'Aerospace', 'Agriculture',
@@ -360,37 +372,6 @@ const locations = [
 
 let filterdata = [];
 
-
-
-
-// function populateSectors() {
-
-//     const sectorList = document.getElementById('sectorList');
-//     sectors.forEach(sector => {
-//         const li = document.createElement('li');
-//         li.classList.add('dropdown-item');
-
-//         const checkbox = document.createElement('input');
-//         checkbox.type = 'checkbox';
-//         checkbox.name = 'sector[]';
-//         checkbox.value = sector;
-//         checkbox.id = `sector_${sector}`;
-
-//         checkbox.classList.add('form-check-input');
-
-//         const label = document.createElement('label');
-//         label.classList.add('form-check-label');
-//         label.setAttribute('for', `sector_${sector}`);
-//         label.textContent = sector;
-//         li.appendChild(checkbox);
-//         li.appendChild(label);
-
-//         sectorList.appendChild(li);
-//     });
-//     // filterSectors();
-// }
-
-
 document.addEventListener('DOMContentLoaded', function () {
     const dropdownMenu = document.querySelector('#investmentSizeDropdown + .dropdown-menu');
 
@@ -452,6 +433,11 @@ function populateSectors() {
         li.appendChild(checkbox);
         li.appendChild(label);
         sectorList.appendChild(li);
+
+         checkbox.addEventListener('change', () => {
+            updateSelectedFilters();
+            
+        });
 
     });
 }
@@ -569,18 +555,24 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('sectorSearch').addEventListener('keyup', filterSectors);
     document.getElementById('locationSearch').addEventListener('keyup', filterLocations);
 
-    document.querySelectorAll('input[name="sector[]"]').forEach(input => {
-        input.addEventListener('change', populateSectors);
-    });
+    // document.querySelectorAll('input[name="sector[]"]').forEach(input => {
+    //     input.addEventListener('change', populateSectors);
+    // });
 
-    document.querySelectorAll('input[name="location[]"]').forEach(input => {
-        input.addEventListener('change', populateLocations);
-    });
+    // document.querySelectorAll('input[name="location[]"]').forEach(input => {
+    //     input.addEventListener('change', populateLocations);
+    // });
 
     document.getElementById('searchNowButton').addEventListener('click', function () {
         fetchResults();
+         updateSelectedFilters();
     });
 });
+
+
+
+// const input = document.getElementById('investmentSizeSearch').value.toLowerCase();
+
 
 function filterInvestmentSize(){
    
@@ -654,6 +646,8 @@ function updateBreadcrumb() {
 }
 
 function addFilterToBreadcrumb (name , label) {
+    if(!label || label.trim() === "") return;
+
     const container = document.getElementById('selected-filters-container-investee');
     const elementinvestee = document.createElement('span');
     elementinvestee.className = 'badge bg-secondary me-2 mb-2';
@@ -662,7 +656,7 @@ function addFilterToBreadcrumb (name , label) {
 
     
    
-   const closeButton = element.querySelector('.btn-close');
+   const closeButton = elementinvestee.querySelector('.btn-close');
     if (closeButton) {
         closeButton.addEventListener('click', function() {
             removeFilter(name, label);
@@ -674,13 +668,22 @@ function addFilterToBreadcrumb (name , label) {
 
 function removeFilter(name, label) {
     // Remove the filter from the selectedFilters object
-    if (Array.isArray(selectedFilters[name])) {
-        selectedFilters[name] = selectedFilters[name].filter(value => value !== label);
-        if( selectedFilters[name].length === 0) {
-            delete selectedFilters[name]; // Remove the key if no values left
+    document.querySelectorAll(`input[name="${name}[]"]`).forEach(el=> {
+        if (el.value === label) {
+            el.checked = false; // Uncheck the checkbox
         }
-    } else {
-         delete selectedFilters[name];
+    });
+    // remove selected sort value of investment size
+    if (name === 'sort') {
+        document.getElementById('idsortby').value = ''; // Reset the sort dropdown
+        // Remove the sort label from breadcrumb
+        const container = document.getElementById('selected-filters-container-investee');
+        const badges = container.querySelectorAll('.badge');
+        badges.forEach(badge => {
+            if (badge.textContent.trim().startsWith(label)) {
+                badge.remove();
+            }
+        });
     }
 
     // Update the breadcrumb display
@@ -688,7 +691,6 @@ function removeFilter(name, label) {
 
     // Re-fetch results after removing the filter
     fetchResults();
-
 }
 
 function updateSelectedFilters() {
@@ -708,12 +710,13 @@ function updateSelectedFilters() {
     selectedFilters['sort'] = document.getElementById('idsortby')?.value || '';
     // updateBreadcrumb();
     // console.log(selectedFilters);
+
+   
+
+
 }
 
-document.getElementById('searchNowButton').addEventListener('click', function() {
-    updateSelectedFilters();
-    fetchResults();
-});
+
 </script>
 
  <!-- jQuery (necessary for various plugins like Owl Carousel, WOW.js, and others) -->

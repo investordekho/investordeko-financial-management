@@ -110,7 +110,7 @@
                                         </button>
                                         <ul class="dropdown-menu px-3 py-2 scrollable-menu" aria-labelledby="investmentSizeDropdown">
                                             
-                                                <!-- <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size"> -->
+
                                                 
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
@@ -189,9 +189,9 @@
                                         </button>
                                         <ul class="dropdown-menu px-3 py-2" aria-labelledby="investorTypeDropdown">
 
-                                                   <!-- <li class="dropdown-item p-0 m-0">                                                        
-                                                        <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type">
-                                                    </li> -->
+                                                   <li class="dropdown-item p-0 m-0">                                                        
+                                                        <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type" type = "hidden" onkeyup="filterinvestorType()">
+                                                    </li>
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel" id="type_angel_investor">
@@ -254,17 +254,17 @@
 
                         <div style="margin-top: -30px;" class="container">
                         <!-- Breadcrumb -->
-                    <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('investee.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Investee Dashboard / Search Investors</li>
-                        <!-- <li class="breadcrumb-item" id="selected-filters-container"></li> -->
-                        </ol>
-                    </nav>
-                    <nav class="nav">
-                        <li class="breadcrumb-item" id="selected-filters-container-list"></li> <!-- Dynamic filter labels will go here -->
-                    
-                    </nav>
+                        <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('investee.dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Investee Dashboard / Search Investors</li>
+                            <li class="breadcrumb-item" id="selected-filters-container-investee"></li>
+                            </ol>
+                        </nav>
+                        <!-- <nav class="nav">
+                            <li class="breadcrumb-item" id="selected-filters-container-list"></li> 
+                            <input type="hidden" id="investmentSizeSearch">
+                        </nav> -->
 
 
                             <!-- Your search form -->
@@ -287,6 +287,18 @@
 
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize the selected filters object       
+    let selectedFilters = {
+        // sector: [],
+        // location: [],
+        // investment_size: [],
+        // investment_tenure: [],
+        // investor_type: [],
+        // sort: '',
+    };
+});
 // Sector data array
 const sectors = [
   'Accounting', 'Adtech', 'Advanced Manufacturing', 'Aerospace', 'Agriculture',
@@ -361,37 +373,6 @@ const locations = [
 
 let filterdata = [];
 
-
-
-
-// function populateSectors() {
-
-//     const sectorList = document.getElementById('sectorList');
-//     sectors.forEach(sector => {
-//         const li = document.createElement('li');
-//         li.classList.add('dropdown-item');
-
-//         const checkbox = document.createElement('input');
-//         checkbox.type = 'checkbox';
-//         checkbox.name = 'sector[]';
-//         checkbox.value = sector;
-//         checkbox.id = `sector_${sector}`;
-
-//         checkbox.classList.add('form-check-input');
-
-//         const label = document.createElement('label');
-//         label.classList.add('form-check-label');
-//         label.setAttribute('for', `sector_${sector}`);
-//         label.textContent = sector;
-//         li.appendChild(checkbox);
-//         li.appendChild(label);
-
-//         sectorList.appendChild(li);
-//     });
-//     // filterSectors();
-// }
-
-
 document.addEventListener('DOMContentLoaded', function () {
     const dropdownMenu = document.querySelector('#investmentSizeDropdown + .dropdown-menu');
 
@@ -453,6 +434,11 @@ function populateSectors() {
         li.appendChild(checkbox);
         li.appendChild(label);
         sectorList.appendChild(li);
+
+         checkbox.addEventListener('change', () => {
+            updateSelectedFilters();
+            
+        });
 
     });
 }
@@ -525,7 +511,9 @@ function filterLocations() {
 // Function to reset filters
 function resetFilters() {
     document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+
 }
+
 
 // Fetch Results
 function fetchResults() {
@@ -545,6 +533,16 @@ function fetchResults() {
         // Keep the selected options checked
         populateSectors();
         populateLocations();
+        updateBreadcrumb();
+        updateSelectedFilters();
+        console.log("Selected Filters: ", selectedFilters);
+        updateSelectedFilters();
+        console.log("Selected Filters after update: ", selectedFilters);
+        updateBreadcrumb();
+        console.log("Breadcrumb updated with selected filters.");
+        console.log("Selected Filters after breadcrumb update: ", selectedFilters);
+        console.log("Selected Filters after fetch: ", selectedFilters);
+      
     })
     .catch(error => console.error('Error:', error));
 }
@@ -558,21 +556,27 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('sectorSearch').addEventListener('keyup', filterSectors);
     document.getElementById('locationSearch').addEventListener('keyup', filterLocations);
 
-    document.querySelectorAll('input[name="sector[]"]').forEach(input => {
-        input.addEventListener('change', populateSectors);
-    });
+    // document.querySelectorAll('input[name="sector[]"]').forEach(input => {
+    //     input.addEventListener('change', populateSectors);
+    // });
 
-    document.querySelectorAll('input[name="location[]"]').forEach(input => {
-        input.addEventListener('change', populateLocations);
-    });
+    // document.querySelectorAll('input[name="location[]"]').forEach(input => {
+    //     input.addEventListener('change', populateLocations);
+    // });
 
     document.getElementById('searchNowButton').addEventListener('click', function () {
         fetchResults();
+         updateSelectedFilters();
     });
 });
 
+
+
+// const input = document.getElementById('investmentSizeSearch').value.toLowerCase();
+
+
 function filterInvestmentSize(){
-    const input = document.getElementById('investmentSizeSearch').value.toLowerCase();
+   
     const items = document.querySelectorAll('.dropdown-menu .dropdown-item');
 
     items.forEach(item => {
@@ -585,7 +589,6 @@ function filterInvestmentSize(){
     })
 }
 
-document.getElementById('investmentSizeSearch').addEventListener('keyup', filterInvestmentSize);
 
 function filterTenure() {
     const input = document.getElementById('investmentTenureSearch').value.toLowerCase();
@@ -605,7 +608,7 @@ function filterTenure() {
     })
 }
 
-document.getElementById('investmentTenureSearch').addEventListener('keyup',filterTenure);
+
 
 function filterinvestorType(){
     const input = document.getElementById('investorTypeSearch').value.toLowerCase();
@@ -630,6 +633,90 @@ document.querySelectorAll('.dropdown-menu').forEach(menu => {
         e.stopPropagation(); // Stops the dropdown from closing
     });
 });
+
+function updateBreadcrumb() {
+    const container = document.getElementById('selected-filters-container-investee');
+    container.innerHTML= '';
+    Object.keys(selectedFilters).forEach(key => {
+        if (Array.isArray(selectedFilters[key])){
+            selectedFilters[key].forEach(value => addFilterToBreadcrumb(key,value));
+        } else {
+            addFilterToBreadcrumb(key,selectedFilters[key]);
+        }
+    });
+}
+
+function addFilterToBreadcrumb (name , label) {
+    if(!label || label.trim() === "") return;
+
+    const container = document.getElementById('selected-filters-container-investee');
+    const elementinvestee = document.createElement('span');
+    elementinvestee.className = 'badge bg-secondary me-2 mb-2';
+    elementinvestee.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
+    container.appendChild(elementinvestee);
+
+    
+   
+   const closeButton = elementinvestee.querySelector('.btn-close');
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
+            removeFilter(name, label);
+        });
+    }
+    
+
+}
+
+function removeFilter(name, label) {
+    // Remove the filter from the selectedFilters object
+    document.querySelectorAll(`input[name="${name}[]"]`).forEach(el=> {
+        if (el.value === label) {
+            el.checked = false; // Uncheck the checkbox
+        }
+    });
+    // remove selected sort value of investment size
+    if (name === 'sort') {
+        document.getElementById('idsortby').value = ''; // Reset the sort dropdown
+        // Remove the sort label from breadcrumb
+        const container = document.getElementById('selected-filters-container-investee');
+        const badges = container.querySelectorAll('.badge');
+        badges.forEach(badge => {
+            if (badge.textContent.trim().startsWith(label)) {
+                badge.remove();
+            }
+        });
+    }
+
+    // Update the breadcrumb display
+    updateSelectedFilters();
+
+    // Re-fetch results after removing the filter
+    fetchResults();
+}
+
+function updateSelectedFilters() {
+    selectedFilters = {
+        sector: [],
+        location: [],
+        investment_size: [],
+        investment_tenure: [],
+        investor_type: [],
+        sort: '',
+    };
+    document.querySelectorAll('input[name="location[]"]:checked').forEach(el => selectedFilters['location'].push(el.value));
+    document.querySelectorAll('input[name="sector[]"]:checked').forEach(el => selectedFilters['sector'].push(el.value));
+    document.querySelectorAll('input[name="investment_size[]"]:checked').forEach(el => selectedFilters['investment_size'].push(el.value));
+    document.querySelectorAll('input[name="investment_tenure[]"]:checked').forEach(el => selectedFilters['investment_tenure'].push(el.value));
+    document.querySelectorAll('input[name="investor_type[]"]:checked').forEach(el => selectedFilters['investor_type'].push(el.value));
+    selectedFilters['sort'] = document.getElementById('idsortby')?.value || '';
+    // updateBreadcrumb();
+    // console.log(selectedFilters);
+
+   
+
+
+}
+
 
 </script>
 
