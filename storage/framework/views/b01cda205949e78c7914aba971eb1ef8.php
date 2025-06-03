@@ -188,9 +188,9 @@
                                         </button>
                                         <ul class="dropdown-menu px-3 py-2" aria-labelledby="investorTypeDropdown">
 
-                                                   <li class="dropdown-item p-0 m-0">                                                        
-                                                        <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type" type = "hidden" onkeyup="filterinvestorType()">
-                                                    </li>
+                                                   <!-- <li class="dropdown-item p-0 m-0">                                                        
+                                                        <input type="text" class="form-control mb-2" id="investorTypeSearch" placeholder="Search investor type">
+                                                    </li> -->
                                                     <li class="dropdown-item">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" name="investor_type[]" value="Angel" id="type_angel_investor">
@@ -253,17 +253,17 @@
 
                         <div style="margin-top: -30px;" class="container">
                         <!-- Breadcrumb -->
-                        <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Investee Dashboard / Search Investors</li>
-                            <li class="breadcrumb-item" id="selected-filters-container-investee"></li>
-                            </ol>
-                        </nav>
-                        <!-- <nav class="nav">
-                            <li class="breadcrumb-item" id="selected-filters-container-list"></li> 
-                            <input type="hidden" id="investmentSizeSearch">
-                        </nav> -->
+                    <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Investee Dashboard / Search Investors</li>
+                        <li class="breadcrumb-item" id="selected-filters-container-investee"></li>
+                        </ol>
+                    </nav>
+                    <nav class="nav">
+                        <li class="breadcrumb-item" id="selected-filters-container-list"></li> <!-- Dynamic filter labels will go here -->
+                        <input type="hidden" id="investmentSizeSearch">
+                    </nav>
 
 
                             <!-- Your search form -->
@@ -655,21 +655,14 @@ function updateBreadcrumb() {
 
 function addFilterToBreadcrumb (name , label) {
     const container = document.getElementById('selected-filters-container-investee');
-    const elementinvestee = document.createElement('span');
-    elementinvestee.className = 'badge bg-secondary me-2 mb-2';
-    elementinvestee.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
-    container.appendChild(elementinvestee);
+    const element = document.createElement('span');
+    element.className = 'badge bg-secondary me-2 mb-2';
+    element.textContent = `${label} <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close"></button>`;
+    container.appendChild(element);
 
-    
-   
-   const closeButton = element.querySelector('.btn-close');
-    if (closeButton) {
-        closeButton.addEventListener('click', function() {
-            removeFilter(name, label);
-        });
-    }
-    
-
+    element.querySelector('.btn-close').addEventListener('click', function(){
+      removeFilter(name , label);
+    });
 }
 
 function removeFilter(name, label) {
@@ -680,7 +673,7 @@ function removeFilter(name, label) {
             delete selectedFilters[name]; // Remove the key if no values left
         }
     } else {
-         delete selectedFilters[name];
+        selectedFilters[name] = '';
     }
 
     // Update the breadcrumb display
@@ -709,6 +702,10 @@ function updateSelectedFilters() {
     // updateBreadcrumb();
     // console.log(selectedFilters);
 }
+document.getElementById('.btn-success').addEventListener('click', function() {
+    updateSelectedFilters();
+    fetchResults();
+});
 
 document.getElementById('searchNowButton').addEventListener('click', function() {
     updateSelectedFilters();
@@ -735,4 +732,4 @@ document.getElementById('searchNowButton').addEventListener('click', function() 
     <script src="https://cdn.jsdelivr.net/npm/jquery.counterup@2.1.0/jquery.counterup.min.js"></script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/dashboards/investee.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views\dashboards\investee.blade.php ENDPATH**/ ?>
