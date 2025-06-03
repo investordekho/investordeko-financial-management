@@ -681,15 +681,17 @@
             <div class="col-md-3">
                 <label for="concerned_person_phone" class="form-label small fw-semibold text-muted">Phone <span class="text-danger">*</span></label>
                 <input 
-                    type="number" 
+                    type="text" 
                     class="form-control form-control-sm @error('concerned_person_phone') is-invalid @enderror" 
                     id="concerned_person_phone" 
                     name="concerned_person_phone" 
                     value="{{ old('concerned_person_phone') }}" 
-                    maxlength="10" 
-                    oninput="this.value=this.value.slice(0, 10)" 
+                    maxlength="20" 
+                    pattern="^\+?[0-9]{7,17}$" 
+                    oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                     required
                 >
+
                 @error('concerned_person_phone')
                     <div class="invalid-feedback d-block small">This Field is Required</div>
                 @enderror

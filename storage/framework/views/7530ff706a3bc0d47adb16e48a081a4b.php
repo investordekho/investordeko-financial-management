@@ -88,7 +88,8 @@
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="phone_number" class="required">Phone Number</label>
-                    <input type="tel" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="10" value="<?php echo e(old('phone_number')); ?>" required>
+                    <input type="text" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="20" value="<?php echo e(old('phone_number')); ?>"   pattern="^\+?[0-9]{7,17}$" 
+                oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" required>
                 </div>
             </div>
         </div>

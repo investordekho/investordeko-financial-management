@@ -168,11 +168,13 @@
         </label>
         <div>
             <input 
-                type="tel" 
+                type="text" 
                 class="form-control @error('phone_number') is-invalid @enderror" 
                 id="phone_number" 
                 name="phone_number" 
-                maxlength="10" 
+                maxlength="20" 
+                pattern="^\+?[0-9]{7,17}$" 
+                oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                 value="{{ old('phone_number') }}" 
                 required
             >

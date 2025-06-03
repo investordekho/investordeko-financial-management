@@ -893,7 +893,7 @@ unset($__errorArgs, $__bag); ?>
             <div class="col-md-3">
                 <label for="concerned_person_phone" class="form-label small fw-semibold text-muted">Phone <span class="text-danger">*</span></label>
                 <input 
-                    type="number" 
+                    type="text" 
                     class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -905,10 +905,12 @@ unset($__errorArgs, $__bag); ?>"
                     id="concerned_person_phone" 
                     name="concerned_person_phone" 
                     value="<?php echo e(old('concerned_person_phone')); ?>" 
-                    maxlength="10" 
-                    oninput="this.value=this.value.slice(0, 10)" 
+                    maxlength="20" 
+                    pattern="^\+?[0-9]{7,17}$" 
+                    oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                     required
                 >
+
                 <?php $__errorArgs = ['concerned_person_phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

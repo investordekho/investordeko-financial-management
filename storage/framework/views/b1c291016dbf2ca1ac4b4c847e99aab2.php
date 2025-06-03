@@ -437,7 +437,7 @@ unset($__errorArgs, $__bag); ?>
     <div class="col-sm-2">
         <label id="labelinput" for="concerned_person_phone" class="required">Phone No.</label>
         <input 
-            type="tel" 
+            type="text" 
             class="form-control spaced-input <?php $__errorArgs = ['concerned_person_phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -448,7 +448,9 @@ endif;
 unset($__errorArgs, $__bag); ?>" 
             id="concerned_person_phone" 
             name="concerned_person_phone" 
-            maxlength="10" 
+            maxlength="20" 
+            pattern="^\+?[0-9]{7,17}$"
+            oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
             value="<?php echo e(old('concerned_person_phone')); ?>" 
             required
         >

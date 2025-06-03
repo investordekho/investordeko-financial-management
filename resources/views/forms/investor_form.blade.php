@@ -350,11 +350,13 @@
     <div class="col-sm-2">
         <label id="labelinput" for="concerned_person_phone" class="required">Phone No.</label>
         <input 
-            type="tel" 
+            type="text" 
             class="form-control spaced-input @error('concerned_person_phone') is-invalid @enderror" 
             id="concerned_person_phone" 
             name="concerned_person_phone" 
-            maxlength="10" 
+            maxlength="20" 
+            pattern="^\+?[0-9]{7,17}$"
+            oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
             value="{{ old('concerned_person_phone') }}" 
             required
         >

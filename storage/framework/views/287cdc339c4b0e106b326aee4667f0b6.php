@@ -237,7 +237,7 @@ unset($__errorArgs, $__bag); ?>
         </label>
         <div>
             <input 
-                type="tel" 
+                type="text" 
                 class="form-control <?php $__errorArgs = ['phone_number'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -248,7 +248,9 @@ endif;
 unset($__errorArgs, $__bag); ?>" 
                 id="phone_number" 
                 name="phone_number" 
-                maxlength="10" 
+                maxlength="20" 
+                pattern="^\+?[0-9]{7,17}$" 
+                oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                 value="<?php echo e(old('phone_number')); ?>" 
                 required
             >
