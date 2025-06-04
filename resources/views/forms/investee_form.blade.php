@@ -664,7 +664,12 @@
             </div>
 
             <div class="col-md-3">
-                <label for="concerned_person_email" class="form-label small fw-semibold text-muted">Email <span class="text-danger">*</span></label>
+                <label for="concerned_person_email" class="form-label small fw-semibold text-muted">
+                    Email <span class="text-danger">*</span>
+                    @error('concerned_person_email')
+                        <span class="text-danger ms-2 small">{{ $message ?: 'This Field is Required' }}</span>
+                    @enderror
+                </label>
                 <input 
                     type="email" 
                     class="form-control form-control-sm @error('concerned_person_email') is-invalid @enderror" 
@@ -673,9 +678,6 @@
                     value="{{ old('concerned_person_email') }}" 
                     required
                 >
-                @error('concerned_person_email')
-                    <div class="invalid-feedback d-block small">This Field is Required</div>
-                @enderror
             </div>
 
             <div class="col-md-3">
