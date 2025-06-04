@@ -140,10 +140,20 @@
         </div>
 
         <!-- Terms Section -->
-        <div class="form-check mb-3">
+        <!-- <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" required>
             <label class="form-check-label" for="terms">I agree to the <a href="{{ route('terms') }}" target="_blank">Terms and Conditions</a></label>
-        </div>
+        </div> -->
+         <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                        @error('terms')
+                            <span class="text-danger">You must agree to the Terms and Conditions</span>
+                        @enderror
+                    </div>
 
         <!-- Submit -->
         <button type="submit" class="btn btn-primary w-100 py-2">Submit</button>

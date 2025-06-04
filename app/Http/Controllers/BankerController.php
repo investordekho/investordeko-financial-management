@@ -68,6 +68,7 @@ class BankerController extends Controller
             'previous_deal_sector.*' => 'required|string',
             'previous_deal_type.*' => 'required|string|in:M&A,Fundraising,IPO,Others',
             'referral_source' => 'required|string',
+             'terms' => 'accepted'
         ]);
 
         // Step 2: Handle file upload for company profile

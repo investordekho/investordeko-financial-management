@@ -862,7 +862,19 @@ unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-3">
-                <label for="concerned_person_email" class="form-label small fw-semibold text-muted">Email <span class="text-danger">*</span></label>
+                <label for="concerned_person_email" class="form-label small fw-semibold text-muted">
+                    Email <span class="text-danger">*</span>
+                    <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger ms-2 small"><?php echo e($message ?: 'This Field is Required'); ?></span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </label>
                 <input 
                     type="email" 
                     class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_email'];
@@ -878,16 +890,6 @@ unset($__errorArgs, $__bag); ?>"
                     value="<?php echo e(old('concerned_person_email')); ?>" 
                     required
                 >
-                <?php $__errorArgs = ['concerned_person_email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback d-block small">This Field is Required</div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-3">
@@ -2552,6 +2554,43 @@ unset($__errorArgs, $__bag); ?>
 
 <!-- Script for Auto-Fill Functionality -->
  <script>
+
+    function fillConcernedPersonDetails() {
+        const nameField = document.getElementById('concerned_person_name');
+        const designationField = document.getElementById('concerned_person_designation');
+        const phoneField = document.getElementById('concerned_person_phone');
+        const emailField = document.getElementById('concerned_person_email');
+
+        if (document.getElementById('concerned_person_is_me').checked) {
+            // Fill in with the logged-in user details if necessary (use appropriate server-side user details here)
+            nameField.value = "<?php echo e(Auth::user()->name); ?>";
+            emailField.value = "<?php echo e(Auth::user()->email); ?>";
+            phoneField.value = "<?php echo e(Auth::user()->phone); ?>";
+            designationField.value = "<?php echo e(Auth::user()->designation ?? ''); ?>";  // Assuming user model has these field
+
+            nameField.readOnly = true;
+            designationField.readOnly = false;
+            phoneField.readOnly = true;
+            emailField.readOnly = true;
+        } else {
+            nameField.value = '';
+            emailField.value = '';
+            phoneField.value = '';
+            designationField.value = '';
+
+            nameField.readOnly = false;
+            designationField.readOnly = false;
+            phoneField.readOnly = false;
+            emailField.readOnly = false;
+        }
+    }
+
+     document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
+
     // Prevent form submission without filling required fields
     document.getElementById('investeeForm').addEventListener('submit', function(event) {
     const requiredFields = document.querySelectorAll('#investeeForm [required]:not([disabled]):not([type="hidden"])');

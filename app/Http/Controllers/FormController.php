@@ -91,7 +91,7 @@ public function submitInvesteeForm(Request $request)
         'guidance_needed.*' => 'nullable|string',
         'other_links.*' => 'nullable|url',
         'link_descriptions.*' => 'nullable|string',
-       
+        'terms' => 'accepted'
         // 'terms' => 'accepted',
     ]);
 
@@ -260,6 +260,7 @@ public function submitInvesteeForm(Request $request)
             'sector' => 'array',
             'sector.*' => 'string',
             'referral_source' => 'required|string',
+            'terms' => 'accepted'
         ]);
 
         // Step 2: Store form data in the Investor table
