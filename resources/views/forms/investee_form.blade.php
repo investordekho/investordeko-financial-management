@@ -1892,6 +1892,43 @@
 
 <!-- Script for Auto-Fill Functionality -->
  <script>
+
+    function fillConcernedPersonDetails() {
+        const nameField = document.getElementById('concerned_person_name');
+        const designationField = document.getElementById('concerned_person_designation');
+        const phoneField = document.getElementById('concerned_person_phone');
+        const emailField = document.getElementById('concerned_person_email');
+
+        if (document.getElementById('concerned_person_is_me').checked) {
+            // Fill in with the logged-in user details if necessary (use appropriate server-side user details here)
+            nameField.value = "{{ Auth::user()->name }}";
+            emailField.value = "{{ Auth::user()->email }}";
+            phoneField.value = "{{ Auth::user()->phone }}";
+            designationField.value = "{{ Auth::user()->designation ?? '' }}";  // Assuming user model has these field
+
+            nameField.readOnly = true;
+            designationField.readOnly = false;
+            phoneField.readOnly = true;
+            emailField.readOnly = true;
+        } else {
+            nameField.value = '';
+            emailField.value = '';
+            phoneField.value = '';
+            designationField.value = '';
+
+            nameField.readOnly = false;
+            designationField.readOnly = false;
+            phoneField.readOnly = false;
+            emailField.readOnly = false;
+        }
+    }
+
+     document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
+
     // Prevent form submission without filling required fields
     document.getElementById('investeeForm').addEventListener('submit', function(event) {
     const requiredFields = document.querySelectorAll('#investeeForm [required]:not([disabled]):not([type="hidden"])');

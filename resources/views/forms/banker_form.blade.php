@@ -906,6 +906,12 @@
         }
     });
 }
+
+ document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
 // changes
 
   document.addEventListener('DOMContentLoaded', function() {

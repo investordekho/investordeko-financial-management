@@ -905,8 +905,8 @@ unset($__errorArgs, $__bag); ?>"
                     id="concerned_person_phone" 
                     name="concerned_person_phone" 
                     value="<?php echo e(old('concerned_person_phone')); ?>" 
-                    maxlength="19" 
-                    pattern="^\+?[0-9]{7,19}$" 
+                    maxlength="20" 
+                    pattern="^\+?[0-9]{7,20}$" 
                     oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                     required
                 >

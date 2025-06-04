@@ -349,6 +349,7 @@ endif;
 unset($__errorArgs, $__bag); ?>" 
         id="investor_profile" 
         name="investor_profile"
+        value ="<?php echo e(old('investor_profile')); ?>"
         required
     >
     <?php $__errorArgs = ['investor_profile'];
@@ -1353,6 +1354,14 @@ unset($__errorArgs, $__bag); ?>
                     </div> -->
 
                     <!-- Submit Button -->
+
+                     <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                    </div>
                     <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>
 </div>

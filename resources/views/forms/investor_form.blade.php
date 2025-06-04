@@ -1260,6 +1260,12 @@ function removePublicLinkField(button) {
         }
     }
     
+     document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
+
     function removePreviousInvestmentField(button) {
     const container = document.getElementById('previous-investments-container');
     const allRows = container.querySelectorAll('.previous-investment-row');
