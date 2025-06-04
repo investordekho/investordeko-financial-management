@@ -37,7 +37,7 @@
             </div>
         </div>
 
-    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('form.bank.submit') }}" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;" novalidate>
+    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('form.bank.submit') }}" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;">
 
         @csrf
      <!-- Company Details Section -->
@@ -113,6 +113,7 @@
             id="company_profile" 
             name="company_profile" 
             required
+            value = "{{ old('company_profile')}}"
         >
         @error('company_profile')
             <span class="text-danger small">This field is required</span>
@@ -173,7 +174,7 @@
                 id="phone_number" 
                 name="phone_number" 
                 maxlength="20" 
-                pattern="^\+?[0-9]{7,17}$" 
+                pattern="^\+?[0-9]{7,20}$" 
                 oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                 value="{{ old('phone_number') }}" 
                 required
@@ -717,13 +718,16 @@
         </div>
         <div class="col-md-2 mt-2 p-1">
             <label for="previous_deal_type_{{ $i }}" class="required">Deal Type<span class="text-danger">*</span></label>
-            <select class="form-control" name="previous_deal_type[]" id="previous_deal_type_{{ $i }}" required>
+            <select class="form-control @error('previous_deal_type.'.$i) is-invalid @enderror" name="previous_deal_type[]" id="previous_deal_type_{{ $i }}" required>
                 <option value="" disabled {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i]) ? '' : 'selected' }}>Select Deal Type</option>
                 <option value="M&A" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : '' }}>M&amp;A</option>
                 <option value="Fundraising" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : '' }}>Fundraising</option>
                 <option value="IPO" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : '' }}>IPO</option>
                 <option value="Others" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : '' }}>Others</option>
             </select>
+            @if($errors->has('previous_deal_type.'.$i))
+                <span class="text-danger small">{{ $errors->first('previous_deal_type.'.$i) }}</span>
+            @endif
         </div>
         <div class="col-md-1 form-floating mt-2 p-1">
             @if($i == 0)

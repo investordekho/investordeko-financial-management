@@ -1,6 +1,6 @@
-@extends('layouts.app') <!-- Assuming you have a layout file for including CSS, JS, etc. -->
+ <!-- Assuming you have a layout file for including CSS, JS, etc. -->
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 
@@ -29,9 +29,9 @@
    </div>
     
 
-<form class="bg-light p-4" id="investeeForm" action="{{ route('form.submit') }}" method="POST" enctype="multipart/form-data" novalidate>
+<form class="bg-light p-4" id="investeeForm" action="<?php echo e(route('form.submit')); ?>" method="POST" enctype="multipart/form-data" novalidate>
 
-    @csrf
+    <?php echo csrf_field(); ?>
     <!-- Company Details Section -->
     <!-- <div class="row g-3">
         <div class="col-sm-2">
@@ -42,40 +42,75 @@
             <label id="labelinput" for="company_name" class="required">Company Name <span style="color:red;">*</span></label>
             <input
                 type="text"
-                class="form-control spaced-input @error('company_name') is-invalid @enderror"
+                class="form-control spaced-input <?php $__errorArgs = ['company_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 id="company_name"
                 name="company_name"
-                value="{{ old('company_name') }}"
+                value="<?php echo e(old('company_name')); ?>"
                 required
             >
-            @error('company_name')
+            <?php $__errorArgs = ['company_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-sm-2">
             <label id="labelinput" for="address" class="required">Address  <span style="color:red;">*</span></label>
             <input
                 type="text"
-                class="form-control spaced-input @error('address') is-invalid @enderror"
+                class="form-control spaced-input <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 id="address"
                 name="address"
-                value="{{ old('address') }}"
+                value="<?php echo e(old('address')); ?>"
                 required
             >
-            @error('address')
+            <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-sm-3">
             <label id="labelinput" for="nature_of_business" class="required">Nature of Business <span style="color:red;">*</span></label>
             <input
                 list="business-options"
-                class="form-control spaced-input @error('nature_of_business') is-invalid @enderror"
+                class="form-control spaced-input <?php $__errorArgs = ['nature_of_business'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 id="nature_of_business"
                 name="nature_of_business"
-                value="{{ old('nature_of_business') }}"
+                value="<?php echo e(old('nature_of_business')); ?>"
                 required
             >
             <datalist id="business-options">
@@ -229,23 +264,44 @@
                 <option value="Writing/Editing">Writing/Editing</option>
                 
             </datalist>
-            @error('nature_of_business')
+            <?php $__errorArgs = ['nature_of_business'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-sm-3">
             <label id="labelinput" for="incorporated_in" class="required">Incorporated In <span style="color:red;">*</span></label>
             <input 
                 type="number" 
-                class="form-control spaced-input @error('incorporated_in') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['incorporated_in'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="incorporated_in" 
                 name="incorporated_in" 
-                value="{{ old('incorporated_in') }}" 
+                value="<?php echo e(old('incorporated_in')); ?>" 
                 required
             >
-            @error('incorporated_in')
+            <?php $__errorArgs = ['incorporated_in'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
     </div> -->
 
@@ -273,45 +329,87 @@
             <label for="company_name" class="form-label fw-medium">Company Name <span class="text-danger">*</span></label>
             <input
                 type="text"
-                class="form-control shadow-sm rounded-3 @error('company_name') is-invalid @enderror"
+                class="form-control shadow-sm rounded-3 <?php $__errorArgs = ['company_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 id="company_name"
                 name="company_name"
-                value="{{ old('company_name') }}"
+                value="<?php echo e(old('company_name')); ?>"
                 required
             >
-            @error('company_name')
+            <?php $__errorArgs = ['company_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="invalid-feedback">This Field is Required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-md-3">
             <label for="address" class="form-label fw-medium">Address <span class="text-danger">*</span></label>
             <input
                 type="text"
-                class="form-control shadow-sm rounded-3 @error('address') is-invalid @enderror"
+                class="form-control shadow-sm rounded-3 <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 id="address"
                 name="address"
-                value="{{ old('address') }}"
+                value="<?php echo e(old('address')); ?>"
                 required
             >
-            @error('address')
+            <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="invalid-feedback">This Field is Required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-md-3">
             <label for="nature_of_business" class="form-label fw-medium">Nature of Business <span class="text-danger">*</span></label>
             <input
                 list="business-options"
-                class="form-control shadow-sm rounded-3 @error('nature_of_business') is-invalid @enderror"
+                class="form-control shadow-sm rounded-3 <?php $__errorArgs = ['nature_of_business'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 id="nature_of_business"
                 name="nature_of_business"
-                value="{{ old('nature_of_business') }}"
+                value="<?php echo e(old('nature_of_business')); ?>"
                 required
             >
-            @error('nature_of_business')
+            <?php $__errorArgs = ['nature_of_business'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="invalid-feedback">This Field is Required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             <datalist id="business-options">
                 
                 <option value="Accounting">Accounting</option>
@@ -469,15 +567,29 @@
             <label for="incorporated_in" class="form-label fw-medium">Incorporated In <span class="text-danger">*</span></label>
             <input 
                 type="number" 
-                class="form-control shadow-sm rounded-3 @error('incorporated_in') is-invalid @enderror" 
+                class="form-control shadow-sm rounded-3 <?php $__errorArgs = ['incorporated_in'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="incorporated_in" 
                 name="incorporated_in" 
-                value="{{ old('incorporated_in') }}" 
+                value="<?php echo e(old('incorporated_in')); ?>" 
                 required
             >
-            @error('incorporated_in')
+            <?php $__errorArgs = ['incorporated_in'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="invalid-feedback">This Field is Required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 
@@ -527,7 +639,8 @@
                     name="concerned_person_is_me"
                     value="1" 
                 
-                    {{ old('concerned_person_is_me') ? 'checked':''}}
+                    <?php echo e(old('concerned_person_is_me') ? 'checked':''); ?>
+
                     onclick="fillConcernedPersonDetails()"
                 >
                 <label 
@@ -544,62 +657,118 @@
             <label id="labelinput" for="concerned_person_name" class="required">Concerned Person <span style="color:red;">*</span></label>
             <input 
                 type="text" 
-                class="form-control spaced-input @error('concerned_person_name') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['concerned_person_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="concerned_person_name" 
                 name="concerned_person_name" 
-                value="{{ old('concerned_person_name') }}" 
+                value="<?php echo e(old('concerned_person_name')); ?>" 
                 required
             >
-            @error('concerned_person_name')
+            <?php $__errorArgs = ['concerned_person_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-md-2">
             <label id="labelinput" for="concerned_person_designation" class="required">Designation <span style="color:red;">*</span></label>
             <input 
                 type="text" 
-                class="form-control spaced-input @error('concerned_person_designation') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="concerned_person_designation" 
                 name="concerned_person_designation" 
-                value="{{ old('concerned_person_designation') }}" 
+                value="<?php echo e(old('concerned_person_designation')); ?>" 
                 required
             >
-            @error('concerned_person_designation')
+            <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-md-3">
             <label id="labelinput" for="concerned_person_email" class="required">Email <span style="color:red;">*</span></label>
             <input 
                 type="email" 
-                class="form-control spaced-input @error('concerned_person_email') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="concerned_person_email" 
                 name="concerned_person_email" 
-                value="{{ old('concerned_person_email') }}" 
+                value="<?php echo e(old('concerned_person_email')); ?>" 
                 required
             >
-            @error('concerned_person_email')
+            <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-md-3">
             <label id="labelinput" for="concerned_person_phone" class="phone required">Phone <span style="color:red;">*</span></label>
             <input 
                 type="number" 
-                class="form-control spaced-input @error('concerned_person_phone') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['concerned_person_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="concerned_person_phone" 
                 name="concerned_person_phone" 
-                value="{{ old('concerned_person_phone') }}" 
+                value="<?php echo e(old('concerned_person_phone')); ?>" 
                 required 
                 maxlength="10" 
                 oninput="this.value=this.value.slice(0, 10)"
             >
-            @error('concerned_person_phone')
+            <?php $__errorArgs = ['concerned_person_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
     </div> -->
 
@@ -624,7 +793,8 @@
                         id="concerned_person_is_me" 
                         name="concerned_person_is_me" 
                         value="1"
-                        {{ old('concerned_person_is_me') ? 'checked' : '' }}
+                        <?php echo e(old('concerned_person_is_me') ? 'checked' : ''); ?>
+
                         onclick="fillConcernedPersonDetails()"
                     >
                     <label class="form-check-label text-danger small" for="concerned_person_is_me">
@@ -637,64 +807,120 @@
                 <label for="concerned_person_name" class="form-label small fw-semibold text-muted">Concerned Person <span class="text-danger">*</span></label>
                 <input 
                     type="text" 
-                    class="form-control form-control-sm @error('concerned_person_name') is-invalid @enderror" 
+                    class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     id="concerned_person_name" 
                     name="concerned_person_name" 
-                    value="{{ old('concerned_person_name') }}" 
+                    value="<?php echo e(old('concerned_person_name')); ?>" 
                     required
                 >
-                @error('concerned_person_name')
+                <?php $__errorArgs = ['concerned_person_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="invalid-feedback d-block small">This Field is Required</div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-sm-2">
                 <label for="concerned_person_designation" class="form-label small fw-semibold text-muted">Designation <span class="text-danger">*</span></label>
                 <input 
                     type="text" 
-                    class="form-control form-control-sm @error('concerned_person_designation') is-invalid @enderror" 
+                    class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     id="concerned_person_designation" 
                     name="concerned_person_designation" 
-                    value="{{ old('concerned_person_designation') }}" 
+                    value="<?php echo e(old('concerned_person_designation')); ?>" 
                     required
                 >
-                @error('concerned_person_designation')
+                <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="invalid-feedback d-block small">This Field is Required</div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-3">
                 <label for="concerned_person_email" class="form-label small fw-semibold text-muted">Email <span class="text-danger">*</span></label>
                 <input 
                     type="email" 
-                    class="form-control form-control-sm @error('concerned_person_email') is-invalid @enderror" 
+                    class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     id="concerned_person_email" 
                     name="concerned_person_email" 
-                    value="{{ old('concerned_person_email') }}" 
+                    value="<?php echo e(old('concerned_person_email')); ?>" 
                     required
                 >
-                @error('concerned_person_email')
+                <?php $__errorArgs = ['concerned_person_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="invalid-feedback d-block small">This Field is Required</div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-3">
                 <label for="concerned_person_phone" class="form-label small fw-semibold text-muted">Phone <span class="text-danger">*</span></label>
                 <input 
                     type="text" 
-                    class="form-control form-control-sm @error('concerned_person_phone') is-invalid @enderror" 
+                    class="form-control form-control-sm <?php $__errorArgs = ['concerned_person_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     id="concerned_person_phone" 
                     name="concerned_person_phone" 
-                    value="{{ old('concerned_person_phone') }}" 
-                    maxlength="20" 
-                    pattern="^\+?[0-9]{7,20}$" 
+                    value="<?php echo e(old('concerned_person_phone')); ?>" 
+                    maxlength="19" 
+                    pattern="^\+?[0-9]{7,19}$" 
                     oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                     required
                 >
 
-                @error('concerned_person_phone')
+                <?php $__errorArgs = ['concerned_person_phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="invalid-feedback d-block small">This Field is Required</div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             
         </div>
@@ -762,29 +988,57 @@
             <label id="labelinput" for="company_website" class="required">Company Website <span style="color:red;">*</span></label>
             <input 
                 type="url" 
-                class="form-control spaced-input @error('website') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['website'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="company_website" 
                 name="website" 
-                value="{{ old('website') }}" 
+                value="<?php echo e(old('website')); ?>" 
                 required
             >
-            @error('website')
+            <?php $__errorArgs = ['website'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-5">
             <label id="labelinput" for="linkedin_link">LinkedIn <span style="color:red;">*</span></label>
             <input 
                 type="url" 
-                class="form-control spaced-input @error('linkedin') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="linkedin_link" 
                 name="linkedin" 
-                value="{{ old('linkedin') }}" 
+                value="<?php echo e(old('linkedin')); ?>" 
                 required
             >
-            @error('linkedin')
+            <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         </div>
         <div class="row g-3 mt-1">
@@ -794,22 +1048,36 @@
         <div class="col-sm-10" id="public-links-container">
             <div class="input-group mb-3">
                 <input 
-                    class="form-control spaced-input @error('public_links.0') is-invalid @enderror" 
+                    class="form-control spaced-input <?php $__errorArgs = ['public_links.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     type="url" 
                     name="public_links[]" 
                     placeholder="URL" 
-                    value="{{ old('public_links.0') }}"
+                    value="<?php echo e(old('public_links.0')); ?>"
                 >
                 
                 <select 
-                    class="form-control spaced-input @error('link_descriptions.0') is-invalid @enderror" 
+                    class="form-control spaced-input <?php $__errorArgs = ['link_descriptions.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="link_descriptions[]" 
                     required
                 >
-                    <option value="" disabled {{ old('link_descriptions.0') ? '' : 'selected' }}>Select Account</option>
-                    <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                    <option value="Twitter" {{ old('link_descriptions.0') == 'Twitter' ? 'selected' : '' }}>Twitter</option>
-                    <option value="Others" {{ old('link_descriptions.0') == 'Others' ? 'selected' : '' }}>Others</option>
+                    <option value="" disabled <?php echo e(old('link_descriptions.0') ? '' : 'selected'); ?>>Select Account</option>
+                    <option value="Facebook" <?php echo e(old('link_descriptions.0') == 'Facebook' ? 'selected' : ''); ?>>Facebook</option>
+                    <option value="Twitter" <?php echo e(old('link_descriptions.0') == 'Twitter' ? 'selected' : ''); ?>>Twitter</option>
+                    <option value="Others" <?php echo e(old('link_descriptions.0') == 'Others' ? 'selected' : ''); ?>>Others</option>
                 </select>
                 
                 <button 
@@ -821,9 +1089,16 @@
                     + Add More Links
                 </button>
             </div>
-            @error('public_links.0')
+            <?php $__errorArgs = ['public_links.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="text-danger">This Field is Required</span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
     </div> -->
 
@@ -863,30 +1138,58 @@
             <label for="company_website" class="form-label required">Company Website <span class="text-danger">*</span></label>
             <input 
                 type="url" 
-                class="form-control @error('website') is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['website'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="company_website" 
                 name="website" 
-                value="{{ old('website') }}" 
+                value="<?php echo e(old('website')); ?>" 
                 required
             >
-            @error('website')
+            <?php $__errorArgs = ['website'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="invalid-feedback">This Field is Required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-md-5">
             <label for="linkedin_link" class="form-label required">LinkedIn <span class="text-danger">*</span></label>
             <input 
                 type="url" 
-                class="form-control @error('linkedin') is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="linkedin_link" 
                 name="linkedin" 
-                value="{{ old('linkedin') }}" 
+                value="<?php echo e(old('linkedin')); ?>" 
                 required
             >
-            @error('linkedin')
+            <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="invalid-feedback">This Field is Required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 
@@ -899,22 +1202,36 @@
         <div class="col-sm-10" id="public-links-container">
             <div class="input-group mb-3">
                 <input 
-                    class="form-control @error('public_links.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['public_links.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     type="url" 
                     name="public_links[]" 
                     placeholder="URL" 
-                    value="{{ old('public_links.0') }}"
+                    value="<?php echo e(old('public_links.0')); ?>"
                     style="width: 425px; flex: 0 0 auto;"
                 >
                 <select 
-                    class="form-control @error('link_descriptions.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['link_descriptions.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="link_descriptions[]" 
                     
                 >
-                    <option value="" disabled {{ old('link_descriptions.0') ? '' : 'selected' }}>Select Account</option>
-                    <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                    <option value="Twitter" {{ old('link_descriptions.0') == 'Twitter' ? 'selected' : '' }}>Twitter</option>
-                    <option value="Others" {{ old('link_descriptions.0') == 'Others' ? 'selected' : '' }}>Others</option>
+                    <option value="" disabled <?php echo e(old('link_descriptions.0') ? '' : 'selected'); ?>>Select Account</option>
+                    <option value="Facebook" <?php echo e(old('link_descriptions.0') == 'Facebook' ? 'selected' : ''); ?>>Facebook</option>
+                    <option value="Twitter" <?php echo e(old('link_descriptions.0') == 'Twitter' ? 'selected' : ''); ?>>Twitter</option>
+                    <option value="Others" <?php echo e(old('link_descriptions.0') == 'Others' ? 'selected' : ''); ?>>Others</option>
                 </select>
                 <button 
                     class="btn btn-outline-primary float-end" 
@@ -925,9 +1242,16 @@
                     + Add More Links
                 </button>
             </div>
-            @error('public_links.0')
+            <?php $__errorArgs = ['public_links.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="invalid-feedback">This Field is Required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 
@@ -983,19 +1307,40 @@
             <label id="labelinput" for="founder_name" class="required">Name <span style="color:red;">*</span></label>
             <input 
                 type="text" 
-                class="form-control @error('founder_name.0') is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['founder_name.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="founder_name[]" 
-                value="{{ old('founder_name.0') }}" 
+                value="<?php echo e(old('founder_name.0')); ?>" 
                 required
             >
-            @error('founder_name.0')
+            <?php $__errorArgs = ['founder_name.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-2">
             <label id="labelinput" for="founder_position" class="required">Position</label>
             <select 
-                class="form-control @error('founder_position.0') is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['founder_position.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="founder_position[]" 
                 required
             >
@@ -1055,35 +1400,70 @@
                             <option value="Vice President">Vice President</option>
                   
                 </select>
-            @error('founder_position.0')
+            <?php $__errorArgs = ['founder_position.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-2">
             <label id="labelinput" for="founder_education" class="required">Highest Qualification <span style="color:red;">*</span></label>
             <input 
                 type="text" 
-                class="form-control @error('founder_education.0') is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['founder_education.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="founder_education[]" 
-                value="{{ old('founder_education.0') }}" 
+                value="<?php echo e(old('founder_education.0')); ?>" 
                 required
             >
-            @error('founder_education.')
+            <?php $__errorArgs = ['founder_education.'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-3">
             <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years) <span style="color:red;">*</span></label>
             <input 
                 type="number" 
-                class="form-control @error('founder_experience.0') is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['founder_experience.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="founder_experience[]" 
-                value="{{ old('founder_experience.0') }}" 
+                value="<?php echo e(old('founder_experience.0')); ?>" 
                 required
             >
-            @error('founder_experience.0')
+            <?php $__errorArgs = ['founder_experience.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-1">
             <button class="btn btn-info float-end mt-4" type="button" onclick="addFounderField()">+</button>
@@ -1128,109 +1508,165 @@
                 <label id="labelinput" for="founder_name" class="required">Name <span style="color:red;">*</span></label>
                 <input 
                     type="text" 
-                    class="form-control @error('founder_name.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['founder_name.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="founder_name[]" 
-                    value="{{ old('founder_name.0') }}" 
+                    value="<?php echo e(old('founder_name.0')); ?>" 
                     required
                 >
-                @error('founder_name.0')
+                <?php $__errorArgs = ['founder_name.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="text-danger">This Field is Required</span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-2">
                 <label id="labelinput" for="founder_position" class="required">Position</label>
                 <select 
-                    class="form-control @error('founder_position.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['founder_position.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="founder_position[]" 
                     required
                 >
-                    <option value="" {{ old('founder_position.0') ?'' :'selected'}} disabled>Select Position</option>
-                    <option value="Chief Administrative Officer" {{ old('founder_position.0') == 'Chief Administrative Officer' ? 'selected' : '' }}>Chief Administrative Officer</option>
-                    <option value="Chief Analytics Officer" {{ old('founder_position.0')== 'Chief Analytics Officer' ? 'selected' : ''}}>Chief Analytics Officer</option>
-                    <option value="Chief Brand Officer" {{ old('founder_position.0') == 'Chief Brand Officer' ? 'selected' : ''}}>Chief Brand Officer</option>
-                    <option value="Chief Business Development Officer" {{ old('founder_position.0') == 'Chief Business Development Officer'? 'selected' : ''}}>Chief Business Development Officer</option>
-                    <option value="Chief Business Officer" {{ old('founder_position.0') == 'Chief Business Officer' ? 'selected':''}}>Chief Business Officer</option>
-                    <option value="Chief Commercial Officer" {{ old('founder_position.0') == 'Chief Commercial Officer' ? 'selected':''}}>Chief Commercial Officer</option>
-                    <option value="Chief Communications Officer" {{ old('founder_position.0') == 'Chief Communications Officer' ? 'selected':''}}>Chief Communications Officer</option>
-                    <option value="Chief Compliance Officer" {{ old('founder_position.0') == 'Chief Compliance Officer'? 'selected':''}}>Chief Compliance Officer</option>
-                    <option value="Chief Content Officer" {{ old('founder_position.0')== 'Chief Content Officer'? 'selected':''}}>Chief Content Officer</option>
-                    <option value="Chief Creative Officer" {{ old('founder_position.0') == 'Chief Creative Officer' ? 'selected':''}}>Chief Creative Officer</option>
-                    <option value="Chief Customer Officer" {{ old('founder_position.0') == 'Chief Customer Officer' ? 'selected':''}}>Chief Customer Officer</option>
-                    <option value="Chief Data Officer"{{ old('founder_position.0') == 'Chief Data Officer'? 'selected':''}}>Chief Data Officer</option>
-                    <option value="Chief Design Officer" {{ old('founder_position.0') == 'Chief Design Officer'? 'selected':''}}>Chief Design Officer</option>
-                    <option value="Chief Digital Officer" {{ old('founder_position.0') == 'Chief Digital Officer'? 'selected':''}}>Chief Digital Officer</option>
-                    <option value="Chief Diversity Officer" {{ old('founder_position.0') == 'Chief Diversity Officer'? 'selected':''}}>Chief Diversity Officer</option>
-                    <option value="Chief Executive Officer" {{ old('founder_position.0') == 'Chief Executive Officer'? 'selected':''}}>Chief Executive Officer</option>
-                    <option value="Chief Experience Officer" {{ old('founder_position.0') == 'Chief Experience Officer'? 'selected':''}}>Chief Experience Officer</option>
-                    <option value="Chief Financial Officer" {{ old('founder_position.0') == 'Chief Financial Officer'? 'selected':''}}>Chief Financial Officer</option>
-                    <option value="Chief Gaming Officer" {{ old('founder_position.0') == 'Chief Gaming Officer'? 'selected':''}}>Chief Gaming Officer</option>
-                    <option value="Chief Genealogical Officer" {{ old('founder_position.0') == 'Chief Genealogical Officer'? 'selected':''}}>Chief Genealogical Officer</option>
-                    <option value="Chief Human Resources Officer" {{ old('founder_position.0') == 'Chief Human Resources Officer'? 'selected':''}}>Chief Human Resources Officer</option>
-                    <option value="Chief Information Officer" {{ old('founder_position.0') == 'Chief Information Officer'? 'selected':''}}>Chief Information Officer</option>
-                    <option value="Chief Information Officer (Higher Education)" {{ old('founder_position.0') == 'Chief Information Officer (Higher Education)'? 'selected':''}}>Chief Information Officer (Higher Education)</option>
-                    <option value="Chief Information Security Officer" {{ old('founder_position.0') == 'Chief Information Security Officer'? 'selected':''}}>Chief Information Security Officer</option>
-                    <option value="Chief Innovation Officer" {{ old('founder_position.0') == 'Chief Innovation Officer'? 'selected':''}}>Chief Innovation Officer</option>
-                    <option value="Chief Investment Officer" {{ old('founder_position.0') == 'Chief Investment Officer'? 'selected':''}}>Chief Investment Officer</option>
-                    <option value="Chief Knowledge Officer" {{ old('founder_position.0') == 'Chief Knowledge Officer'? 'selected':''}}>Chief Knowledge Officer</option>
-                    <option value="Chief Learning Officer" {{ old('founder_position.0') == 'Chief Learning Officer'? 'selected':''}}>Chief Learning Officer</option>
-                    <option value="Chief Marketing Officer" {{ old('founder_position.0') == 'Chief Marketing Officer'? 'selected':''}}>Chief Marketing Officer</option>
-                    <option value="Chief Operating Officer" {{ old('founder_position.0') == 'Chief Operating Officer'? 'selected':''}}>Chief Operating Officer</option>
-                    <option value="Chief Privacy Officer" {{ old('founder_position.0') == 'Chief Privacy Officer'? 'selected':''}}>Chief Privacy Officer</option>
-                    <option value="Chief Process Officer" {{ old('founder_position.0') == 'Chief Process Officer'? 'selected':''}}>Chief Process Officer</option>
-                    <option value="Chief Product Officer" {{ old('founder_position.0') == 'Chief Product Officer'? 'selected':''}}>Chief Product Officer</option>
-                    <option value="Chief Reputation Officer" {{ old('founder_position.0') == 'Chief Reputation Officer'? 'selected':''}}>Chief Reputation Officer</option>
-                    <option value="Chief Research Officer" {{ old('founder_position.0') == 'Chief Research Officer'? 'selected':''}}>Chief Research Officer</option>
-                    <option value="Chief Restructuring Officer" {{ old('founder_position.0') == 'Chief Restructuring Officer'? 'selected':''}}>Chief Restructuring Officer</option>
-                    <option value="Chief Risk Officer" {{ old('founder_position.0') == 'Chief Risk Officer'? 'selected':''}}>Chief Risk Officer</option>
-                    <option value="Chief Science Officer" {{ old('founder_position.0') == 'Chief Science Officer'? 'selected':''}}>Chief Science Officer</option>
-                    <option value="Chief Scientific Officer" {{ old('founder_position.0') == 'Chief Scientific Officer'? 'selected':''}}>Chief Scientific Officer</option>
-                    <option value="Chief Security Officer" {{ old('founder_position.0') == 'Chief Security Officer'? 'selected':''}}>Chief Security Officer</option>
-                    <option value="Chief Services Officer" {{ old('founder_position.0') == 'Chief Services Officer'? 'selected':''}}>Chief Services Officer</option>
-                    <option value="Chief Strategy Officer" {{ old('founder_position.0') == 'Chief Strategy Officer'? 'selected':''}}>Chief Strategy Officer</option>
-                    <option value="Chief Sustainability Officer" {{ old('founder_position.0') == 'Chief Sustainability Officer'? 'selected':''}}>Chief Sustainability Officer</option>
-                    <option value="Chief Technology Officer" {{ old('founder_position.0') == 'Chief Technology Officer'? 'selected':''}}>Chief Technology Officer</option>
-                    <option value="Chief Visibility Officer" {{ old('founder_position.0') == 'Chief Visibility Officer'? 'selected':''}}>Chief Visibility Officer</option>
-                    <option value="Chief Visionary Officer" {{ old('founder_position.0') == 'Chief Visionary Officer'? 'selected':''}}>Chief Visionary Officer</option>
-                    <option value="Chief Web Officer" {{ old('founder_position.0') == 'Chief Web Officer'? 'selected':''}}>Chief Web Officer</option>
-                    <option value="General Manager" {{ old('founder_position.0') == 'General Manager'? 'selected':''}}>General Manager</option>
-                    <option value="Manager" {{ old('founder_position.0') == 'Manager'? 'selected':''}}>Manager</option>
-                    <option value="Others" {{ old('founder_position.0') == 'Others'? 'selected':''}}>Others</option>
-                    <option value="Secretary" {{ old('founder_position.0') == 'Secretary'? 'selected':''}}>Secretary</option>
-                    <option value="Supervisor" {{ old('founder_position.0') == 'Supervisor'? 'selected':''}}>Supervisor</option>
-                    <option value="Vice President" {{ old('founder_position.0') == 'Vice President'? 'selected':''}}>Vice President</option>
+                    <option value="" <?php echo e(old('founder_position.0') ?'' :'selected'); ?> disabled>Select Position</option>
+                    <option value="Chief Administrative Officer" <?php echo e(old('founder_position.0') == 'Chief Administrative Officer' ? 'selected' : ''); ?>>Chief Administrative Officer</option>
+                    <option value="Chief Analytics Officer" <?php echo e(old('founder_position.0')== 'Chief Analytics Officer' ? 'selected' : ''); ?>>Chief Analytics Officer</option>
+                    <option value="Chief Brand Officer" <?php echo e(old('founder_position.0') == 'Chief Brand Officer' ? 'selected' : ''); ?>>Chief Brand Officer</option>
+                    <option value="Chief Business Development Officer" <?php echo e(old('founder_position.0') == 'Chief Business Development Officer'? 'selected' : ''); ?>>Chief Business Development Officer</option>
+                    <option value="Chief Business Officer" <?php echo e(old('founder_position.0') == 'Chief Business Officer' ? 'selected':''); ?>>Chief Business Officer</option>
+                    <option value="Chief Commercial Officer" <?php echo e(old('founder_position.0') == 'Chief Commercial Officer' ? 'selected':''); ?>>Chief Commercial Officer</option>
+                    <option value="Chief Communications Officer" <?php echo e(old('founder_position.0') == 'Chief Communications Officer' ? 'selected':''); ?>>Chief Communications Officer</option>
+                    <option value="Chief Compliance Officer" <?php echo e(old('founder_position.0') == 'Chief Compliance Officer'? 'selected':''); ?>>Chief Compliance Officer</option>
+                    <option value="Chief Content Officer" <?php echo e(old('founder_position.0')== 'Chief Content Officer'? 'selected':''); ?>>Chief Content Officer</option>
+                    <option value="Chief Creative Officer" <?php echo e(old('founder_position.0') == 'Chief Creative Officer' ? 'selected':''); ?>>Chief Creative Officer</option>
+                    <option value="Chief Customer Officer" <?php echo e(old('founder_position.0') == 'Chief Customer Officer' ? 'selected':''); ?>>Chief Customer Officer</option>
+                    <option value="Chief Data Officer"<?php echo e(old('founder_position.0') == 'Chief Data Officer'? 'selected':''); ?>>Chief Data Officer</option>
+                    <option value="Chief Design Officer" <?php echo e(old('founder_position.0') == 'Chief Design Officer'? 'selected':''); ?>>Chief Design Officer</option>
+                    <option value="Chief Digital Officer" <?php echo e(old('founder_position.0') == 'Chief Digital Officer'? 'selected':''); ?>>Chief Digital Officer</option>
+                    <option value="Chief Diversity Officer" <?php echo e(old('founder_position.0') == 'Chief Diversity Officer'? 'selected':''); ?>>Chief Diversity Officer</option>
+                    <option value="Chief Executive Officer" <?php echo e(old('founder_position.0') == 'Chief Executive Officer'? 'selected':''); ?>>Chief Executive Officer</option>
+                    <option value="Chief Experience Officer" <?php echo e(old('founder_position.0') == 'Chief Experience Officer'? 'selected':''); ?>>Chief Experience Officer</option>
+                    <option value="Chief Financial Officer" <?php echo e(old('founder_position.0') == 'Chief Financial Officer'? 'selected':''); ?>>Chief Financial Officer</option>
+                    <option value="Chief Gaming Officer" <?php echo e(old('founder_position.0') == 'Chief Gaming Officer'? 'selected':''); ?>>Chief Gaming Officer</option>
+                    <option value="Chief Genealogical Officer" <?php echo e(old('founder_position.0') == 'Chief Genealogical Officer'? 'selected':''); ?>>Chief Genealogical Officer</option>
+                    <option value="Chief Human Resources Officer" <?php echo e(old('founder_position.0') == 'Chief Human Resources Officer'? 'selected':''); ?>>Chief Human Resources Officer</option>
+                    <option value="Chief Information Officer" <?php echo e(old('founder_position.0') == 'Chief Information Officer'? 'selected':''); ?>>Chief Information Officer</option>
+                    <option value="Chief Information Officer (Higher Education)" <?php echo e(old('founder_position.0') == 'Chief Information Officer (Higher Education)'? 'selected':''); ?>>Chief Information Officer (Higher Education)</option>
+                    <option value="Chief Information Security Officer" <?php echo e(old('founder_position.0') == 'Chief Information Security Officer'? 'selected':''); ?>>Chief Information Security Officer</option>
+                    <option value="Chief Innovation Officer" <?php echo e(old('founder_position.0') == 'Chief Innovation Officer'? 'selected':''); ?>>Chief Innovation Officer</option>
+                    <option value="Chief Investment Officer" <?php echo e(old('founder_position.0') == 'Chief Investment Officer'? 'selected':''); ?>>Chief Investment Officer</option>
+                    <option value="Chief Knowledge Officer" <?php echo e(old('founder_position.0') == 'Chief Knowledge Officer'? 'selected':''); ?>>Chief Knowledge Officer</option>
+                    <option value="Chief Learning Officer" <?php echo e(old('founder_position.0') == 'Chief Learning Officer'? 'selected':''); ?>>Chief Learning Officer</option>
+                    <option value="Chief Marketing Officer" <?php echo e(old('founder_position.0') == 'Chief Marketing Officer'? 'selected':''); ?>>Chief Marketing Officer</option>
+                    <option value="Chief Operating Officer" <?php echo e(old('founder_position.0') == 'Chief Operating Officer'? 'selected':''); ?>>Chief Operating Officer</option>
+                    <option value="Chief Privacy Officer" <?php echo e(old('founder_position.0') == 'Chief Privacy Officer'? 'selected':''); ?>>Chief Privacy Officer</option>
+                    <option value="Chief Process Officer" <?php echo e(old('founder_position.0') == 'Chief Process Officer'? 'selected':''); ?>>Chief Process Officer</option>
+                    <option value="Chief Product Officer" <?php echo e(old('founder_position.0') == 'Chief Product Officer'? 'selected':''); ?>>Chief Product Officer</option>
+                    <option value="Chief Reputation Officer" <?php echo e(old('founder_position.0') == 'Chief Reputation Officer'? 'selected':''); ?>>Chief Reputation Officer</option>
+                    <option value="Chief Research Officer" <?php echo e(old('founder_position.0') == 'Chief Research Officer'? 'selected':''); ?>>Chief Research Officer</option>
+                    <option value="Chief Restructuring Officer" <?php echo e(old('founder_position.0') == 'Chief Restructuring Officer'? 'selected':''); ?>>Chief Restructuring Officer</option>
+                    <option value="Chief Risk Officer" <?php echo e(old('founder_position.0') == 'Chief Risk Officer'? 'selected':''); ?>>Chief Risk Officer</option>
+                    <option value="Chief Science Officer" <?php echo e(old('founder_position.0') == 'Chief Science Officer'? 'selected':''); ?>>Chief Science Officer</option>
+                    <option value="Chief Scientific Officer" <?php echo e(old('founder_position.0') == 'Chief Scientific Officer'? 'selected':''); ?>>Chief Scientific Officer</option>
+                    <option value="Chief Security Officer" <?php echo e(old('founder_position.0') == 'Chief Security Officer'? 'selected':''); ?>>Chief Security Officer</option>
+                    <option value="Chief Services Officer" <?php echo e(old('founder_position.0') == 'Chief Services Officer'? 'selected':''); ?>>Chief Services Officer</option>
+                    <option value="Chief Strategy Officer" <?php echo e(old('founder_position.0') == 'Chief Strategy Officer'? 'selected':''); ?>>Chief Strategy Officer</option>
+                    <option value="Chief Sustainability Officer" <?php echo e(old('founder_position.0') == 'Chief Sustainability Officer'? 'selected':''); ?>>Chief Sustainability Officer</option>
+                    <option value="Chief Technology Officer" <?php echo e(old('founder_position.0') == 'Chief Technology Officer'? 'selected':''); ?>>Chief Technology Officer</option>
+                    <option value="Chief Visibility Officer" <?php echo e(old('founder_position.0') == 'Chief Visibility Officer'? 'selected':''); ?>>Chief Visibility Officer</option>
+                    <option value="Chief Visionary Officer" <?php echo e(old('founder_position.0') == 'Chief Visionary Officer'? 'selected':''); ?>>Chief Visionary Officer</option>
+                    <option value="Chief Web Officer" <?php echo e(old('founder_position.0') == 'Chief Web Officer'? 'selected':''); ?>>Chief Web Officer</option>
+                    <option value="General Manager" <?php echo e(old('founder_position.0') == 'General Manager'? 'selected':''); ?>>General Manager</option>
+                    <option value="Manager" <?php echo e(old('founder_position.0') == 'Manager'? 'selected':''); ?>>Manager</option>
+                    <option value="Others" <?php echo e(old('founder_position.0') == 'Others'? 'selected':''); ?>>Others</option>
+                    <option value="Secretary" <?php echo e(old('founder_position.0') == 'Secretary'? 'selected':''); ?>>Secretary</option>
+                    <option value="Supervisor" <?php echo e(old('founder_position.0') == 'Supervisor'? 'selected':''); ?>>Supervisor</option>
+                    <option value="Vice President" <?php echo e(old('founder_position.0') == 'Vice President'? 'selected':''); ?>>Vice President</option>
                 </select>
-                @error('founder_position.0')
+                <?php $__errorArgs = ['founder_position.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="text-danger">This Field is Required</span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-2">
                 <label id="labelinput" for="founder_education" class="required">Highest Qualification <span style="color:red;">*</span></label>
                 <input 
                     type="text" 
-                    class="form-control @error('founder_education.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['founder_education.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="founder_education[]" 
-                    value="{{ old('founder_education.0') }}" 
+                    value="<?php echo e(old('founder_education.0')); ?>" 
                     required
                 >
-                @error('founder_education.0')
+                <?php $__errorArgs = ['founder_education.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="text-danger">This Field is Required</span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-3">
                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years) <span style="color:red;">*</span></label>
                 <input 
                     type="number" 
-                    class="form-control @error('founder_experience.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['founder_experience.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="founder_experience[]" 
-                    value="{{ old('founder_experience.0') }}" 
+                    value="<?php echo e(old('founder_experience.0')); ?>" 
                     required
                 >
-                @error('founder_experience.0')
+                <?php $__errorArgs = ['founder_experience.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="text-danger">This Field is Required</span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-1 text-end">
@@ -1299,40 +1735,68 @@
         <div class="col-md-3">
             <label id="labelinput" for="fund_usage" class="required">Usage of Fund <span style="color:red;">*</span></label>
             <select 
-                class="form-control spaced-input @error('fund_usage.0') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['fund_usage.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="fund_usage[]" 
                 required
             >
-                <option value="" disabled {{ old('fund_usage.0') ? '' : 'selected' }}>Select Usage</option>
-                <option value="Capex" {{ old('fund_usage.0') == 'Capex' ? 'selected' : '' }}>Capex</option>
-                <option value="Opex" {{ old('fund_usage.0') == 'Opex' ? 'selected' : '' }}>Opex</option>
-                <option value="Acquisition" {{ old('fund_usage.0') == 'Acquisition' ? 'selected' : '' }}>Acquisition</option>
-                <option value="Debt Requirement" {{ old('fund_usage.0') == 'Debt Requirement' ? 'selected' : '' }}>Debt Requirement</option>
-                <option value="Others" {{ old('fund_usage.0') == 'Others' ? 'selected' : '' }}>Others</option>
+                <option value="" disabled <?php echo e(old('fund_usage.0') ? '' : 'selected'); ?>>Select Usage</option>
+                <option value="Capex" <?php echo e(old('fund_usage.0') == 'Capex' ? 'selected' : ''); ?>>Capex</option>
+                <option value="Opex" <?php echo e(old('fund_usage.0') == 'Opex' ? 'selected' : ''); ?>>Opex</option>
+                <option value="Acquisition" <?php echo e(old('fund_usage.0') == 'Acquisition' ? 'selected' : ''); ?>>Acquisition</option>
+                <option value="Debt Requirement" <?php echo e(old('fund_usage.0') == 'Debt Requirement' ? 'selected' : ''); ?>>Debt Requirement</option>
+                <option value="Others" <?php echo e(old('fund_usage.0') == 'Others' ? 'selected' : ''); ?>>Others</option>
             </select>
-            @error('fund_usage.0')
+            <?php $__errorArgs = ['fund_usage.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger d-block">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-md-8">
             <label id="labelinput" for="fund_requirement" class="required">Fund Requirement <span style="color:red;">*</span></label>
             <div class="input-group">
                 <input 
-                    class="form-control spaced-input @error('fund_requirement.0') is-invalid @enderror " 
+                    class="form-control spaced-input <?php $__errorArgs = ['fund_requirement.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?> " 
                     type="number" 
                     name="fund_requirement[]" 
-                    value="{{ old('fund_requirement.0') }}" 
+                    value="<?php echo e(old('fund_requirement.0')); ?>" 
                     required
                 >
                 
                 <select 
-                    class="form-select spaced-input @error('fund_unit.0') is-invalid @enderror" 
+                    class="form-select spaced-input <?php $__errorArgs = ['fund_unit.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="fund_unit[]" 
                     required
                 >
-                    <option value="crores" {{ old('fund_unit.0') == 'crores' ? 'selected' : '' }}>Cr</option>
-                    <option value="lakhs" {{ old('fund_unit.0') == 'lakhs' ? 'selected' : '' }}>Lakh</option>
+                    <option value="crores" <?php echo e(old('fund_unit.0') == 'crores' ? 'selected' : ''); ?>>Cr</option>
+                    <option value="lakhs" <?php echo e(old('fund_unit.0') == 'lakhs' ? 'selected' : ''); ?>>Lakh</option>
                 </select>
                
             </div>
@@ -1344,12 +1808,26 @@
             <button id="addfundButton" class="btn btn-info float-end" type="button" onclick="addFundField()">+ </button>
         </div>
        
-           @error('fund_requirement.0')
+           <?php $__errorArgs = ['fund_requirement.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger d-block mt-1">This Field is Required</span>
-        @enderror
-        @error('fund_unit.0')
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        <?php $__errorArgs = ['fund_unit.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger d-block mt-1">This Field is Required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
     </div>
 
@@ -1359,7 +1837,7 @@
         class="form-control spaced-input" 
         id="total_fund_raised" 
         name="total_fund_raised" 
-        value="{{ old('total_fund_raised') }}" 
+        value="<?php echo e(old('total_fund_raised')); ?>" 
         readonly
     >
     <label id="labelinput" for="fund_requirement" class="required">Total Fund Raised</label>
@@ -1465,63 +1943,119 @@
         <div class="col-md-2">
             <label id="labelinput" for="previous_rounds" class="required">Previous Round <span style="color:red;">*</span></label>
             <select 
-                class="form-control spaced-input @error('previous_rounds.0') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['previous_rounds.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="previous_rounds[]" 
                 required
             >
-                <option value="" disabled {{ old('previous_rounds.0') ? '' : 'selected' }}>Select Round</option>
-                <option value="Pre seed round" {{ old('previous_rounds.0') == 'Pre seed round' ? 'selected' : '' }}>Pre seed round</option>
-                <option value="Seed Round" {{ old('previous_rounds.0') == 'Seed Round' ? 'selected' : '' }}>Seed Round</option>
-                <option value="Series A round" {{ old('previous_rounds.0') == 'Series A round' ? 'selected' : '' }}>Series A round</option>
-                <option value="Series B round" {{ old('previous_rounds.0') == 'Series B round' ? 'selected' : '' }}>Series B round</option>
-                <option value="Series C round" {{ old('previous_rounds.0') == 'Series C round' ? 'selected' : '' }}>Series C round</option>
-                <option value="Series D round" {{ old('previous_rounds.0') == 'Series D round' ? 'selected' : '' }}>Series D round</option>
-                <option value="Series E and beyond" {{ old('previous_rounds.0') == 'Series E and beyond' ? 'selected' : '' }}>Series E and beyond</option>
+                <option value="" disabled <?php echo e(old('previous_rounds.0') ? '' : 'selected'); ?>>Select Round</option>
+                <option value="Pre seed round" <?php echo e(old('previous_rounds.0') == 'Pre seed round' ? 'selected' : ''); ?>>Pre seed round</option>
+                <option value="Seed Round" <?php echo e(old('previous_rounds.0') == 'Seed Round' ? 'selected' : ''); ?>>Seed Round</option>
+                <option value="Series A round" <?php echo e(old('previous_rounds.0') == 'Series A round' ? 'selected' : ''); ?>>Series A round</option>
+                <option value="Series B round" <?php echo e(old('previous_rounds.0') == 'Series B round' ? 'selected' : ''); ?>>Series B round</option>
+                <option value="Series C round" <?php echo e(old('previous_rounds.0') == 'Series C round' ? 'selected' : ''); ?>>Series C round</option>
+                <option value="Series D round" <?php echo e(old('previous_rounds.0') == 'Series D round' ? 'selected' : ''); ?>>Series D round</option>
+                <option value="Series E and beyond" <?php echo e(old('previous_rounds.0') == 'Series E and beyond' ? 'selected' : ''); ?>>Series E and beyond</option>
             </select>
-            @error('previous_rounds.0')
+            <?php $__errorArgs = ['previous_rounds.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-3">
             <label id="labelinput" for="investors" class="required">Investors <span style="color:red;">*</span></label>
             <input 
                 type="text" 
-                class="form-control spaced-input @error('investors.0') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['investors.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="investors[]" 
-                value="{{ old('investors.0') }}" 
+                value="<?php echo e(old('investors.0')); ?>" 
                 required
             >
-            @error('investors.0')
+            <?php $__errorArgs = ['investors.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-3">
             <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr) <span style="color:red;">*</span></label>
             <input 
                 type="number" 
-                class="form-control spaced-input @error('amount_raised.0') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['amount_raised.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="amount_raised[]" 
                 min="0" 
                 step="0.01" 
-                value="{{ old('amount_raised.0') }}" 
+                value="<?php echo e(old('amount_raised.0')); ?>" 
                 required
             >
-            @error('amount_raised.0')
+            <?php $__errorArgs = ['amount_raised.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-3">
             <label id="labelinput" for="valuation" class="required">Valuation (in cr) <span style="color:red;">*</span></label>
             <input 
                 type="number" 
-                class="form-control spaced-input @error('valuation.0') is-invalid @enderror" 
+                class="form-control spaced-input <?php $__errorArgs = ['valuation.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="valuation[]" 
-                value="{{ old('valuation.0') }}" 
+                value="<?php echo e(old('valuation.0')); ?>" 
                 required
             >
-            @error('valuation.0')
+            <?php $__errorArgs = ['valuation.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger">This Field is Required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-1">
             <button class="btn btn-info float-end mt-4" type="button" onclick="addPreviousRoundField()">+</button>
@@ -1585,22 +2119,36 @@
             <div class="col-md-2">
                 <label id="labelinput" for="previous_rounds" class="form-label required">Previous Round <span class="text-danger">*</span></label>
                 <select 
-                    class="form-select @error('previous_rounds.0') is-invalid @enderror" 
+                    class="form-select <?php $__errorArgs = ['previous_rounds.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="previous_rounds[]" 
                     required
                 >
-                    <option value="" disabled {{ old('previous_rounds.0') ? '' : 'selected' }}>Select Round</option>
-                    <option value="Pre seed round" {{ old('previous_rounds.0') == 'Pre seed round' ? 'selected' : '' }}>Pre seed round</option>
-                    <option value="Seed Round" {{ old('previous_rounds.0') == 'Seed Round' ? 'selected' : '' }}>Seed Round</option>
-                    <option value="Series A round" {{ old('previous_rounds.0') == 'Series A round' ? 'selected' : '' }}>Series A round</option>
-                    <option value="Series B round" {{ old('previous_rounds.0') == 'Series B round' ? 'selected' : '' }}>Series B round</option>
-                    <option value="Series C round" {{ old('previous_rounds.0') == 'Series C round' ? 'selected' : '' }}>Series C round</option>
-                    <option value="Series D round" {{ old('previous_rounds.0') == 'Series D round' ? 'selected' : '' }}>Series D round</option>
-                    <option value="Series E and beyond" {{ old('previous_rounds.0') == 'Series E and beyond' ? 'selected' : '' }}>Series E and beyond</option>
+                    <option value="" disabled <?php echo e(old('previous_rounds.0') ? '' : 'selected'); ?>>Select Round</option>
+                    <option value="Pre seed round" <?php echo e(old('previous_rounds.0') == 'Pre seed round' ? 'selected' : ''); ?>>Pre seed round</option>
+                    <option value="Seed Round" <?php echo e(old('previous_rounds.0') == 'Seed Round' ? 'selected' : ''); ?>>Seed Round</option>
+                    <option value="Series A round" <?php echo e(old('previous_rounds.0') == 'Series A round' ? 'selected' : ''); ?>>Series A round</option>
+                    <option value="Series B round" <?php echo e(old('previous_rounds.0') == 'Series B round' ? 'selected' : ''); ?>>Series B round</option>
+                    <option value="Series C round" <?php echo e(old('previous_rounds.0') == 'Series C round' ? 'selected' : ''); ?>>Series C round</option>
+                    <option value="Series D round" <?php echo e(old('previous_rounds.0') == 'Series D round' ? 'selected' : ''); ?>>Series D round</option>
+                    <option value="Series E and beyond" <?php echo e(old('previous_rounds.0') == 'Series E and beyond' ? 'selected' : ''); ?>>Series E and beyond</option>
                 </select>
-                @error('previous_rounds.0')
+                <?php $__errorArgs = ['previous_rounds.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="invalid-feedback">This Field is Required</div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             
@@ -1608,14 +2156,28 @@
                 <label id="labelinput" for="investors" class="form-label required">Investors <span class="text-danger">*</span></label>
                 <input 
                     type="text" 
-                    class="form-control @error('investors.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['investors.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="investors[]" 
-                    value="{{ old('investors.0') }}" 
+                    value="<?php echo e(old('investors.0')); ?>" 
                     required
                 >
-                @error('investors.0')
+                <?php $__errorArgs = ['investors.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="invalid-feedback">This Field is Required</div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
            
@@ -1623,16 +2185,30 @@
                 <label id="labelinput" for="amount_raised" class="form-label required">Amount Raised (in cr) <span class="text-danger">*</span></label>
                 <input 
                     type="number" 
-                    class="form-control @error('amount_raised.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['amount_raised.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="amount_raised[]" 
                     min="0" 
                     step="0.01" 
-                    value="{{ old('amount_raised.0') }}" 
+                    value="<?php echo e(old('amount_raised.0')); ?>" 
                     required
                 >
-                @error('amount_raised.0')
+                <?php $__errorArgs = ['amount_raised.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="invalid-feedback">This Field is Required</div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
            
@@ -1640,14 +2216,28 @@
                 <label id="labelinput" for="valuation" class="form-label required">Valuation (in cr) <span class="text-danger">*</span></label>
                 <input 
                     type="number" 
-                    class="form-control @error('valuation.0') is-invalid @enderror" 
+                    class="form-control <?php $__errorArgs = ['valuation.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="valuation[]" 
-                    value="{{ old('valuation.0') }}" 
+                    value="<?php echo e(old('valuation.0')); ?>" 
                     required
                 >
-                @error('valuation.0')
+                <?php $__errorArgs = ['valuation.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="invalid-feedback">This Field is Required</div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
           
@@ -1718,16 +2308,30 @@
     <label id="labelinput" for="pitch_deck" class="required" style="color: red;">Pitch Deck<small> (ppt, pptx, pdf, doc, docx)</small> <span style="color:red;">*</span></label>
     <input 
         type="file" 
-        class="form-control spaced-input @error('pitch_deck') is-invalid @enderror" 
+        class="form-control spaced-input <?php $__errorArgs = ['pitch_deck'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
         id="pitch_deck" 
         name="pitch_deck" 
-        value="{{ old('pitch_deck.0')}}"
+        value="<?php echo e(old('pitch_deck.0')); ?>"
         accept=".ppt,.pptx,.pdf,.doc,.docx" 
         required
     >
-    @error('pitch_deck')
+    <?php $__errorArgs = ['pitch_deck'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
         <span class="text-danger">This Field is Required</span>
-    @enderror
+    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
     <div class="mb-1">
     <label id="labelinput" for="financials" class="required" style="color:red;">Financials</label>
@@ -1736,34 +2340,62 @@
             <div class="col-md-3">
                 <label id="labelinput" for="fiscal_year" class="required">Fiscal Year<span style="color:red;">*</span></label>
                 <select 
-                    class="form-control spaced-input @error('fiscal_year.0') is-invalid @enderror" 
+                    class="form-control spaced-input <?php $__errorArgs = ['fiscal_year.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="fiscal_year[]" 
                     required
                 >
-                    <option value="" disabled {{ old('fiscal_year.0') ? '' : 'selected' }}>Select Year</option>
-                    <option value="2020" {{ old('fiscal_year.0') == '2020' ? 'selected' : '' }}>2020-2021</option>
-                    <option value="2021" {{ old('fiscal_year.0') == '2021' ? 'selected' : '' }}>2021-2022</option>
-                    <option value="2022" {{ old('fiscal_year.0') == '2022' ? 'selected' : '' }}>2022-2023</option>
-                    <option value="2023" {{ old('fiscal_year.0') == '2023' ? 'selected' : '' }}>2023-2024</option>
+                    <option value="" disabled <?php echo e(old('fiscal_year.0') ? '' : 'selected'); ?>>Select Year</option>
+                    <option value="2020" <?php echo e(old('fiscal_year.0') == '2020' ? 'selected' : ''); ?>>2020-2021</option>
+                    <option value="2021" <?php echo e(old('fiscal_year.0') == '2021' ? 'selected' : ''); ?>>2021-2022</option>
+                    <option value="2022" <?php echo e(old('fiscal_year.0') == '2022' ? 'selected' : ''); ?>>2022-2023</option>
+                    <option value="2023" <?php echo e(old('fiscal_year.0') == '2023' ? 'selected' : ''); ?>>2023-2024</option>
                 </select>
-                @error('fiscal_year.0')
+                <?php $__errorArgs = ['fiscal_year.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="text-danger">This Field is Required</span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             <div class="col-md-8">
                 <label id="labelinput" for="financials" class="required">Choose file<small> (pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
                 <input 
                     type="file" 
                     id="financials"
-                    class="form-control spaced-input @error('financials.0') is-invalid @enderror" 
+                    class="form-control spaced-input <?php $__errorArgs = ['financials.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                     name="financials[]" 
                     accept=".pdf,.doc,.docx,.xls,.xlsx" 
                     required
-                    value="{{ old('financials.0')}}"
+                    value="<?php echo e(old('financials.0')); ?>"
                 >
-                @error('financials.0')
+                <?php $__errorArgs = ['financials.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="text-danger">This Field is Required</span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             
             <div class="col-md-1">
@@ -1777,15 +2409,29 @@
     <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment<small> (pdf, doc, docx, xls, xlsx, ppt, pptx)</small></label>
     <input 
         type="file" 
-        class="form-control spaced-input @error('other_attachment') is-invalid @enderror" 
+        class="form-control spaced-input <?php $__errorArgs = ['other_attachment'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
         id="other_attachment" 
         name="other_attachment"
-        value = "{{ old('other_attachment')}}"
+        value = "<?php echo e(old('other_attachment')); ?>"
         accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" 
     >
-    @error('other_attachment')
+    <?php $__errorArgs = ['other_attachment'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
         <span class="text-danger">This Field is Required</span>
-    @enderror
+    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
     <!-- <hr> -->
 
@@ -1798,26 +2444,40 @@
     <div class="form-floating mb-4">
         <label id="labelinput" for="referral_source" class="required"></label>
         <select 
-            class="form-control spaced-input @error('referral_source') is-invalid @enderror" 
+            class="form-control spaced-input <?php $__errorArgs = ['referral_source'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="referral_source" 
             name="referral_source" 
             required
         >
-            <option value="" disabled {{ old('referral_source') ? '' : 'selected' }}>Select Source</option>
-            <option value="Friend/Family" {{ old('referral_source') == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
-            <option value="Social Media (Facebook, Instagram, Twitter, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter, etc.)</option>
-            <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
-            <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
-            <option value="Email Newsletter" {{ old('referral_source') == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
-            <option value="Event/Seminar" {{ old('referral_source') == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
-            <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral (Doctor, Lawyer, etc.)</option>
-            <option value="Blog/Website" {{ old('referral_source') == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
-            <option value="Direct Mail" {{ old('referral_source') == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
-            <option value="Company Website" {{ old('referral_source') == 'Company Website' ? 'selected' : '' }}>Company Website</option>
+            <option value="" disabled <?php echo e(old('referral_source') ? '' : 'selected'); ?>>Select Source</option>
+            <option value="Friend/Family" <?php echo e(old('referral_source') == 'Friend/Family' ? 'selected' : ''); ?>>Friend/Family</option>
+            <option value="Social Media (Facebook, Instagram, Twitter, etc.)" <?php echo e(old('referral_source') == 'Social Media (Facebook, Instagram, Twitter, etc.)' ? 'selected' : ''); ?>>Social Media (Facebook, Instagram, Twitter, etc.)</option>
+            <option value="Online Search (Google, Bing, etc.)" <?php echo e(old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : ''); ?>>Online Search (Google, Bing, etc.)</option>
+            <option value="Advertisement (TV, Radio, Print)" <?php echo e(old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : ''); ?>>Advertisement (TV, Radio, Print)</option>
+            <option value="Email Newsletter" <?php echo e(old('referral_source') == 'Email Newsletter' ? 'selected' : ''); ?>>Email Newsletter</option>
+            <option value="Event/Seminar" <?php echo e(old('referral_source') == 'Event/Seminar' ? 'selected' : ''); ?>>Event/Seminar</option>
+            <option value="Professional Referral (Doctor, Lawyer, etc.)" <?php echo e(old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : ''); ?>>Professional Referral (Doctor, Lawyer, etc.)</option>
+            <option value="Blog/Website" <?php echo e(old('referral_source') == 'Blog/Website' ? 'selected' : ''); ?>>Blog/Website</option>
+            <option value="Direct Mail" <?php echo e(old('referral_source') == 'Direct Mail' ? 'selected' : ''); ?>>Direct Mail</option>
+            <option value="Company Website" <?php echo e(old('referral_source') == 'Company Website' ? 'selected' : ''); ?>>Company Website</option>
         </select>
-        @error('referral_source')
+        <?php $__errorArgs = ['referral_source'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger">This Field is Required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
     </div>
 
@@ -1830,43 +2490,43 @@
                         <div class="form-group mb-3">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="capital_raise" name="guidance_needed[]" value="Capital Raise" 
-                                {{ in_array('Capital Raise', old('guidance_needed', [])) ? 'checked' : '' }}>
+                                <?php echo e(in_array('Capital Raise', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                             <label class="form-check-label" for="capital_raise">Capital Raise</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="valuation_modelling" name="guidance_needed[]" value="Valuation and Financial Modelling"
-                                    {{ in_array('Valuation and Financial Modelling', old('guidance_needed', [])) ? 'checked' : '' }}>
+                                    <?php echo e(in_array('Valuation and Financial Modelling', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="valuation_modelling">Valuation and Financial Modelling</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="ma_advisory" name="guidance_needed[]" value="M&A Advisory"
-                                    {{ in_array('M&A Advisory', old('guidance_needed', [])) ? 'checked' : '' }}>
+                                    <?php echo e(in_array('M&A Advisory', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="ma_advisory">M&A Advisory</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="pitch_deck" name="guidance_needed[]" value="Pitch deck Preparation"
-                                    {{ in_array('Pitch deck Preparation', old('guidance_needed', [])) ? 'checked' : '' }}>
+                                    <?php echo e(in_array('Pitch deck Preparation', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="pitch_deck">Pitch deck Preparation</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="investor_pitching" name="guidance_needed[]" value="Investor Pitching"
-                                    {{ in_array('Investor Pitching', old('guidance_needed', [])) ? 'checked' : '' }}>
+                                    <?php echo e(in_array('Investor Pitching', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="investor_pitching">Investor Pitching</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="na" name="guidance_needed[]" value="NA"
-                                    {{ in_array('NA', old('guidance_needed', [])) ? 'checked' : '' }}>
+                                    <?php echo e(in_array('NA', old('guidance_needed', [])) ? 'checked' : ''); ?>>
                                 <label class="form-check-label" for="na">NA</label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="others_checkbox" name="others_checkbox" {{ old('others_checkbox') ? 'checked' : '' }} value="Others" onclick="toggleOtherField()">
+                                <input class="form-check-input" type="checkbox" id="others_checkbox" name="others_checkbox" <?php echo e(old('others_checkbox') ? 'checked' : ''); ?> value="Others" onclick="toggleOtherField()">
                                 <label class="form-check-label" for="others_checkbox">Others</label>
                             </div>
                         </div>
                         <div class="form-group mb-3" id="other_field" style="display: none;">
                             <label id="labelinput" for="other_guidance">Please specify (Others)</label>
-                            <input type="text" name="other_guidance" id="other_guidance_input" class="form-control" value="{{ old('other_guidance') }}" placeholder="Please specify your other guidance">
+                            <input type="text" name="other_guidance" id="other_guidance_input" class="form-control" value="<?php echo e(old('other_guidance')); ?>" placeholder="Please specify your other guidance">
 
                         </div>
                     </div>
@@ -1875,10 +2535,10 @@
    
     <!-- Terms and Conditions Section -->
     <div class="form-check mb-4">
-        <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
+        <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
         <label class="form-check-label" for="terms">
             I agree to the 
-            <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms and Conditions</a>
+            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
         </label>
     </div>
 
@@ -1936,9 +2596,9 @@
 
     if (this.checked) {
         // Auto-fill the fields with the registered user's details
-        nameField.value = "{{ auth()->user()->name }}";
-        emailField.value = "{{ auth()->user()->email }}";
-        phoneField.value = "{{ auth()->user()->phone }}";
+        nameField.value = "<?php echo e(auth()->user()->name); ?>";
+        emailField.value = "<?php echo e(auth()->user()->email); ?>";
+        phoneField.value = "<?php echo e(auth()->user()->phone); ?>";
 
         // Disable the fields to prevent editing
         nameField.setAttribute('readonly', true);
@@ -2052,7 +2712,7 @@ window.onload = function() {
         // Check if there's an existing value in the "other_guidance" input field
         if (document.getElementById('other_guidance_input')) {
             const input = document.getElementById('other_guidance_input');
-            input.value = "{{ old('other_guidance') }}"; // Retain value from old input
+            input.value = "<?php echo e(old('other_guidance')); ?>"; // Retain value from old input
         }
     }
 };
@@ -2520,4 +3180,6 @@ document.getElementById('pitch_deck').addEventListener('change', function() {
 
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/forms/investee_form.blade.php ENDPATH**/ ?>
