@@ -1202,9 +1202,10 @@ unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-sm-10" id="public-links-container">
-            <div class="input-group mb-3">
-                <input 
-                    class="form-control <?php $__errorArgs = ['public_links.0'];
+            <div class="row g-0 mb-3">
+                <div class="col-sm-5">
+                    <input 
+                        class="form-control <?php $__errorArgs = ['public_links.0'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -1212,48 +1213,63 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" 
-                    type="url" 
-                    name="public_links[]" 
-                    placeholder="URL" 
-                    value="<?php echo e(old('public_links.0')); ?>"
-                    style="width: 425px; flex: 0 0 auto;"
-                >
-                <select 
-                    class="form-control <?php $__errorArgs = ['link_descriptions.0'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-                    name="link_descriptions[]" 
-                    
-                >
-                    <option value="" disabled <?php echo e(old('link_descriptions.0') ? '' : 'selected'); ?>>Select Account</option>
-                    <option value="Facebook" <?php echo e(old('link_descriptions.0') == 'Facebook' ? 'selected' : ''); ?>>Facebook</option>
-                    <option value="Twitter" <?php echo e(old('link_descriptions.0') == 'Twitter' ? 'selected' : ''); ?>>Twitter</option>
-                    <option value="Others" <?php echo e(old('link_descriptions.0') == 'Others' ? 'selected' : ''); ?>>Others</option>
-                </select>
-                <button 
-                    class="btn btn-outline-primary float-end" 
-                    type="button" 
-                    style="margin-right: 8px;" 
-                    onclick="addPublicLinkField()"
-                >
-                    + Add More Links
-                </button>
-            </div>
-            <?php $__errorArgs = ['public_links.0'];
+                        type="url" 
+                        name="public_links[]" 
+                        placeholder="URL" 
+                        value="<?php echo e(old('public_links.0')); ?>"
+                        required
+                    >
+                    <?php $__errorArgs = ['public_links.0'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                <div class="invalid-feedback">This Field is Required</div>
-            <?php unset($message);
+                        <div class="invalid-feedback d-block">This Field is Required</div>
+                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                </div>
+                <div class="col-sm-5">
+                    <select 
+                        class="form-control <?php $__errorArgs = ['link_descriptions.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                        name="link_descriptions[]" 
+                        required
+                    >
+                        <option value="" disabled <?php echo e(old('link_descriptions.0') ? '' : 'selected'); ?>>Select Account</option>
+                        <option value="Facebook" <?php echo e(old('link_descriptions.0') == 'Facebook' ? 'selected' : ''); ?>>Facebook</option>
+                        <option value="Twitter" <?php echo e(old('link_descriptions.0') == 'Twitter' ? 'selected' : ''); ?>>Twitter</option>
+                        <option value="Others" <?php echo e(old('link_descriptions.0') == 'Others' ? 'selected' : ''); ?>>Others</option>
+                    </select>
+                    <?php $__errorArgs = ['link_descriptions.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="invalid-feedback d-block">This Field is Required</div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+                <div class="col-sm-2 text-end">
+                    <button 
+                        class="btn btn-outline-primary" 
+                        type="button" 
+                        onclick="addPublicLinkField()"
+                    >
+                        + Add More Links
+                    </button>
+                </div>
+            </div>
+            <!-- Dynamically added rows will appear here -->
         </div>
     </div>
 
@@ -2536,14 +2552,38 @@ unset($__errorArgs, $__bag); ?>
     <!-- CAPTCHA Section -->
    
     <!-- Terms and Conditions Section -->
-    <div class="form-check mb-4">
+    <!-- <div class="form-check mb-4">
         <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
         <label class="form-check-label" for="terms">
             I agree to the 
             <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
         </label>
-    </div>
+    </div> -->
 
+     <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                        <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger">You must agree to the Terms and Conditions</span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
     
 
     <!-- Submit Button -->
@@ -2591,32 +2631,54 @@ unset($__errorArgs, $__bag); ?>
         }
     });
 
-    // Prevent form submission without filling required fields
-    document.getElementById('investeeForm').addEventListener('submit', function(event) {
+// Prevent form submission without filling required fields
+document.getElementById('investeeForm').addEventListener('submit', function(event) {
     const requiredFields = document.querySelectorAll('#investeeForm [required]:not([disabled]):not([type="hidden"])');
     let isValid = true;
 
     requiredFields.forEach(field => {
-        if(field.type === 'checkbox'){
-            if(!field.checked){
-                 isValid = false;
-                 field.classList.add('is-invalid');
-                 field.scrollIntoView({behavior:'smooth', block:'center'});
-                 console.log(`Missing checkbox: ${field.name}`);
+        // Remove previous invalid state
+        field.classList.remove('is-invalid');
+
+        if (field.type === 'checkbox') {
+            // Only validate checkboxes that are not part of a group (like terms)
+            if (field.name === 'terms' && !field.checked) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                field.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+        } else if (field.type === 'file') {
+            if (!field.value) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                field.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+        } else {
+            const value = field.value.trim();
+            if (!value) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                field.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
-        else{
-            const value = field.value.trim();
-        if (!value) {
+    });
+
+    // Custom validation for dynamically added public_links[] and link_descriptions[]
+    document.querySelectorAll('input[name="public_links[]"]').forEach(function(input) {
+        input.classList.remove('is-invalid');
+        if (!input.value.trim()) {
             isValid = false;
-            field.classList.add('is-invalid');
-            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            console.log(`Missing field: ${field.name}`);
-        } else {
-            field.classList.remove('is-invalid');
+            input.classList.add('is-invalid');
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+    });
+    document.querySelectorAll('select[name="link_descriptions[]"]').forEach(function(select) {
+        select.classList.remove('is-invalid');
+        if (!select.value.trim()) {
+            isValid = false;
+            select.classList.add('is-invalid');
+            select.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
     });
 
     if (!isValid) {
