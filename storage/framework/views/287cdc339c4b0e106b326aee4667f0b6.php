@@ -35,7 +35,7 @@
             </div>
         </div>
 
-    <form class="form-group bg-light" id="investmentBankerForm" action="<?php echo e(route('form.bank.submit')); ?>" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;" novalidate>
+    <form class="form-group bg-light" id="investmentBankerForm" action="<?php echo e(route('form.bank.submit')); ?>" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;">
 
         <?php echo csrf_field(); ?>
      <!-- Company Details Section -->
@@ -160,6 +160,7 @@ unset($__errorArgs, $__bag); ?>"
             id="company_profile" 
             name="company_profile" 
             required
+            value = "<?php echo e(old('company_profile')); ?>"
         >
         <?php $__errorArgs = ['company_profile'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -237,7 +238,7 @@ unset($__errorArgs, $__bag); ?>
         </label>
         <div>
             <input 
-                type="tel" 
+                type="text" 
                 class="form-control <?php $__errorArgs = ['phone_number'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -248,7 +249,9 @@ endif;
 unset($__errorArgs, $__bag); ?>" 
                 id="phone_number" 
                 name="phone_number" 
-                maxlength="10" 
+                maxlength="20" 
+                pattern="^\+?[0-9]{7,20}$" 
+                oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                 value="<?php echo e(old('phone_number')); ?>" 
                 required
             >
@@ -959,13 +962,23 @@ unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-2 mt-2 p-1">
             <label for="previous_deal_type_<?php echo e($i); ?>" class="required">Deal Type<span class="text-danger">*</span></label>
-            <select class="form-control" name="previous_deal_type[]" id="previous_deal_type_<?php echo e($i); ?>" required>
+            <select class="form-control <?php $__errorArgs = ['previous_deal_type.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="previous_deal_type[]" id="previous_deal_type_<?php echo e($i); ?>" required>
                 <option value="" disabled <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i]) ? '' : 'selected'); ?>>Select Deal Type</option>
                 <option value="M&A" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : ''); ?>>M&amp;A</option>
                 <option value="Fundraising" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : ''); ?>>Fundraising</option>
                 <option value="IPO" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : ''); ?>>IPO</option>
                 <option value="Others" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : ''); ?>>Others</option>
             </select>
+            <?php if($errors->has('previous_deal_type.'.$i)): ?>
+                <span class="text-danger small"><?php echo e($errors->first('previous_deal_type.'.$i)); ?></span>
+            <?php endif; ?>
         </div>
         <div class="col-md-1 form-floating mt-2 p-1">
             <?php if($i == 0): ?>
@@ -1018,6 +1031,31 @@ endif;
 unset($__errorArgs, $__bag); ?>
 </div>
 
+
+ <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                        <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger">You must agree to the Terms and Conditions</span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>
@@ -1158,6 +1196,12 @@ unset($__errorArgs, $__bag); ?>
         }
     });
 }
+
+ document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
 // changes
 
   document.addEventListener('DOMContentLoaded', function() {

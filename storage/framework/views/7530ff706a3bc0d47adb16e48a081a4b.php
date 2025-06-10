@@ -72,7 +72,7 @@
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <!-- <div class="form-section-title">Contact Details</div> -->
                 <div class="form-check" style="text-align: left;">
-                    <input type="checkbox" class="form-check-input" id="concerned_person_is_me" onclick="fillConcernedPersonDetails()">
+                    <input type="checkbox" class="form-check-input" id="concerned_person_is_me" name="concerned_person_is_me" onclick="fillConcernedPersonDetails()" value="1" <?php echo e(old('concerned_person_is_me') ? 'checked': ''); ?>>
                     <label class="form-check-label text-danger" for="concerned_person_is_me">Concerned Person is Me</label>
                 </div>
             </div>
@@ -88,7 +88,8 @@
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="phone_number" class="required">Phone Number</label>
-                    <input type="tel" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="10" value="<?php echo e(old('phone_number')); ?>" required>
+                    <input type="text" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="20" value="<?php echo e(old('phone_number')); ?>"   pattern="^\+?[0-9]{7,20}$" 
+                oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" required>
                 </div>
             </div>
         </div>
@@ -121,27 +122,51 @@
             <div class="form-section-title">How did you hear about Investor Dekho?</div>
             <div class="form-floating">
                 <select class="form-select spaced-input" id="referral_source" name="referral_source" required>
-                    <option value="" disabled selected>Select Source</option>
-                    <option value="Friend/Family">Friend/Family</option>
-                    <option value="Social Media (Facebook, Instagram, Twitter, etc.)">Social Media</option>
-                    <option value="Online Search (Google, Bing, etc.)">Online Search</option>
-                    <option value="Advertisement (TV, Radio, Print)">Advertisement</option>
-                    <option value="Email Newsletter">Email Newsletter</option>
-                    <option value="Event/Seminar">Event/Seminar</option>
-                    <option value="Professional Referral (Doctor, Lawyer, etc.)">Professional Referral</option>
-                    <option value="Blog/Website">Blog/Website</option>
-                    <option value="Direct Mail">Direct Mail</option>
-                    <option value="Company Website">Company Website</option>
+                    <option value="" disabled <?php echo e(old('referral_source') ? '' : 'selected'); ?>>Select Source</option>
+                    <option value="Friend/Family" <?php echo e(old('referral_source') == 'Friend/Family' ? 'selected' : ''); ?>>Friend/Family</option>
+                    <option value="Social Media (Facebook, Instagram, Twitter, etc.)" <?php echo e(old('referral_source') == 'Social Media (Facebook, Instagram, Twitter, etc.)' ? 'selected' : ''); ?>>Social Media</option>
+                    <option value="Online Search (Google, Bing, etc.)" <?php echo e(old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : ''); ?>>Online Search</option>
+                    <option value="Advertisement (TV, Radio, Print)" <?php echo e(old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : ''); ?>>Advertisement</option>
+                    <option value="Email Newsletter" <?php echo e(old('referral_source') == 'Email Newsletter' ? 'selected' : ''); ?>>Email Newsletter</option>
+                    <option value="Event/Seminar" <?php echo e(old('referral_source') == 'Event/Seminar' ? 'selected' : ''); ?>>Event/Seminar</option>
+                    <option value="Professional Referral (Doctor, Lawyer, etc.)" <?php echo e(old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : ''); ?>>Professional Referral</option>
+                    <option value="Blog/Website" <?php echo e(old('referral_source') == 'Blog/Website' ? 'selected' : ''); ?>>Blog/Website</option>
+                    <option value="Direct Mail" <?php echo e(old('referral_source') == 'Direct Mail' ? 'selected' : ''); ?>>Direct Mail</option>
+                    <option value="Company Website" <?php echo e(old('referral_source') == 'Company Website' ? 'selected' : ''); ?>>Company Website</option>
                 </select>
                 <label for="referral_source">Referral Source</label>
             </div>
         </div>
 
         <!-- Terms Section -->
-        <div class="form-check mb-3">
+        <!-- <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" required>
-            <label class="form-check-label" for="terms">I agree to the <a href="<?php echo e(route('terms')); ?>">Terms and Conditions</a></label>
-        </div>
+            <label class="form-check-label" for="terms">I agree to the <a href="<?php echo e(route('terms')); ?>" target="_blank">Terms and Conditions</a></label>
+        </div> -->
+         <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                        <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger">You must agree to the Terms and Conditions</span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
 
         <!-- Submit -->
         <button type="submit" class="btn btn-primary w-100 py-2">Submit</button>
@@ -172,6 +197,12 @@
             emailField.readOnly = false;
         }
     }
+
+     document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
 </script>
 
 <?php $__env->stopSection(); ?>

@@ -69,7 +69,7 @@
                             @if(Auth::user()->category_id == 1)
                             Number of Investors:
                             @elseif(Auth::user()->category_id == 2)
-                            Nomber of Investee 
+                            Number of Investee 
                             @else
                             Number of Investor and Investee:
                             @endif

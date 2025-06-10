@@ -303,7 +303,7 @@ INSERT INTO `locations` (`id`, `name`) VALUES
 (264, 'Jorhat'),
 (265, 'Junagadh'),
 (266, 'Jyotiba Phule Nagar'),
-(267, 'Kabirdham (formerly Kawardha)'),
+(267, 'Kabirdham (Kawardha)'),
 (268, 'Kadapa'),
 (269, 'Kaimur'),
 (270, 'Kaithal'),

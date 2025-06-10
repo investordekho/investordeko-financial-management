@@ -1,0 +1,47 @@
+<?php $__env->startSection('content'); ?>
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                <h2 class="text-center">Verify OTP</h2>
+
+                <!-- Success or Error Message -->
+                <?php if(session('success')): ?>
+                    <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+                <?php endif; ?>
+                <?php if(session('error')): ?>
+                    <div class="alert alert-danger"><?php echo e(session('error')); ?></div>
+                <?php endif; ?>
+
+                <!-- OTP Form -->
+                <form method="POST" action="<?php echo e(route('otp.verify')); ?>">
+                    <?php echo csrf_field(); ?>
+               
+                    <!-- i want to show only 4 last number and other number as X -->
+                         <!-- <p class="text-left mb-4"><?php echo e(session('phone')); ?></p> -->
+
+                    <p class="text-left mb-3" style="font-size: 0.75rem; letter-spacing: 1px; background: #f8f9fa; padding: 8px 14px; border-radius: 6px; border: 1px solid #e3e3e3;">
+                        <?php 
+                            $phone = session('phone');
+                            $country_code = session('country_code') ?? '';
+                            if ($phone && strlen($phone) >= 4) {
+                                $maskedphone = $country_code . '-' . str_repeat('X', strlen($phone) - 4) . substr($phone, -4);
+                            } else {
+                                $maskedphone = $country_code . '-' . $phone;
+                            }
+                        ?>
+                        An OTP has been sent to your number <?php echo e($maskedphone); ?>. Please enter it below to verify.
+                    </p>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter the OTP" required>
+                        <label for="otp">Enter OTP</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary py-3 px-5 w-100">Verify OTP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views\auth\verify_otp.blade.php ENDPATH**/ ?>

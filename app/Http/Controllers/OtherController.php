@@ -22,11 +22,11 @@ class OtherController extends Controller
         $request->validate([
             'full_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'phone_number' => 'required|string|max:10',
+            'phone_number' => 'required|string|max:19',
             'address' => 'required|string',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
+            'country' => 'required|string|max:300',
             'referral_source' => 'required|string|max:255',
             'terms' => 'required|accepted', // Terms must be accepted
         ]);

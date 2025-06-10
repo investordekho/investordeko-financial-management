@@ -372,7 +372,34 @@
                             <?php else: ?>
                                 <img src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
                             <?php endif; ?> -->
-                              <?php
+<?php
+    $profileImage = Auth::user()->profile_image;
+    $imagePath = 'storage/profile_image/' . $profileImage;
+?>
+
+<?php if($profileImage): ?>
+    <img 
+        src="<?php echo e(asset($imagePath)); ?>" 
+        alt="Profile Image" 
+        width="40" 
+        height="40" 
+        class="rounded-circle" 
+        style="object-fit: cover;"
+        onerror="this.onerror=null;this.src='<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>';"
+    >
+<?php else: ?>
+    <img 
+        src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" 
+        alt="Default Profile Image" 
+        width="40" 
+        height="40" 
+        class="rounded-circle" 
+        style="object-fit: cover;"
+    >
+<?php endif; ?>
+
+
+                              <!-- <?php
                               $profileImage = Auth::user()->profile_image;
                               $imagePath = 'storage/profile_image/' . $profileImage;
                             ?>
@@ -381,7 +408,7 @@
                               <img src="<?php echo e(asset($imagePath)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             <?php else: ?>
                               <img src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
-                            <?php endif; ?>
+                            <?php endif; ?> -->
                             <span class="ms-2"><?php echo e(Auth::user()->name); ?></span>
                         </a>
                         <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">

@@ -1057,7 +1057,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="https://www.instagram.com/investor_dekho/" target="_blank" class="social-icon instagram d-flex align-items-center justify-content-center">
         <i class="fab fa-instagram"></i><span class="text ms-2">Instagram</span>
     </a>
-    <a href="https://www.linkedin.com/in/investor-dekho-327689338/" target="_blank" class="social-icon linkedin d-flex align-items-center justify-content-center">
+    <a href="https://www.linkedin.com/in/investor-dekho-ad-327689338/" target="_blank" class="social-icon linkedin d-flex align-items-center justify-content-center">
         <i class="fab fa-linkedin-in"></i><span class="text ms-2">LinkedIn</span>
     </a>
      <a href="https://www.youtube.com/@InvestorDekho" target="_blank" class="social-icon linkedin d-flex align-item-center justify-content-center">

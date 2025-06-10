@@ -32,11 +32,11 @@
                 <div class="card-body text-center p-4">
                     <h4 class="text-primary fw-semibold mb-4">Bank Transfer</h4>
                     <div class="text-start mx-auto" style="max-width: 300px;">
-                        <p><strong>Account Number:</strong> <span class="text-muted">1234567890</span></p>
-                        <p><strong>IFSC Code:</strong> <span class="text-muted">SBIN0001234</span></p>
-                        <p><strong>Account Holder:</strong> <span class="text-muted">John Doe</span></p>
-                        <p><strong>Bank Name:</strong> <span class="text-muted">State Bank of India</span></p>
-                        <p><strong>Branch:</strong> <span class="text-muted">Main Branch</span></p>
+                        <p><strong>Account Number:</strong> <span class="text-muted">250080071988</span></p>
+                        <p><strong>IFSC Code:</strong> <span class="text-muted">INDB0000018</span></p>
+                        <p><strong>Account Holder:</strong> <span class="text-muted">JaiBharti Investor Insights Pvt. Ltd.</span></p>
+                        <p><strong>Bank Name:</strong> <span class="text-muted">Induslnd Bank</span></p>
+                        <p><strong>Branch:</strong> <span class="text-muted">Andheri East</span></p>
                     </div>
                 </div>
             </div>

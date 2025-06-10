@@ -664,7 +664,12 @@
             </div>
 
             <div class="col-md-3">
-                <label for="concerned_person_email" class="form-label small fw-semibold text-muted">Email <span class="text-danger">*</span></label>
+                <label for="concerned_person_email" class="form-label small fw-semibold text-muted">
+                    Email <span class="text-danger">*</span>
+                    @error('concerned_person_email')
+                        <span class="text-danger ms-2 small">{{ $message ?: 'This Field is Required' }}</span>
+                    @enderror
+                </label>
                 <input 
                     type="email" 
                     class="form-control form-control-sm @error('concerned_person_email') is-invalid @enderror" 
@@ -673,23 +678,22 @@
                     value="{{ old('concerned_person_email') }}" 
                     required
                 >
-                @error('concerned_person_email')
-                    <div class="invalid-feedback d-block small">This Field is Required</div>
-                @enderror
             </div>
 
             <div class="col-md-3">
                 <label for="concerned_person_phone" class="form-label small fw-semibold text-muted">Phone <span class="text-danger">*</span></label>
                 <input 
-                    type="number" 
+                    type="text" 
                     class="form-control form-control-sm @error('concerned_person_phone') is-invalid @enderror" 
                     id="concerned_person_phone" 
                     name="concerned_person_phone" 
                     value="{{ old('concerned_person_phone') }}" 
-                    maxlength="10" 
-                    oninput="this.value=this.value.slice(0, 10)" 
+                    maxlength="20" 
+                    pattern="^\+?[0-9]{7,20}$" 
+                    oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                     required
                 >
+
                 @error('concerned_person_phone')
                     <div class="invalid-feedback d-block small">This Field is Required</div>
                 @enderror
@@ -895,37 +899,46 @@
         </div>
 
         <div class="col-sm-10" id="public-links-container">
-            <div class="input-group mb-3">
-                <input 
-                    class="form-control @error('public_links.0') is-invalid @enderror" 
-                    type="url" 
-                    name="public_links[]" 
-                    placeholder="URL" 
-                    value="{{ old('public_links.0') }}"
-                    style="width: 425px; flex: 0 0 auto;"
-                >
-                <select 
-                    class="form-control @error('link_descriptions.0') is-invalid @enderror" 
-                    name="link_descriptions[]" 
-                    
-                >
-                    <option value="" disabled {{ old('link_descriptions.0') ? '' : 'selected' }}>Select Account</option>
-                    <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                    <option value="Twitter" {{ old('link_descriptions.0') == 'Twitter' ? 'selected' : '' }}>Twitter</option>
-                    <option value="Others" {{ old('link_descriptions.0') == 'Others' ? 'selected' : '' }}>Others</option>
-                </select>
-                <button 
-                    class="btn btn-outline-primary float-end" 
-                    type="button" 
-                    style="margin-right: 8px;" 
-                    onclick="addPublicLinkField()"
-                >
-                    + Add More Links
-                </button>
+            <div class="row g-0 mb-3">
+                <div class="col-sm-5">
+                    <input 
+                        class="form-control @error('public_links.0') is-invalid @enderror" 
+                        type="url" 
+                        name="public_links[]" 
+                        placeholder="URL" 
+                        value="{{ old('public_links.0') }}"
+                        required
+                    >
+                    @error('public_links.0')
+                        <div class="invalid-feedback d-block">This Field is Required</div>
+                    @enderror
+                </div>
+                <div class="col-sm-5">
+                    <select 
+                        class="form-control @error('link_descriptions.0') is-invalid @enderror" 
+                        name="link_descriptions[]" 
+                        required
+                    >
+                        <option value="" disabled {{ old('link_descriptions.0') ? '' : 'selected' }}>Select Account</option>
+                        <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
+                        <option value="Twitter" {{ old('link_descriptions.0') == 'Twitter' ? 'selected' : '' }}>Twitter</option>
+                        <option value="Others" {{ old('link_descriptions.0') == 'Others' ? 'selected' : '' }}>Others</option>
+                    </select>
+                    @error('link_descriptions.0')
+                        <div class="invalid-feedback d-block">This Field is Required</div>
+                    @enderror
+                </div>
+                <div class="col-sm-2 text-end">
+                    <button 
+                        class="btn btn-outline-primary" 
+                        type="button" 
+                        onclick="addPublicLinkField()"
+                    >
+                        + Add More Links
+                    </button>
+                </div>
             </div>
-            @error('public_links.0')
-                <div class="invalid-feedback">This Field is Required</div>
-            @enderror
+            <!-- Dynamically added rows will appear here -->
         </div>
     </div>
 
@@ -1757,11 +1770,13 @@
                     name="financials[]" 
                     accept=".pdf,.doc,.docx,.xls,.xlsx" 
                     required
+                    value="{{ old('financials.0')}}"
                 >
                 @error('financials.0')
                     <span class="text-danger">This Field is Required</span>
                 @enderror
             </div>
+            
             <div class="col-md-1">
                 <button class="btn btn-info float-end" type="button" onclick="addFinancialsField()">+ </button>
             </div>
@@ -1776,6 +1791,7 @@
         class="form-control spaced-input @error('other_attachment') is-invalid @enderror" 
         id="other_attachment" 
         name="other_attachment"
+        value = "{{ old('other_attachment')}}"
         accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" 
     >
     @error('other_attachment')
@@ -1869,11 +1885,24 @@
     <!-- CAPTCHA Section -->
    
     <!-- Terms and Conditions Section -->
-    <div class="form-check mb-4">
+    <!-- <div class="form-check mb-4">
         <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
-        <label class="form-check-label" for="terms">I agree to the <a href="{{ route('terms') }}">Terms and Conditions</a></label>
-    </div>
+        <label class="form-check-label" for="terms">
+            I agree to the 
+            <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms and Conditions</a>
+        </label>
+    </div> -->
 
+     <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                        @error('terms')
+                            <span class="text-danger">You must agree to the Terms and Conditions</span>
+                        @enderror
+                    </div>
     
 
     <!-- Submit Button -->
@@ -1884,32 +1913,91 @@
 
 <!-- Script for Auto-Fill Functionality -->
  <script>
-    // Prevent form submission without filling required fields
-    document.getElementById('investeeForm').addEventListener('submit', function(event) {
+
+    function fillConcernedPersonDetails() {
+        const nameField = document.getElementById('concerned_person_name');
+        const designationField = document.getElementById('concerned_person_designation');
+        const phoneField = document.getElementById('concerned_person_phone');
+        const emailField = document.getElementById('concerned_person_email');
+
+        if (document.getElementById('concerned_person_is_me').checked) {
+            // Fill in with the logged-in user details if necessary (use appropriate server-side user details here)
+            nameField.value = "{{ Auth::user()->name }}";
+            emailField.value = "{{ Auth::user()->email }}";
+            phoneField.value = "{{ Auth::user()->phone }}";
+            designationField.value = "{{ Auth::user()->designation ?? '' }}";  // Assuming user model has these field
+
+            nameField.readOnly = true;
+            designationField.readOnly = false;
+            phoneField.readOnly = true;
+            emailField.readOnly = true;
+        } else {
+            nameField.value = '';
+            emailField.value = '';
+            phoneField.value = '';
+            designationField.value = '';
+
+            nameField.readOnly = false;
+            designationField.readOnly = false;
+            phoneField.readOnly = false;
+            emailField.readOnly = false;
+        }
+    }
+
+     document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
+
+// Prevent form submission without filling required fields
+document.getElementById('investeeForm').addEventListener('submit', function(event) {
     const requiredFields = document.querySelectorAll('#investeeForm [required]:not([disabled]):not([type="hidden"])');
     let isValid = true;
 
     requiredFields.forEach(field => {
-        if(field.type === 'checkbox'){
-            if(!field.checked){
-                 isValid = false;
-                 field.classList.add('is-invalid');
-                 field.scrollIntoView({behavior:'smooth', block:'center'});
-                 console.log(`Missing checkbox: ${field.name}`);
+        // Remove previous invalid state
+        field.classList.remove('is-invalid');
+
+        if (field.type === 'checkbox') {
+            // Only validate checkboxes that are not part of a group (like terms)
+            if (field.name === 'terms' && !field.checked) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                field.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+        } else if (field.type === 'file') {
+            if (!field.value) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                field.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+        } else {
+            const value = field.value.trim();
+            if (!value) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                field.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
-        else{
-            const value = field.value.trim();
-        if (!value) {
+    });
+
+    // Custom validation for dynamically added public_links[] and link_descriptions[]
+    document.querySelectorAll('input[name="public_links[]"]').forEach(function(input) {
+        input.classList.remove('is-invalid');
+        if (!input.value.trim()) {
             isValid = false;
-            field.classList.add('is-invalid');
-            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            console.log(`Missing field: ${field.name}`);
-        } else {
-            field.classList.remove('is-invalid');
+            input.classList.add('is-invalid');
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+    });
+    document.querySelectorAll('select[name="link_descriptions[]"]').forEach(function(select) {
+        select.classList.remove('is-invalid');
+        if (!select.value.trim()) {
+            isValid = false;
+            select.classList.add('is-invalid');
+            select.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
     });
 
     if (!isValid) {

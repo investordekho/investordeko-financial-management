@@ -24,7 +24,7 @@ class InvestorController extends Controller
                 'address' => 'required|string',
                 'concerned_person_name' => 'required|string',
                 'concerned_person_designation' => 'required|string',
-                'concerned_person_phone' => 'required|digits:10',
+                'concerned_person_phone' => 'required|digits:20',
                 'email' => 'required|email',
                 'public_links.*' => 'required|url',
                 'link_descriptions.*' => 'required|string',

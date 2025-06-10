@@ -349,13 +349,15 @@ endif;
 unset($__errorArgs, $__bag); ?>" 
         id="investor_profile" 
         name="investor_profile"
+        value ="<?php echo e(old('investor_profile')); ?>"
+        required
     >
     <?php $__errorArgs = ['investor_profile'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-        <span class="text-danger">This field is required</span>
+        <span class="text-danger"><?php echo e($message ?: 'This field is required'); ?></span>
     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
@@ -437,7 +439,7 @@ unset($__errorArgs, $__bag); ?>
     <div class="col-sm-2">
         <label id="labelinput" for="concerned_person_phone" class="required">Phone No.</label>
         <input 
-            type="tel" 
+            type="text" 
             class="form-control spaced-input <?php $__errorArgs = ['concerned_person_phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -448,7 +450,9 @@ endif;
 unset($__errorArgs, $__bag); ?>" 
             id="concerned_person_phone" 
             name="concerned_person_phone" 
-            maxlength="10" 
+            maxlength="20" 
+            pattern="^\+?[0-9]{7,20}$"
+            oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
             value="<?php echo e(old('concerned_person_phone')); ?>" 
             required
         >
@@ -1277,19 +1281,36 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="form-floating">
                             <label id="labelinput" for="referral_source" class="required">Referral Source</label>
-                            <select class="form-control spaced-input" id="referral_source" name="referral_source" required>
-                                <option value="" disabled selected>Select Source</option>
-                                <option value="Friend/Family">Friend/Family</option>
-                                <option value="Social Media (Facebook, Instagram, Twitter, etc.)">Social Media (Facebook, Instagram, Twitter, etc.)</option>
-                                <option value="Online Search (Google, Bing, etc.)">Online Search (Google, Bing, etc.)</option>
-                                <option value="Advertisement (TV, Radio, Print)">Advertisement (TV, Radio, Print)</option>
-                                <option value="Email Newsletter">Email Newsletter</option>
-                                <option value="Event/Seminar">Event/Seminar</option>
-                                <option value="Professional Referral (Doctor, Lawyer, etc.)">Professional Referral (Doctor, Lawyer, etc.)</option>
-                                <option value="Blog/Website">Blog/Website</option>
-                                <option value="Direct Mail">Direct Mail</option>
-                                <option value="Company Website">Company Website</option>
+                            <select class="form-control spaced-input <?php $__errorArgs = ['referral_source'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="referral_source" name="referral_source" required>
+                                <option value="" disabled <?php echo e(old('referral_source') ? '' : 'selected'); ?>>Select Source</option>
+                                <option value="Friend/Family" <?php echo e(old('referral_source') == 'Friend/Family' ? 'selected' : ''); ?>>Friend/Family</option>
+                                <option value="Social Media (Facebook, Instagram, Twitter, etc.)" <?php echo e(old('referral_source') == 'Social Media (Facebook, Instagram, Twitter, etc.)' ? 'selected' : ''); ?>>Social Media (Facebook, Instagram, Twitter, etc.)</option>
+                                <option value="Online Search (Google, Bing, etc.)" <?php echo e(old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : ''); ?>>Online Search (Google, Bing, etc.)</option>
+                                <option value="Advertisement (TV, Radio, Print)" <?php echo e(old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : ''); ?>>Advertisement (TV, Radio, Print)</option>
+                                <option value="Email Newsletter" <?php echo e(old('referral_source') == 'Email Newsletter' ? 'selected' : ''); ?>>Email Newsletter</option>
+                                <option value="Event/Seminar" <?php echo e(old('referral_source') == 'Event/Seminar' ? 'selected' : ''); ?>>Event/Seminar</option>
+                                <option value="Professional Referral (Doctor, Lawyer, etc.)" <?php echo e(old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : ''); ?>>Professional Referral (Doctor, Lawyer, etc.)</option>
+                                <option value="Blog/Website" <?php echo e(old('referral_source') == 'Blog/Website' ? 'selected' : ''); ?>>Blog/Website</option>
+                                <option value="Direct Mail" <?php echo e(old('referral_source') == 'Direct Mail' ? 'selected' : ''); ?>>Direct Mail</option>
+                                <option value="Company Website" <?php echo e(old('referral_source') == 'Company Website' ? 'selected' : ''); ?>>Company Website</option>
                             </select>
+                            <?php $__errorArgs = ['referral_source'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger">This Field is required</span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?> 
                         </div>
                     </div>
 
@@ -1338,6 +1359,40 @@ unset($__errorArgs, $__bag); ?>
                     </div> -->
 
                     <!-- Submit Button -->
+
+                     <!-- <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                    </div> -->
+                    
+                     <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                        <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger">You must agree to the Terms and Conditions</span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+
                     <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>
 </div>
@@ -1535,7 +1590,12 @@ function removePublicLinkField(button) {
             nameField.value = "<?php echo e(Auth::user()->name); ?>";
             emailField.value = "<?php echo e(Auth::user()->email); ?>";
             phoneField.value = "<?php echo e(Auth::user()->phone); ?>";
-            designationField.value = "<?php echo e(Auth::user()->designation ?? ''); ?>";  // Assuming user model has these field
+            // designationField.value = "<?php echo e(Auth::user()->designation ?? ''); ?>";  // Assuming user model has these field
+            const userDesignation = <?php echo json_encode(Auth::user()->designation ?? null, 15, 512) ?>;
+            if (userDesignation) {
+                designationField.value = userDesignation;
+            }
+
 
             nameField.readOnly = true;
             designationField.readOnly = false;
@@ -1554,6 +1614,12 @@ function removePublicLinkField(button) {
         }
     }
     
+     document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
+
     function removePreviousInvestmentField(button) {
     const container = document.getElementById('previous-investments-container');
     const allRows = container.querySelectorAll('.previous-investment-row');

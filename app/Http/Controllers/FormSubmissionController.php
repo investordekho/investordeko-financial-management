@@ -40,12 +40,12 @@ class FormSubmissionController extends Controller
         'valuation.*' => 'required|numeric',
         'public_links.*' => 'nullable|url',
         'link_descriptions.*' => 'nullable|string',
-        'pitch_deck' => 'required|file',
+        'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx',
         'referral_source' => 'required|string',
         'website' => 'required|url',
         'linkedin' => 'required|url',
         'fiscal_year.*' => 'required|integer|digits:4',
-        'financials.*' => 'required|file',
+        'financials.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx',
         'other_attachment'=>'nullable|file',
     ]);
 

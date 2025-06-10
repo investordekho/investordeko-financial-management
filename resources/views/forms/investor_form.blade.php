@@ -298,9 +298,11 @@
         class="form-control spaced-input @error('investor_profile') is-invalid @enderror" 
         id="investor_profile" 
         name="investor_profile"
+        value ="{{ old('investor_profile')}}"
+        required
     >
     @error('investor_profile')
-        <span class="text-danger">This field is required</span>
+        <span class="text-danger">{{ $message ?: 'This field is required' }}</span>
     @enderror
 </div>
 
@@ -350,11 +352,13 @@
     <div class="col-sm-2">
         <label id="labelinput" for="concerned_person_phone" class="required">Phone No.</label>
         <input 
-            type="tel" 
+            type="text" 
             class="form-control spaced-input @error('concerned_person_phone') is-invalid @enderror" 
             id="concerned_person_phone" 
             name="concerned_person_phone" 
-            maxlength="10" 
+            maxlength="20" 
+            pattern="^\+?[0-9]{7,20}$"
+            oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
             value="{{ old('concerned_person_phone') }}" 
             required
         >
@@ -966,19 +970,22 @@
                         </div>
                         <div class="form-floating">
                             <label id="labelinput" for="referral_source" class="required">Referral Source</label>
-                            <select class="form-control spaced-input" id="referral_source" name="referral_source" required>
-                                <option value="" disabled selected>Select Source</option>
-                                <option value="Friend/Family">Friend/Family</option>
-                                <option value="Social Media (Facebook, Instagram, Twitter, etc.)">Social Media (Facebook, Instagram, Twitter, etc.)</option>
-                                <option value="Online Search (Google, Bing, etc.)">Online Search (Google, Bing, etc.)</option>
-                                <option value="Advertisement (TV, Radio, Print)">Advertisement (TV, Radio, Print)</option>
-                                <option value="Email Newsletter">Email Newsletter</option>
-                                <option value="Event/Seminar">Event/Seminar</option>
-                                <option value="Professional Referral (Doctor, Lawyer, etc.)">Professional Referral (Doctor, Lawyer, etc.)</option>
-                                <option value="Blog/Website">Blog/Website</option>
-                                <option value="Direct Mail">Direct Mail</option>
-                                <option value="Company Website">Company Website</option>
+                            <select class="form-control spaced-input @error('referral_source') is-invalid @enderror" id="referral_source" name="referral_source" required>
+                                <option value="" disabled {{ old('referral_source') ? '' : 'selected' }}>Select Source</option>
+                                <option value="Friend/Family" {{ old('referral_source') == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
+                                <option value="Social Media (Facebook, Instagram, Twitter, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter, etc.)</option>
+                                <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
+                                <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
+                                <option value="Email Newsletter" {{ old('referral_source') == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
+                                <option value="Event/Seminar" {{ old('referral_source') == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
+                                <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral (Doctor, Lawyer, etc.)</option>
+                                <option value="Blog/Website" {{ old('referral_source') == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
+                                <option value="Direct Mail" {{ old('referral_source') == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
+                                <option value="Company Website" {{ old('referral_source') == 'Company Website' ? 'selected' : '' }}>Company Website</option>
                             </select>
+                            @error('referral_source')
+                                <span class="text-danger">This Field is required</span>
+                            @enderror 
                         </div>
                     </div>
 
@@ -1027,6 +1034,26 @@
                     </div> -->
 
                     <!-- Submit Button -->
+
+                     <!-- <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                    </div> -->
+                    
+                     <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the 
+                            <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms and Conditions</a>
+                        </label>
+                        @error('terms')
+                            <span class="text-danger">You must agree to the Terms and Conditions</span>
+                        @enderror
+                    </div>
+
                     <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>
 </div>
@@ -1224,7 +1251,12 @@ function removePublicLinkField(button) {
             nameField.value = "{{ Auth::user()->name }}";
             emailField.value = "{{ Auth::user()->email }}";
             phoneField.value = "{{ Auth::user()->phone }}";
-            designationField.value = "{{ Auth::user()->designation ?? '' }}";  // Assuming user model has these field
+            // designationField.value = "{{ Auth::user()->designation ?? '' }}";  // Assuming user model has these field
+            const userDesignation = @json(Auth::user()->designation ?? null);
+            if (userDesignation) {
+                designationField.value = userDesignation;
+            }
+
 
             nameField.readOnly = true;
             designationField.readOnly = false;
@@ -1243,6 +1275,12 @@ function removePublicLinkField(button) {
         }
     }
     
+     document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('concerned_person_is_me').checked) {
+            fillConcernedPersonDetails();
+        }
+    });
+
     function removePreviousInvestmentField(button) {
     const container = document.getElementById('previous-investments-container');
     const allRows = container.querySelectorAll('.previous-investment-row');

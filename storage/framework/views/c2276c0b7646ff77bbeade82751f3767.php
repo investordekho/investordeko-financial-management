@@ -90,7 +90,7 @@
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-        <?php if(!$isSubscribed && $investors->count() == 3): ?>
+        <?php if(!$isSubscribed): ?>
         <div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
@@ -113,6 +113,18 @@
         <h2 class="text-center mb-4 fw-bold text-dark">No Investors Found</h2>
         <p class="text-center">Please check back later or consider subscribing for more options.</p>
     </div>
+
+    
+     <?php if(!$isSubscribed): ?>
+        <div class="col-md-12 text-center mt-4 mb-2">
+            <div class="alert subscription-box">
+                <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+                <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+            </div>
+        </div>
+    <?php endif; ?>
+    <div class="divider height-4"></div>
 <?php endif; ?>
 
 <style>

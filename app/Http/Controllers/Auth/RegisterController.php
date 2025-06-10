@@ -59,7 +59,7 @@ class RegisterController extends Controller
     $this->validate($request, [
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
-        'phone' => 'required|string|max:10|unique:users',
+        'phone' => 'required|string|max:14|unique:users',
         'password' => 'required|string|min:8|confirmed',
         'category' => 'required',
         // 'captcha' => ['required', new CaptchaMatch(session('captcha_value_1'))],
@@ -80,11 +80,13 @@ class RegisterController extends Controller
     //     return back()->withErrors(['captcha' => 'The entered captcha is incorrect'])->withInput();
     // }
 
+    //combine phone and country_code_input
+    $phone = $request->country_code.$request->phone;
     // Create the user
     $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
-        'phone' => $request->phone,
+        'phone' => $phone,
         'password' => Hash::make($request->password),
         'category_id' => $request->category,
     ]);
@@ -96,7 +98,12 @@ class RegisterController extends Controller
 
     $this->otpService->sendOtp($request->phone, $otp);
     // Redirect to OTP verification page
-    return redirect()->route('otp.form')->with('success', 'Registration successful! Please verify your mobile number using the OTP sent.');
+    // return redirect()->route('otp.form')->with('success', 'Registration successful! Please verify your mobile number using the OTP sent.');
+         return redirect()->route('otp.form')->with([
+        'success' => 'Registration successful! Please verify your mobile number using the OTP sent.',
+        'phone' => $request->phone,
+        'country_code' => $request->country_code,
+    ]); // Pass phone number to the OTP form
 }
 
 

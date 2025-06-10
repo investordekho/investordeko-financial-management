@@ -27,7 +27,7 @@ class RegisterController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|max:10|unique:users',
+            'phone' => 'required|string|max:14|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'category' => 'required',
             'captcha' => 'required|in:' . session('captcha'),

@@ -5,11 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionRequest;
-use App\Models\payment_detail;
+use App\Models\Payment_detail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Subscriber;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubscriptionRequestMail;
+use App\Models\ServiceContact;
+use App\Models\SubscriptionPlan;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use App\Mail\ResetPasswordMail;
+
 class SubscriptionRequestController extends Controller
 {
     //
@@ -71,12 +82,12 @@ class SubscriptionRequestController extends Controller
         $paymentDetails->transaction_id = $request->input('transaction_id');
         if($paymentDetails->payment_method == 'upi')
         {
-            $paymentDetails->upi_id = $request->input('upi_id');
-            $paymentDetails->reference_id = null;
+            // $paymentDetails->upi_id = $request->input('upi_id');
+            $paymentDetails->reference_id = $request->input('upi_id');;
         }
         else
         {
-            $paymentDetails->upi_id = null;
+            // $paymentDetails->upi_id = null;
             $paymentDetails->reference_id = $request->input('reference_id');
         }
     
@@ -100,6 +111,23 @@ class SubscriptionRequestController extends Controller
         $subscriptionRequest->save(); // Save the subscription request again to update the payment detail ID
 
     
+        //send email to admin
+        try{    
+        Mail::to('investordekhopoojad@gmail.com')->send(new \App\Mail\SubscriptionRequestMail([
+                    'name' => $request->input('name'),
+                    'phone' => $request->input('phone'),
+                    'payment_method' => $request->input('payment_method'),
+                    'transaction_id' => $request->input('transaction_id'),
+                    'reference_id' => $request->input('reference_id') ?? $request->input('upi_id'),
+                    'plan_amount' => $request->input('plan_amount'),
+                    'no_of_data' => $request->input('no_of_data'),
+                ]));
+        }
+        catch (\Exception $e) {
+            Log::error('Failed to send subscription request email: ' . $e->getMessage());
+            return back()->with('error', 'Failed to send subscription request email.');
+        }    
+        
         return redirect()->route('home')->with('success','Subscription Request Created Successfully!');
         
     }

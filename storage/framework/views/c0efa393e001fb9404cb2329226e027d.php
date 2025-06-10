@@ -70,7 +70,7 @@
                         <div class="dropdown-menu p-3" style="width: 250px;" id="locationDropdownMenu">
                             <input type="text" class="form-control mb-2" id="locationSearch" placeholder="Search location">
                             <div id="locationList" style="max-height: 200px; overflow-y: auto;">
-                                <?php $__currentLoopData = $locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $locations->sortBy(function($location) { return strtoupper($location->name); }); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="location[]" value="<?php echo e($location->name); ?>" id="location_<?php echo e($location->name); ?>">
                                         <label class="form-check-label" for="location_<?php echo e($location->name); ?>"><?php echo e($location->name); ?></label>
@@ -95,7 +95,7 @@
             <div class="dropdown-menu p-3" style="width: 250px;" id="sectorDropdownMenu">
                 <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector">
                 <div id="sectorList" style="max-height: 200px; overflow-y: auto;">
-                    <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = $sectors->sortBy( function($sector){ return strtoupper($sector->sectors_name); }); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->sectors_name); ?>">
                             <label class="form-check-label" for="sector_<?php echo e($sector->sectors_name); ?>"><?php echo e($sector->sectors_name); ?></label>
@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function addFilterToBreadcrumb(name, label) {
         const container = document.getElementById('selected-filters-container');
         const filterElement = document.createElement('span');
-        filterElement.className = 'badge bg-secondary me-2';
+        filterElement.className = 'badge bg-secondary me-2 mt-2';
         filterElement.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
 
         container.appendChild(filterElement);

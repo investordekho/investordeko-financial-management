@@ -67,7 +67,7 @@
                             <?php if(Auth::user()->category_id == 1): ?>
                             Number of Investors:
                             <?php elseif(Auth::user()->category_id == 2): ?>
-                            Nomber of Investee 
+                            Number of Investee 
                             <?php else: ?>
                             Number of Investor and Investee:
                             <?php endif; ?>

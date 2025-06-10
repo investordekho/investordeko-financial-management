@@ -19,7 +19,7 @@
                         <a class="btn btn-square btn-outline-light rounded-circle me-2" href="https://x.com/investordekho"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-square btn-outline-light rounded-circle me-2" href="https://www.facebook.com/profile.php?id=61568901415594"><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-square btn-outline-light rounded-circle me-2" href="https://www.youtube.com/@InvestorDekho"><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href="https://www.linkedin.com/in/investor-dekho-327689338/"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href="https://www.linkedin.com/in/investor-dekho-ad-327689338/"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                <div class="col-lg-4 col-md-6">
