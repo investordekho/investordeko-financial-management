@@ -246,7 +246,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="investmentSizeDropdown">
                                                     <div class="px-3 py-2">
-                                                        <!-- <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size"> -->
+                                                        <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size" style="display: none;">
                                                         <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                             <li class="dropdown-item">
                                                                 <div class="form-check">
@@ -797,15 +797,16 @@
                             </div>
 
                         </form>
-                        <!-- <div style="margin-top: -30px;" class="container">
+                        <div style="margin-top: -30px;" class="container">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
+                                    <!-- <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li> -->
                                     <li class="breadcrumb-item active" aria-current="page">Search Results</li>
-                                    <li class="breadcrumb-item" id="selected-filters-container"></li> 
+                                    <li class="breadcrumb-item" id="selected-filters-container">Pooja</li> 
+                                    <li class="breadcrumb-item" id="selected-filters-breadcrumb"></li>
                                 </ol>
                             </nav>
-                        </div> -->
+                        </div>
 
                         <!-- Investee List Section -->
                         <div class="row mt-4" id="investeeList">
@@ -1101,44 +1102,44 @@
     // const locations = [
     //     'Adilabad', 'Agra', 'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Gurgaon', 'Hyderabad', 'Kolkata', 'Mumbai', 'Noida', 'Pune', 'Surat'
     // ];
-const locations = [
-    'Agartala', 'Agra', 'Agraharam', 'Ahmedabad', 'Ajmer', 'Alappuzha', 'Aligarh', 'Ambala',
-    'Amritsar', 'Anantapur', 'Ankleshwar', 'Aurangabad', 'Azamgarh', 'Bagalkot', 'Balasore',
-    'Ballari', 'Banda', 'Bardhaman', 'Bareilly', 'Belgaum', 'Bellary', 'Bengaluru', 'Berhampur',
-    'Bhagalpur', 'Bhandara', 'Bharuch', 'Bhavnagar', 'Bhilai', 'Bhilwara', 'Bhimavaram', 'Bhiwadi',
-    'Bhopal', 'Bhubaneswar', 'Bhuj', 'Bidar', 'Bihar', 'Bihar Sharif', 'Bikaner', 'Bilaspur',
-    'Bokaro', 'Bongaigaon', 'Budaun', 'Bulandshahr', 'Chandigarh', 'Chandrapur', 'Chapra',
-    'Chhattisgarh', 'Chhindwara', 'Chikmagalur', 'Chittoor', 'Churu', 'Coimbatore', 'Cuddalore',
-    'Cuttack', 'Dadra and Nagar Haveli and Daman and Diu', 'Dahod', 'Darbhanga', 'Darjeeling',
-    'Dehradun', 'Delhi', 'Dewas', 'Dhanbad', 'Dhar', 'Dharmapuri', 'Dharwad', 'Dibrugarh',
-    'Dimapur', 'Dindigul', 'Durg', 'East Godavari', 'Erode', 'Etawah', 'Faizabad', 'Faridabad',
-    'Farrukhabad', 'Fatehpur', 'Firozabad', 'Gadag', 'Gandhinagar', 'Gangtok', 'Gaya', 'Ghaziabad',
-    'Giridih', 'Goa', 'Godhra', 'Gorakhpur', 'Greater Noida', 'Gujarat', 'Gulbarga', 'Guna',
-    'Guntur', 'Gurgaon', 'Gurugram', 'Guwahati', 'Gwalior', 'Haldwani', 'Haldia', 'Haryana',
-    'Hassan', 'Hathras', 'Himachal Pradesh', 'Hisar', 'Hosur', 'Hubli', 'Hyderabad', 'Ichalkaranji',
-    'Imphal', 'Indore', 'Itanagar', 'Jabalpur', 'Jaipur', 'Jalandhar', 'Jalgaon', 'Jammu',
-    'Jammu and Kashmir', 'Jamnagar', 'Jamshedpur', 'Jhansi', 'Jharkhand', 'Jodhpur', 'Junagadh',
-    'Kadapa', 'Kakinada', 'Kalaburagi', 'Kalyan', 'Kanchipuram', 'Kannur', 'Kanpur', 'Kanyakumari',
-    'Kapurthala', 'Karimnagar', 'Karnal', 'Karnataka', 'Karur', 'Kasaragod', 'Kashipur', 'Kathua',
-    'Katihar', 'Kavali', 'Kendrapara', 'Kerala', 'Khammam', 'Kharagpur', 'Kochi', 'Kolar',
-    'Kolhapur', 'Kolkata', 'Kollam', 'Korba', 'Kota', 'Kottayam', 'Kozhikode', 'Krishnagiri',
-    'Kurnool', 'Kurukshetra', 'Latur', 'Lucknow', 'Ludhiana', 'Madurai', 'Maharashtra', 'Malappuram',
-    'Malda', 'Manipur', 'Mathura', 'Mau', 'Meerut', 'Meghalaya', 'Midnapore', 'Mirzapur', 'Mizoram',
-    'Mangalore', 'Moradabad', 'Morena', 'Motihari', 'Muzaffarnagar', 'Muzaffarpur', 'Mysore',
-    'Mysuru', 'Nagaland', 'Nagapattinam', 'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'Nellore',
-    'Noida', 'North 24 Parganas', 'Odisha', 'Ongole', 'Palakkad', 'Palghar', 'Pali', 'Panaji',
-    'Panipat', 'Parbhani', 'Patiala', 'Patna', 'Pimpri-Chinchwad', 'Pondicherry', 'Porbandar',
-    'Prayagraj', 'Puducherry', 'Punjab', 'Pune', 'Puri', 'Raebareli', 'Raichur', 'Raipur',
-    'Rajasthan', 'Rajkot', 'Ranchi', 'Ratlam', 'Ratnagiri', 'Rewa', 'Rohtak', 'Rourkela', 'Sagar',
-    'Saharanpur', 'Salem', 'Sambalpur', 'Sangli', 'Satara', 'Satna', 'Secunderabad', 'Shahjahanpur',
-    'Shillong', 'Shimla', 'Shivamogga', 'Siliguri', 'Sikar', 'Silchar', 'Siliguri', 'Sirmaur',
-    'Sitapur', 'Solapur', 'Sonipat', 'Srinagar', 'Surat', 'Tamil Nadu', 'Telangana',
-    'Thane', 'Thanjavur', 'Thiruvananthapuram', 'Thoothukudi', 'Thrissur', 'Tiruchirappalli',
-    'Tirunelveli', 'Tirupati', 'Tiruppur', 'Tripura', 'Tumkur', 'Udaipur', 'Udupi', 'Ujjain',
-    'Uttar Pradesh', 'Uttarakhand', 'Vadodara', 'Valsad', 'Varanasi', 'Vasai-Virar', 'Vellore',
-    'Vidisha', 'Vijayawada', 'Villupuram', 'Virudhunagar', 'Visakhapatnam', 'Vizianagaram',
-    'Warangal', 'Wardha', 'West Bengal', 'Yamunanagar'
-];
+    const locations = [
+        'Agartala', 'Agra', 'Agraharam', 'Ahmedabad', 'Ajmer', 'Alappuzha', 'Aligarh', 'Ambala',
+        'Amritsar', 'Anantapur', 'Ankleshwar', 'Aurangabad', 'Azamgarh', 'Bagalkot', 'Balasore',
+        'Ballari', 'Banda', 'Bardhaman', 'Bareilly', 'Belgaum', 'Bellary', 'Bengaluru', 'Berhampur',
+        'Bhagalpur', 'Bhandara', 'Bharuch', 'Bhavnagar', 'Bhilai', 'Bhilwara', 'Bhimavaram', 'Bhiwadi',
+        'Bhopal', 'Bhubaneswar', 'Bhuj', 'Bidar', 'Bihar', 'Bihar Sharif', 'Bikaner', 'Bilaspur',
+        'Bokaro', 'Bongaigaon', 'Budaun', 'Bulandshahr', 'Chandigarh', 'Chandrapur', 'Chapra',
+        'Chhattisgarh', 'Chhindwara', 'Chikmagalur', 'Chittoor', 'Churu', 'Coimbatore', 'Cuddalore',
+        'Cuttack', 'Dadra and Nagar Haveli and Daman and Diu', 'Dahod', 'Darbhanga', 'Darjeeling',
+        'Dehradun', 'Delhi', 'Dewas', 'Dhanbad', 'Dhar', 'Dharmapuri', 'Dharwad', 'Dibrugarh',
+        'Dimapur', 'Dindigul', 'Durg', 'East Godavari', 'Erode', 'Etawah', 'Faizabad', 'Faridabad',
+        'Farrukhabad', 'Fatehpur', 'Firozabad', 'Gadag', 'Gandhinagar', 'Gangtok', 'Gaya', 'Ghaziabad',
+        'Giridih', 'Goa', 'Godhra', 'Gorakhpur', 'Greater Noida', 'Gujarat', 'Gulbarga', 'Guna',
+        'Guntur', 'Gurgaon', 'Gurugram', 'Guwahati', 'Gwalior', 'Haldwani', 'Haldia', 'Haryana',
+        'Hassan', 'Hathras', 'Himachal Pradesh', 'Hisar', 'Hosur', 'Hubli', 'Hyderabad', 'Ichalkaranji',
+        'Imphal', 'Indore', 'Itanagar', 'Jabalpur', 'Jaipur', 'Jalandhar', 'Jalgaon', 'Jammu',
+        'Jammu and Kashmir', 'Jamnagar', 'Jamshedpur', 'Jhansi', 'Jharkhand', 'Jodhpur', 'Junagadh',
+        'Kadapa', 'Kakinada', 'Kalaburagi', 'Kalyan', 'Kanchipuram', 'Kannur', 'Kanpur', 'Kanyakumari',
+        'Kapurthala', 'Karimnagar', 'Karnal', 'Karnataka', 'Karur', 'Kasaragod', 'Kashipur', 'Kathua',
+        'Katihar', 'Kavali', 'Kendrapara', 'Kerala', 'Khammam', 'Kharagpur', 'Kochi', 'Kolar',
+        'Kolhapur', 'Kolkata', 'Kollam', 'Korba', 'Kota', 'Kottayam', 'Kozhikode', 'Krishnagiri',
+        'Kurnool', 'Kurukshetra', 'Latur', 'Lucknow', 'Ludhiana', 'Madurai', 'Maharashtra', 'Malappuram',
+        'Malda', 'Manipur', 'Mathura', 'Mau', 'Meerut', 'Meghalaya', 'Midnapore', 'Mirzapur', 'Mizoram',
+        'Mangalore', 'Moradabad', 'Morena', 'Motihari', 'Muzaffarnagar', 'Muzaffarpur', 'Mysore',
+        'Mysuru', 'Nagaland', 'Nagapattinam', 'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'Nellore',
+        'Noida', 'North 24 Parganas', 'Odisha', 'Ongole', 'Palakkad', 'Palghar', 'Pali', 'Panaji',
+        'Panipat', 'Parbhani', 'Patiala', 'Patna', 'Pimpri-Chinchwad', 'Pondicherry', 'Porbandar',
+        'Prayagraj', 'Puducherry', 'Punjab', 'Pune', 'Puri', 'Raebareli', 'Raichur', 'Raipur',
+        'Rajasthan', 'Rajkot', 'Ranchi', 'Ratlam', 'Ratnagiri', 'Rewa', 'Rohtak', 'Rourkela', 'Sagar',
+        'Saharanpur', 'Salem', 'Sambalpur', 'Sangli', 'Satara', 'Satna', 'Secunderabad', 'Shahjahanpur',
+        'Shillong', 'Shimla', 'Shivamogga', 'Siliguri', 'Sikar', 'Silchar', 'Siliguri', 'Sirmaur',
+        'Sitapur', 'Solapur', 'Sonipat', 'Srinagar', 'Surat', 'Tamil Nadu', 'Telangana',
+        'Thane', 'Thanjavur', 'Thiruvananthapuram', 'Thoothukudi', 'Thrissur', 'Tiruchirappalli',
+        'Tirunelveli', 'Tirupati', 'Tiruppur', 'Tripura', 'Tumkur', 'Udaipur', 'Udupi', 'Ujjain',
+        'Uttar Pradesh', 'Uttarakhand', 'Vadodara', 'Valsad', 'Varanasi', 'Vasai-Virar', 'Vellore',
+        'Vidisha', 'Vijayawada', 'Villupuram', 'Virudhunagar', 'Visakhapatnam', 'Vizianagaram',
+        'Warangal', 'Wardha', 'West Bengal', 'Yamunanagar'
+    ];
 
 
     let filterdata = [];
@@ -1336,7 +1337,7 @@ const locations = [
         })
     }
 
-    document.getElementById('investmentTenureSearch').addEventListener('keyup',filterTenure);
+   
 
     function filterinvestorType(){
         const input = document.getElementById('investorTypeSearch').value.toLowerCase();
@@ -1370,6 +1371,59 @@ const locations = [
         document.addEventListener('DOMContentLoaded', function () {
 
             let selectedFilters = {}; // Object to store selected filters and their labels
+    // updateBreadcrumb();
+    console.log("***********************************1");
+    console.log("Container found:", document.getElementById('selected-filters-container'));
+
+    const container = document.getElementById('selected-filters-container');
+            console.log("***********************************2",container.innerText);
+            // function updateBreadcrumb() {
+            //     const container = document.getElementById('selected-filters-container');
+            //     console.log("***********************************3");
+            //     container.innerHTML = '';
+            //     Object.keys(selectedFilters).forEach(key => {
+            //         if (Array.isArray(selectedFilters[key])) {
+            //             selectedFilters[key].forEach(value => addFilterToBreadcrumb(key, value));
+            //         } else {
+            //             addFilterToBreadcrumb(key, selectedFilters[key]);
+            //         }
+            //     });
+            // }
+            function updateBreadcrumb() {
+                const container = document.getElementById('selected-filters-container');
+                container.innerHTML = '';
+
+                Object.keys(selectedFilters).forEach(key => {
+                    if (Array.isArray(selectedFilters[key])) {
+                        selectedFilters[key].forEach(value => addFilterToBreadcrumb(key, value));
+                    } else {
+                        addFilterToBreadcrumb(key, selectedFilters[key]);
+                    }
+                });
+            }
+
+
+        function addFilterToBreadcrumb(name, label) {
+            const container = document.getElementById('selected-filters-container');
+            const filterElement = document.createElement('span');
+            filterElement.className = 'badge bg-secondary me-2 mt-2';
+            filterElement.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
+
+            container.appendChild(filterElement);
+
+            filterElement.querySelector('.btn-close').addEventListener('click', function () {
+                removeFilter(name, label);
+            });
+        }
+
+
+
+
+
+
+
+
+
 
             // Function to fetch results based on form input
             function fetchResults() {
@@ -1398,7 +1452,7 @@ const locations = [
             }
 
             // Function to update breadcrumb with selected filters
-            function updateBreadcrumb() {
+            function updateBreadcrumbinvestor() {
                 const container = document.getElementById('selected-filters-container2');
                 container.innerHTML = ''; // Clear the breadcrumb
 
@@ -1406,23 +1460,23 @@ const locations = [
                 Object.keys(selectedFilters).forEach(key => {
                     if(Array.isArray(selectedFilters[key])){
                         selectedFilters[key].forEach(values => {
-                            addFilterToBreadcrumb(key, values);
+                            addFilterToBreadcrumbinvestor(key, values);
                         });
                     }
                     else{
-                        addFilterToBreadcrumb(key, selectedFilters[key]);
+                        addFilterToBreadcrumbinvestor(key, selectedFilters[key]);
                     }
                 });
 
                 // Add searchBox value to the breadcrumb if it's not empty
                 let searchBoxValue = document.getElementById('searchBox2').value;
                 if (searchBoxValue && searchBoxValue.trim() !== '') {
-                    addFilterToBreadcrumb('searchBox', searchBoxValue); // Add searchBox filter
+                    addFilterToBreadcrumbinvestor('searchBox', searchBoxValue); // Add searchBox filter
                 }
             }
 
             // Function to add filter to the breadcrumb
-            function addFilterToBreadcrumb(name, label) {
+            function addFilterToBreadcrumbinvestor(name, label) {
                 const container = document.getElementById('selected-filters-container2');
 
                 // Create a span element for the filter
@@ -1556,6 +1610,44 @@ const locations = [
         fetchResults();
     });
 
+    //--------------------------------------START------------------------------------------------------------------------------------
+        // function renderSelectedFilters() {
+        //     const breadcrumbContainer = document.getElementById('selected-filters-breadcrumb');
+        //     breadcrumbContainer.innerHTML = ''; // Clear previous filters
+
+        //     Object.keys(selectedFilters).forEach(key => {
+        //         const values = selectedFilters[key];
+        //         if (Array.isArray(values)) {
+        //             values.forEach(val => {
+        //                 appendBadgeToBreadcrumb(key, val);
+        //             });
+        //         } else if (values && values.trim()) {
+        //             appendBadgeToBreadcrumb(key, values);
+        //         }
+        //     });
+        // }
+
+    // Function to add a badge-like span to the breadcrumb <li>
+    // function appendBadgeToBreadcrumb(name, label) {
+    //     const breadcrumbContainer = document.getElementById('selected-filters-breadcrumb');
+    //     const badge = document.createElement('span');
+    //     badge.className = 'badge bg-primary me-2';
+    //     badge.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
+
+    //     breadcrumbContainer.appendChild(badge);
+
+    //     badge.querySelector('.btn-close').addEventListener('click', function () {
+    //         removeFilter(name, label); // Reuses your existing logic
+    //         renderSelectedFilters();  // Refresh breadcrumbs
+    //         fetchResults();           // Re-fetch results
+    //     });
+    // }
+
+    // updateSelectedFilters();  // already defined
+    // renderSelectedFilters();  // 🔁 call the new breadcrumb updater
+    // fetchResults();           // fetches AJAX results
+
+    //-------------------------------END--------------------------------------------------------------------------
 
 </script>
 
