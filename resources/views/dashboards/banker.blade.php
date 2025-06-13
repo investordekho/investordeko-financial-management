@@ -798,7 +798,7 @@
                             </div>
 
                         </form>
-                        <!-- <div style="margin-top: -30px;" class="container">
+                        <div style="margin-top: -30px;" class="container">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ route('investee.dashboard') }}">Home</a></li>
@@ -806,7 +806,7 @@
                                     <li class="breadcrumb-item" id="selected-filters-container"></li> 
                                 </ol>
                             </nav>
-                        </div> -->
+                        </div>
 
                         <!-- Investee List Section -->
                         <div class="row mt-4" id="investeeList">
@@ -1102,69 +1102,55 @@
     // const locations = [
     //     'Adilabad', 'Agra', 'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Gurgaon', 'Hyderabad', 'Kolkata', 'Mumbai', 'Noida', 'Pune', 'Surat'
     // ];
-const locations = [
-    'Agartala', 'Agra', 'Agraharam', 'Ahmedabad', 'Ajmer', 'Alappuzha', 'Aligarh', 'Ambala',
-    'Amritsar', 'Anantapur', 'Ankleshwar', 'Aurangabad', 'Azamgarh', 'Bagalkot', 'Balasore',
-    'Ballari', 'Banda', 'Bardhaman', 'Bareilly', 'Belgaum', 'Bellary', 'Bengaluru', 'Berhampur',
-    'Bhagalpur', 'Bhandara', 'Bharuch', 'Bhavnagar', 'Bhilai', 'Bhilwara', 'Bhimavaram', 'Bhiwadi',
-    'Bhopal', 'Bhubaneswar', 'Bhuj', 'Bidar', 'Bihar', 'Bihar Sharif', 'Bikaner', 'Bilaspur',
-    'Bokaro', 'Bongaigaon', 'Budaun', 'Bulandshahr', 'Chandigarh', 'Chandrapur', 'Chapra',
-    'Chhattisgarh', 'Chhindwara', 'Chikmagalur', 'Chittoor', 'Churu', 'Coimbatore', 'Cuddalore',
-    'Cuttack', 'Dadra and Nagar Haveli and Daman and Diu', 'Dahod', 'Darbhanga', 'Darjeeling',
-    'Dehradun', 'Delhi', 'Dewas', 'Dhanbad', 'Dhar', 'Dharmapuri', 'Dharwad', 'Dibrugarh',
-    'Dimapur', 'Dindigul', 'Durg', 'East Godavari', 'Erode', 'Etawah', 'Faizabad', 'Faridabad',
-    'Farrukhabad', 'Fatehpur', 'Firozabad', 'Gadag', 'Gandhinagar', 'Gangtok', 'Gaya', 'Ghaziabad',
-    'Giridih', 'Goa', 'Godhra', 'Gorakhpur', 'Greater Noida', 'Gujarat', 'Gulbarga', 'Guna',
-    'Guntur', 'Gurgaon', 'Gurugram', 'Guwahati', 'Gwalior', 'Haldwani', 'Haldia', 'Haryana',
-    'Hassan', 'Hathras', 'Himachal Pradesh', 'Hisar', 'Hosur', 'Hubli', 'Hyderabad', 'Ichalkaranji',
-    'Imphal', 'Indore', 'Itanagar', 'Jabalpur', 'Jaipur', 'Jalandhar', 'Jalgaon', 'Jammu',
-    'Jammu and Kashmir', 'Jamnagar', 'Jamshedpur', 'Jhansi', 'Jharkhand', 'Jodhpur', 'Junagadh',
-    'Kadapa', 'Kakinada', 'Kalaburagi', 'Kalyan', 'Kanchipuram', 'Kannur', 'Kanpur', 'Kanyakumari',
-    'Kapurthala', 'Karimnagar', 'Karnal', 'Karnataka', 'Karur', 'Kasaragod', 'Kashipur', 'Kathua',
-    'Katihar', 'Kavali', 'Kendrapara', 'Kerala', 'Khammam', 'Kharagpur', 'Kochi', 'Kolar',
-    'Kolhapur', 'Kolkata', 'Kollam', 'Korba', 'Kota', 'Kottayam', 'Kozhikode', 'Krishnagiri',
-    'Kurnool', 'Kurukshetra', 'Latur', 'Lucknow', 'Ludhiana', 'Madurai', 'Maharashtra', 'Malappuram',
-    'Malda', 'Manipur', 'Mathura', 'Mau', 'Meerut', 'Meghalaya', 'Midnapore', 'Mirzapur', 'Mizoram',
-    'Mangalore', 'Moradabad', 'Morena', 'Motihari', 'Muzaffarnagar', 'Muzaffarpur', 'Mysore',
-    'Mysuru', 'Nagaland', 'Nagapattinam', 'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'Nellore',
-    'Noida', 'North 24 Parganas', 'Odisha', 'Ongole', 'Palakkad', 'Palghar', 'Pali', 'Panaji',
-    'Panipat', 'Parbhani', 'Patiala', 'Patna', 'Pimpri-Chinchwad', 'Pondicherry', 'Porbandar',
-    'Prayagraj', 'Puducherry', 'Punjab', 'Pune', 'Puri', 'Raebareli', 'Raichur', 'Raipur',
-    'Rajasthan', 'Rajkot', 'Ranchi', 'Ratlam', 'Ratnagiri', 'Rewa', 'Rohtak', 'Rourkela', 'Sagar',
-    'Saharanpur', 'Salem', 'Sambalpur', 'Sangli', 'Satara', 'Satna', 'Secunderabad', 'Shahjahanpur',
-    'Shillong', 'Shimla', 'Shivamogga', 'Siliguri', 'Sikar', 'Silchar', 'Siliguri', 'Sirmaur',
-    'Sitapur', 'Solapur', 'Sonipat', 'Srinagar', 'Surat', 'Tamil Nadu', 'Telangana',
-    'Thane', 'Thanjavur', 'Thiruvananthapuram', 'Thoothukudi', 'Thrissur', 'Tiruchirappalli',
-    'Tirunelveli', 'Tirupati', 'Tiruppur', 'Tripura', 'Tumkur', 'Udaipur', 'Udupi', 'Ujjain',
-    'Uttar Pradesh', 'Uttarakhand', 'Vadodara', 'Valsad', 'Varanasi', 'Vasai-Virar', 'Vellore',
-    'Vidisha', 'Vijayawada', 'Villupuram', 'Virudhunagar', 'Visakhapatnam', 'Vizianagaram',
-    'Warangal', 'Wardha', 'West Bengal', 'Yamunanagar'
-];
+    const locations = [
+        'Agartala', 'Agra', 'Agraharam', 'Ahmedabad', 'Ajmer', 'Alappuzha', 'Aligarh', 'Ambala',
+        'Amritsar', 'Anantapur', 'Ankleshwar', 'Aurangabad', 'Azamgarh', 'Bagalkot', 'Balasore',
+        'Ballari', 'Banda', 'Bardhaman', 'Bareilly', 'Belgaum', 'Bellary', 'Bengaluru', 'Berhampur',
+        'Bhagalpur', 'Bhandara', 'Bharuch', 'Bhavnagar', 'Bhilai', 'Bhilwara', 'Bhimavaram', 'Bhiwadi',
+        'Bhopal', 'Bhubaneswar', 'Bhuj', 'Bidar', 'Bihar', 'Bihar Sharif', 'Bikaner', 'Bilaspur',
+        'Bokaro', 'Bongaigaon', 'Budaun', 'Bulandshahr', 'Chandigarh', 'Chandrapur', 'Chapra',
+        'Chhattisgarh', 'Chhindwara', 'Chikmagalur', 'Chittoor', 'Churu', 'Coimbatore', 'Cuddalore',
+        'Cuttack', 'Dadra and Nagar Haveli and Daman and Diu', 'Dahod', 'Darbhanga', 'Darjeeling',
+        'Dehradun', 'Delhi', 'Dewas', 'Dhanbad', 'Dhar', 'Dharmapuri', 'Dharwad', 'Dibrugarh',
+        'Dimapur', 'Dindigul', 'Durg', 'East Godavari', 'Erode', 'Etawah', 'Faizabad', 'Faridabad',
+        'Farrukhabad', 'Fatehpur', 'Firozabad', 'Gadag', 'Gandhinagar', 'Gangtok', 'Gaya', 'Ghaziabad',
+        'Giridih', 'Goa', 'Godhra', 'Gorakhpur', 'Greater Noida', 'Gujarat', 'Gulbarga', 'Guna',
+        'Guntur', 'Gurgaon', 'Gurugram', 'Guwahati', 'Gwalior', 'Haldwani', 'Haldia', 'Haryana',
+        'Hassan', 'Hathras', 'Himachal Pradesh', 'Hisar', 'Hosur', 'Hubli', 'Hyderabad', 'Ichalkaranji',
+        'Imphal', 'Indore', 'Itanagar', 'Jabalpur', 'Jaipur', 'Jalandhar', 'Jalgaon', 'Jammu',
+        'Jammu and Kashmir', 'Jamnagar', 'Jamshedpur', 'Jhansi', 'Jharkhand', 'Jodhpur', 'Junagadh',
+        'Kadapa', 'Kakinada', 'Kalaburagi', 'Kalyan', 'Kanchipuram', 'Kannur', 'Kanpur', 'Kanyakumari',
+        'Kapurthala', 'Karimnagar', 'Karnal', 'Karnataka', 'Karur', 'Kasaragod', 'Kashipur', 'Kathua',
+        'Katihar', 'Kavali', 'Kendrapara', 'Kerala', 'Khammam', 'Kharagpur', 'Kochi', 'Kolar',
+        'Kolhapur', 'Kolkata', 'Kollam', 'Korba', 'Kota', 'Kottayam', 'Kozhikode', 'Krishnagiri',
+        'Kurnool', 'Kurukshetra', 'Latur', 'Lucknow', 'Ludhiana', 'Madurai', 'Maharashtra', 'Malappuram',
+        'Malda', 'Manipur', 'Mathura', 'Mau', 'Meerut', 'Meghalaya', 'Midnapore', 'Mirzapur', 'Mizoram',
+        'Mangalore', 'Moradabad', 'Morena', 'Motihari', 'Muzaffarnagar', 'Muzaffarpur', 'Mysore',
+        'Mysuru', 'Nagaland', 'Nagapattinam', 'Nagpur', 'Nanded', 'Nashik', 'Navi Mumbai', 'Nellore',
+        'Noida', 'North 24 Parganas', 'Odisha', 'Ongole', 'Palakkad', 'Palghar', 'Pali', 'Panaji',
+        'Panipat', 'Parbhani', 'Patiala', 'Patna', 'Pimpri-Chinchwad', 'Pondicherry', 'Porbandar',
+        'Prayagraj', 'Puducherry', 'Punjab', 'Pune', 'Puri', 'Raebareli', 'Raichur', 'Raipur',
+        'Rajasthan', 'Rajkot', 'Ranchi', 'Ratlam', 'Ratnagiri', 'Rewa', 'Rohtak', 'Rourkela', 'Sagar',
+        'Saharanpur', 'Salem', 'Sambalpur', 'Sangli', 'Satara', 'Satna', 'Secunderabad', 'Shahjahanpur',
+        'Shillong', 'Shimla', 'Shivamogga', 'Siliguri', 'Sikar', 'Silchar', 'Siliguri', 'Sirmaur',
+        'Sitapur', 'Solapur', 'Sonipat', 'Srinagar', 'Surat', 'Tamil Nadu', 'Telangana',
+        'Thane', 'Thanjavur', 'Thiruvananthapuram', 'Thoothukudi', 'Thrissur', 'Tiruchirappalli',
+        'Tirunelveli', 'Tirupati', 'Tiruppur', 'Tripura', 'Tumkur', 'Udaipur', 'Udupi', 'Ujjain',
+        'Uttar Pradesh', 'Uttarakhand', 'Vadodara', 'Valsad', 'Varanasi', 'Vasai-Virar', 'Vellore',
+        'Vidisha', 'Vijayawada', 'Villupuram', 'Virudhunagar', 'Visakhapatnam', 'Vizianagaram',
+        'Warangal', 'Wardha', 'West Bengal', 'Yamunanagar'
+    ];
 
 
     let filterdata = [];
+    const checkboxNameMap = {
+    location: 'location[]',
+    nature_of_business: 'nature_of_business[]',
+    incorporated_in: 'incorporated_in[]',
+    fund_usage: 'fund_usage[]'
+};
+    let selectedFilters = {}; // Object to hold selected filters
 
-   
-
-
-    // Render Sectors Dropdown
-    // function populateSectors() {
-    //     const sectorList = document.getElementById('sectorList');
-    //     const selectedSectors = new Set([...new FormData(document.getElementById('searchForm')).getAll('sector[]')]);
-    //     sectorList.innerHTML = '';
-
-    //     sectors.forEach((sector, index) => {
-    //         const listItem = document.createElement('li');
-    //         listItem.classList.add('dropdown-item');
-    //         listItem.innerHTML = `
-    //             <div class="form-check">
-    //                 <input class="form-check-input" type="checkbox" name="sector[]" value="${sector}" id="sector_${index}" ${selectedSectors.has(sector) ? 'checked' : ''}>
-    //                 <label class="form-check-label" for="sector_${index}">${sector}</label>
-    //             </div>
-    //         `;
-    //         sectorList.appendChild(listItem);
-    //     });
-    // }
 
     function populateSectors() {
 
@@ -1210,20 +1196,10 @@ const locations = [
     //document.getElementById('sectorSearch').addEventListener('keyup',filterSectors);
 
     filterSectors();
-    // Filter Sectors
-    // function filterSectors() {
-    //     const input = document.getElementById('sectorSearch').value.toLowerCase();
-    //     const items = document.querySelectorAll('#sectorList .dropdown-item');
-
-    //     items.forEach(item => {
-    //         item.style.display = item.textContent.toLowerCase().includes(input) ? '' : 'none';
-    //     });
-    // }
-
-    // Render Locations Dropdown
+  
     function populateLocations() {
         const locationList = document.getElementById('locationList');
-        const selectedLocations = new Set([...new FormData(document.getElementById('searchForm')).getAll('location[]')]);
+        const selectedLocations = new Set([...new FormData(document.getElementById('searchForm')).getAll('location2[]')]);
         locationList.innerHTML = '';
 
         locations.forEach((location, index) => {
@@ -1231,7 +1207,7 @@ const locations = [
             listItem.classList.add('dropdown-item');
             listItem.innerHTML = `
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="location[]" value="${location}" id="location_${index}" ${selectedLocations.has(location) ? 'checked' : ''}>
+                    <input class="form-check-input" type="checkbox" name="location2[]" value="${location}" id="location_${index}" ${selectedLocations.has(location) ? 'checked' : ''}>
                     <label class="form-check-label" for="location_${index}">${location}</label>
                 </div>
             `;
@@ -1272,6 +1248,7 @@ const locations = [
             // Keep the selected options checked
             populateSectors();
             populateLocations();
+            
         })
         .catch(error => console.error('Error:', error));
     }
@@ -1280,7 +1257,10 @@ const locations = [
     document.addEventListener('DOMContentLoaded', function () {
        
         populateLocations();
+        // updateSelectedFilters();  // <-- Add this line
         fetchResults1();
+          updateSelectedFilters();  // Update the selected filters
+                 fetchResults();  // Fetch results
         document.getElementById('sectorSearch').addEventListener('keyup', filterSectors);
         document.getElementById('locationSearch').addEventListener('keyup', filterLocations);
 
@@ -1288,12 +1268,16 @@ const locations = [
             input.addEventListener('change', populateSectors);
         });
 
-        document.querySelectorAll('input[name="location[]"]').forEach(input => {
+        document.querySelectorAll('input[name="location2[]"]').forEach(input => {
             input.addEventListener('change', populateLocations);
         });
 
-        document.getElementById('searchNowButton').addEventListener('click', function () {
+        document.getElementById('searchBtn2').addEventListener('click', function () {
+            updateSelectedFilters();  // <-- Add this line
+            console.log('Selected Filters:', selectedFilters);
             fetchResults1();
+              updateSelectedFilters();  // Update the selected filters
+                 fetchResults();  // Fetch results
         });
 
         document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
@@ -1302,6 +1286,132 @@ const locations = [
         });
     });
     });
+
+    //on any change update selected filters
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            updateSelectedFilters(); // Update selected filters on checkbox change
+            fetchResults1(); // Fetch results after updating filters
+              updateSelectedFilters();  // Update the selected filters
+                 fetchResults();  // Fetch results
+        });
+    });
+
+    // on chamge checkbox update selected filters
+        selectedFilters = {}; // Clear previous selected filters
+      function updateSelectedFilters() {
+            // selectedFilters = {}; // Clear previous selected filters
+
+            // Capture selected locations (location2[])
+            selectedFilters['location'] = [];
+            document.querySelectorAll('input[name="location[]"]:checked').forEach(el => {
+                selectedFilters['location'].push(el.value);
+            });
+
+            // Capture selected sectors (nature_of_business[])
+            selectedFilters['nature_of_business'] = [];
+            document.querySelectorAll('input[name="nature_of_business[]"]:checked').forEach(el => {
+                selectedFilters['nature_of_business'].push(el.value);
+            });
+
+            // Capture selected incorporated years (incorporated_in[])
+            selectedFilters['incorporated_in'] = [];
+            document.querySelectorAll('input[name="incorporated_in[]"]:checked').forEach(el => {
+                selectedFilters['incorporated_in'].push(el.value);
+            });
+
+           // Capture selected fund usages (fund_usage[])
+            selectedFilters['fund_usage'] = [];
+            document.querySelectorAll('input[name="fund_usage[]"]:checked').forEach(el => {
+                selectedFilters['fund_usage'].push(el.value);
+            });
+
+            // Capture searchBox value (searchBox2)
+            const searchBoxValue = document.getElementById('searchBox2').value.trim();
+            if (searchBoxValue !== '') {
+                selectedFilters['searchBox'] = searchBoxValue;
+            }
+
+            const container = document.getElementById('selected-filters-container');
+            container.innerHTML = ''; // Clear previous filters
+
+            for (const [key, values] of Object.entries(selectedFilters)) {
+                if (Array.isArray(values) && values.length > 0) {
+                    values.forEach(val => {
+                        addFilterToBreadcrumb(key, val);
+                    });
+                } else if (typeof values === 'string' && values.trim()) {
+                    addFilterToBreadcrumb(key, values);
+                }
+            } 
+
+            function addFilterToBreadcrumb(name, label) {
+                const filterElement = document.createElement('span');
+                filterElement.className = 'badge bg-secondary me-2 mt-2 d-inline-flex align-items-center';
+                filterElement.innerHTML = `
+                    ${label}
+                    <button type="button" class="btn-close btn-close-white ms-2" aria-label="Remove"></button>
+                `;
+
+                container.appendChild(filterElement);
+
+                // Remove button handler
+                filterElement.querySelector('.btn-close').addEventListener('click', function () {
+                    removeFilter(name, label);
+                });
+                
+            }
+
+            // function removeFilter(name, label) {
+            //     // Remove the filter from the selected filters object
+            //     if (Array.isArray(selectedFilters[name])) {
+            //         selectedFilters[name] = selectedFilters[name].filter(value => value !== label);
+            //     } else {
+            //         delete selectedFilters[name];
+            //     }
+
+            //     // Uncheck the corresponding checkbox for other filters
+            //     const filterElement = document.querySelector(`input[name="${name}[]"][value="${label}"]`);
+            //     if (filterElement) {
+            //         filterElement.checked = false;
+            //     }
+
+            //     // Immediately update filters and fetch results
+            //     updateSelectedFilters();
+            //     fetchResults1();
+            // }
+            function removeFilter(name, label) {
+                // Remove from selectedFilters
+                if (Array.isArray(selectedFilters[name])) {
+                    selectedFilters[name] = selectedFilters[name].filter(value => value !== label);
+                    if (selectedFilters[name].length === 0) {
+                        delete selectedFilters[name];
+                    }
+                } else {
+                    delete selectedFilters[name];
+                }
+
+            // Special case: If it's the searchBox, clear the input field
+                if (name === 'searchBox') {
+                    document.getElementById('searchBox2').value = '';
+                } else {
+                // Get checkbox name — fallback to name[]
+                const inputName = checkboxNameMap?.[name] || `${name}[]`;
+
+                // Uncheck all checkboxes with matching name and value
+                const checkboxes = document.querySelectorAll(`input[name="${inputName}"][value="${label}"]`);
+                checkboxes.forEach(cb => cb.checked = false);
+                }
+                // Re-render filters and fetch updated results
+                updateSelectedFilters();
+                fetchResults1();
+                   updateSelectedFilters();  // Update the selected filters
+                 fetchResults();  // Fetch results
+            }
+
+            
+}
+
 
     function filterInvestmentSize(){
         const input = document.getElementById('investmentSizeSearch').value.toLowerCase();
@@ -1481,7 +1591,7 @@ const locations = [
 
 
         // Function to update selected filters based on checkboxes
-        function updateSelectedFilters() {
+        function updateSelectedFilters2() {
             selectedFilters = {}; // Clear previous selected filters
 
             // Capture selected locations

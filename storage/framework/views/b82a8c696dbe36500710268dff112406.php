@@ -246,7 +246,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="investmentSizeDropdown">
                                                     <div class="px-3 py-2">
-                                                        <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size" style="display: none;">
+                                                        <!-- <input type="text" class="form-control mb-2" id="investmentSizeSearch" placeholder="Search investment size"> -->
                                                         <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                             <li class="dropdown-item">
                                                                 <div class="form-check">
@@ -800,10 +800,9 @@
                         <div style="margin-top: -30px;" class="container">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <!-- <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li> -->
+                                    <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Search Results</li>
-                                    <li class="breadcrumb-item" id="selected-filters-container">Pooja</li> 
-                                    <li class="breadcrumb-item" id="selected-filters-breadcrumb"></li>
+                                    <li class="breadcrumb-item" id="selected-filters-container"></li> 
                                 </ol>
                             </nav>
                         </div>
@@ -1143,28 +1142,14 @@
 
 
     let filterdata = [];
+    const checkboxNameMap = {
+    location: 'location[]',
+    nature_of_business: 'nature_of_business[]',
+    incorporated_in: 'incorporated_in[]',
+    fund_usage: 'fund_usage[]'
+};
+    let selectedFilters = {}; // Object to hold selected filters
 
-   
-
-
-    // Render Sectors Dropdown
-    // function populateSectors() {
-    //     const sectorList = document.getElementById('sectorList');
-    //     const selectedSectors = new Set([...new FormData(document.getElementById('searchForm')).getAll('sector[]')]);
-    //     sectorList.innerHTML = '';
-
-    //     sectors.forEach((sector, index) => {
-    //         const listItem = document.createElement('li');
-    //         listItem.classList.add('dropdown-item');
-    //         listItem.innerHTML = `
-    //             <div class="form-check">
-    //                 <input class="form-check-input" type="checkbox" name="sector[]" value="${sector}" id="sector_${index}" ${selectedSectors.has(sector) ? 'checked' : ''}>
-    //                 <label class="form-check-label" for="sector_${index}">${sector}</label>
-    //             </div>
-    //         `;
-    //         sectorList.appendChild(listItem);
-    //     });
-    // }
 
     function populateSectors() {
 
@@ -1210,20 +1195,10 @@
     //document.getElementById('sectorSearch').addEventListener('keyup',filterSectors);
 
     filterSectors();
-    // Filter Sectors
-    // function filterSectors() {
-    //     const input = document.getElementById('sectorSearch').value.toLowerCase();
-    //     const items = document.querySelectorAll('#sectorList .dropdown-item');
-
-    //     items.forEach(item => {
-    //         item.style.display = item.textContent.toLowerCase().includes(input) ? '' : 'none';
-    //     });
-    // }
-
-    // Render Locations Dropdown
+  
     function populateLocations() {
         const locationList = document.getElementById('locationList');
-        const selectedLocations = new Set([...new FormData(document.getElementById('searchForm')).getAll('location[]')]);
+        const selectedLocations = new Set([...new FormData(document.getElementById('searchForm')).getAll('location2[]')]);
         locationList.innerHTML = '';
 
         locations.forEach((location, index) => {
@@ -1231,7 +1206,7 @@
             listItem.classList.add('dropdown-item');
             listItem.innerHTML = `
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="location[]" value="${location}" id="location_${index}" ${selectedLocations.has(location) ? 'checked' : ''}>
+                    <input class="form-check-input" type="checkbox" name="location2[]" value="${location}" id="location_${index}" ${selectedLocations.has(location) ? 'checked' : ''}>
                     <label class="form-check-label" for="location_${index}">${location}</label>
                 </div>
             `;
@@ -1272,6 +1247,7 @@
             // Keep the selected options checked
             populateSectors();
             populateLocations();
+            
         })
         .catch(error => console.error('Error:', error));
     }
@@ -1280,7 +1256,10 @@
     document.addEventListener('DOMContentLoaded', function () {
        
         populateLocations();
+        // updateSelectedFilters();  // <-- Add this line
         fetchResults1();
+          updateSelectedFilters();  // Update the selected filters
+                 fetchResults();  // Fetch results
         document.getElementById('sectorSearch').addEventListener('keyup', filterSectors);
         document.getElementById('locationSearch').addEventListener('keyup', filterLocations);
 
@@ -1288,12 +1267,16 @@
             input.addEventListener('change', populateSectors);
         });
 
-        document.querySelectorAll('input[name="location[]"]').forEach(input => {
+        document.querySelectorAll('input[name="location2[]"]').forEach(input => {
             input.addEventListener('change', populateLocations);
         });
 
-        document.getElementById('searchNowButton').addEventListener('click', function () {
+        document.getElementById('searchBtn2').addEventListener('click', function () {
+            updateSelectedFilters();  // <-- Add this line
+            console.log('Selected Filters:', selectedFilters);
             fetchResults1();
+              updateSelectedFilters();  // Update the selected filters
+                 fetchResults();  // Fetch results
         });
 
         document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
@@ -1302,6 +1285,132 @@
         });
     });
     });
+
+    //on any change update selected filters
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            updateSelectedFilters(); // Update selected filters on checkbox change
+            fetchResults1(); // Fetch results after updating filters
+              updateSelectedFilters();  // Update the selected filters
+                 fetchResults();  // Fetch results
+        });
+    });
+
+    // on chamge checkbox update selected filters
+        selectedFilters = {}; // Clear previous selected filters
+      function updateSelectedFilters() {
+            // selectedFilters = {}; // Clear previous selected filters
+
+            // Capture selected locations (location2[])
+            selectedFilters['location'] = [];
+            document.querySelectorAll('input[name="location[]"]:checked').forEach(el => {
+                selectedFilters['location'].push(el.value);
+            });
+
+            // Capture selected sectors (nature_of_business[])
+            selectedFilters['nature_of_business'] = [];
+            document.querySelectorAll('input[name="nature_of_business[]"]:checked').forEach(el => {
+                selectedFilters['nature_of_business'].push(el.value);
+            });
+
+            // Capture selected incorporated years (incorporated_in[])
+            selectedFilters['incorporated_in'] = [];
+            document.querySelectorAll('input[name="incorporated_in[]"]:checked').forEach(el => {
+                selectedFilters['incorporated_in'].push(el.value);
+            });
+
+           // Capture selected fund usages (fund_usage[])
+            selectedFilters['fund_usage'] = [];
+            document.querySelectorAll('input[name="fund_usage[]"]:checked').forEach(el => {
+                selectedFilters['fund_usage'].push(el.value);
+            });
+
+            // Capture searchBox value (searchBox2)
+            const searchBoxValue = document.getElementById('searchBox2').value.trim();
+            if (searchBoxValue !== '') {
+                selectedFilters['searchBox'] = searchBoxValue;
+            }
+
+            const container = document.getElementById('selected-filters-container');
+            container.innerHTML = ''; // Clear previous filters
+
+            for (const [key, values] of Object.entries(selectedFilters)) {
+                if (Array.isArray(values) && values.length > 0) {
+                    values.forEach(val => {
+                        addFilterToBreadcrumb(key, val);
+                    });
+                } else if (typeof values === 'string' && values.trim()) {
+                    addFilterToBreadcrumb(key, values);
+                }
+            } 
+
+            function addFilterToBreadcrumb(name, label) {
+                const filterElement = document.createElement('span');
+                filterElement.className = 'badge bg-secondary me-2 mt-2 d-inline-flex align-items-center';
+                filterElement.innerHTML = `
+                    ${label}
+                    <button type="button" class="btn-close btn-close-white ms-2" aria-label="Remove"></button>
+                `;
+
+                container.appendChild(filterElement);
+
+                // Remove button handler
+                filterElement.querySelector('.btn-close').addEventListener('click', function () {
+                    removeFilter(name, label);
+                });
+                
+            }
+
+            // function removeFilter(name, label) {
+            //     // Remove the filter from the selected filters object
+            //     if (Array.isArray(selectedFilters[name])) {
+            //         selectedFilters[name] = selectedFilters[name].filter(value => value !== label);
+            //     } else {
+            //         delete selectedFilters[name];
+            //     }
+
+            //     // Uncheck the corresponding checkbox for other filters
+            //     const filterElement = document.querySelector(`input[name="${name}[]"][value="${label}"]`);
+            //     if (filterElement) {
+            //         filterElement.checked = false;
+            //     }
+
+            //     // Immediately update filters and fetch results
+            //     updateSelectedFilters();
+            //     fetchResults1();
+            // }
+            function removeFilter(name, label) {
+                // Remove from selectedFilters
+                if (Array.isArray(selectedFilters[name])) {
+                    selectedFilters[name] = selectedFilters[name].filter(value => value !== label);
+                    if (selectedFilters[name].length === 0) {
+                        delete selectedFilters[name];
+                    }
+                } else {
+                    delete selectedFilters[name];
+                }
+
+            // Special case: If it's the searchBox, clear the input field
+                if (name === 'searchBox') {
+                    document.getElementById('searchBox2').value = '';
+                } else {
+                // Get checkbox name — fallback to name[]
+                const inputName = checkboxNameMap?.[name] || `${name}[]`;
+
+                // Uncheck all checkboxes with matching name and value
+                const checkboxes = document.querySelectorAll(`input[name="${inputName}"][value="${label}"]`);
+                checkboxes.forEach(cb => cb.checked = false);
+                }
+                // Re-render filters and fetch updated results
+                updateSelectedFilters();
+                fetchResults1();
+                   updateSelectedFilters();  // Update the selected filters
+                 fetchResults();  // Fetch results
+            }
+
+            
+}
+
 
     function filterInvestmentSize(){
         const input = document.getElementById('investmentSizeSearch').value.toLowerCase();
@@ -1337,7 +1446,7 @@
         })
     }
 
-   
+    document.getElementById('investmentTenureSearch').addEventListener('keyup',filterTenure);
 
     function filterinvestorType(){
         const input = document.getElementById('investorTypeSearch').value.toLowerCase();
@@ -1371,59 +1480,6 @@
         document.addEventListener('DOMContentLoaded', function () {
 
             let selectedFilters = {}; // Object to store selected filters and their labels
-    // updateBreadcrumb();
-    console.log("***********************************1");
-    console.log("Container found:", document.getElementById('selected-filters-container'));
-
-    const container = document.getElementById('selected-filters-container');
-            console.log("***********************************2",container.innerText);
-            // function updateBreadcrumb() {
-            //     const container = document.getElementById('selected-filters-container');
-            //     console.log("***********************************3");
-            //     container.innerHTML = '';
-            //     Object.keys(selectedFilters).forEach(key => {
-            //         if (Array.isArray(selectedFilters[key])) {
-            //             selectedFilters[key].forEach(value => addFilterToBreadcrumb(key, value));
-            //         } else {
-            //             addFilterToBreadcrumb(key, selectedFilters[key]);
-            //         }
-            //     });
-            // }
-            function updateBreadcrumb() {
-                const container = document.getElementById('selected-filters-container');
-                container.innerHTML = '';
-
-                Object.keys(selectedFilters).forEach(key => {
-                    if (Array.isArray(selectedFilters[key])) {
-                        selectedFilters[key].forEach(value => addFilterToBreadcrumb(key, value));
-                    } else {
-                        addFilterToBreadcrumb(key, selectedFilters[key]);
-                    }
-                });
-            }
-
-
-        function addFilterToBreadcrumb(name, label) {
-            const container = document.getElementById('selected-filters-container');
-            const filterElement = document.createElement('span');
-            filterElement.className = 'badge bg-secondary me-2 mt-2';
-            filterElement.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
-
-            container.appendChild(filterElement);
-
-            filterElement.querySelector('.btn-close').addEventListener('click', function () {
-                removeFilter(name, label);
-            });
-        }
-
-
-
-
-
-
-
-
-
 
             // Function to fetch results based on form input
             function fetchResults() {
@@ -1452,7 +1508,7 @@
             }
 
             // Function to update breadcrumb with selected filters
-            function updateBreadcrumbinvestor() {
+            function updateBreadcrumb() {
                 const container = document.getElementById('selected-filters-container2');
                 container.innerHTML = ''; // Clear the breadcrumb
 
@@ -1460,23 +1516,23 @@
                 Object.keys(selectedFilters).forEach(key => {
                     if(Array.isArray(selectedFilters[key])){
                         selectedFilters[key].forEach(values => {
-                            addFilterToBreadcrumbinvestor(key, values);
+                            addFilterToBreadcrumb(key, values);
                         });
                     }
                     else{
-                        addFilterToBreadcrumbinvestor(key, selectedFilters[key]);
+                        addFilterToBreadcrumb(key, selectedFilters[key]);
                     }
                 });
 
                 // Add searchBox value to the breadcrumb if it's not empty
                 let searchBoxValue = document.getElementById('searchBox2').value;
                 if (searchBoxValue && searchBoxValue.trim() !== '') {
-                    addFilterToBreadcrumbinvestor('searchBox', searchBoxValue); // Add searchBox filter
+                    addFilterToBreadcrumb('searchBox', searchBoxValue); // Add searchBox filter
                 }
             }
 
             // Function to add filter to the breadcrumb
-            function addFilterToBreadcrumbinvestor(name, label) {
+            function addFilterToBreadcrumb(name, label) {
                 const container = document.getElementById('selected-filters-container2');
 
                 // Create a span element for the filter
@@ -1534,7 +1590,7 @@
 
 
         // Function to update selected filters based on checkboxes
-        function updateSelectedFilters() {
+        function updateSelectedFilters2() {
             selectedFilters = {}; // Clear previous selected filters
 
             // Capture selected locations
@@ -1610,44 +1666,6 @@
         fetchResults();
     });
 
-    //--------------------------------------START------------------------------------------------------------------------------------
-        // function renderSelectedFilters() {
-        //     const breadcrumbContainer = document.getElementById('selected-filters-breadcrumb');
-        //     breadcrumbContainer.innerHTML = ''; // Clear previous filters
-
-        //     Object.keys(selectedFilters).forEach(key => {
-        //         const values = selectedFilters[key];
-        //         if (Array.isArray(values)) {
-        //             values.forEach(val => {
-        //                 appendBadgeToBreadcrumb(key, val);
-        //             });
-        //         } else if (values && values.trim()) {
-        //             appendBadgeToBreadcrumb(key, values);
-        //         }
-        //     });
-        // }
-
-    // Function to add a badge-like span to the breadcrumb <li>
-    // function appendBadgeToBreadcrumb(name, label) {
-    //     const breadcrumbContainer = document.getElementById('selected-filters-breadcrumb');
-    //     const badge = document.createElement('span');
-    //     badge.className = 'badge bg-primary me-2';
-    //     badge.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
-
-    //     breadcrumbContainer.appendChild(badge);
-
-    //     badge.querySelector('.btn-close').addEventListener('click', function () {
-    //         removeFilter(name, label); // Reuses your existing logic
-    //         renderSelectedFilters();  // Refresh breadcrumbs
-    //         fetchResults();           // Re-fetch results
-    //     });
-    // }
-
-    // updateSelectedFilters();  // already defined
-    // renderSelectedFilters();  // 🔁 call the new breadcrumb updater
-    // fetchResults();           // fetches AJAX results
-
-    //-------------------------------END--------------------------------------------------------------------------
 
 </script>
 
