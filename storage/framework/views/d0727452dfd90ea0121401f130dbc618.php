@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
             .bg-light {
@@ -40,7 +38,7 @@
 <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
 <!-- Two tab for investee and investor dashboard -->
 
-  @if (Auth::user()->category_id == 3 || Auth::user()->category_id == 4)
+  <?php if(Auth::user()->category_id == 3 || Auth::user()->category_id == 4): ?>
 <style>
     .dashboard-tabs-container {
         margin-top: 20px;
@@ -85,42 +83,42 @@
     <ul class="nav nav-tabs justify-content-center dashboard-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <a 
-                class="nav-link {{ request()->routeIs('investee.dashboard') ? 'active' : '' }}" 
+                class="nav-link <?php echo e(request()->routeIs('investee.dashboard') ? 'active' : ''); ?>" 
                 id="investee-tab" 
-                href="{{ route('investee.dashboard') }}" 
+                href="<?php echo e(route('investee.dashboard')); ?>" 
                 role="tab" 
                 aria-controls="investee" 
-                aria-selected="{{ request()->routeIs('investee.dashboard') ? 'true' : 'false' }}"
+                aria-selected="<?php echo e(request()->routeIs('investee.dashboard') ? 'true' : 'false'); ?>"
             >
                 Investee Dashboard
             </a>
         </li>
         <li class="nav-item" role="presentation">
             <a 
-                class="nav-link {{ request()->routeIs('investor.dashboard') ? 'active' : '' }}" 
+                class="nav-link <?php echo e(request()->routeIs('investor.dashboard') ? 'active' : ''); ?>" 
                 id="investor-tab" 
-                href="{{ route('investor.dashboard') }}" 
+                href="<?php echo e(route('investor.dashboard')); ?>" 
                 role="tab" 
                 aria-controls="investor" 
-                aria-selected="{{ request()->routeIs('investor.dashboard') ? 'true' : 'false' }}"
+                aria-selected="<?php echo e(request()->routeIs('investor.dashboard') ? 'true' : 'false'); ?>"
             >
                 Investor Dashboard
             </a>
         </li>
     </ul>
 </div>
-@endif
+<?php endif; ?>
 
 
             
 
     <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
-        <h1 style="font-size: 16px; color: grey;" class="mb-1 animated slideInDown">Welcome {{ Auth::user()->name }} </h1>
+        <h1 style="font-size: 16px; color: grey;" class="mb-1 animated slideInDown">Welcome <?php echo e(Auth::user()->name); ?> </h1>
     </div>
 </div>
           <div class="container">
-                        <form class="form-control p-3 bg-light" id="searchForm" method="post" action="{{ route('investee.search') }}">
-                            @csrf <!-- Protect the form with CSRF token -->
+                        <form class="form-control p-3 bg-light" id="searchForm" method="post" action="<?php echo e(route('investee.search')); ?>">
+                            <?php echo csrf_field(); ?> <!-- Protect the form with CSRF token -->
                             <div class="row g-3">
                                 <!-- Sector Multi-select Dropdown -->
                                 <div class="col-md-3 mb-3">
@@ -156,20 +154,21 @@
                                                 <input type="text" class="form-control mb-2" id="locationSearch" placeholder="Search location" onkeyup="filterLocations()">
                                                 <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
                                                     <ul id="locationList">
-                                                        @if (!empty($locations))
-                                                            @foreach ($locations as $location)
+                                                        <?php if(!empty($locations)): ?>
+                                                            <?php $__currentLoopData = $locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                 <li class="dropdown-item">
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" name="location[]" value="{{ $location->name }}" id="location_{{ $location->name }}">
-                                                                        <label class="form-check-label" for="location_{{ $location->name }}">
-                                                                            {{ $location->name }}
+                                                                        <input class="form-check-input" type="checkbox" name="location[]" value="<?php echo e($location->name); ?>" id="location_<?php echo e($location->name); ?>">
+                                                                        <label class="form-check-label" for="location_<?php echo e($location->name); ?>">
+                                                                            <?php echo e($location->name); ?>
+
                                                                         </label>
                                                                     </div>
                                                                 </li>
-                                                            @endforeach
-                                                        @else
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
                                                             <li>No locations available</li>
-                                                        @endif
+                                                        <?php endif; ?>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -332,7 +331,7 @@
                         <!-- Breadcrumb -->
                         <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('investee.dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="<?php echo e(route('investee.dashboard')); ?>">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Search Results</li>
                             <li class="breadcrumb-item" id="selected-filters-container-investee"></li>
                             </ol>
@@ -347,11 +346,11 @@
 
                             <!-- Display investor results -->
                             <div id="investorList">
-                                @include('partials.investor_list', ['investors' => $investors]) 
+                                <?php echo $__env->make('partials.investor_list', ['investors' => $investors], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?> 
                             
                                 <!--  echo $investors; -->
                             
-                                <!-- <pre>{{ print_r($investors, true) }}</pre> -->
+                                <!-- <pre><?php echo e(print_r($investors, true)); ?></pre> -->
                             </div>
                         </div>
 
@@ -595,7 +594,7 @@
     function fetchResults() {
         const formData = new FormData(document.getElementById('searchForm'));
         console.log("Form Data: ");
-        fetch('{{ route("investee.search") }}', {
+        fetch('<?php echo e(route("investee.search")); ?>', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -813,4 +812,6 @@
 
     <!-- CounterUp (correct CDN for version 2.1.0) -->
     <script src="https://cdn.jsdelivr.net/npm/jquery.counterup@2.1.0/jquery.counterup.min.js"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/dashboards/investee.blade.php ENDPATH**/ ?>
