@@ -87,6 +87,6 @@ class BankController extends Controller
         $user->save();
 
         // Redirect to dashboard
-        return redirect()->route('banker.dashboard')->with('success_message', 'Banker profile created successfully!');
+        return redirect()->route('investee.dashboard')->with('success_message', 'Banker profile created successfully!');
     }
 }

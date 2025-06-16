@@ -113,9 +113,9 @@ Route::middleware(['auth'])->group(function () {
             case 2:
                 return redirect()->route('investor.dashboard');
             case 3:
-                return redirect()->route('banker.dashboard');
+                return redirect()->route('investee.dashboard');
             case 4:
-                return redirect()->route('other.dashboard');
+                return redirect()->route('investee.dashboard');
             default:
                 return redirect()->route('home')->with('error', 'Invalid category.');
         }

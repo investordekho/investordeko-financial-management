@@ -43,6 +43,53 @@
 
 
 </style>
+
+
+
+
+
+  <!-- two tab one for investee and one for investor -->
+        @if (Auth::user()->category_id == 3 || Auth::user()->category_id == 4)
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a 
+                                class="nav-link active" 
+                                id="investee-tab" 
+                                href="{{ route('investee.dashboard') }}" 
+                                role="tab" 
+                                aria-controls="investee" 
+                                aria-selected="true"
+                            >
+                                Investee Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a 
+                                class="nav-link" 
+                                id="investor-tab" 
+                                href="{{ route('investor.dashboard') }}" 
+                                role="tab" 
+                                aria-controls="investor" 
+                                aria-selected="false"
+                            >
+                                Investor Dashboard
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End of two tab -->
+        @endif
+
+
+
+
+
+
 <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
     <div class="container">
         <h1 style="font-size: 16px; color: grey;" class="display-8 mb-4 animated slideInDown">Welcome {{ Auth::user()->name }} </h1>
@@ -439,152 +486,152 @@
 
 <!-- JavaScript for Dropdown Filters and Fetch Results -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    let selectedFilters = {};
+    document.addEventListener('DOMContentLoaded', function () {
+        let selectedFilters = {};
 
-    function fetchResults() {
-        const formData = new FormData(document.getElementById('searchForm'));
-        const searchBoxValue = document.getElementById('searchBox')?.value;
-        if (searchBoxValue) {
-            formData.append('searchBox', searchBoxValue);
+        function fetchResults() {
+            const formData = new FormData(document.getElementById('searchForm'));
+            const searchBoxValue = document.getElementById('searchBox')?.value;
+            if (searchBoxValue) {
+                formData.append('searchBox', searchBoxValue);
+            }
+
+            fetch('{{ route("investor.search") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('investeeList').innerHTML = data || '<p class="no-results">No results found.</p>';
+                updateBreadcrumb();
+            })
+            .catch(error => console.error('Error fetching results:', error));
         }
 
-        fetch('{{ route("investor.search") }}', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('investeeList').innerHTML = data || '<p class="no-results">No results found.</p>';
-            updateBreadcrumb();
-        })
-        .catch(error => console.error('Error fetching results:', error));
-    }
+        function updateBreadcrumb() {
+            const container = document.getElementById('selected-filters-container');
+            container.innerHTML = '';
+            Object.keys(selectedFilters).forEach(key => {
+                if (Array.isArray(selectedFilters[key])) {
+                    selectedFilters[key].forEach(value => addFilterToBreadcrumb(key, value));
+                } else {
+                    addFilterToBreadcrumb(key, selectedFilters[key]);
+                }
+            });
+        }
 
-    function updateBreadcrumb() {
-        const container = document.getElementById('selected-filters-container');
-        container.innerHTML = '';
-        Object.keys(selectedFilters).forEach(key => {
-            if (Array.isArray(selectedFilters[key])) {
-                selectedFilters[key].forEach(value => addFilterToBreadcrumb(key, value));
+        function addFilterToBreadcrumb(name, label) {
+            const container = document.getElementById('selected-filters-container');
+            const filterElement = document.createElement('span');
+            filterElement.className = 'badge bg-secondary me-2 mt-2';
+            filterElement.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
+
+            container.appendChild(filterElement);
+
+            filterElement.querySelector('.btn-close').addEventListener('click', function () {
+                removeFilter(name, label);
+            });
+        }
+
+        function removeFilter(name, value) {
+            if (Array.isArray(selectedFilters[name])) {
+                selectedFilters[name] = selectedFilters[name].filter(val => val !== value);
+                if (selectedFilters[name].length === 0) {
+                    delete selectedFilters[name];
+                }
             } else {
-                addFilterToBreadcrumb(key, selectedFilters[key]);
-            }
-        });
-    }
-
-    function addFilterToBreadcrumb(name, label) {
-        const container = document.getElementById('selected-filters-container');
-        const filterElement = document.createElement('span');
-        filterElement.className = 'badge bg-secondary me-2 mt-2';
-        filterElement.innerHTML = `${label} <button type="button" class="btn-close btn-close-white ms-1" aria-label="Close"></button>`;
-
-        container.appendChild(filterElement);
-
-        filterElement.querySelector('.btn-close').addEventListener('click', function () {
-            removeFilter(name, label);
-        });
-    }
-
-    function removeFilter(name, value) {
-        if (Array.isArray(selectedFilters[name])) {
-            selectedFilters[name] = selectedFilters[name].filter(val => val !== value);
-            if (selectedFilters[name].length === 0) {
                 delete selectedFilters[name];
             }
-        } else {
-            delete selectedFilters[name];
+
+            if (name === 'searchBox') {
+                document.getElementById('searchBox').value = '';
+            } else {
+                const checkbox = document.querySelector(`input[name="${name}[]"][value="${value}"]`);
+                if (checkbox) checkbox.checked = false;
+            }
+
+            updateSelectedFilters();
+            fetchResults();
         }
 
-        if (name === 'searchBox') {
-            document.getElementById('searchBox').value = '';
-        } else {
-            const checkbox = document.querySelector(`input[name="${name}[]"][value="${value}"]`);
-            if (checkbox) checkbox.checked = false;
+        function updateSelectedFilters() {
+            selectedFilters = {
+                location: [],
+                nature_of_business: [],
+                incorporated_in: [],
+                fund_usage: [],
+            };
+
+            document.querySelectorAll('input[name="location[]"]:checked').forEach(el => selectedFilters['location'].push(el.value));
+            document.querySelectorAll('input[name="nature_of_business[]"]:checked').forEach(el => selectedFilters['nature_of_business'].push(el.value));
+            document.querySelectorAll('input[name="incorporated_in[]"]:checked').forEach(el => selectedFilters['incorporated_in'].push(el.value));
+            document.querySelectorAll('input[name="fund_usage[]"]:checked').forEach(el => selectedFilters['fund_usage'].push(el.value));
+
+            const searchBoxValue = document.getElementById('searchBox')?.value.trim();
+            if (searchBoxValue) {
+                selectedFilters['searchBox'] = searchBoxValue;
+            }
         }
 
-        updateSelectedFilters();
-        fetchResults();
-    }
+        document.querySelector('.btn-success')?.addEventListener('click', function () {
+            updateSelectedFilters();
+            fetchResults();
+        });
 
-    function updateSelectedFilters() {
-        selectedFilters = {
-            location: [],
-            nature_of_business: [],
-            incorporated_in: [],
-            fund_usage: [],
-        };
+        // ✅ Location Dropdown Search Filter — FIXED HERE
+        const locationSearch = document.getElementById('locationSearch');
+        const locationList = document.getElementById('locationList');
+        const noFound = document.getElementById('no-location-found');
 
-        document.querySelectorAll('input[name="location[]"]:checked').forEach(el => selectedFilters['location'].push(el.value));
-        document.querySelectorAll('input[name="nature_of_business[]"]:checked').forEach(el => selectedFilters['nature_of_business'].push(el.value));
-        document.querySelectorAll('input[name="incorporated_in[]"]:checked').forEach(el => selectedFilters['incorporated_in'].push(el.value));
-        document.querySelectorAll('input[name="fund_usage[]"]:checked').forEach(el => selectedFilters['fund_usage'].push(el.value));
+        if (locationSearch && locationList && noFound) {
+            locationSearch.addEventListener('keyup', function () {
+                const searchValue = this.value.toLowerCase();
+                let matchCount = 0;
 
-        const searchBoxValue = document.getElementById('searchBox')?.value.trim();
-        if (searchBoxValue) {
-            selectedFilters['searchBox'] = searchBoxValue;
+                locationList.querySelectorAll('.form-check').forEach(function (item) {
+                    const label = item.querySelector('label')?.innerText.toLowerCase() || '';
+                    const match = label.includes(searchValue);
+                    item.style.display = match ? 'block' : 'none';
+                    if (match) matchCount++;
+                });
+
+                noFound.style.display = matchCount === 0 ? 'block' : 'none';
+            });
         }
-    }
 
-    document.querySelector('.btn-success')?.addEventListener('click', function () {
-        updateSelectedFilters();
+        // Prevent dropdown from closing on inner clicks
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Initial fetch
         fetchResults();
     });
 
-    // ✅ Location Dropdown Search Filter — FIXED HERE
-    const locationSearch = document.getElementById('locationSearch');
-    const locationList = document.getElementById('locationList');
-    const noFound = document.getElementById('no-location-found');
+    document.addEventListener('DOMContentLoaded', function () {
+        const sectorSearch = document.getElementById('sectorSearch');
+        const sectorList = document.getElementById('sectorList');
+        const noSectorFound = document.getElementById('no-sector-found');
 
-    if (locationSearch && locationList && noFound) {
-        locationSearch.addEventListener('keyup', function () {
+        sectorSearch.addEventListener('keyup', function () {
             const searchValue = this.value.toLowerCase();
             let matchCount = 0;
 
-            locationList.querySelectorAll('.form-check').forEach(function (item) {
-                const label = item.querySelector('label')?.innerText.toLowerCase() || '';
-                const match = label.includes(searchValue);
-                item.style.display = match ? 'block' : 'none';
-                if (match) matchCount++;
+            sectorList.querySelectorAll('.form-check').forEach(function (item) {
+                const label = item.querySelector('label').innerText.toLowerCase();
+                const isMatch = label.includes(searchValue);
+                item.style.display = isMatch ? 'block' : 'none';
+                if (isMatch) matchCount++;
             });
 
-            noFound.style.display = matchCount === 0 ? 'block' : 'none';
-        });
-    }
-
-    // Prevent dropdown from closing on inner clicks
-    document.querySelectorAll('.dropdown-menu').forEach(menu => {
-        menu.addEventListener('click', function (e) {
-            e.stopPropagation();
+            noSectorFound.style.display = matchCount === 0 ? 'block' : 'none';
         });
     });
-
-    // Initial fetch
-    fetchResults();
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const sectorSearch = document.getElementById('sectorSearch');
-    const sectorList = document.getElementById('sectorList');
-    const noSectorFound = document.getElementById('no-sector-found');
-
-    sectorSearch.addEventListener('keyup', function () {
-        const searchValue = this.value.toLowerCase();
-        let matchCount = 0;
-
-        sectorList.querySelectorAll('.form-check').forEach(function (item) {
-            const label = item.querySelector('label').innerText.toLowerCase();
-            const isMatch = label.includes(searchValue);
-            item.style.display = isMatch ? 'block' : 'none';
-            if (isMatch) matchCount++;
-        });
-
-        noSectorFound.style.display = matchCount === 0 ? 'block' : 'none';
-    });
-});
 
 </script>
 
