@@ -61,7 +61,7 @@
                                             <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <li class="list-inline-item text-muted" style="border: 1px solid #ddd; padding: 5px; border-radius: 5px; margin-right: 5px; margin-bottom: 5px; background-color: #f8f9fa;">
                                                     <!-- <i class="bi bi-check-circle-fill text-success me-1"></i> -->
-                                                    <?php echo e($sector); ?>
+                                                    <?php echo e(ucwords(strtolower($sector))); ?>
 
                                                 </li>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
