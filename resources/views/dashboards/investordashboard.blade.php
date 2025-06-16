@@ -46,45 +46,81 @@
 
 
 
+<div style="height:10px"></div>
 
 
   <!-- two tab one for investee and one for investor -->
-        @if (Auth::user()->category_id == 3 || Auth::user()->category_id == 4)
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a 
-                                class="nav-link active" 
-                                id="investee-tab" 
-                                href="{{ route('investee.dashboard') }}" 
-                                role="tab" 
-                                aria-controls="investee" 
-                                aria-selected="true"
-                            >
-                                Investee Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a 
-                                class="nav-link" 
-                                id="investor-tab" 
-                                href="{{ route('investor.dashboard') }}" 
-                                role="tab" 
-                                aria-controls="investor" 
-                                aria-selected="false"
-                            >
-                                Investor Dashboard
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- End of two tab -->
-        @endif
+   
+          @if (Auth::user()->category_id == 3 || Auth::user()->category_id == 4)
+<style>
+    .dashboard-tabs-container {
+        margin-top: 20px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 16px;
+        padding: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        backdrop-filter: blur(10px);
+    }
 
+    .dashboard-tabs .nav-link {
+        color: #198754;
+        background-color: transparent;
+        border: none;
+        border-radius: 12px;
+        margin: 0 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .dashboard-tabs .nav-link.active {
+        background-color: #198754;
+        color: #fff;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(25, 135, 84, 0.3);
+    }
+
+    .dashboard-tabs .nav-link:hover {
+        background-color: rgba(25, 135, 84, 0.1);
+        color: #198754;
+    }
+
+    @media (max-width: 576px) {
+        .dashboard-tabs .nav-link {
+            display: block;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+<div class="container dashboard-tabs-container">
+    <ul class="nav nav-tabs justify-content-center dashboard-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a 
+                class="nav-link {{ request()->routeIs('investee.dashboard') ? 'active' : '' }}" 
+                id="investee-tab" 
+                href="{{ route('investee.dashboard') }}" 
+                role="tab" 
+                aria-controls="investee" 
+                aria-selected="{{ request()->routeIs('investee.dashboard') ? 'true' : 'false' }}"
+            >
+                Investee Dashboard
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a 
+                class="nav-link {{ request()->routeIs('investor.dashboard') ? 'active' : '' }}" 
+                id="investor-tab" 
+                href="{{ route('investor.dashboard') }}" 
+                role="tab" 
+                aria-controls="investor" 
+                aria-selected="{{ request()->routeIs('investor.dashboard') ? 'true' : 'false' }}"
+            >
+                Investor Dashboard
+            </a>
+        </li>
+    </ul>
+</div>
+@endif
 
 
 
