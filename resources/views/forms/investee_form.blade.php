@@ -1991,23 +1991,81 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
         linkDescriptions[i].classList.remove('is-invalid');
         const linkFilled = publicLinks[i].value.trim() !== '';
         const descSelected = linkDescriptions[i].value && linkDescriptions[i].value.trim() !== '';
-        if (linkFilled || descSelected) {
-            if (!linkFilled) {
+        // if(i!==0){
+        //     if (linkFilled || descSelected) {
+            
+        //         if (!linkFilled) {
+        //             isValid = false;
+        //             publicLinks[i].classList.add('is-invalid');
+        //             publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //         }
+        //         if (!descSelected) {
+        //             isValid = false;
+        //             linkDescriptions[i].classList.add('is-invalid');
+        //             linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //         }
+        //     }
+        //     if( !linkFilled && !descSelected) {
+        //         isValid = false;
+        //         publicLinks[i].classList.add('is-invalid');
+        //         linkDescriptions[i].classList.add('is-invalid');
+        //         publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //     }
+        // }
+        // else{
+        //     if(linkFilled || descSelected){
+        //         if(!linkFilled) {
+        //             isValid = false;
+        //             publicLinks[i].classList.add('is-invalid');
+        //             publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //         }
+        //         if(!descSelected) {
+        //             isValid = false;
+        //             linkDescriptions[i].classList.add('is-invalid');
+        //             linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //         }
+        //     }
+        // }
+        
+        if (publicLinks.length === 1) {
+            // Only one row
+            if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
+                if (!linkFilled) publicLinks[i].classList.add('is-invalid');
+                if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
                 isValid = false;
-                publicLinks[i].classList.add('is-invalid');
                 publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-            if (!descSelected) {
-                isValid = false;
-                linkDescriptions[i].classList.add('is-invalid');
-                linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+        // if both empty: allowed (do nothing)
         }
-        if( !linkFilled && !descSelected) {
-            isValid = false;
-            publicLinks[i].classList.add('is-invalid');
-            linkDescriptions[i].classList.add('is-invalid');
-            publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        else {
+            // More than one row
+            if (i === 0) {
+                // First row is always required
+                if (!linkFilled) {
+                    publicLinks[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                if (!descSelected) {
+                    linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            } else {
+                // All other rows must be either fully filled or fully empty
+                if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
+                    if (!linkFilled) publicLinks[i].classList.add('is-invalid');
+                    if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else if (!linkFilled && !descSelected) {
+                    // ❌ error on both if completely empty
+                    publicLinks[i].classList.add('is-invalid');
+                    linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
         }
     }
 
