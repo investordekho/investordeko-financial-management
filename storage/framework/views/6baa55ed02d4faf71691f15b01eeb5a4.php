@@ -2339,7 +2339,9 @@ unset($__errorArgs, $__bag); ?>"
         value="<?php echo e(old('pitch_deck.0')); ?>"
         accept=".ppt,.pptx,.pdf,.doc,.docx" 
         required
+        onchange="validatePitchDeckFile(this)"
     >
+    <div id="pitch_deck_error" class="text-danger"></div>
     <?php $__errorArgs = ['pitch_deck'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -2350,6 +2352,24 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+
+    <script>
+    function validatePitchDeckFile(input) {
+        const file = input.files[0];
+        const errorDiv = document.getElementById('pitch_deck_error');
+        if (!file) {
+            errorDiv.textContent = '';
+            return;
+        }
+        const allowedExtensions = /\.(ppt|pptx|pdf|doc|docx)$/i;
+        if (!allowedExtensions.test(file.name)) {
+            errorDiv.textContent = 'Invalid file type. Only ppt, pptx, pdf, doc, or docx files are allowed.';
+            input.value = '';
+        } else {
+            errorDiv.textContent = '';
+        }
+    }
+    </script>
     </div>
     <div class="mb-1">
     <label id="labelinput" for="financials" class="required" style="color:red;">Financials</label>
@@ -2388,7 +2408,56 @@ unset($__errorArgs, $__bag); ?>
             </div>
             <div class="col-md-8">
                 <label id="labelinput" for="financials" class="required">Choose file<small> (pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
-                <input 
+                <!-- Add this after your input field -->
+                 <span id="fileTypeError" class="text-danger"></span>
+<input 
+    type="file" 
+    id="financials"
+    class="form-control spaced-input <?php $__errorArgs = ['financials.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+    name="financials[]" 
+    accept=".pdf,.doc,.docx,.xls,.xlsx" 
+    required
+    value="<?php echo e(old('financials.0')); ?>"
+>
+
+<?php $__errorArgs = ['financials.0'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+    <span class="text-danger">This Field is Required</span>
+<?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+<script>
+document.getElementById('financials').addEventListener('change', function(event) {
+    const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+    const errorSpan = document.getElementById('fileTypeError');
+    if (file) {
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+        if (!allowedExtensions.includes(fileExtension)) {
+            errorSpan.textContent = 'Invalid file type selected!';
+            fileInput.value = ''; // Clear the file input
+        } else {
+            errorSpan.textContent = '';
+        }
+    } else {
+        errorSpan.textContent = '';
+    }
+});
+</script>
+                <!-- <input 
                     type="file" 
                     id="financials"
                     class="form-control spaced-input <?php $__errorArgs = ['financials.0'];
@@ -2413,7 +2482,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
                 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>
+unset($__errorArgs, $__bag); ?> -->
             </div>
             
             <div class="col-md-1">
@@ -2426,6 +2495,52 @@ unset($__errorArgs, $__bag); ?>
     <div class="mb-4">
     <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment<small> (pdf, doc, docx, xls, xlsx, ppt, pptx)</small></label>
     <input 
+    type="file" 
+    class="form-control spaced-input <?php $__errorArgs = ['other_attachment'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+    id="other_attachment" 
+    name="other_attachment"
+    value="<?php echo e(old('other_attachment')); ?>"
+    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" 
+    >
+    <span id="otherAttachmentError" class="text-danger"></span>
+    <?php $__errorArgs = ['other_attachment'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+        <span class="text-danger">This Field is Required</span>
+    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+    <script>
+        document.getElementById('other_attachment').addEventListener('change', function(event) {
+            const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const errorSpan = document.getElementById('otherAttachmentError');
+            if (file) {
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (!allowedExtensions.includes(fileExtension)) {
+                    errorSpan.textContent = 'Invalid file type selected!';
+                    fileInput.value = ''; // Clear the file input
+                } else {
+                    errorSpan.textContent = '';
+                }
+            } else {
+                errorSpan.textContent = '';
+            }
+        });
+    </script>
+    <!-- <input 
         type="file" 
         class="form-control spaced-input <?php $__errorArgs = ['other_attachment'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -2449,7 +2564,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>
+unset($__errorArgs, $__bag); ?> -->
     </div>
     <!-- <hr> -->
 
@@ -2672,23 +2787,81 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
         linkDescriptions[i].classList.remove('is-invalid');
         const linkFilled = publicLinks[i].value.trim() !== '';
         const descSelected = linkDescriptions[i].value && linkDescriptions[i].value.trim() !== '';
-        if (linkFilled || descSelected) {
-            if (!linkFilled) {
+        // if(i!==0){
+        //     if (linkFilled || descSelected) {
+            
+        //         if (!linkFilled) {
+        //             isValid = false;
+        //             publicLinks[i].classList.add('is-invalid');
+        //             publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //         }
+        //         if (!descSelected) {
+        //             isValid = false;
+        //             linkDescriptions[i].classList.add('is-invalid');
+        //             linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //         }
+        //     }
+        //     if( !linkFilled && !descSelected) {
+        //         isValid = false;
+        //         publicLinks[i].classList.add('is-invalid');
+        //         linkDescriptions[i].classList.add('is-invalid');
+        //         publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //     }
+        // }
+        // else{
+        //     if(linkFilled || descSelected){
+        //         if(!linkFilled) {
+        //             isValid = false;
+        //             publicLinks[i].classList.add('is-invalid');
+        //             publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //         }
+        //         if(!descSelected) {
+        //             isValid = false;
+        //             linkDescriptions[i].classList.add('is-invalid');
+        //             linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //         }
+        //     }
+        // }
+        
+        if (publicLinks.length === 1) {
+            // Only one row
+            if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
+                if (!linkFilled) publicLinks[i].classList.add('is-invalid');
+                if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
                 isValid = false;
-                publicLinks[i].classList.add('is-invalid');
                 publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-            if (!descSelected) {
-                isValid = false;
-                linkDescriptions[i].classList.add('is-invalid');
-                linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+        // if both empty: allowed (do nothing)
         }
-        if( !linkFilled && !descSelected) {
-            isValid = false;
-            publicLinks[i].classList.add('is-invalid');
-            linkDescriptions[i].classList.add('is-invalid');
-            publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        else {
+            // More than one row
+            if (i === 0) {
+                // First row is always required
+                if (!linkFilled) {
+                    publicLinks[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                if (!descSelected) {
+                    linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            } else {
+                // All other rows must be either fully filled or fully empty
+                if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
+                    if (!linkFilled) publicLinks[i].classList.add('is-invalid');
+                    if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else if (!linkFilled && !descSelected) {
+                    // ❌ error on both if completely empty
+                    publicLinks[i].classList.add('is-invalid');
+                    linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
         }
     }
 

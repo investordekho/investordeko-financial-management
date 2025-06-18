@@ -1735,10 +1735,30 @@
         value="{{ old('pitch_deck.0')}}"
         accept=".ppt,.pptx,.pdf,.doc,.docx" 
         required
+        onchange="validatePitchDeckFile(this)"
     >
+    <div id="pitch_deck_error" class="text-danger"></div>
     @error('pitch_deck')
         <span class="text-danger">This Field is Required</span>
     @enderror
+
+    <script>
+    function validatePitchDeckFile(input) {
+        const file = input.files[0];
+        const errorDiv = document.getElementById('pitch_deck_error');
+        if (!file) {
+            errorDiv.textContent = '';
+            return;
+        }
+        const allowedExtensions = /\.(ppt|pptx|pdf|doc|docx)$/i;
+        if (!allowedExtensions.test(file.name)) {
+            errorDiv.textContent = 'Invalid file type. Only ppt, pptx, pdf, doc, or docx files are allowed.';
+            input.value = '';
+        } else {
+            errorDiv.textContent = '';
+        }
+    }
+    </script>
     </div>
     <div class="mb-1">
     <label id="labelinput" for="financials" class="required" style="color:red;">Financials</label>
@@ -1763,7 +1783,42 @@
             </div>
             <div class="col-md-8">
                 <label id="labelinput" for="financials" class="required">Choose file<small> (pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
-                <input 
+                <!-- Add this after your input field -->
+                 <span id="fileTypeError" class="text-danger"></span>
+<input 
+    type="file" 
+    id="financials"
+    class="form-control spaced-input @error('financials.0') is-invalid @enderror" 
+    name="financials[]" 
+    accept=".pdf,.doc,.docx,.xls,.xlsx" 
+    required
+    value="{{ old('financials.0')}}"
+>
+
+@error('financials.0')
+    <span class="text-danger">This Field is Required</span>
+@enderror
+
+<script>
+document.getElementById('financials').addEventListener('change', function(event) {
+    const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+    const errorSpan = document.getElementById('fileTypeError');
+    if (file) {
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+        if (!allowedExtensions.includes(fileExtension)) {
+            errorSpan.textContent = 'Invalid file type selected!';
+            fileInput.value = ''; // Clear the file input
+        } else {
+            errorSpan.textContent = '';
+        }
+    } else {
+        errorSpan.textContent = '';
+    }
+});
+</script>
+                <!-- <input 
                     type="file" 
                     id="financials"
                     class="form-control spaced-input @error('financials.0') is-invalid @enderror" 
@@ -1774,7 +1829,7 @@
                 >
                 @error('financials.0')
                     <span class="text-danger">This Field is Required</span>
-                @enderror
+                @enderror -->
             </div>
             
             <div class="col-md-1">
@@ -1787,6 +1842,38 @@
     <div class="mb-4">
     <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment<small> (pdf, doc, docx, xls, xlsx, ppt, pptx)</small></label>
     <input 
+    type="file" 
+    class="form-control spaced-input @error('other_attachment') is-invalid @enderror" 
+    id="other_attachment" 
+    name="other_attachment"
+    value="{{ old('other_attachment')}}"
+    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" 
+    >
+    <span id="otherAttachmentError" class="text-danger"></span>
+    @error('other_attachment')
+        <span class="text-danger">This Field is Required</span>
+    @enderror
+
+    <script>
+        document.getElementById('other_attachment').addEventListener('change', function(event) {
+            const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const errorSpan = document.getElementById('otherAttachmentError');
+            if (file) {
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (!allowedExtensions.includes(fileExtension)) {
+                    errorSpan.textContent = 'Invalid file type selected!';
+                    fileInput.value = ''; // Clear the file input
+                } else {
+                    errorSpan.textContent = '';
+                }
+            } else {
+                errorSpan.textContent = '';
+            }
+        });
+    </script>
+    <!-- <input 
         type="file" 
         class="form-control spaced-input @error('other_attachment') is-invalid @enderror" 
         id="other_attachment" 
@@ -1796,7 +1883,7 @@
     >
     @error('other_attachment')
         <span class="text-danger">This Field is Required</span>
-    @enderror
+    @enderror -->
     </div>
     <!-- <hr> -->
 
