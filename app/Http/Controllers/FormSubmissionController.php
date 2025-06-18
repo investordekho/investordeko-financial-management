@@ -12,6 +12,8 @@ use App\Models\Attachment;
 use App\Models\ReferralSource;
 use Illuminate\Http\Request;
 USE App\Models\investee_guidance_needed_model;
+USE App\Mail\GuidanceNeededInvesteeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
 class FormSubmissionController extends Controller
@@ -324,7 +326,27 @@ public function store(Request $request)
             $guidanceNeeded->save();
         }
     }
-
+    if($request->has('guidance_needed') && Auth::check()){
+        $user = Auth::user();
+        $email = $user->email;
+        $subscriptionRequest = [
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'phone' => $user->phone,
+            'email' => $user->email,
+            'concern_person_name' => $request->concerned_person_name,
+            'concern_person_phone' => $request->concerned_person_phone,
+            'concern_person_email' => $request->concerned_person_email,
+            'concern_person_designation' => $request->concerned_person_designation,          
+            'company_name' => $request->company_name,
+            'company_website' => $request->website ?? null,
+            'guidance_needed' => is_array($request->guidance_needed)
+                ? implode(', ', $request->guidance_needed)
+                : $request->guidance_needed,
+        ];
+        // mail to admin 
+        Mail::to('investordekhopoojad@gmail.com')->send(new GuidanceNeededInvesteeMail($subscriptionRequest));
+    }
     if ($user->category_id == 1) { 
        
         return redirect()->route('investee.dashboard')->with('success', 'Form submitted successfully!');
