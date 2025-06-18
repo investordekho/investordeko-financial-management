@@ -244,7 +244,8 @@ public function store(Request $request)
             'usage' => $usage,
             'requirement' => $request->fund_requirement[$index],
             'unit' => isset($request->fund_unit[$index]) ? $request->fund_unit[$index] : null,
-            'amount' => isset($request->amount[$index]) ? $request->amount[$index] : 0,
+            'amount' => isset($request->fund_requirement[$index]) ? $request->fund_requirement[$index] : 0,
+            // 'amount' => isset($request->amount[$index]) ? $request->amount[$index] : 0,
         ]);
     }
 
