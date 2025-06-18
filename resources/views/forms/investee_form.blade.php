@@ -2003,6 +2003,12 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
                 linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
+        if( !linkFilled && !descSelected) {
+            isValid = false;
+            publicLinks[i].classList.add('is-invalid');
+            linkDescriptions[i].classList.add('is-invalid');
+            publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }
 
     if (!isValid) {
