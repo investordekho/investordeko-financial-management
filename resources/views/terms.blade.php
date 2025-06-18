@@ -39,7 +39,9 @@
                     <a href="#jurisdiction" class="list-group-item list-group-item-action">Jurisdiction</a>
                     <a href="#international-use" class="list-group-item list-group-item-action">International Use</a>
                     <a href="#general" class="list-group-item list-group-item-action">General</a>
+                    <a href="#data-disclaimer" class="list-group-item list-group-item-action">Data Disclaimer</a>
                     <a href="#miscellaneous" class="list-group-item list-group-item-action">Miscellaneous</a>
+                   
                 </div>
             </div>
             
@@ -196,17 +198,38 @@
                     <p>The failure of Investor Dekho to enforce any right or provision of these Terms of Use will not constitute a waiver of future enforcement of that right or provision. The waiver of any such right or provision will be effective only if in writing and signed by a duly authorized representative of Investor Dekho. Except as expressly set forth in these Terms of Use, the exercise by either party of any of its remedies under these Terms of Use will be without prejudice to its other remedies under these Terms of Use or otherwise. If for any reason a court of competent jurisdiction, as applicable, finds any provision of these Terms of Use invalid or unenforceable, that provision will be enforced to the maximum extent permissible and the other provisions of these Terms of Use will remain in full force and effect.</p>
                 </section>
 
+                <section id="data-disclaimer">
+                    <h2 class="fw-bold">Data Disclaimer</h2>
+                    <section id="data-disclaimer">
+                    <p>This website presents data on various investors that is publicly available.  
+                    We have made every reasonable effort to collect this information from credible sources and the public domain.  
+                    However, the company shall not be held liable for the absence of any specific data fields that may be of interest to you.</p>
+
+                    <p>The data provided on this website was verified and deemed accurate by the company at the time of collection.  
+                    The company assumes no responsibility for any changes, inaccuracies, or updates that may occur after the time of collection.</p>
+                </section>
                 <section id="miscellaneous">
                     <h2 class="fw-bold">Miscellaneous</h2>
                     <p>Except as expressly provided in these Terms of Use, there shall be no third-party beneficiaries to the Terms of Use. Investor Dekho shall have the right to assign its rights or delegate any of its responsibilities under these Terms of Use to an affiliate or in connection with a merger, consolidation, or reorganization of Investor Dekho for the sale of substantially all of its assets.</p>
 
-<p>In the event that any provision of this Agreement, or the application thereof, becomes or is declared by a court of competent jurisdiction to be illegal, void, or unenforceable, the remainder of this Agreement will continue in full force and effect and the application of such provision to other persons or circumstances will be interpreted so as reasonably to effect the intent of the parties hereto.</p>
+                        <p>In the event that any provision of this Agreement, or the application thereof, becomes or is declared by a court of competent jurisdiction to be illegal, void, or unenforceable, the remainder of this Agreement will continue in full force and effect and the application of such provision to other persons or circumstances will be interpreted so as reasonably to effect the intent of the parties hereto.</p>
 
-<p>This Agreement constitutes the entire agreement between Investor Dekho and User regarding the subject matter hereof, and supersedes any previous arrangement, understanding, or agreement between the parties, written or oral, relating to the subject matter hereof.</p>
+                        <p>This Agreement constitutes the entire agreement between Investor Dekho and User regarding the subject matter hereof, and supersedes any previous arrangement, understanding, or agreement between the parties, written or oral, relating to the subject matter hereof.</p>
 
-<p>Notwithstanding anything to the contrary herein, Investor Dekho will not be held liable for any delay or failure in performance or non-availability of the services resulting, directly or indirectly, from acts of nature, events, omissions, accidents, or causes beyond its reasonable control, including, but not limited to, internet failure, network or computer equipment failures, telecommunication equipment failure, electrical power failures, strikes, lock-outs or other industrial disputes, labour disputes, riots, insurrections, civil disturbances, shortages of labour or materials, fires, floods, storms, explosions, breakdown of plant or machinery, acts of God, war, governmental actions or orders, orders of domestic or foreign courts or tribunals.</p>
+                        <p>Notwithstanding anything to the contrary herein, Investor Dekho will not be held liable for any delay or failure in performance or non-availability of the services resulting, directly or indirectly, from acts of nature, events, omissions, accidents, or causes beyond its reasonable control, including, but not limited to, internet failure, network or computer equipment failures, telecommunication equipment failure, electrical power failures, strikes, lock-outs or other industrial disputes, labour disputes, riots, insurrections, civil disturbances, shortages of labour or materials, fires, floods, storms, explosions, breakdown of plant or machinery, acts of God, war, governmental actions or orders, orders of domestic or foreign courts or tribunals.</p>
 
                 </section>
+
+                <!-- <section>
+                    This website contains the data available in public domain for various investors. 
+                    We have tried our sincere effords while collecting the data from various sources/public domain.
+                    The company shall not be responsible for any perticular unavailable data field which may be required by you.
+
+                    the data available in the weebsite where correct and authenticated by the company at the time of collection.
+                    The company shall not be responsible for any subcequent change in data field.
+                </section> -->
+
+
             </div>
         </div>
     </div>

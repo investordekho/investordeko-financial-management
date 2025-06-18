@@ -186,13 +186,26 @@
                                 </div>
                             @endif
                         </div>
+                       
                         <div class="col-sm-6 mb-3">
                             <label id="Ctext" for="email">Email <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required>                            
-                            @error('email')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <input 
+                                type="text"
+                                class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" 
+                                id="email"
+                                name="email" 
+                                value="{{ old('email') }}" 
+                                placeholder="Enter your email"
+                                pattern="^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$"
+                                required
+                            >                            
+                            @if ($errors->has('email'))
+                                <div class="invalid-feedback d-block">
+                                    {{ $errors->first('email') }}
+                                </div>
+                            @endif
                         </div>
+
                     </div>
                       <div class="row g-3">
                     <!-- Phone Number Field Covering Full Line -->
@@ -1577,4 +1590,64 @@
      
 
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const emailInput = document.getElementById("email");
+    const fullNameInput = document.getElementById("fullName");
+    const allInputs = document.querySelectorAll("input, select, textarea, button");
+
+    const emailError = document.createElement("div");
+    emailError.className = "text-danger mt-1";
+    emailInput.parentNode.appendChild(emailError);
+
+    const nameError = document.createElement("div");
+    nameError.className = "text-danger mt-1";
+    fullNameInput.parentNode.appendChild(nameError);
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+
+    function validateEmail() {
+        const value = emailInput.value.trim();
+        if (!emailPattern.test(value)) {
+            emailInput.classList.add("is-invalid");
+            emailError.textContent = "Enter a valid email like example@gmail.com";
+            return false;
+        } else {
+            emailInput.classList.remove("is-invalid");
+            emailError.textContent = "";
+            return true;
+        }
+    }
+
+    function validateName() {
+        const nameVal = fullNameInput.value.trim();
+        if (nameVal === "") {
+            fullNameInput.classList.add("is-invalid");
+            nameError.textContent = "Full name is required.";
+            return false;
+        } else {
+            fullNameInput.classList.remove("is-invalid");
+            nameError.textContent = "";
+            return true;
+        }
+    }
+
+    fullNameInput.addEventListener("blur", function () {
+        if (!validateName()) {
+            fullNameInput.focus();
+        }
+    });
+
+    emailInput.addEventListener("blur", function () {
+        if (!validateEmail()) {
+            emailInput.focus();
+        }
+    });
+
+    emailInput.addEventListener("input", validateEmail);
+    fullNameInput.addEventListener("input", validateName);
+});
+</script>
+
+
 @endsection

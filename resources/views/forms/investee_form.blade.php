@@ -907,7 +907,7 @@
                         name="public_links[]" 
                         placeholder="URL" 
                         value="{{ old('public_links.0') }}"
-                        required
+                        
                     >
                     @error('public_links.0')
                         <div class="invalid-feedback d-block">This Field is Required</div>
@@ -917,7 +917,7 @@
                     <select 
                         class="form-control @error('link_descriptions.0') is-invalid @enderror" 
                         name="link_descriptions[]" 
-                        required
+                       
                     >
                         <option value="" disabled {{ old('link_descriptions.0') ? '' : 'selected' }}>Select Account</option>
                         <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
@@ -1983,22 +1983,27 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
     });
 
     // Custom validation for dynamically added public_links[] and link_descriptions[]
-    document.querySelectorAll('input[name="public_links[]"]').forEach(function(input) {
-        input.classList.remove('is-invalid');
-        if (!input.value.trim()) {
-            isValid = false;
-            input.classList.add('is-invalid');
-            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Custom validation for dynamically added public_links[] and link_descriptions[]
+    const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
+    const linkDescriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
+    for (let i = 0; i < publicLinks.length; i++) {
+        publicLinks[i].classList.remove('is-invalid');
+        linkDescriptions[i].classList.remove('is-invalid');
+        const linkFilled = publicLinks[i].value.trim() !== '';
+        const descSelected = linkDescriptions[i].value && linkDescriptions[i].value.trim() !== '';
+        if (linkFilled || descSelected) {
+            if (!linkFilled) {
+                isValid = false;
+                publicLinks[i].classList.add('is-invalid');
+                publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            if (!descSelected) {
+                isValid = false;
+                linkDescriptions[i].classList.add('is-invalid');
+                linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
-    });
-    document.querySelectorAll('select[name="link_descriptions[]"]').forEach(function(select) {
-        select.classList.remove('is-invalid');
-        if (!select.value.trim()) {
-            isValid = false;
-            select.classList.add('is-invalid');
-            select.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    }
 
     if (!isValid) {
         event.preventDefault();
@@ -2597,6 +2602,7 @@ document.getElementById('pitch_deck').addEventListener('change', function() {
             document.getElementById('file-error').innerText = ''; // Clear the error message if the file is valid
         }
     });
+
 
 </script>
 

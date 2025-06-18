@@ -136,7 +136,7 @@ class BankerController extends Controller
         $user->save();
 
         // Step 9: Redirect to dashboard
-        return redirect()->route('banker.dashboard')->with('success_message', 'Banker profile created successfully!');
+        return redirect()->route('investee.dashboard')->with('success_message', 'Banker profile created successfully!');
     }
 
   public function filterInvestees(Request $request)

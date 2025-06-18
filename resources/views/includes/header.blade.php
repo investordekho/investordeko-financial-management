@@ -433,9 +433,9 @@
                                         @elseif(Auth::user()->category_id == 2)
                                             {{ route('investor.dashboard') }}
                                         @elseif(Auth::user()->category_id == 3)
-                                            {{ route('banker.dashboard') }}
+                                            {{ route('investee.dashboard') }}
                                         @elseif(Auth::user()->category_id == 4)
-                                            {{ route('banker.dashboard') }}
+                                            {{ route('investee.dashboard') }}
                                         @else
                                             {{ route('home') }}
                                         @endif

@@ -51,7 +51,7 @@ class OtherController extends Controller
         $user->save();
 
         // Redirect with success message
-        return redirect()->route('banker.dashboard')->with('success', 'Form submitted successfully.');
+        return redirect()->route('investee.dashboard')->with('success', 'Form submitted successfully.');
     }
 
     // Show the form for "Other" users

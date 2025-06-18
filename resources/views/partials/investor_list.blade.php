@@ -60,7 +60,7 @@
                                             @foreach($sectors as $sector)
                                                 <li class="list-inline-item text-muted" style="border: 1px solid #ddd; padding: 5px; border-radius: 5px; margin-right: 5px; margin-bottom: 5px; background-color: #f8f9fa;">
                                                     <!-- <i class="bi bi-check-circle-fill text-success me-1"></i> -->
-                                                    {{ $sector }}
+                                                    {{ ucwords(strtolower($sector)) }}
                                                 </li>
                                             @endforeach
                                         </ul>

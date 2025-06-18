@@ -92,7 +92,7 @@ class DashboardController extends Controller
             } elseif ($userType == 'investor') {
                 return redirect()->route('investor.dashboard')->with('results', $results);
             } elseif ($userType == 'banker') {
-                return redirect()->route('banker.dashboard')->with('results', $results);
+                return redirect()->route('investee.dashboard')->with('results', $results);
             } else {
                 // General dashboard for logged-in users if no specific type
                 return view('dashboard.dashboard', [
