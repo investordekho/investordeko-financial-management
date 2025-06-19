@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     #Ctext{
@@ -156,54 +154,56 @@
                 <h2 class="text-center" style="bold; color:blue;">Hello there!</h2>
                 <h3 class="text-center">Let's create an account</h3>
                 <!-- Display Success or Error Messages -->
-                @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
-                @if(session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-                @endif
+                <?php if(session('success')): ?>
+                <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+                <?php endif; ?>
+                <?php if(session('error')): ?>
+                <div class="alert alert-danger"><?php echo e(session('error')); ?></div>
+                <?php endif; ?>
 
-                @if ($errors->any())
+                <?php if($errors->any()): ?>
                 <div class="alert alert-danger">
                     <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
-                @endif
+                <?php endif; ?>
                 <!-- Registration Form -->
-                <form method="POST" action="{{ route('register') }}" style="background-color: #f8f9fa; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('register')); ?>" style="background-color: #f8f9fa; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <?php echo csrf_field(); ?>
                     <!-- Full Name and Email Fields on the Same Line -->
                     <div class="row g-3">
                         <div class="col-sm-6 mb-3">
                             <label id="Ctext" for="fullName">Full Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="fullName" name="name" value="{{ old('name') }}" placeholder="Enter your full name" required pattern="[A-Za-z\s]+" title="Full name should only contain letters and spaces">
-                            @if ($errors->has('name'))
+                            <input type="text" class="form-control<?php echo e($errors->has('name') ? ' is-invalid' : ''); ?>" id="fullName" name="name" value="<?php echo e(old('name')); ?>" placeholder="Enter your full name" required pattern="[A-Za-z\s]+" title="Full name should only contain letters and spaces">
+                            <?php if($errors->has('name')): ?>
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('name') }}
+                                    <?php echo e($errors->first('name')); ?>
+
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
                        
                         <div class="col-sm-6 mb-3">
                             <label id="Ctext" for="email">Email <span class="text-danger">*</span></label>
                             <input 
                                 type="text"
-                                class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" 
+                                class="form-control <?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" 
                                 id="email"
                                 name="email" 
-                                value="{{ old('email') }}" 
+                                value="<?php echo e(old('email')); ?>" 
                                 placeholder="Enter your email"
                                 pattern="^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$"
                                 required
                             >                            
-                            @if ($errors->has('email'))
+                            <?php if($errors->has('email')): ?>
                                 <div class="invalid-feedback d-block">
-                                    {{ $errors->first('email') }}
+                                    <?php echo e($errors->first('email')); ?>
+
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
 
                     </div>
@@ -227,7 +227,7 @@
             <!-- Phone Number Input -->
             <div class="flex-grow-1 d-flex flex-column">
                 <input type="tel" class="form-control phone mt-3" id="phone" name="phone"
-                    value="{{ old('phone') }}"
+                    value="<?php echo e(old('phone')); ?>"
                     placeholder="Enter your phone number"
                     required
                     pattern="[0-9]{10,14}"
@@ -238,9 +238,16 @@
                 <!-- Error Message Div (starts hidden) -->
                 <div id="phone-error" class="text-danger mt-1" style="display: none;"></div>
 
-                @error('phone')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="text-danger"><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
         </div>
     </div>
@@ -253,9 +260,16 @@
                             <label id="Ctext" for="password">Password<span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                             
-                            @error('password')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger"><?php echo e($message); ?></div>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="col-md-6 form-auto mb-1">
                             <label id="Ctext" for="password_confirmation">Confirm Password <span class="text-danger">*</span></label>
@@ -263,9 +277,16 @@
                             
                             <div id="passwordmsgid" style="display:none;">
                                 <div class="text-danger">Password do not match</div>
-                                <!-- @error('password_confirmation')
+                                <!-- <?php $__errorArgs = ['password_confirmation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                 <div class="text-danger">Password do not match</div>
-                                @enderror -->
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?> -->
                             </div>
                         </div>
                     </div>
@@ -275,42 +296,64 @@
                          <label id="Ctext" for="category">Join as <span class="text-danger">*</span></label>
                         <select class="form-select" id="category" name="category" required>
                             <option value="">Select Category</option>
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>
-                                {{ $category->category_name }}
+                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($category->id); ?>" <?php echo e(old('category') == $category->id ? 'selected' : ''); ?>>
+                                <?php echo e($category->category_name); ?>
+
                             </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                        
-                        @error('category')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <?php $__errorArgs = ['category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="text-danger"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="captcha">Enter the text shown in the image: <span class="text-danger">*</span></label>
                         <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Enter CAPTCHA" required>
                         <br>
-                        <img id="captchaImage" src="{{ url('/captcha') }}" alt="CAPTCHA Image">
-                        <img src="{{ asset('img/refresh.png') }}" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:25px; margin-left:10px;" onclick="refreshCaptcha()">
+                        <img id="captchaImage" src="<?php echo e(url('/captcha')); ?>" alt="CAPTCHA Image">
+                        <img src="<?php echo e(asset('img/refresh.png')); ?>" id="refreshIcon" alt="Refresh CAPTCHA" style="cursor: pointer; width:25px; margin-left:10px;" onclick="refreshCaptcha()">
                         
                         <div id="captchaerrormsgdiv" style="display:none;">
                             <div class="text-danger">Incorrect Captcha Enter</div>
                         </div>
-                        @error('captcha')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <?php $__errorArgs = ['captcha'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Terms and Conditions Checkbox -->
                     <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
                         <label class="form-check-label" for="terms">
-                            By clicking to register, I agree to the <a href="{{ route('terms') }}" target="_blank">Terms of Use</a> and <a href="{{ route('privacy-policy') }}" target="_blank">Privacy Policy</a>.
+                            By clicking to register, I agree to the <a href="<?php echo e(route('terms')); ?>" target="_blank">Terms of Use</a> and <a href="<?php echo e(route('privacy-policy')); ?>" target="_blank">Privacy Policy</a>.
                         </label>
-                        @error('terms')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="text-danger"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Submit Button -->
@@ -318,7 +361,7 @@
                 </form>
 
                 <!-- Already have an account -->
-                <h4 class="text-center mt-4">Already have an account? <a href="{{ route('login') }}">Login</a></h4>
+                <h4 class="text-center mt-4">Already have an account? <a href="<?php echo e(route('login')); ?>">Login</a></h4>
             </div>
         </div>
     </div>
@@ -332,7 +375,7 @@
     function refreshCaptcha() {
         // Refresh the CAPTCHA image by appending a random query string to avoid caching
         var captchaImage = document.getElementById('captchaImage');
-        captchaImage.src = '{{ url('/captcha') }}?' + Math.random();
+        captchaImage.src = '<?php echo e(url('/captcha')); ?>?' + Math.random();
 
         // Get the refresh icon and add the rotation class to trigger the animation
         var refreshIcon = document.getElementById('refreshIcon');
@@ -1691,4 +1734,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/auth/register.blade.php ENDPATH**/ ?>
