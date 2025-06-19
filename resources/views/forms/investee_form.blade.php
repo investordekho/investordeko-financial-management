@@ -1330,11 +1330,14 @@
             <label id="labelinput" for="fund_requirement" class="required">Fund Requirement <span style="color:red;">*</span></label>
             <div class="input-group">
                 <input 
-                    class="form-control spaced-input @error('fund_requirement.0') is-invalid @enderror " 
+                    class="form-control spaced-input @error('fund_requirement.0') is-invalid @enderror" 
                     type="number" 
                     name="fund_requirement[]" 
                     value="{{ old('fund_requirement.0') }}" 
+                    min="1"
+                    step="1"
                     required
+                    oninput="if (this.value < 1) this.value = ''"
                 >
                 
                 <select 
@@ -1638,6 +1641,7 @@
                     name="amount_raised[]" 
                     min="0" 
                     step="0.01" 
+                    oninput = "if (this.value < 0) this.value = ''"
                     value="{{ old('amount_raised.0') }}" 
                     required
                 >
@@ -1654,6 +1658,9 @@
                     class="form-control @error('valuation.0') is-invalid @enderror" 
                     name="valuation[]" 
                     value="{{ old('valuation.0') }}" 
+                    min="0"
+                    step="0.01"
+                    oninput="if (this.value < 0) this.value = ''"
                     required
                 >
                 @error('valuation.0')

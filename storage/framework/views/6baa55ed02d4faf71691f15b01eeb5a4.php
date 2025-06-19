@@ -1794,11 +1794,14 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?> " 
+unset($__errorArgs, $__bag); ?>" 
                     type="number" 
                     name="fund_requirement[]" 
                     value="<?php echo e(old('fund_requirement.0')); ?>" 
+                    min="1"
+                    step="1"
                     required
+                    oninput="if (this.value < 1) this.value = ''"
                 >
                 
                 <select 
@@ -2214,6 +2217,7 @@ unset($__errorArgs, $__bag); ?>"
                     name="amount_raised[]" 
                     min="0" 
                     step="0.01" 
+                    oninput = "if (this.value < 0) this.value = ''"
                     value="<?php echo e(old('amount_raised.0')); ?>" 
                     required
                 >
@@ -2244,6 +2248,9 @@ endif;
 unset($__errorArgs, $__bag); ?>" 
                     name="valuation[]" 
                     value="<?php echo e(old('valuation.0')); ?>" 
+                    min="0"
+                    step="0.01"
+                    oninput="if (this.value < 0) this.value = ''"
                     required
                 >
                 <?php $__errorArgs = ['valuation.0'];
