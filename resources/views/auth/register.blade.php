@@ -224,7 +224,7 @@
                                 </div>
                             </div>
                             <!-- Phone Number Input -->
-                            <input type="tel" class="form-control phone mt-3" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Enter your phone number" required pattern="[0-9]{10,14}" maxlength="14" minlength="10" oninput="validatePhoneLength(this)">
+                            <input type="tel" class="form-control phone mt-3" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Enter number, e.g., 9820318923" required pattern="[0-9]{10,14}" maxlength="14" minlength="10" oninput="validatePhoneLength(this)">
                         </div>
                         <label for="phone"></label>
                         @error('phone')
@@ -330,27 +330,31 @@
     }
 
     function validatePhoneLength(input) {
+        const phone = document.getElementById("phone");
         if (input.value.length < 10) {
-            input.setCustomValidity("Phone number must be exactly 10 digits.");
+            phone.classList.add("is-invalid");
+            input.setCustomValidity("Phone number must be at least 10 digits.");
         } else {
+            phone.classList.remove("is-invalid");
             input.setCustomValidity("");
         }
     }
 
-     let passwordinput = document.getElementById("password");
-     let confirmpasswordinput = document.getElementById("password_confirmation");
-     let passwordmsgdiv = document.getElementById("passwordmsgid");
+    let passwordinput = document.getElementById("password");
+    let confirmpasswordinput = document.getElementById("password_confirmation");
+    let passwordmsgdiv = document.getElementById("passwordmsgid");
 
-      function confirmpassword() {
-        if(passwordinput.value !== confirmpasswordinput.value){
+    function confirmpassword() {
+        if (passwordinput.value !== confirmpasswordinput.value) {
+            confirmpasswordinput.classList.add("is-invalid");
             passwordmsgdiv.style.display = "block";
-            confirmpasswordinput.style.borderColor = "red";
-        }
-        else{
+            confirmpasswordinput.setCustomValidity("Passwords do not match.");
+        } else {
+            confirmpasswordinput.classList.remove("is-invalid");
             passwordmsgdiv.style.display = "none";
-            confirmpasswordinput.style.borderColor = "";
+            confirmpasswordinput.setCustomValidity("");
         }
-     }
+    }
 
     //  passwordinput.addEventListener("input", confirmpassword);
      confirmpasswordinput.addEventListener("input", confirmpassword);
