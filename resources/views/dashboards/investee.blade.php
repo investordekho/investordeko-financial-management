@@ -309,10 +309,10 @@
                                     <label style="font-weight: 500;" for="sort"></label>
                                     <select class="form-control" name="sort" id="idsortby">
                                         <option style="font-weight: 400;" value="" class="text-center dropdown">Sort By </option>
-                                        <option style="font-weight: 40000;" value="A-Z">Investor Name (Ascending)</option>
-                                        <option style="font-weight: 400;" value="Z-A">Investor Name (Descending)</option>
-                                        <option style="font-weight: 400;" value="investment_size_asc">Investment Size (Low to High)</option>
-                                        <option style="font-weight: 400;" value="investment_size_desc">Investment Size (High to Low)</option>
+                                        <option style="font-weight: 40000;" value="Investor Name (Ascending)">Investor Name (Ascending)</option>
+                                        <option style="font-weight: 400;" value="Investor Name (Descending)">Investor Name (Descending)</option>
+                                        <option style="font-weight: 400;" value="Investment Size (Low to High)">Investment Size (Low to High)</option>
+                                        <option style="font-weight: 400;" value="Investment Size (High to Low)">Investment Size (High to Low)</option>
                                     </select>
                                 </div>
 
