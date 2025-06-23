@@ -2037,7 +2037,7 @@ document.getElementById('financials').addEventListener('change', function(event)
                         </div>
                         <div class="form-group mb-3" id="other_field" style="display: none;">
                             <label id="labelinput" for="other_guidance">Please specify (Others)</label>
-                            <input type="text" name="other_guidance" id="other_guidance_input" class="form-control" value="{{ old('other_guidance') }}" placeholder="Please specify your other guidance">
+                            <input type="text" name="guidance_needed[]" id="other_guidance_input" class="form-control" value="{{ old('other_guidance') }}" placeholder="Please specify your other guidance">
 
                         </div>
                     </div>
@@ -2362,6 +2362,7 @@ window.onload = function() {
         if (document.getElementById('other_guidance_input')) {
             const input = document.getElementById('other_guidance_input');
             input.value = "{{ old('other_guidance') }}"; // Retain value from old input
+          
         }
     }
 };
