@@ -21,16 +21,28 @@
 </style>
 
 <div class="container">
-   <div class="row p-2"  style="background: #a5bdc4;
-   max-width: 1400px;
-   width: 100%;
-   border-radius: 8px; margin-left:0px">
-       <h2> Investee Form</h2>
-   </div>
+
+<div class="row justify-content-center mb-4">
+   
+</div> 
     
+    <form class="bg-light p-4" id="investeeForm" action="{{ route('form.submit') }}" method="POST" enctype="multipart/form-data" style="box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18), 0 1.5rem 3rem rgba(0,0,0,0.15);" novalidate>
 
-<form class="bg-light p-4" id="investeeForm" action="{{ route('form.submit') }}" method="POST" enctype="multipart/form-data" novalidate>
-
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-md-10 col-lg-22" style="max-width: 100%;">
+            <div class="p-2 rounded-4 shadow-sm" style="background: linear-gradient(90deg,rgb(95, 185, 212) 0%, #e3ecef 100%);
+                border-radius: 16px;
+                box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center; width: 100%;">
+                <div class="w-100">
+                    <h2 class="fw-bold mb-1" style="color:rgb(27, 48, 55); letter-spacing: 1px;">Investee Form</h2>
+                </div>
+            </div>
+        </div>
+    </div> 
     @csrf
     <!-- Company Details Section -->
     <!-- <div class="row g-3">
@@ -278,6 +290,10 @@
                 name="company_name"
                 value="{{ old('company_name') }}"
                 required
+                pattern="^[A-Za-z\s\.\-&']+$"
+                title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                autocomplete="off"
             >
             @error('company_name')
                 <div class="invalid-feedback">This Field is Required</div>
@@ -465,20 +481,43 @@
             </datalist>
         </div>
 
-        <div class="col-md-3">
-            <label for="incorporated_in" class="form-label fw-medium">Incorporated In <span class="text-danger">*</span></label>
-            <input 
+       <div class="col-sm-3">
+            <label for="incorporated_in" class="form-label">
+                Incorporated In <span class="text-danger">*</span>
+            </label>
+            <!-- <input 
                 type="number" 
-                class="form-control shadow-sm rounded-3 @error('incorporated_in') is-invalid @enderror" 
+                class="form-control" 
                 id="incorporated_in" 
                 name="incorporated_in" 
-                value="{{ old('incorporated_in') }}" 
+                step="1"
+                min="1800"
+                max="{{ date('Y') }}"
                 required
+                value="{{ old('incorporated_in') }}"
+                oninput="validateYear()"
             >
+            <div id="incorporated_in_error" class="text-danger mt-1 small"></div> -->
+            <!-- Select dropdown option for incorporated in -->
+            <select 
+                class="form-select shadow-sm rounded-3 @error('incorporated_in') is-invalid @enderror" 
+                id="incorporated_in" 
+                name="incorporated_in" 
+                required
+                aria-describedby="incorporated_in_error"
+            >
+                <option value="" disabled selected>Select Year</option>
+                @for ($year = date('Y'); $year >= 1901; $year--)
+                    <option value="{{ $year }}" {{ old('incorporated_in') == $year ? 'selected' : '' }}>
+                        {{ $year }}
+                    </option>
+                @endfor
+            </select>
             @error('incorporated_in')
-                <div class="invalid-feedback">This Field is Required</div>
+                <div class="invalid-feedback d-block small">This Field is Required</div>
             @enderror
         </div>
+
     </div>
 
 
@@ -642,6 +681,10 @@
                     name="concerned_person_name" 
                     value="{{ old('concerned_person_name') }}" 
                     required
+                    pattern="^[A-Za-z\s\.\-&']+$"
+                    title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                    oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                    autocomplete="off"
                 >
                 @error('concerned_person_name')
                     <div class="invalid-feedback d-block small">This Field is Required</div>
@@ -657,6 +700,10 @@
                     name="concerned_person_designation" 
                     value="{{ old('concerned_person_designation') }}" 
                     required
+                    pattern="^[A-Za-z\s\.\-&']+$"
+                    title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                    oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                    autocomplete="off"
                 >
                 @error('concerned_person_designation')
                     <div class="invalid-feedback d-block small">This Field is Required</div>
@@ -670,6 +717,7 @@
                         <span class="text-danger ms-2 small">{{ $message ?: 'This Field is Required' }}</span>
                     @enderror
                 </label>
+                <div id="concerned_person_email_error" class="text-danger small"></div>
                 <input 
                     type="email" 
                     class="form-control form-control-sm @error('concerned_person_email') is-invalid @enderror" 
@@ -863,6 +911,7 @@
 
         <div class="col-md-5">
             <label for="company_website" class="form-label required">Company Website <span class="text-danger">*</span></label>
+            <div id="company_website_error" class="text-danger small"></div>
             <input 
                 type="url" 
                 class="form-control @error('website') is-invalid @enderror" 
@@ -870,6 +919,9 @@
                 name="website" 
                 value="{{ old('website') }}" 
                 required
+                pattern="^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$"
+                title="Please enter a valid website URL (e.g., https://example.com)"
+                placeholder="https://example.com"
             >
             @error('website')
                 <div class="invalid-feedback">This Field is Required</div>
@@ -878,6 +930,7 @@
 
         <div class="col-md-5">
             <label for="linkedin_link" class="form-label required">LinkedIn <span class="text-danger">*</span></label>
+            <div id="linkedin_link_error" class="text-danger small"></div>
             <input 
                 type="url" 
                 class="form-control @error('linkedin') is-invalid @enderror" 
@@ -885,6 +938,7 @@
                 name="linkedin" 
                 value="{{ old('linkedin') }}" 
                 required
+                placeholder="https://www.linkedin.com/in/username"
             >
             @error('linkedin')
                 <div class="invalid-feedback">This Field is Required</div>
@@ -1224,6 +1278,10 @@
                     name="founder_education[]" 
                     value="{{ old('founder_education.0') }}" 
                     required
+                    pattern="^[A-Za-z\s\.\-&']+$"
+                    title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                    oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                    autocomplete="off"
                 >
                 @error('founder_education.0')
                     <span class="text-danger">This Field is Required</span>
@@ -1237,6 +1295,10 @@
                     class="form-control @error('founder_experience.0') is-invalid @enderror" 
                     name="founder_experience[]" 
                     value="{{ old('founder_experience.0') }}" 
+                    step="0.1"       
+                    min="0.1"
+                    max="100"
+                    oninput="if (this.value < 0.1) this.value = ''"
                     required
                 >
                 @error('founder_experience.0')
@@ -1335,7 +1397,7 @@
                     name="fund_requirement[]" 
                     value="{{ old('fund_requirement.0') }}" 
                     min="1"
-                    step="1"
+                    step="0.01"
                     required
                     oninput="if (this.value < 1) this.value = ''"
                 >
@@ -1626,6 +1688,10 @@
                     name="investors[]" 
                     value="{{ old('investors.0') }}" 
                     required
+                    pattern="^[A-Za-z\s\.\-&']+$"
+                    title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                    oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                    autocomplete="off"
                 >
                 @error('investors.0')
                     <div class="invalid-feedback">This Field is Required</div>
@@ -1639,7 +1705,7 @@
                     type="number" 
                     class="form-control @error('amount_raised.0') is-invalid @enderror" 
                     name="amount_raised[]" 
-                    min="0" 
+                    min="0.01" 
                     step="0.01" 
                     oninput = "if (this.value < 0) this.value = ''"
                     value="{{ old('amount_raised.0') }}" 
@@ -1658,9 +1724,9 @@
                     class="form-control @error('valuation.0') is-invalid @enderror" 
                     name="valuation[]" 
                     value="{{ old('valuation.0') }}" 
-                    min="0"
+                    min="0.01"
                     step="0.01"
-                    oninput="if (this.value < 0) this.value = ''"
+                    oninput="if (this.value <= 0) this.value = ''"
                     required
                 >
                 @error('valuation.0')
@@ -2019,7 +2085,7 @@ document.getElementById('financials').addEventListener('change', function(event)
             nameField.value = "{{ Auth::user()->name }}";
             emailField.value = "{{ Auth::user()->email }}";
             phoneField.value = "{{ Auth::user()->phone }}";
-            designationField.value = "{{ Auth::user()->designation ?? '' }}";  // Assuming user model has these field
+            // designationField.value = "{{ Auth::user()->designation ?? '' }}";  // Assuming user model has these field
 
             nameField.readOnly = true;
             designationField.readOnly = false;
@@ -2461,11 +2527,21 @@ function removeLinkField(button) {
             </div>
             <div class="col-md-2">
                 <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
-                <input type="text" class="form-control" name="founder_education[]" required>
+                <input type="text" class="form-control" name="founder_education[]" required
+                    pattern="^[A-Za-z\s.\-&']+$"
+                    title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                    oninput="filterQualificationInput(this)"
+                    autocomplete="off">
             </div>
+           
             <div class="col-md-3">
                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
-                <input type="number" class="form-control " name="founder_experience[]" required>
+                <input type="number" class="form-control " name="founder_experience[]" 
+                    step="0.1"       
+                    min="0.1"
+                    max="100"
+                    oninput="if (this.value < 0.1) this.value = ''" 
+                    required>
             </div>
             <div class="col-md-1">
                 <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
@@ -2475,6 +2551,7 @@ function removeLinkField(button) {
         
         container.appendChild(newRow);
 }
+
 
 // Function to remove founder fields
 function removeFounderField(button) {
@@ -2538,7 +2615,10 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="col-md-8">
                 <label id="labelinput" for="fund_requirement" class="required">Fund Requirement</label>
                 <div class="input-group">
-                    <input class="form-control spaced-input" type="number" name="fund_requirement[]" required>
+                    <input class="form-control spaced-input" type="number" name="fund_requirement[]"  min="1"
+                    step="0.01"
+                    oninput="if (this.value < 1) this.value = ''"
+                    required>
                     <select class="form-select spaced-input" name="fund_unit[]" required>
                         <option value="crores">Cr</option>
                         <option value="lakhs">Lakh</option>
@@ -2682,16 +2762,22 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="investors" class="required">Investors</label>
-                <input type="text" class="form-control spaced-input" name="investors[]" required>
+                <input type="text" class="form-control spaced-input" name="investors[]" required 
+                    pattern="^[A-Za-z\s.,&'-]+$"
+                    title="Only letters, spaces, commas, periods, ampersands, and hyphens are allowed."
+                    oninput="filterInvestorInput(this)"
+                    autocomplete="off">
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0" step="0.01" required>
+                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0.01" step="0.01" required>
 
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="valuation[]" required>
+                <input type="number" class="form-control spaced-input" name="valuation[]" min="0.01"
+                    step="0.01"
+                    oninput="if (this.value <= 0) this.value = ''" required>
             </div>
             <div class="col-md-1">
                 <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">×</button>
@@ -2764,4 +2850,181 @@ document.getElementById('pitch_deck').addEventListener('change', function() {
 
 </script>
 
+
+
+
+<script>
+function validateYear() {
+    const input = document.getElementById("incorporated_in");
+    const errorDiv = document.getElementById("incorporated_in_error");
+    const year = parseInt(input.value);
+    const currentYear = new Date().getFullYear();
+
+    if (!input.value) {
+        errorDiv.textContent = "This field is required.";
+        input.focus();
+        return false;
+    }
+
+    if (isNaN(year) || year < 1800 || year > currentYear) {
+        errorDiv.textContent = `Please enter a valid year between 1800 and ${currentYear}.`;
+        input.focus();
+        return false;
+    }
+
+    errorDiv.textContent = "";
+    return true;
+}
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const submitbutton = document.querySelector('button[type="submit"]');
+    const yearInput = document.getElementById("incorporated_in");
+
+    if (!form || !submitbutton || !yearInput) return;
+
+    form.addEventListener("submit", function (e) {
+        if (!validateYear()) {
+            e.preventDefault();
+        }
+    });
+
+    // Set initial state
+    submitbutton.disabled = !validateYear();
+
+    // Enable/disable submit button on year input change
+    yearInput.addEventListener("input", function () {
+        submitbutton.disabled = !validateYear();
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const emailInput = document.getElementById('concerned_person_email');
+    const form = document.querySelector('form');
+    const emailError = document.getElementById('concerned_person_email_error');
+
+    // Real-time validation
+    emailInput.addEventListener('input', function () {
+        const emailValue = emailInput.value.trim();
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        if (!emailPattern.test(emailValue)) {
+            emailError.textContent = "Please enter a valid email address.e.g.,demo@gmail.com";
+        } else {
+            emailError.textContent = "";
+        }
+    });
+
+    // Form submit validation
+    form.addEventListener('submit', function (event) {
+        const emailValue = emailInput.value.trim();
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailPattern.test(emailValue)) {
+            event.preventDefault();
+            emailError.textContent = "Please enter a valid email address.e.g.,demo@gmail.com";
+            emailInput.focus();
+        } else {
+            emailError.textContent = "";
+        }
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let websiteInput = document.getElementById('company_website');
+    let linkedinInput = document.getElementById('linkedin_link');
+    let websiteError = document.getElementById('company_website_error');
+    let linkedinError = document.getElementById('linkedin_link_error');
+    let form = document.querySelector('form');
+
+    // Real-time validation for website input
+    websiteInput.addEventListener('input', function () {
+        // let urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w- .\/?%&=]*)?$/;
+            const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+
+        if (!urlPattern.test(websiteInput.value)) {
+            websiteError.textContent = "Please enter a valid URL. e.g., https://www.example.com";
+        } else {
+            websiteError.textContent = "";
+        }
+    });
+
+    // on change validation for website input
+    websiteInput.addEventListener('change', function () {
+         const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+
+        if (!urlPattern.test(websiteInput.value)) {
+            websiteError.textContent = "Please enter a valid URL. e.g., https://www.example.com";
+            websiteInput.focus();
+        } else {
+            websiteError.textContent = "";
+        }
+    });
+
+    // Real-time validation for LinkedIn input
+    linkedinInput.addEventListener('input', function () {
+        let linkedinPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+        if (!linkedinPattern.test(linkedinInput.value)) {
+            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://www.linkedin.com/in/username/";
+        } else {
+            linkedinError.textContent = "";
+        }
+    });
+
+    // on change validation for LinkedIn input
+    linkedinInput.addEventListener('change', function () {
+        let linkedinPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+        if (!linkedinPattern.test(linkedinInput.value)) {
+            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://www.linkedin.com/in/username/";
+            linkedinInput.focus();
+        } else {
+            linkedinError.textContent = "";
+        }
+    });
+
+    // Form submit validation
+    form.addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // Validate website input
+        if (!websiteInput.value || !/^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w- .\/?%&=]*)?$/.test(websiteInput.value)) {
+            websiteError.textContent = "Please enter a valid URL. e.g., https://www.example.com";
+            isValid = false;
+        }
+
+        // Validate LinkedIn input
+        if (!linkedinInput.value || !/^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/.test(linkedinInput.value)) {
+            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://www.linkedin.com/in/username/";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+            if (!websiteInput.value) websiteInput.focus();
+            else linkedinInput.focus();
+        }
+    });
+});
+</script>
+
+<script>
+            function filterQualificationInput(input) {
+                // Allow only letters, spaces, dots, hyphens, ampersands, and apostrophes
+                input.value = input.value.replace(/[^A-Za-z\s.\-&']/g, '');
+            }
+</script>
+
+<script>
+            function filterInvestorInput(input) {
+                // Allow only letters, spaces, commas, periods, ampersands, and hyphens
+                input.value = input.value.replace(/[^A-Za-z\s.,&'-]/g, '');
+            }
+</script>
 @endsection

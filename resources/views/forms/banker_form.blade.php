@@ -63,7 +63,7 @@
         @enderror
     </div>
 
-    <div class="col-sm-3">
+    <!-- <div class="col-sm-3">
         <label for="incorporated_in" class="form-label">
             Incorporated In <span class="text-danger">*</span>
         </label>
@@ -72,15 +72,36 @@
             class="form-control @error('incorporated_in') is-invalid @enderror" 
             id="incorporated_in" 
             name="incorporated_in" 
-            min="1900" 
-            max="2023" 
+            step="1"       
+            min="1800"
+            max="{{ date('Y') }}"
+            oninput="if (this.value < 1) this.value = ''"
             value="{{ old('incorporated_in') }}" 
             required
         >
         @error('incorporated_in')
             <span class="text-danger small">This field is required</span>
         @enderror
+    </div> -->
+
+    <div class="col-sm-3">
+            <label for="incorporated_in" class="form-label">
+                Incorporated In <span class="text-danger">*</span>
+            </label>
+            <input 
+                type="number" 
+                class="form-control" 
+                id="incorporated_in" 
+                name="incorporated_in" 
+                step="1"
+                min="1800"
+                max="{{ date('Y') }}"
+                required
+                oninput="validateYear()"
+            >
+            <div id="incorporated_in_error" class="text-danger mt-1 small"></div>
     </div>
+
 
     <div class="col-sm-2">
         <label for="ib_team_size" class="form-label">
@@ -940,4 +961,55 @@ function removePublicLinkField(element) {
 }
 
 </script>
+
+<script>
+function validateYear() {
+    const input = document.getElementById("incorporated_in");
+    const errorDiv = document.getElementById("incorporated_in_error");
+    const year = parseInt(input.value);
+    const currentYear = new Date().getFullYear();
+
+    if (!input.value) {
+        errorDiv.textContent = "This field is required.";
+        input.focus();
+        return false;
+    }
+
+    if (isNaN(year) || year < 1800 || year > currentYear) {
+        errorDiv.textContent = `Please enter a valid year between 1800 and ${currentYear}.`;
+        input.focus();
+        return false;
+    }
+
+    errorDiv.textContent = "";
+    return true;
+}
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const submitbutton = document.querySelector('button[type="submit"]');
+    const yearInput = document.getElementById("incorporated_in");
+
+    if (!form || !submitbutton || !yearInput) return;
+
+    form.addEventListener("submit", function (e) {
+        if (!validateYear()) {
+            e.preventDefault();
+        }
+    });
+
+    // Set initial state
+    submitbutton.disabled = !validateYear();
+
+    // Enable/disable submit button on year input change
+    yearInput.addEventListener("input", function () {
+        submitbutton.disabled = !validateYear();
+    });
+});
+</script>
+
+
 @endsection

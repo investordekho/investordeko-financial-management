@@ -187,7 +187,7 @@ public function store(Request $request)
         'founder_name.*' => 'required|string', //
         'founder_position.*'=>'required|string', //
         'founder_education.*'=>'required|string', //
-        'founder_experience.*'=>'required|integer',//
+        'founder_experience.*' => 'required|numeric', //
         'fund_usage.*' => 'required|string', //
         'fund_requirement.*' => 'required|numeric', //
         'previous_rounds.*' => 'required|string', //

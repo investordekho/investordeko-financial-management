@@ -218,7 +218,7 @@
           <a href="https://www.youtube.com/@InvestorDekho" class="me-2 text-dark"><i class="bi bi-youtube"></i></a>
           <a href="https://x.com/investordekho" class="me-2 text-dark"><i class="fa-solid fa-x"></i></span></a>
           <a href="https://www.instagram.com/investor_dekho/" class="me-2 text-dark"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.linkedin.com/in/investor-dekho-327689338/" class="text-dark"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.linkedin.com/in/investor-dekho-ad-327689338/" class="text-dark"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </div>

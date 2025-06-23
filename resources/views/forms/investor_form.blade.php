@@ -58,7 +58,7 @@
              color: #2e2e2e; 
              padding: 40px; 
              border-radius: 16px; 
-             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);"
+             box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18), 0 1.5rem 3rem rgba(0,0,0,0.15);"
       novalidate>
     @csrf
 
@@ -88,6 +88,9 @@
         name="investor_name"
         value="{{ old('investor_name') }}"
         required
+        pattern="^[a-zA-Z\s]+$"
+        title="Please enter a valid name (letters and spaces only)"
+        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
     >
     @error('investor_name')
         <span class="text-danger">This field is required</span>
@@ -298,8 +301,9 @@
         class="form-control spaced-input @error('investor_profile') is-invalid @enderror" 
         id="investor_profile" 
         name="investor_profile"
-        value ="{{ old('investor_profile')}}"
         required
+        accept=".doc,.docx,.pdf,.ppt,.pptx,.jpg,.jpeg,.png"
+        onchange="validateFileTypeinvestorprofile(this)"
     >
     @error('investor_profile')
         <span class="text-danger">{{ $message ?: 'This field is required' }}</span>
@@ -330,6 +334,10 @@
             name="concerned_person_name" 
             value="{{ old('concerned_person_name') }}" 
             required
+            pattern="^[a-zA-Z\s]+$"
+            title="Please enter a valid name (letters and spaces only)"
+            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+            autocomplete="off"
         >
         @error('concerned_person_name')
             <span class="text-danger">This field is required</span>
@@ -344,6 +352,10 @@
             name="concerned_person_designation" 
             value="{{ old('concerned_person_designation') }}" 
             required
+            pattern="^[a-zA-Z\s]+$"
+            title="Please enter a valid designation (letters and spaces only)"
+            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+            autocomplete="off"
         >
         @error('concerned_person_designation')
             <span class="text-danger">This field is required</span>
@@ -376,6 +388,7 @@
             value="{{ old('email') }}" 
             required
         >
+        <div id="email_error" class="text-danger small"></div>
         @error('email')
             <span class="text-danger">This field is required</span>
         @enderror
@@ -726,14 +739,50 @@
                                 </div>
                                 <div class="col-sm-3 form-group">
                                     <label id="labelinput" for="sector" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Sector' : ''}}</label>
-                                    <input 
-                                        type="text" 
+                                    <select 
                                         class="form-control spaced-input @error('sector.' . $i) is-invalid @enderror" 
                                         id="sector" 
                                         name="sector[]" 
-                                        value="{{ $sectors[$i] ?? '' }}" 
                                         required
                                     >
+                                        @if ($i == 0)
+                                            <option value="" disabled selected>Select Sector</option>
+                                        @endif
+                                        @php
+                                            $sectorOptions = [
+                                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+                                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+                                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+                                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+                                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+                                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+                                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+                                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+                                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+                                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+                                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+                                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+                                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+                                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+                                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+                                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+                                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+                                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+                                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+                                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+                                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+                                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+                                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+                                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+                                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+                                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+                                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+                                            ];
+                                        @endphp
+                                        @foreach($sectorOptions as $option)
+                                            <option value="{{ $option }}" {{ (isset($sectors[$i]) && $sectors[$i] == $option) ? 'selected' : '' }}>{{ $option }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('sector.' . $i)
                                         <span class="text-danger">This field is required</span>
                                     @enderror
@@ -1169,7 +1218,156 @@ function removePublicLinkField(button) {
                 </div>
                 <div class="col-sm-3 form-group">
                     <label id="labelinput" for="sector" class="required">Sector</label>
-                    <input type="text" class="form-control spaced-input" id="sector" name="sector[]" required>
+                    <select class="form-control spaced-input" id="sector" name="sector[]" required>
+                        <option value="" disabled selected>Select Sector</option>
+                        <option value="Accounting">Accounting</option>
+                        <option value="Airlines/Aviation">Airlines/Aviation</option>
+                        <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
+                        <option value="Alternative Medicine">Alternative Medicine</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Apparel/Fashion">Apparel/Fashion</option>
+                        <option value="Architecture/Planning">Architecture/Planning</option>
+                        <option value="Arts/Crafts">Arts/Crafts</option>
+                        <option value="Automotive">Automotive</option>
+                        <option value="Aviation/Aerospace">Aviation/Aerospace</option>
+                        <option value="Banking/Mortgage">Banking/Mortgage</option>
+                        <option value="Biotechnology/Greentech">Biotechnology/Greentech</option>
+                        <option value="Broadcast Media">Broadcast Media</option>
+                        <option value="Building Materials">Building Materials</option>
+                        <option value="Business Supplies/Equipment">Business Supplies/Equipment</option>
+                        <option value="Capital Markets/Hedge Fund/Private Equity">Capital Markets/Hedge Fund/Private Equity</option>
+                        <option value="Chemicals">Chemicals</option>
+                        <option value="Civic/Social Organization">Civic/Social Organization</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                        <option value="Commercial Real Estate">Commercial Real Estate</option>
+                        <option value="Computer Games">Computer Games</option>
+                        <option value="Computer Hardware">Computer Hardware</option>
+                        <option value="Computer Networking">Computer Networking</option>
+                        <option value="Computer Software/Engineering">Computer Software/Engineering</option>
+                        <option value="Computer/Network Security">Computer/Network Security</option>
+                        <option value="Construction">Construction</option>
+                        <option value="Consumer Electronics">Consumer Electronics</option>
+                        <option value="Consumer Goods">Consumer Goods</option>
+                        <option value="Consumer Services">Consumer Services</option>
+                        <option value="Cosmetics">Cosmetics</option>
+                        <option value="Dairy">Dairy</option>
+                        <option value="Defense/Space">Defense/Space</option>
+                        <option value="Design">Design</option>
+                        <option value="E-Learning">E-Learning</option>
+                        <option value="Education Management">Education Management</option>
+                        <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
+                        <option value="Entertainment/Movie Production">Entertainment/Movie Production</option>
+                        <option value="Environmental Services">Environmental Services</option>
+                        <option value="Events Services">Events Services</option>
+                        <option value="Executive Office">Executive Office</option>
+                        <option value="Facilities Services">Facilities Services</option>
+                        <option value="Farming">Farming</option>
+                        <option value="Financial Services">Financial Services</option>
+                        <option value="Fine Art">Fine Art</option>
+                        <option value="Fishery">Fishery</option>
+                        <option value="Food Production">Food Production</option>
+                        <option value="Food/Beverages">Food/Beverages</option>
+                        <option value="Fundraising">Fundraising</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Gambling/Casinos">Gambling/Casinos</option>
+                        <option value="Glass/Ceramics/Concrete">Glass/Ceramics/Concrete</option>
+                        <option value="Government Administration">Government Administration</option>
+                        <option value="Government Relations">Government Relations</option>
+                        <option value="Graphic Design/Web Design">Graphic Design/Web Design</option>
+                        <option value="Health/Fitness">Health/Fitness</option>
+                        <option value="Higher Education/Acadamia">Higher Education/Acadamia</option>
+                        <option value="Hospital/Health Care">Hospital/Health Care</option>
+                        <option value="Hospitality">Hospitality</option>
+                        <option value="Human Resources/HR">Human Resources/HR</option>
+                        <option value="Import/Export">Import/Export</option>
+                        <option value="Individual/Family Services">Individual/Family Services</option>
+                        <option value="Industrial Automation">Industrial Automation</option>
+                        <option value="Information Services">Information Services</option>
+                        <option value="Information Technology/IT">Information Technology/IT</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="International Affairs">International Affairs</option>
+                        <option value="International Trade/Development">International Trade/Development</option>
+                        <option value="Internet">Internet</option>
+                        <option value="Investment Banking/Venture">Investment Banking/Venture</option>
+                        <option value="Investment Management/Hedge Fund/Private Equity">Investment Management/Hedge Fund/Private Equity</option>
+                        <option value="Judiciary">Judiciary</option>
+                        <option value="Law Enforcement">Law Enforcement</option>
+                        <option value="Law Practice/Law Firms">Law Practice/Law Firms</option>
+                        <option value="Legal Services">Legal Services</option>
+                        <option value="Legislative Office">Legislative Office</option>
+                        <option value="Leisure/Travel">Leisure/Travel</option>
+                        <option value="Library">Library</option>
+                        <option value="Logistics/Procurement">Logistics/Procurement</option>
+                        <option value="Luxury Goods/Jewelry">Luxury Goods/Jewelry</option>
+                        <option value="Machinery">Machinery</option>
+                        <option value="Management Consulting">Management Consulting</option>
+                        <option value="Maritime">Maritime</option>
+                        <option value="Market Research">Market Research</option>
+                        <option value="Marketing/Advertising/Sales">Marketing/Advertising/Sales</option>
+                        <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
+                        <option value="Media Production">Media Production</option>
+                        <option value="Medical Equipment">Medical Equipment</option>
+                        <option value="Medical Practice">Medical Practice</option>
+                        <option value="Mental Health Care">Mental Health Care</option>
+                        <option value="Military Industry">Military Industry</option>
+                        <option value="Mining/Metals">Mining/Metals</option>
+                        <option value="Motion Pictures/Film">Motion Pictures/Film</option>
+                        <option value="Museums/Institutions">Museums/Institutions</option>
+                        <option value="Music">Music</option>
+                        <option value="Nanotechnology">Nanotechnology</option>
+                        <option value="Newspapers/Journalism">Newspapers/Journalism</option>
+                        <option value="Non-Profit/Volunteering">Non-Profit/Volunteering</option>
+                        <option value="Oil/Energy/Solar/Greentech">Oil/Energy/Solar/Greentech</option>
+                        <option value="Online Publishing">Online Publishing</option>
+                        <option value="Other Industry">Other Industry</option>
+                        <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
+                        <option value="Package/Freight Delivery">Package/Freight Delivery</option>
+                        <option value="Packaging/Containers">Packaging/Containers</option>
+                        <option value="Paper/Forest Products">Paper/Forest Products</option>
+                        <option value="Performing Arts">Performing Arts</option>
+                        <option value="Pharmaceuticals">Pharmaceuticals</option>
+                        <option value="Philanthropy">Philanthropy</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Plastics">Plastics</option>
+                        <option value="Political Organization">Political Organization</option>
+                        <option value="Primary/Secondary Education">Primary/Secondary Education</option>
+                        <option value="Printing">Printing</option>
+                        <option value="Professional Training">Professional Training</option>
+                        <option value="Program Development">Program Development</option>
+                        <option value="Public Relations/PR">Public Relations/PR</option>
+                        <option value="Public Safety">Public Safety</option>
+                        <option value="Publishing Industry">Publishing Industry</option>
+                        <option value="Railroad Manufacture">Railroad Manufacture</option>
+                        <option value="Ranching">Ranching</option>
+                        <option value="Real Estate/Mortgage">Real Estate/Mortgage</option>
+                        <option value="Recreational Facilities/Services">Recreational Facilities/Services</option>
+                        <option value="Religious Institutions">Religious Institutions</option>
+                        <option value="Renewables/Environment">Renewables/Environment</option>
+                        <option value="Research Industry">Research Industry</option>
+                        <option value="Restaurants">Restaurants</option>
+                        <option value="Retail Industry">Retail Industry</option>
+                        <option value="Security/Investigations">Security/Investigations</option>
+                        <option value="Semiconductors">Semiconductors</option>
+                        <option value="Shipbuilding">Shipbuilding</option>
+                        <option value="Sporting Goods">Sporting Goods</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Staffing/Recruiting">Staffing/Recruiting</option>
+                        <option value="Supermarkets">Supermarkets</option>
+                        <option value="Telecommunications">Telecommunications</option>
+                        <option value="Textiles">Textiles</option>
+                        <option value="Think Tanks">Think Tanks</option>
+                        <option value="Tobacco">Tobacco</option>
+                        <option value="Translation/Localization">Translation/Localization</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Venture Capital/VC">Venture Capital/VC</option>
+                        <option value="Veterinary">Veterinary</option>
+                        <option value="Warehousing">Warehousing</option>
+                        <option value="Wholesale">Wholesale</option>
+                        <option value="Wine/Spirits">Wine/Spirits</option>
+                        <option value="Wireless">Wireless</option>
+                        <option value="Writing/Editing">Writing/Editing</option>
+                    </select>
                 </div>
                 <div class="col-sm-1 form-group">
                     <button type="button" class="btn btn-danger mt-4" onclick="removeField(this)">x</button>
@@ -1293,5 +1491,86 @@ function removePublicLinkField(button) {
 }
 
     
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const emailvalue = document.getElementById('email');
+        const form = document.querySelector('form');
+        const emailError = document.getElementById('email_error');
+        //real time email validation
+          const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+
+          emailvalue.addEventListener('input', function () {
+            if(!emailPattern.test(emailvalue.value.trim())){
+                emailError.textContent = "Please enter a valid email address.e.g.,demo@gmail.com";
+            }else{
+                emailError.textContent = "";
+            }
+          });
+        // Real-time email validation
+        emailvalue.addEventListener('change', function () {
+            if (!emailPattern.test(emailvalue.value.trim())) {
+                emailError.textContent = 'Please enter a valid email address. e.g.,demo@gmail.com';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+        // Form submission validation
+        form.addEventListener('submit', function (event) {
+            if (!emailPattern.test(emailvalue.value.trim())) {
+                event.preventDefault(); // Prevent form submission
+                alert('Please enter a valid email address. e.g.,demo@gmail.com');
+                emailvalue.focus(); // Set focus back to the email field
+            }
+            if (emailvalue.value.trim() === '') {
+                event.preventDefault(); // Prevent form submission
+                alert('Email field cannot be empty.');
+            }
+
+    });
+    });
+</script>
+
+<script>
+
+     document.addEventListener('DOMContentLoaded', function (){
+        let 
+    })
+</script>
+<script>
+    function validateFileTypeinvestorprofile(input) {
+        // If called from form submit, input will be the event, not the input element
+        if (input && input.target && input.target.type === 'submit') {
+            input = document.getElementById('investor_profile');
+        }
+        const allowedExtensions = /(\.doc|\.docx|\.pdf|\.ppt|\.pptx|\.jpg|\.jpeg|\.png)$/i;
+        if (input && input.value && !allowedExtensions.exec(input.value)) {
+            alert('Invalid file type. Please upload a DOC, DOCX, PDF, PPT, PPTX, JPG, JPEG, or PNG file.');
+            input.value = '';
+            return false;
+        }
+        return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let fileInput = document.getElementById('investor_profile');
+        if (fileInput) {
+            fileInput.addEventListener('change', function () {
+                validateFileTypeinvestorprofile(fileInput);
+            });
+        }
+
+        let form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                if (!validateFileTypeinvestorprofile(fileInput)) {
+                    e.preventDefault();
+                }
+            });
+        }
+    });
 </script>
 @endsection

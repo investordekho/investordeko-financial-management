@@ -226,18 +226,19 @@
             
             <!-- Phone Number Input -->
             <div class="flex-grow-1 d-flex flex-column">
+                <!-- Error Message Div (starts hidden) -->
+                <div id="phone-error" class="text-danger mt-1" style="display: none; fontsize:0.8rem;"></div>
+
                 <input type="tel" class="form-control phone mt-3" id="phone" name="phone"
                     value="{{ old('phone') }}"
-                    placeholder="Enter your phone number"
+                    placeholder="Enter your phone number e.g. 1234567890"
                     required
                     pattern="[0-9]{10,14}"
                     maxlength="14"
                     minlength="10"
                     oninput="validatePhoneLength(this)">
                 
-                <!-- Error Message Div (starts hidden) -->
-                <div id="phone-error" class="text-danger mt-1" style="display: none;"></div>
-
+                
                 @error('phone')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -262,7 +263,7 @@
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password" required>
                             
                             <div id="passwordmsgid" style="display:none;">
-                                <div class="text-danger">Password do not match</div>
+                                <div class="text-danger" style="font-size:0.8rem;">Password do not match</div>
                                 <!-- @error('password_confirmation')
                                 <div class="text-danger">Password do not match</div>
                                 @enderror -->
@@ -1625,6 +1626,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!emailPattern.test(value)) {
             emailInput.classList.add("is-invalid");
             emailError.textContent = "Enter a valid email like example@gmail.com";
+            //decrease size of text content
+            emailError.style.fontSize = "0.8rem";
             return false;
         } else {
             emailInput.classList.remove("is-invalid");
@@ -1667,13 +1670,13 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const phone = document.getElementById("phone");
     const phoneError = document.getElementById("phone-error");
-
+    phoneError.style.fontSize = "0.8rem";
     function validatePhone() {
         const value = phone.value.trim();
         const phonePattern = /^[0-9]{10,14}$/;
         if (!phonePattern.test(value)) {
             phone.classList.add("is-invalid");
-            phoneError.textContent = "Enter a valid phone number (10–14 digits).";
+            phoneError.textContent = "Enter a valid phone number.";
             phoneError.style.display = "block";
             return false;
         } else {
