@@ -2853,95 +2853,110 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <script>
-function showError(input, message) {
-    input.classList.add('is-invalid');
-    let errorDiv = input.parentElement.querySelector('.invalid-feedback');
-    if (!errorDiv) {
-        errorDiv = document.createElement('div');
-        errorDiv.className = 'invalid-feedback d-block';
-        input.parentElement.appendChild(errorDiv);
+    function showError(input, message) {
+        input.classList.add('is-invalid');
+        let errorDiv = input.parentElement.querySelector('.invalid-feedback');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'invalid-feedback d-block';
+            input.parentElement.appendChild(errorDiv);
+        }
+        errorDiv.textContent = message;
     }
-    errorDiv.textContent = message;
-}
 
-function clearError(input) {
-    input.classList.remove('is-invalid');
-    const errorDiv = input.parentElement.querySelector('.invalid-feedback');
-    if (errorDiv) errorDiv.remove();
-}
+    function clearError(input) {
+        input.classList.remove('is-invalid');
+        const errorDiv = input.parentElement.querySelector('.invalid-feedback');
+        if (errorDiv) errorDiv.remove();
+    }
 
-function validateAllLinks(showAlert = false) {
-    let isValid = true;
-    let scrolled = false;
+    function validateAllLinks(showAlert = false) {
+        let isValid = true;
+        let scrolled = false;
 
-    const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
-    const descriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
+        const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
+        const descriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
 
-    publicLinks.forEach((input, i) => {
-        const link = input.value.trim();
-        const desc = descriptions[i].value.trim();
+        publicLinks.forEach((input, i) => {
+            const link = input.value.trim();
+            const desc = descriptions[i].value.trim();
 
-        clearError(input);
-        clearError(descriptions[i]);
+            clearError(input);
+            clearError(descriptions[i]);
 
-        // One filled, other not
-        if ((link && !desc) || (!link && desc)) {
-            if (!link) showError(input, 'URL is required');
-            if (!desc) showError(descriptions[i], 'Account type is required');
-            isValid = false;
+            // One filled, other not
+            if ((link && !desc) || (!link && desc)) {
+                if (!link) showError(input, 'URL is required');
+                if (!desc) showError(descriptions[i], 'Account type is required');
+                isValid = false;
+            }
+
+            // First row required if multiple
+            if (publicLinks.length > 1 && i === 0 && (!link || !desc)) {
+                if (!link) showError(input, 'URL is required');
+                if (!desc) showError(descriptions[i], 'Account type is required');
+                isValid = false;
+            }
+
+            // Pattern check
+            if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+$/.test(link)) {
+                showError(input, 'Valid Facebook URL required. e.g., https://www.facebook.com/username');
+                isValid = false;
+            }
+
+            if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+$/.test(link)) {
+                showError(input, 'Valid Twitter URL required. e.g., https://www.twitter.com/username');
+                isValid = false;
+            }
+
+            // Scroll to first error only
+            if (!isValid && !scrolled && input.classList.contains('is-invalid')) {
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                scrolled = true;
+            }
+        });
+
+        if (!isValid && showAlert) {
+            alert('Please fix the highlighted errors before submitting.');
         }
 
-        // First row required if multiple
-        if (publicLinks.length > 1 && i === 0 && (!link || !desc)) {
-            if (!link) showError(input, 'URL is required');
-            if (!desc) showError(descriptions[i], 'Account type is required');
-            isValid = false;
-        }
+        return isValid;
+    }
 
-        // Pattern check
-        if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+$/.test(link)) {
-            showError(input, 'Valid Facebook URL required. e.g., https://www.facebook.com/username');
-            isValid = false;
-        }
-
-        if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+$/.test(link)) {
-            showError(input, 'Valid Twitter URL required. e.g., https://www.twitter.com/username');
-            isValid = false;
-        }
-
-        // Scroll to first error only
-        if (!isValid && !scrolled && input.classList.contains('is-invalid')) {
-            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            scrolled = true;
+    // Form submission
+    document.querySelector('form').addEventListener('submit', function (e) {
+        if (!validateAllLinks(true)) {
+            e.preventDefault();
         }
     });
 
-    if (!isValid && showAlert) {
-        alert('Please fix the highlighted errors before submitting.');
-    }
+    // Input validation on typing
+    document.addEventListener('input', function (e) {
+        if (e.target.name === 'public_links[]') {
+            validateAllLinks();
+        }
+    });
 
-    return isValid;
-}
+    // Validation on dropdown change
+    document.addEventListener('change', function (e) {
+        if (e.target.name === 'link_descriptions[]') {
+            validateAllLinks();
+        }
+    });
+</script>
 
-// Form submission
-document.querySelector('form').addEventListener('submit', function (e) {
-    if (!validateAllLinks(true)) {
-        e.preventDefault();
-    }
-});
 
-// Input validation on typing
-document.addEventListener('input', function (e) {
-    if (e.target.name === 'public_links[]') {
-        validateAllLinks();
-    }
-});
-
-// Validation on dropdown change
-document.addEventListener('change', function (e) {
-    if (e.target.name === 'link_descriptions[]') {
-        validateAllLinks();
-    }
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const formid = document.getElementById('investeeForm');
+   formid.addEventListener('submit', function (e) {
+        const isFormValid = validateAllLinks(true);
+        console.log('Validation result:', isFormValid); // Debug: see if validation returned false
+        if (!isFormValid) {
+            e.preventDefault(); // 🔴 This will definitely stop form submission
+        }
+    });
 });
 </script>
 
