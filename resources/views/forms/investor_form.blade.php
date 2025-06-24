@@ -1622,20 +1622,20 @@ function validateAllLinks(showAlert = false) {
         }
 
         // URL Pattern Check
-        if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+$/.test(link)) {
-            showError(input, 'Valid Facebook URL required');
+        if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+\/?$/.test(link)) {
+            showError(input, 'Valid Facebook URL required, e.g., https://facebook.com/yourprofile');
             isValid = false;
         }
-        if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+$/.test(link)) {
-            showError(input, 'Valid Twitter URL required');
+        if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/?$/.test(link)) {
+            showError(input, 'Valid Twitter/X URL required, e.g., https://twitter.com/yourhandle or https://x.com/yourhandle');
             isValid = false;
         }
         if (link && desc === 'Instagram' && !/^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/.test(link)) {
-            showError(input, 'Valid Instagram URL required');
+            showError(input, 'Valid Instagram URL required, e.g., https://instagram.com/yourprofile');
             isValid = false;
         }
-        if (link && desc === 'LinkedIn' && !/^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-_%]+\/?$/.test(link)) {
-            showError(input, 'Valid LinkedIn URL required');
+        if (link && desc === 'LinkedIn' && !/^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[a-zA-Z0-9\-_%]+\/?$/.test(link)) {
+            showError(input, 'Valid LinkedIn URL required, e.g., https://linkedin.com/in/yourprofile or https://linkedin.com/company/yourcompany');
             isValid = false;
         }
 
