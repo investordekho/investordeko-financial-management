@@ -1103,7 +1103,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
+                    <button type="submit" id="submitbutton" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>
 </div>
 </div>
@@ -1165,7 +1165,7 @@
    function addPublicLinkField(button) {
     // Create a new public link field without changing the + button to - button
     const newField = `
-        <div class="public-link-row d-flex align-items-end">
+        <div class="public-link-row d-flex align-items-start">
             <div class="form-group flex-grow-1 mr-2" style="max-width: 522px;">
                 <label for="public_links" class=""></label>
                 <input type="url" class="form-control spaced-input" name="public_links[]" placeholder="Enter URL" required>
@@ -1573,4 +1573,108 @@ function removePublicLinkField(button) {
         }
     });
 </script>
+
+
+<script>
+function showError(input, message) {
+    input.classList.add('is-invalid');
+    let error = input.parentElement.querySelector('.text-danger');
+    if (!error) {
+        error = document.createElement('span');
+        error.className = 'text-danger';
+        input.parentElement.appendChild(error);
+    }
+    error.textContent = message;
+}
+
+function clearError(input) {
+    input.classList.remove('is-invalid');
+    const error = input.parentElement.querySelector('.text-danger');
+    if (error) error.remove();
+}
+
+function validateAllLinks(showAlert = false) {
+    const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
+    const descriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
+
+    let isValid = true;
+    let scrolled = false;
+
+    publicLinks.forEach((input, i) => {
+        const link = input.value.trim();
+        const desc = descriptions[i]?.value.trim();
+
+        clearError(input);
+        clearError(descriptions[i]);
+
+        // Pair validation: both filled or both empty
+        if ((link && !desc) || (!link && desc)) {
+            if (!link) showError(input, 'URL is required');
+            if (!desc) showError(descriptions[i], 'Account type is required');
+            isValid = false;
+        }
+
+        // First row always required if more than one
+        if (publicLinks.length > 1 && i === 0 && (!link || !desc)) {
+            if (!link) showError(input, 'URL is required');
+            if (!desc) showError(descriptions[i], 'Account type is required');
+            isValid = false;
+        }
+
+        // URL Pattern Check
+        if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+$/.test(link)) {
+            showError(input, 'Valid Facebook URL required');
+            isValid = false;
+        }
+        if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+$/.test(link)) {
+            showError(input, 'Valid Twitter URL required');
+            isValid = false;
+        }
+        if (link && desc === 'Instagram' && !/^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/.test(link)) {
+            showError(input, 'Valid Instagram URL required');
+            isValid = false;
+        }
+        if (link && desc === 'LinkedIn' && !/^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-_%]+\/?$/.test(link)) {
+            showError(input, 'Valid LinkedIn URL required');
+            isValid = false;
+        }
+
+        // Scroll to first invalid
+        if (!isValid && !scrolled && input.classList.contains('is-invalid')) {
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            scrolled = true;
+        }
+    });
+
+    if (!isValid && showAlert) {
+        alert('Please fix the highlighted errors before submitting.');
+    }
+
+    return isValid;
+}
+
+    // Ensure the validation blocks submission
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const formid= document.getElementById('submitbutton');
+        formid.addEventListener('submit', function (e) {
+            if (!validateAllLinks(true)) {
+                e.preventDefault();
+            }
+        });
+
+        document.getElementById('public-links-container').addEventListener('input', function (e) {
+            if (e.target.name === 'public_links[]') {
+                validateAllLinks();
+            }
+        });
+
+        document.getElementById('public-links-container').addEventListener('change', function (e) {
+            if (e.target.name === 'link_descriptions[]') {
+                validateAllLinks();
+            }
+        });
+    });
+</script>
+
 @endsection
