@@ -2151,41 +2151,7 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
         linkDescriptions[i].classList.remove('is-invalid');
         const linkFilled = publicLinks[i].value.trim() !== '';
         const descSelected = linkDescriptions[i].value && linkDescriptions[i].value.trim() !== '';
-        // if(i!==0){
-        //     if (linkFilled || descSelected) {
-            
-        //         if (!linkFilled) {
-        //             isValid = false;
-        //             publicLinks[i].classList.add('is-invalid');
-        //             publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        //         }
-        //         if (!descSelected) {
-        //             isValid = false;
-        //             linkDescriptions[i].classList.add('is-invalid');
-        //             linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        //         }
-        //     }
-        //     if( !linkFilled && !descSelected) {
-        //         isValid = false;
-        //         publicLinks[i].classList.add('is-invalid');
-        //         linkDescriptions[i].classList.add('is-invalid');
-        //         publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        //     }
-        // }
-        // else{
-        //     if(linkFilled || descSelected){
-        //         if(!linkFilled) {
-        //             isValid = false;
-        //             publicLinks[i].classList.add('is-invalid');
-        //             publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        //         }
-        //         if(!descSelected) {
-        //             isValid = false;
-        //             linkDescriptions[i].classList.add('is-invalid');
-        //             linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        //         }
-        //     }
-        // }
+       
         
         if (publicLinks.length === 1) {
             // Only one row
@@ -2266,56 +2232,6 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
     }
 });
 
-// function toggleOtherField() {
-//     const otherField = document.getElementById('other_field');
-//     const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the checkboxes
-
-//     if (document.getElementById('others_checkbox').checked) {
-       
-//         otherField.style.display = 'block';
-
-       
-//         otherGuidanceContainer.innerHTML = '';
-
-//         const serviceCategories = [
-//             'Equity Funding', 'Debt Funding', 'Mergers & Acquisitions', 'Pitchdeck Making',
-//             'Pitching to Investors', 'IPO Planning', 'IPO Listing', 'Issuance of Bonus Shares',
-//             'Issuance of Rights Issue', 'Employee Stock Options (ESOP) Planning', 'Patent', 'Trademark', 'Design Registration', 
-//             'DSC', 'Online Listing', 'Income Tax Return', 'GST, TDS, PF, ESI, PT, Customs', 'MCA & ROC Works', 
-//             'Appointment & Resignation of Directors', 'Annual Return', 'Company Registration', 'Udyog Aadhar & GST Registration', 
-//             'Importer-Exporter Code', 'Loan Proposal', 'CMA Data', 'Accounting', 'Subsidy', 'Tax Planning', 
-//             'Capital Re-Structuring', 'Project Report', 'TEV Study', 'Structured Finance', 
-//             'Preparation of Share and Warrants', 'Subscription Agreement (SWSA)', 'Preparation of Share Holders\' Agreement (SHA)', 
-//             'Due Diligence'
-//         ];
-
-//         serviceCategories.forEach(category => {
-//             const checkboxDiv = document.createElement('div');
-//             checkboxDiv.classList.add('form-check'); 
-//             const checkbox = document.createElement('input');
-//             checkbox.classList.add('form-check-input');
-//             checkbox.type = 'checkbox';
-//             checkbox.name = 'other_guidance[]';
-//             checkbox.value = category;
-//             checkbox.id = category.replace(/\s+/g, '_').toLowerCase(); 
-
-//             const label = document.createElement('label');
-//             label.classList.add('form-check-label');
-//             label.setAttribute('for', checkbox.id);
-//             label.textContent = category;
-
-            
-//             checkboxDiv.appendChild(checkbox);
-//             checkboxDiv.appendChild(label);
-
-           
-//             otherGuidanceContainer.appendChild(checkboxDiv);
-//         });
-//     } else {
-       
-//         otherField.style.display = 'none';
-//     }
-// }
 function toggleOtherField() {
     const otherField = document.getElementById('other_field');
     const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the input box
@@ -2647,99 +2563,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     // Attach the event listener to the existing fund fields
-//     document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
-//         input.addEventListener('input', calculateTotalFund);
-//     });
-
-//     // document.querySelector('select[name="fund_unit[]"]').addEventListener('change', calculateTotalFund);
-//     // Attach an event listener to the label with id 'labelinput'
-//     document.getElementById('addfundButton').addEventListener('click', calculateTotalFund);
-    
-//     // Function to calculate total fund raised
-//     function calculateTotalFund() {
-//         let total = 0;
-//         // Sum all values from fund_requirement[] inputs
-//         const row = document.querySelectorAll('input[name="fund_requirement[]"]');
-
-//         row.forEach(input,index)=>{
-//             let value = parseFloat(input.value);
-//             const unitSelect= document.querySelector('select[name="fund_unit[]"]').value;
-//             const unit = unitSelect[index]?.value;
-//             if(!isNaN(value)){
-//                 if(unit=="lakhs"){
-//                     value = value/100;
-//                 }
-//                 total +=value;
-//             }
-
-//         }
-//         // document.querySelectorAll('input[name="fund_requirement[]"]').forEach(function(input) {
-//         //     let value = parseFloat(input.value);
-
-//         //     if (!isNaN(value))
-//         //     if(unit=="lakhs"){
-//         //         value = value /100;
-//         //      }              
-//         //         total += value;
-            
-//         // });
-
-//         // Update the total fund raised field
-//         document.getElementById('total_fund_raised').value = total.toFixed(2) + ' Cr';
-//     }
-
-//     // Add new fund fields dynamically with event listener
-//     window.addFundField = function () {
-//         const container = document.getElementById('funds-container');
-//         const newRow = document.createElement('div');
-//         newRow.className = 'row mb-3 align-items-end';
-
-//         newRow.innerHTML = `
-//             <div class="col-md-3">
-//                 <label id="labelinput" for="fund_usage" class="required">Usage of Fund</label>
-//                 <select class="form-control spaced-input" name="fund_usage[]" required>
-//                     <option value="" disabled selected>Select Usage</option>
-//                     <option value="Capex">Capex</option>
-//                     <option value="Opex">Opex</option>
-//                     <option value="Acquisition">Acquisition</option>
-//                     <option value="Debt Requirement">Debt Requirement</option>
-//                     <option value="Others">Others</option>
-//                 </select>
-//             </div>
-//             <div class="col-md-8">
-//                 <label id="labelinput" for="fund_requirement" class="required">Fund Requirement</label>
-//                 <div class="input-group">
-//                     <input class="form-control spaced-input" type="number" name="fund_requirement[]" required>
-//                     <select id="newfundAdd" class="form-select spaced-input" name="fund_unit[]" required>
-//                         <option value="crores">Cr</option>
-//                         <option value="lakhs">Lakh</option>
-//                     </select>
-//                 </div>
-//             </div>
-//             <div class="col-md-1 mt-3">
-//                 <button class="btn btn-danger float-end" type="button" onclick="removeFundField(this)">×</button>
-//             </div>
-//         `;
-
-//         container.appendChild(newRow);
-
-//         // Attach event listener to the new fund_requirement input
-//         newRow.querySelector('input[name="fund_requirement[]"]').addEventListener('input', calculateTotalFund);
-//         newRow.querySelector('select[name="fund_unit[]"]').addEventListener('input', calculateTotalFund);
-//     };
-
-//     // Function to remove fund field and recalculate total
-//     window.removeFundField = function (button) {
-//         const row = button.closest('.row');
-//         row.remove();
-//         calculateTotalFund(); // Recalculate after removal
-//     };
-// });
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
     // Function to add a new previous round field set
     window.addPreviousRoundField = function () {
@@ -3028,4 +2851,98 @@ document.addEventListener('DOMContentLoaded', function () {
                 input.value = input.value.replace(/[^A-Za-z\s.,&'-]/g, '');
             }
 </script>
+
+<script>
+function showError(input, message) {
+    input.classList.add('is-invalid');
+    let errorDiv = input.parentElement.querySelector('.invalid-feedback');
+    if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.className = 'invalid-feedback d-block';
+        input.parentElement.appendChild(errorDiv);
+    }
+    errorDiv.textContent = message;
+}
+
+function clearError(input) {
+    input.classList.remove('is-invalid');
+    const errorDiv = input.parentElement.querySelector('.invalid-feedback');
+    if (errorDiv) errorDiv.remove();
+}
+
+function validateAllLinks(showAlert = false) {
+    let isValid = true;
+    let scrolled = false;
+
+    const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
+    const descriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
+
+    publicLinks.forEach((input, i) => {
+        const link = input.value.trim();
+        const desc = descriptions[i].value.trim();
+
+        clearError(input);
+        clearError(descriptions[i]);
+
+        // One filled, other not
+        if ((link && !desc) || (!link && desc)) {
+            if (!link) showError(input, 'URL is required');
+            if (!desc) showError(descriptions[i], 'Account type is required');
+            isValid = false;
+        }
+
+        // First row required if multiple
+        if (publicLinks.length > 1 && i === 0 && (!link || !desc)) {
+            if (!link) showError(input, 'URL is required');
+            if (!desc) showError(descriptions[i], 'Account type is required');
+            isValid = false;
+        }
+
+        // Pattern check
+        if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+$/.test(link)) {
+            showError(input, 'Valid Facebook URL required. e.g., https://www.facebook.com/username');
+            isValid = false;
+        }
+
+        if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+$/.test(link)) {
+            showError(input, 'Valid Twitter URL required. e.g., https://www.twitter.com/username');
+            isValid = false;
+        }
+
+        // Scroll to first error only
+        if (!isValid && !scrolled && input.classList.contains('is-invalid')) {
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            scrolled = true;
+        }
+    });
+
+    if (!isValid && showAlert) {
+        alert('Please fix the highlighted errors before submitting.');
+    }
+
+    return isValid;
+}
+
+// Form submission
+document.querySelector('form').addEventListener('submit', function (e) {
+    if (!validateAllLinks(true)) {
+        e.preventDefault();
+    }
+});
+
+// Input validation on typing
+document.addEventListener('input', function (e) {
+    if (e.target.name === 'public_links[]') {
+        validateAllLinks();
+    }
+});
+
+// Validation on dropdown change
+document.addEventListener('change', function (e) {
+    if (e.target.name === 'link_descriptions[]') {
+        validateAllLinks();
+    }
+});
+</script>
+
 @endsection
