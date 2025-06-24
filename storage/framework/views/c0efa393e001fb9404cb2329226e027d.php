@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     /* CSS to make the dropdown scrollable */
@@ -51,7 +49,7 @@
 
   <!-- two tab one for investee and one for investor -->
    
-          @if (Auth::user()->category_id == 3 || Auth::user()->category_id == 4)
+          <?php if(Auth::user()->category_id == 3 || Auth::user()->category_id == 4): ?>
 <style>
     .dashboard-tabs-container {
         margin-top: 20px;
@@ -96,31 +94,31 @@
     <ul class="nav nav-tabs justify-content-center dashboard-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <a 
-                class="nav-link {{ request()->routeIs('investee.dashboard') ? 'active' : '' }}" 
+                class="nav-link <?php echo e(request()->routeIs('investee.dashboard') ? 'active' : ''); ?>" 
                 id="investee-tab" 
-                href="{{ route('investee.dashboard') }}" 
+                href="<?php echo e(route('investee.dashboard')); ?>" 
                 role="tab" 
                 aria-controls="investee" 
-                aria-selected="{{ request()->routeIs('investee.dashboard') ? 'true' : 'false' }}"
+                aria-selected="<?php echo e(request()->routeIs('investee.dashboard') ? 'true' : 'false'); ?>"
             >
                 Investee Dashboard
             </a>
         </li>
         <li class="nav-item" role="presentation">
             <a 
-                class="nav-link {{ request()->routeIs('investor.dashboard') ? 'active' : '' }}" 
+                class="nav-link <?php echo e(request()->routeIs('investor.dashboard') ? 'active' : ''); ?>" 
                 id="investor-tab" 
-                href="{{ route('investor.dashboard') }}" 
+                href="<?php echo e(route('investor.dashboard')); ?>" 
                 role="tab" 
                 aria-controls="investor" 
-                aria-selected="{{ request()->routeIs('investor.dashboard') ? 'true' : 'false' }}"
+                aria-selected="<?php echo e(request()->routeIs('investor.dashboard') ? 'true' : 'false'); ?>"
             >
                 Investor Dashboard
             </a>
         </li>
     </ul>
 </div>
-@endif
+<?php endif; ?>
 
 
 
@@ -128,7 +126,7 @@
 
 <div class="container-fluid page-header mb-1 wow fadeIn" data-wow-delay="0.1s">
     <div class="container">
-        <h1 style="font-size: 16px; color: grey;" class="display-8 mb-4 animated slideInDown">Welcome {{ Auth::user()->name }} </h1>
+        <h1 style="font-size: 16px; color: grey;" class="display-8 mb-4 animated slideInDown">Welcome <?php echo e(Auth::user()->name); ?> </h1>
     </div>
 </div>
 
@@ -155,12 +153,12 @@
                         <div class="dropdown-menu p-3" style="width: 250px;" id="locationDropdownMenu">
                             <input type="text" class="form-control mb-2" id="locationSearch" placeholder="Search location">
                             <div id="locationList" style="max-height: 200px; overflow-y: auto;">
-                                @foreach ($locations->sortBy(function($location) { return strtoupper($location->name); }) as $location)
+                                <?php $__currentLoopData = $locations->sortBy(function($location) { return strtoupper($location->name); }); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="location[]" value="{{ $location->name }}" id="location_{{ $location->name }}">
-                                        <label class="form-check-label" for="location_{{ $location->name }}">{{ $location->name }}</label>
+                                        <input class="form-check-input" type="checkbox" name="location[]" value="<?php echo e($location->name); ?>" id="location_<?php echo e($location->name); ?>">
+                                        <label class="form-check-label" for="location_<?php echo e($location->name); ?>"><?php echo e($location->name); ?></label>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <div id="no-location-found" class="text-muted small px-2" style="display: none;">No locations found</div>
                             </div>
                         </div>
@@ -180,12 +178,12 @@
             <div class="dropdown-menu p-3" style="width: 250px;" id="sectorDropdownMenu">
                 <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector">
                 <div id="sectorList" style="max-height: 200px; overflow-y: auto;">
-                    @foreach ($sectors->sortBy( function($sector){ return strtoupper($sector->sectors_name); }) as $sector) 
+                    <?php $__currentLoopData = $sectors->sortBy( function($sector){ return strtoupper($sector->sectors_name); }); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="{{ $sector->sectors_name }}" id="sector_{{ $sector->sectors_name }}">
-                            <label class="form-check-label" for="sector_{{ $sector->sectors_name }}">{{ $sector->sectors_name }}</label>
+                            <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->sectors_name); ?>">
+                            <label class="form-check-label" for="sector_<?php echo e($sector->sectors_name); ?>"><?php echo e($sector->sectors_name); ?></label>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <div id="no-sector-found" class="text-muted small px-2" style="display: none;">No sectors found</div>
                 </div>
             </div>
@@ -204,14 +202,14 @@
                             <div class="px-3 py-2">
                                 <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
                                 <ul>
-                                    @foreach ($sectors as $sector)
+                                    <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <li class="dropdown-item">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="{{ $sector->sectors_name }}" id="sector_{{ $sector->sectors_name }}">
-                                                <label class="form-check-label" for="sector_{{ $sector->sectors_name }}">{{ $sector->sectors_name }}</label>
+                                                <input class="form-check-input" type="checkbox" name="nature_of_business[]" value="<?php echo e($sector->sectors_name); ?>" id="sector_<?php echo e($sector->sectors_name); ?>">
+                                                <label class="form-check-label" for="sector_<?php echo e($sector->sectors_name); ?>"><?php echo e($sector->sectors_name); ?></label>
                                             </div>
                                         </li>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                 </ul>
                             </div>
@@ -503,7 +501,7 @@
     <div style="margin-top: -30px;" class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('investor.dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo e(route('investor.dashboard')); ?>">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Search Results</li>
                 <!-- <li class="breadcrumb-item" id="selected-filters-container"></li> Dynamic filter labels will go here ------------------------------------------------------------------------------------------------------------------ -->
             </ol>
@@ -533,7 +531,7 @@
                 formData.append('searchBox', searchBoxValue);
             }
 
-            fetch('{{ route("investor.search") }}', {
+            fetch('<?php echo e(route("investor.search")); ?>', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -673,4 +671,6 @@
 </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/dashboards/investordashboard.blade.php ENDPATH**/ ?>
