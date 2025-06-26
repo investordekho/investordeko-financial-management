@@ -293,7 +293,7 @@
                 pattern="^[A-Za-z\s\.\-&']+$"
                 title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                 oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
-                autocomplete="off"
+               
             >
             @error('company_name')
                 <div class="invalid-feedback">This Field is Required</div>
@@ -684,7 +684,7 @@
                     pattern="^[A-Za-z\s\.\-&']+$"
                     title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                     oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
-                    autocomplete="off"
+                    
                 >
                 @error('concerned_person_name')
                     <div class="invalid-feedback d-block small">This Field is Required</div>
@@ -703,7 +703,7 @@
                     pattern="^[A-Za-z\s\.\-&']+$"
                     title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                     oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
-                    autocomplete="off"
+                   
                 >
                 @error('concerned_person_designation')
                     <div class="invalid-feedback d-block small">This Field is Required</div>
@@ -911,7 +911,7 @@
 
         <div class="col-md-5">
             <label for="company_website" class="form-label required">Company Website <span class="text-danger">*</span></label>
-            <div id="company_website_error" class="text-danger small"></div>
+          
             <input 
                 type="url" 
                 class="form-control @error('website') is-invalid @enderror" 
@@ -923,6 +923,8 @@
                 title="Please enter a valid website URL (e.g., https://example.com)"
                 placeholder="https://example.com"
             >
+
+              <div id="company_website_error" class="text-danger small"></div>
             @error('website')
                 <div class="invalid-feedback">This Field is Required</div>
             @enderror
@@ -930,7 +932,7 @@
 
         <div class="col-md-5">
             <label for="linkedin_link" class="form-label required">LinkedIn <span class="text-danger">*</span></label>
-            <div id="linkedin_link_error" class="text-danger small"></div>
+           
             <input 
                 type="url" 
                 class="form-control @error('linkedin') is-invalid @enderror" 
@@ -940,6 +942,7 @@
                 required
                 placeholder="https://www.linkedin.com/in/username"
             >
+             <div id="linkedin_link_error" class="text-danger small"></div>
             @error('linkedin')
                 <div class="invalid-feedback">This Field is Required</div>
             @enderror
@@ -1197,6 +1200,9 @@
                     name="founder_name[]" 
                     value="{{ old('founder_name.0') }}" 
                     required
+                    pattern="^[A-Za-z\s\.\-&']+$"
+                    title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                    oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
                 >
                 @error('founder_name.0')
                     <span class="text-danger">This Field is Required</span>
@@ -1281,7 +1287,7 @@
                     pattern="^[A-Za-z\s\.\-&']+$"
                     title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                     oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
-                    autocomplete="off"
+                   
                 >
                 @error('founder_education.0')
                     <span class="text-danger">This Field is Required</span>
@@ -1691,7 +1697,7 @@
                     pattern="^[A-Za-z\s\.\-&']+$"
                     title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                     oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
-                    autocomplete="off"
+                 
                 >
                 @error('investors.0')
                     <div class="invalid-feedback">This Field is Required</div>
@@ -2448,7 +2454,7 @@ function removeLinkField(button) {
                     pattern="^[A-Za-z\s.\-&']+$"
                     title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                     oninput="filterQualificationInput(this)"
-                    autocomplete="off">
+                    >
             </div>
            
             <div class="col-md-3">
@@ -2476,23 +2482,16 @@ function removeFounderField(button) {
     button.closest('.row').remove();
 }
 
+// Ensure total fund is calculated only from currently rendered fund fields
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('input[name="fund_requirement[]"]').addEventListener('input',calculateTotalFund);
-    document.querySelectorAll('input[name="fund_requirement[]"]').forEach(input => {
-        input.addEventListener('input',calculateTotalFund);
-    });
-    // Function to calculate total fund raised
     function calculateTotalFund() {
         let total = 0;
-        const fundRows = document.querySelectorAll('#funds-container .row');
-
-        fundRows.forEach(row => {
-            const input = row.querySelector('input[name="fund_requirement[]"]');
-            const unitSelect = row.querySelector('select[name="fund_unit[]"]');
-
+        // Only sum up currently rendered and visible fund_requirement fields
+        const fundInputs = document.querySelectorAll('#funds-container input[name="fund_requirement[]"]');
+        const unitSelects = document.querySelectorAll('#funds-container select[name="fund_unit[]"]');
+        fundInputs.forEach((input, idx) => {
             let value = parseFloat(input.value);
-            let unit = unitSelect.value;
-
+            let unit = unitSelects[idx] ? unitSelects[idx].value : 'crores';
             if (!isNaN(value)) {
                 if (unit === "lakhs") {
                     value = value / 100;
@@ -2500,17 +2499,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 total += value;
             }
         });
-
-        // Update the total fund raised field
-        document.getElementById('total_fund_raised').value = total.toFixed(2) + ' Cr';
+        document.getElementById('total_fund_raised').value = (total > 0 ? total.toFixed(2) : '') + (total > 0 ? ' Cr' : '');
     }
 
-    // Initial calculation on unit change or button click
-    document.querySelectorAll('select[name="fund_unit[]"]').forEach(select => {
-        select.addEventListener('change', calculateTotalFund);
-    });
-    document.getElementById('addfundButton').addEventListener('click', calculateTotalFund);
-    
+    // Attach event listeners to all current and future fund fields
+    function attachFundListeners() {
+        document.querySelectorAll('#funds-container input[name="fund_requirement[]"]').forEach(input => {
+            input.removeEventListener('input', calculateTotalFund);
+            input.addEventListener('input', calculateTotalFund);
+        });
+        document.querySelectorAll('#funds-container select[name="fund_unit[]"]').forEach(select => {
+            select.removeEventListener('change', calculateTotalFund);
+            select.addEventListener('change', calculateTotalFund);
+        });
+    }
+
+    // Initial attach
+    attachFundListeners();
+    calculateTotalFund();
+
     // Add new fund fields dynamically
     window.addFundField = function () {
         const container = document.getElementById('funds-container');
@@ -2548,10 +2555,8 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
 
         container.appendChild(newRow);
-
-        // Attach event listeners to new fields
-        newRow.querySelector('input[name="fund_requirement[]"]').addEventListener('input', calculateTotalFund);
-        newRow.querySelector('select[name="fund_unit[]"]').addEventListener('change', calculateTotalFund);
+        attachFundListeners();
+        calculateTotalFund();
     };
 
     // Remove fund field and recalculate
@@ -2560,6 +2565,17 @@ document.addEventListener('DOMContentLoaded', function () {
         row.remove();
         calculateTotalFund();
     };
+
+    // Recalculate on page load (for browser autofill or back navigation)
+    setTimeout(() => {
+        calculateTotalFund();
+    }, 100);
+
+    // Attach listeners again after DOM changes (for back navigation)
+    window.addEventListener('pageshow', function() {
+        attachFundListeners();
+        calculateTotalFund();
+    });
 });
 
 
@@ -2590,7 +2606,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     pattern="^[A-Za-z\s.,&'-]+$"
                     title="Only letters, spaces, commas, periods, ampersands, and hyphens are allowed."
                     oninput="filterInvestorInput(this)"
-                    autocomplete="off">
+                   >
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
