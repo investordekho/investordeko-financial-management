@@ -750,9 +750,12 @@
                                         name="sector[]" 
                                         required
                                     >
-                                        @if ($i == 0)
+                                        <!-- @if ($i == 0)
                                             <option value="" selected hidden>Select Sector</option>
-                                        @endif
+                                        @endif -->
+                                        <!-- <option value="" {{ empty($sectors[$i]) ? 'selected' : '' }}>Select Sector</option> -->
+                                        <option value="" {{ !isset($sectors[$i]) || $sectors[$i] == '' ? 'selected' : '' }}>Select Sector</option>
+
                                         @php
                                             $sectorOptions = [
                                                 'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
@@ -1459,263 +1462,224 @@ function removePublicLinkField(button) {
 //     container.insertAdjacentHTML('beforeend', newField);
 // }
 
-function addPreviousInvestmentField() {
-    const container = document.getElementById('previous-investments-container');
+// function addPreviousInvestmentField() {
+//     const container = document.getElementById('previous-investments-container');
 
-    // Define sector options as an array of objects (label + value)
-    const sectors = [
-    { label: "Select Sector", value: "Select Sector" },
-    { label: "Accounting", value: "Accounting" },
-    { label: "Airlines/Aviation", value: "Airlines/Aviation" },
-    { label: "Alternative Dispute Resolution", value: "Alternative Dispute Resolution" },
-    { label: "Alternative Medicine", value: "Alternative Medicine" },
-    { label: "Animation", value: "Animation" },
-    { label: "Apparel/Fashion", value: "Apparel/Fashion" },
-    { label: "Architecture/Planning", value: "Architecture/Planning" },
-    { label: "Arts/Crafts", value: "Arts/Crafts" },
-    { label: "Automotive", value: "Automotive" },
-    { label: "Aviation/Aerospace", value: "Aviation/Aerospace" },
-    { label: "Banking/Mortgage", value: "Banking/Mortgage" },
-    { label: "Biotechnology/Greentech", value: "Biotechnology/Greentech" },
-    { label: "Broadcast Media", value: "Broadcast Media" },
-    { label: "Building Materials", value: "Building Materials" },
-    { label: "Business Supplies/Equipment", value: "Business Supplies/Equipment" },
-    { label: "Capital Markets/Hedge Fund/Private Equity", value: "Capital Markets/Hedge Fund/Private Equity" },
-    { label: "Chemicals", value: "Chemicals" },
-    { label: "Civic/Social Organization", value: "Civic/Social Organization" },
-    { label: "Civil Engineering", value: "Civil Engineering" },
-    { label: "Commercial Real Estate", value: "Commercial Real Estate" },
-    { label: "Computer Games", value: "Computer Games" },
-    { label: "Computer Hardware", value: "Computer Hardware" },
-    { label: "Computer Networking", value: "Computer Networking" },
-    { label: "Computer Software/Engineering", value: "Computer Software/Engineering" },
-    { label: "Computer/Network Security", value: "Computer/Network Security" },
-    { label: "Construction", value: "Construction" },
-    { label: "Consumer Electronics", value: "Consumer Electronics" },
-    { label: "Consumer Goods", value: "Consumer Goods" },
-    { label: "Consumer Services", value: "Consumer Services" },
-    { label: "Cosmetics", value: "Cosmetics" },
-    { label: "Dairy", value: "Dairy" },
-    { label: "Defense/Space", value: "Defense/Space" },
-    { label: "Design", value: "Design" },
-    { label: "E-Learning", value: "E-Learning" },
-    { label: "Education Management", value: "Education Management" },
-    { label: "Electrical/Electronic Manufacturing", value: "Electrical/Electronic Manufacturing" },
-    { label: "Entertainment/Movie Production", value: "Entertainment/Movie Production" },
-    { label: "Environmental Services", value: "Environmental Services" },
-    { label: "Events Services", value: "Events Services" },
-    { label: "Executive Office", value: "Executive Office" },
-    { label: "Facilities Services", value: "Facilities Services" },
-    { label: "Farming", value: "Farming" },
-    { label: "Financial Services", value: "Financial Services" },
-    { label: "Fine Art", value: "Fine Art" },
-    { label: "Fishery", value: "Fishery" },
-    { label: "Food Production", value: "Food Production" },
-    { label: "Food/Beverages", value: "Food/Beverages" },
-    { label: "Fundraising", value: "Fundraising" },
-    { label: "Furniture", value: "Furniture" },
-    { label: "Gambling/Casinos", value: "Gambling/Casinos" },
-    { label: "Glass/Ceramics/Concrete", value: "Glass/Ceramics/Concrete" },
-    { label: "Government Administration", value: "Government Administration" },
-    { label: "Government Relations", value: "Government Relations" },
-    { label: "Graphic Design/Web Design", value: "Graphic Design/Web Design" },
-    { label: "Health/Fitness", value: "Health/Fitness" },
-    { label: "Higher Education/Acadamia", value: "Higher Education/Acadamia" },
-    { label: "Hospital/Health Care", value: "Hospital/Health Care" },
-    { label: "Hospitality", value: "Hospitality" },
-    { label: "Human Resources/HR", value: "Human Resources/HR" },
-    { label: "Import/Export", value: "Import/Export" },
-    { label: "Individual/Family Services", value: "Individual/Family Services" },
-    { label: "Industrial Automation", value: "Industrial Automation" },
-    { label: "Information Services", value: "Information Services" },
-    { label: "Information Technology/IT", value: "Information Technology/IT" },
-    { label: "Insurance", value: "Insurance" },
-    { label: "International Affairs", value: "International Affairs" },
-    { label: "International Trade/Development", value: "International Trade/Development" },
-    { label: "Internet", value: "Internet" },
-    { label: "Investment Banking/Venture", value: "Investment Banking/Venture" },
-    { label: "Investment Management/Hedge Fund/Private Equity", value: "Investment Management/Hedge Fund/Private Equity" },
-    { label: "Judiciary", value: "Judiciary" },
-    { label: "Law Enforcement", value: "Law Enforcement" },
-    { label: "Law Practice/Law Firms", value: "Law Practice/Law Firms" },
-    { label: "Legal Services", value: "Legal Services" },
-    { label: "Legislative Office", value: "Legislative Office" },
-    { label: "Leisure/Travel", value: "Leisure/Travel" },
-    { label: "Library", value: "Library" },
-    { label: "Logistics/Procurement", value: "Logistics/Procurement" },
-    { label: "Luxury Goods/Jewelry", value: "Luxury Goods/Jewelry" },
-    { label: "Machinery", value: "Machinery" },
-    { label: "Management Consulting", value: "Management Consulting" },
-    { label: "Maritime", value: "Maritime" },
-    { label: "Market Research", value: "Market Research" },
-    { label: "Marketing/Advertising/Sales", value: "Marketing/Advertising/Sales" },
-    { label: "Mechanical or Industrial Engineering", value: "Mechanical or Industrial Engineering" },
-    { label: "Media Production", value: "Media Production" },
-    { label: "Medical Equipment", value: "Medical Equipment" },
-    { label: "Medical Practice", value: "Medical Practice" },
-    { label: "Mental Health Care", value: "Mental Health Care" },
-    { label: "Military Industry", value: "Military Industry" },
-    { label: "Mining/Metals", value: "Mining/Metals" },
-    { label: "Motion Pictures/Film", value: "Motion Pictures/Film" },
-    { label: "Museums/Institutions", value: "Museums/Institutions" },
-    { label: "Music", value: "Music" },
-    { label: "Nanotechnology", value: "Nanotechnology" },
-    { label: "Newspapers/Journalism", value: "Newspapers/Journalism" },
-    { label: "Non-Profit/Volunteering", value: "Non-Profit/Volunteering" },
-    { label: "Oil/Energy/Solar/Greentech", value: "Oil/Energy/Solar/Greentech" },
-    { label: "Online Publishing", value: "Online Publishing" },
-    { label: "Other Industry", value: "Other Industry" },
-    { label: "Outsourcing/Offshoring", value: "Outsourcing/Offshoring" },
-    { label: "Package/Freight Delivery", value: "Package/Freight Delivery" },
-    { label: "Packaging/Containers", value: "Packaging/Containers" },
-    { label: "Paper/Forest Products", value: "Paper/Forest Products" },
-    { label: "Performing Arts", value: "Performing Arts" },
-    { label: "Pharmaceuticals", value: "Pharmaceuticals" },
-    { label: "Philanthropy", value: "Philanthropy" },
-    { label: "Photography", value: "Photography" },
-    { label: "Plastics", value: "Plastics" },
-    { label: "Political Organization", value: "Political Organization" },
-    { label: "Primary/Secondary Education", value: "Primary/Secondary Education" },
-    { label: "Printing", value: "Printing" },
-    { label: "Professional Training", value: "Professional Training" },
-    { label: "Program Development", value: "Program Development" },
-    { label: "Public Relations/PR", value: "Public Relations/PR" },
-    { label: "Public Safety", value: "Public Safety" },
-    { label: "Publishing Industry", value: "Publishing Industry" },
-    { label: "Railroad Manufacture", value: "Railroad Manufacture" },
-    { label: "Ranching", value: "Ranching" },
-    { label: "Real Estate/Mortgage", value: "Real Estate/Mortgage" },
-    { label: "Recreational Facilities/Services", value: "Recreational Facilities/Services" },
-    { label: "Religious Institutions", value: "Religious Institutions" },
-    { label: "Renewables/Environment", value: "Renewables/Environment" },
-    { label: "Research Industry", value: "Research Industry" },
-    { label: "Restaurants", value: "Restaurants" },
-    { label: "Retail Industry", value: "Retail Industry" },
-    { label: "Security/Investigations", value: "Security/Investigations" },
-    { label: "Semiconductors", value: "Semiconductors" },
-    { label: "Shipbuilding", value: "Shipbuilding" },
-    { label: "Sporting Goods", value: "Sporting Goods" },
-    { label: "Sports", value: "Sports" },
-    { label: "Staffing/Recruiting", value: "Staffing/Recruiting" },
-    { label: "Supermarkets", value: "Supermarkets" },
-    { label: "Telecommunications", value: "Telecommunications" },
-    { label: "Textiles", value: "Textiles" },
-    { label: "Think Tanks", value: "Think Tanks" },
-    { label: "Tobacco", value: "Tobacco" },
-    { label: "Translation/Localization", value: "Translation/Localization" },
-    { label: "Transportation", value: "Transportation" },
-    { label: "Utilities", value: "Utilities" },
-    { label: "Venture Capital/VC", value: "Venture Capital/VC" },
-    { label: "Veterinary", value: "Veterinary" },
-    { label: "Warehousing", value: "Warehousing" },
-    { label: "Wholesale", value: "Wholesale" },
-    { label: "Wine/Spirits", value: "Wine/Spirits" },
-    { label: "Wireless", value: "Wireless" },
-    { label: "Writing/Editing", value: "Writing/Editing" }
-];
-
-
-    // Generate HTML options for sector select
-    let sectorOptions = "";
-    sectors.forEach(sector => {
-        const isPlaceholder = sector.value === "";
-        sectorOptions += `<option value="${sector.value}" ${isPlaceholder ? 'disabled selected hidden' : ''}>${sector.label}</option>`;
-    });
-
-    // Year dropdown options
-    const currentYear = new Date().getFullYear();
-    let yearOptions = `<option value="" disabled selected hidden>Select Year</option>`;
-    for (let year = 2000; year <= currentYear; year++) {
-        yearOptions += `<option value="${year}">${year}</option>`;
-    }
-
-    // Create new input row
-    const newField = document.createElement('div');
-    newField.className = 'row g-3 mb-1 investment-row';
-    newField.innerHTML = `
-        <div class="col-sm-3 form-group">
-            <label class="required">Year</label>
-            <select class="form-control" name="previous_investment_year[]" required>
-                ${yearOptions}
-            </select>
-        </div>
-        <div class="col-sm-3 form-group">
-            <label class="required">Company</label>
-            <input type="text" class="form-control" name="previous_investment_company[]" required>
-        </div>
-        <div class="col-sm-3 form-group">
-            <label class="required">Sector</label>
-            <select class="form-control sector-select" name="sector[]" required>
-                ${sectorOptions}
-            </select>
-        </div>
-        <div class="col-sm-1 form-group">
-            <button type="button" class="btn btn-danger mt-4" onclick="removeField(this)">x</button>
-        </div>
-    `;
-
-    container.appendChild(newField);
-
-    // Force the placeholder to remain selected on insert
-    const sectorSelect = newField.querySelector('.sector-select');
-    sectorSelect.selectedIndex = 0;
-
-    // Debug log
-    console.log("✅ New sector select added with default placeholder:", sectorSelect.value);
-}
+//     // Define sector options as an array of objects (label + value)
+//             const sectors = [
+//             { label: "Select Sector", value: "Select Sector" },
+//             { label: "Accounting", value: "Accounting" },
+//             { label: "Airlines/Aviation", value: "Airlines/Aviation" },
+//             { label: "Alternative Dispute Resolution", value: "Alternative Dispute Resolution" },
+//             { label: "Alternative Medicine", value: "Alternative Medicine" },
+//             { label: "Animation", value: "Animation" },
+//             { label: "Apparel/Fashion", value: "Apparel/Fashion" },
+//             { label: "Architecture/Planning", value: "Architecture/Planning" },
+//             { label: "Arts/Crafts", value: "Arts/Crafts" },
+//             { label: "Automotive", value: "Automotive" },
+//             { label: "Aviation/Aerospace", value: "Aviation/Aerospace" },
+//             { label: "Banking/Mortgage", value: "Banking/Mortgage" },
+//             { label: "Biotechnology/Greentech", value: "Biotechnology/Greentech" },
+//             { label: "Broadcast Media", value: "Broadcast Media" },
+//             { label: "Building Materials", value: "Building Materials" },
+//             { label: "Business Supplies/Equipment", value: "Business Supplies/Equipment" },
+//             { label: "Capital Markets/Hedge Fund/Private Equity", value: "Capital Markets/Hedge Fund/Private Equity" },
+//             { label: "Chemicals", value: "Chemicals" },
+//             { label: "Civic/Social Organization", value: "Civic/Social Organization" },
+//             { label: "Civil Engineering", value: "Civil Engineering" },
+//             { label: "Commercial Real Estate", value: "Commercial Real Estate" },
+//             { label: "Computer Games", value: "Computer Games" },
+//             { label: "Computer Hardware", value: "Computer Hardware" },
+//             { label: "Computer Networking", value: "Computer Networking" },
+//             { label: "Computer Software/Engineering", value: "Computer Software/Engineering" },
+//             { label: "Computer/Network Security", value: "Computer/Network Security" },
+//             { label: "Construction", value: "Construction" },
+//             { label: "Consumer Electronics", value: "Consumer Electronics" },
+//             { label: "Consumer Goods", value: "Consumer Goods" },
+//             { label: "Consumer Services", value: "Consumer Services" },
+//             { label: "Cosmetics", value: "Cosmetics" },
+//             { label: "Dairy", value: "Dairy" },
+//             { label: "Defense/Space", value: "Defense/Space" },
+//             { label: "Design", value: "Design" },
+//             { label: "E-Learning", value: "E-Learning" },
+//             { label: "Education Management", value: "Education Management" },
+//             { label: "Electrical/Electronic Manufacturing", value: "Electrical/Electronic Manufacturing" },
+//             { label: "Entertainment/Movie Production", value: "Entertainment/Movie Production" },
+//             { label: "Environmental Services", value: "Environmental Services" },
+//             { label: "Events Services", value: "Events Services" },
+//             { label: "Executive Office", value: "Executive Office" },
+//             { label: "Facilities Services", value: "Facilities Services" },
+//             { label: "Farming", value: "Farming" },
+//             { label: "Financial Services", value: "Financial Services" },
+//             { label: "Fine Art", value: "Fine Art" },
+//             { label: "Fishery", value: "Fishery" },
+//             { label: "Food Production", value: "Food Production" },
+//             { label: "Food/Beverages", value: "Food/Beverages" },
+//             { label: "Fundraising", value: "Fundraising" },
+//             { label: "Furniture", value: "Furniture" },
+//             { label: "Gambling/Casinos", value: "Gambling/Casinos" },
+//             { label: "Glass/Ceramics/Concrete", value: "Glass/Ceramics/Concrete" },
+//             { label: "Government Administration", value: "Government Administration" },
+//             { label: "Government Relations", value: "Government Relations" },
+//             { label: "Graphic Design/Web Design", value: "Graphic Design/Web Design" },
+//             { label: "Health/Fitness", value: "Health/Fitness" },
+//             { label: "Higher Education/Acadamia", value: "Higher Education/Acadamia" },
+//             { label: "Hospital/Health Care", value: "Hospital/Health Care" },
+//             { label: "Hospitality", value: "Hospitality" },
+//             { label: "Human Resources/HR", value: "Human Resources/HR" },
+//             { label: "Import/Export", value: "Import/Export" },
+//             { label: "Individual/Family Services", value: "Individual/Family Services" },
+//             { label: "Industrial Automation", value: "Industrial Automation" },
+//             { label: "Information Services", value: "Information Services" },
+//             { label: "Information Technology/IT", value: "Information Technology/IT" },
+//             { label: "Insurance", value: "Insurance" },
+//             { label: "International Affairs", value: "International Affairs" },
+//             { label: "International Trade/Development", value: "International Trade/Development" },
+//             { label: "Internet", value: "Internet" },
+//             { label: "Investment Banking/Venture", value: "Investment Banking/Venture" },
+//             { label: "Investment Management/Hedge Fund/Private Equity", value: "Investment Management/Hedge Fund/Private Equity" },
+//             { label: "Judiciary", value: "Judiciary" },
+//             { label: "Law Enforcement", value: "Law Enforcement" },
+//             { label: "Law Practice/Law Firms", value: "Law Practice/Law Firms" },
+//             { label: "Legal Services", value: "Legal Services" },
+//             { label: "Legislative Office", value: "Legislative Office" },
+//             { label: "Leisure/Travel", value: "Leisure/Travel" },
+//             { label: "Library", value: "Library" },
+//             { label: "Logistics/Procurement", value: "Logistics/Procurement" },
+//             { label: "Luxury Goods/Jewelry", value: "Luxury Goods/Jewelry" },
+//             { label: "Machinery", value: "Machinery" },
+//             { label: "Management Consulting", value: "Management Consulting" },
+//             { label: "Maritime", value: "Maritime" },
+//             { label: "Market Research", value: "Market Research" },
+//             { label: "Marketing/Advertising/Sales", value: "Marketing/Advertising/Sales" },
+//             { label: "Mechanical or Industrial Engineering", value: "Mechanical or Industrial Engineering" },
+//             { label: "Media Production", value: "Media Production" },
+//             { label: "Medical Equipment", value: "Medical Equipment" },
+//             { label: "Medical Practice", value: "Medical Practice" },
+//             { label: "Mental Health Care", value: "Mental Health Care" },
+//             { label: "Military Industry", value: "Military Industry" },
+//             { label: "Mining/Metals", value: "Mining/Metals" },
+//             { label: "Motion Pictures/Film", value: "Motion Pictures/Film" },
+//             { label: "Museums/Institutions", value: "Museums/Institutions" },
+//             { label: "Music", value: "Music" },
+//             { label: "Nanotechnology", value: "Nanotechnology" },
+//             { label: "Newspapers/Journalism", value: "Newspapers/Journalism" },
+//             { label: "Non-Profit/Volunteering", value: "Non-Profit/Volunteering" },
+//             { label: "Oil/Energy/Solar/Greentech", value: "Oil/Energy/Solar/Greentech" },
+//             { label: "Online Publishing", value: "Online Publishing" },
+//             { label: "Other Industry", value: "Other Industry" },
+//             { label: "Outsourcing/Offshoring", value: "Outsourcing/Offshoring" },
+//             { label: "Package/Freight Delivery", value: "Package/Freight Delivery" },
+//             { label: "Packaging/Containers", value: "Packaging/Containers" },
+//             { label: "Paper/Forest Products", value: "Paper/Forest Products" },
+//             { label: "Performing Arts", value: "Performing Arts" },
+//             { label: "Pharmaceuticals", value: "Pharmaceuticals" },
+//             { label: "Philanthropy", value: "Philanthropy" },
+//             { label: "Photography", value: "Photography" },
+//             { label: "Plastics", value: "Plastics" },
+//             { label: "Political Organization", value: "Political Organization" },
+//             { label: "Primary/Secondary Education", value: "Primary/Secondary Education" },
+//             { label: "Printing", value: "Printing" },
+//             { label: "Professional Training", value: "Professional Training" },
+//             { label: "Program Development", value: "Program Development" },
+//             { label: "Public Relations/PR", value: "Public Relations/PR" },
+//             { label: "Public Safety", value: "Public Safety" },
+//             { label: "Publishing Industry", value: "Publishing Industry" },
+//             { label: "Railroad Manufacture", value: "Railroad Manufacture" },
+//             { label: "Ranching", value: "Ranching" },
+//             { label: "Real Estate/Mortgage", value: "Real Estate/Mortgage" },
+//             { label: "Recreational Facilities/Services", value: "Recreational Facilities/Services" },
+//             { label: "Religious Institutions", value: "Religious Institutions" },
+//             { label: "Renewables/Environment", value: "Renewables/Environment" },
+//             { label: "Research Industry", value: "Research Industry" },
+//             { label: "Restaurants", value: "Restaurants" },
+//             { label: "Retail Industry", value: "Retail Industry" },
+//             { label: "Security/Investigations", value: "Security/Investigations" },
+//             { label: "Semiconductors", value: "Semiconductors" },
+//             { label: "Shipbuilding", value: "Shipbuilding" },
+//             { label: "Sporting Goods", value: "Sporting Goods" },
+//             { label: "Sports", value: "Sports" },
+//             { label: "Staffing/Recruiting", value: "Staffing/Recruiting" },
+//             { label: "Supermarkets", value: "Supermarkets" },
+//             { label: "Telecommunications", value: "Telecommunications" },
+//             { label: "Textiles", value: "Textiles" },
+//             { label: "Think Tanks", value: "Think Tanks" },
+//             { label: "Tobacco", value: "Tobacco" },
+//             { label: "Translation/Localization", value: "Translation/Localization" },
+//             { label: "Transportation", value: "Transportation" },
+//             { label: "Utilities", value: "Utilities" },
+//             { label: "Venture Capital/VC", value: "Venture Capital/VC" },
+//             { label: "Veterinary", value: "Veterinary" },
+//             { label: "Warehousing", value: "Warehousing" },
+//             { label: "Wholesale", value: "Wholesale" },
+//             { label: "Wine/Spirits", value: "Wine/Spirits" },
+//             { label: "Wireless", value: "Wireless" },
+//             { label: "Writing/Editing", value: "Writing/Editing" }
+//         ];
 
 
-
-// document.getElementById('submitbutton').addEventListener('click', function(event) {
-//     let isValid = true;
-
-//     // Remove previous errors
-//     document.querySelectorAll('.sector-error').forEach(e => e.remove());
-
-//     // Loop through all sector selects
-//     const sectorSelects = document.querySelectorAll('select[name="sector[]"]');
-//     sectorSelects.forEach(select => {
-//         if (select.value === "Select Sector") {
-//             isValid = false;
-
-//             // Add error message if not already present
-//             const errorDiv = document.createElement('div');
-//             errorDiv.className = 'text-danger mt-1 sector-error';
-//             errorDiv.innerText = 'Sector field is required';
-//             select.parentNode.appendChild(errorDiv);
-
-//             // Optional: Add red border to highlight invalid
-//             select.classList.add('is-invalid');
-//         } else {
-//             // Clean up any red border from previous attempt
-//             select.classList.remove('is-invalid');
-//         }
+//     // Generate HTML options for sector select
+//     let sectorOptions = "";
+//     sectors.forEach(sector => {
+//         const isPlaceholder = sector.value === "";
+//         sectorOptions += `<option value="${sector.value}" ${isPlaceholder ? 'disabled selected hidden' : ''}>${sector.label}</option>`;
 //     });
 
-//     if (!isValid) {
-//         event.preventDefault(); // Prevent form submission
+//     // Year dropdown options
+//     const currentYear = new Date().getFullYear();
+//     let yearOptions = `<option value="" disabled selected hidden>Select Year</option>`;
+//     for (let year = 2000; year <= currentYear; year++) {
+//         yearOptions += `<option value="${year}">${year}</option>`;
 //     }
-// });
 
+//     // Create new input row
+//     const newField = document.createElement('div');
+//     newField.className = 'row g-3 mb-1 investment-row';
+//     newField.innerHTML = `
+//         <div class="col-sm-3 form-group">
+//             <label class="required">Year</label>
+//             <select class="form-control" name="previous_investment_year[]" required>
+//                 ${yearOptions}
+//             </select>
+//         </div>
+//         <div class="col-sm-3 form-group">
+//             <label class="required">Company</label>
+//             <input type="text" class="form-control" name="previous_investment_company[]" required>
+//         </div>
+//         <div class="col-sm-3 form-group">
+//             <label class="required">Sector</label>
+//             <select class="form-control sector-select" name="sector[]" required>
+//                 ${sectorOptions}
+//             </select>
+//         </div>
+//         <div class="col-sm-1 form-group">
+//             <button type="button" class="btn btn-danger mt-4" onclick="removeField(this)">x</button>
+//         </div>
+//     `;
 
+//     container.appendChild(newField);
 
+//     // Force the placeholder to remain selected on insert
+//     const sectorSelect = newField.querySelector('.sector-select');
+//     sectorSelect.selectedIndex = 0;
 
-function removeField(element) {
-    element.closest('.investment-row').remove();
-}
+//     // Debug log
+//     console.log("✅ New sector select added with default placeholder:", sectorSelect.value);
+// }
+
 
 
 
     // Function to remove the investment fields
-    function removeField(element) {
-        element.closest('.investment-row').remove();
-    }
+    // function removeField(element) {
+    //     element.closest('.investment-row').remove();
+    // }
 
 
    function toggleOtherField() {
     const otherField = document.getElementById('other_field');
     const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the checkboxes
-
+ 
     if (document.getElementById('others_checkbox').checked) {
         // Show the field
         otherField.style.display = 'block';
@@ -2006,5 +1970,89 @@ function validateAllLinks(showAlert = false) {
         });
     });
 </script>
+
+<script>
+    function addPreviousInvestmentField() {
+        const container = document.getElementById('previous-investments-container');
+
+        const sectors = [          
+                                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+                                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+                                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+                                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+                                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+                                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+                                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+                                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+                                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+                                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+                                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+                                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+                                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+                                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+                                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+                                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+                                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+                                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+                                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+                                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+                                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+                                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+                                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+                                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+                                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+                                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+                                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+                                           ];
+        let sectorOptions = `<option value="" selected>Select Sector</option>`;
+        
+        sectors.forEach(sector => {
+            sectorOptions += `<option value="${sector}">${sector}</option>`;
+        });
+
+        const currentYear = new Date().getFullYear();
+        let yearOptions = `<option value="" disabled selected>Select Year</option>`;
+        for (let year = 2000; year <= currentYear; year++) {
+            yearOptions += `<option value="${year}">${year}</option>`;
+        }
+
+        const newRow = document.createElement('div');
+        newRow.className = 'row g-3 previous-investment-row';
+        newRow.innerHTML = `
+            <div class="col-sm-3 form-group">
+                <label class="required">Year</label>
+                <select class="form-control" name="previous_investment_year[]" required>
+                    ${yearOptions}
+                </select>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label class="required">Company</label>
+                <input type="text" class="form-control" name="previous_investment_company[]" required>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label class="required">Sector</label>
+                <select class="form-control" name="sector[]" required>
+                    ${sectorOptions}
+                </select>
+            </div>
+            <div class="col-sm-3 form-group">
+                <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
+            </div>
+        `;
+
+        container.appendChild(newRow);
+    }
+
+    function removePreviousInvestmentField(button) {
+        const row = button.closest('.previous-investment-row');
+        row.remove();
+    }
+</script>
+
+
+
+
+
+
 
 @endsection
