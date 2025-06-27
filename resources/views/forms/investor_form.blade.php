@@ -463,7 +463,7 @@
 
     @for ($i = 0; $i < $count; $i++)
         <div class="public-link-row d-flex align-items-start mb-2">
-            <div class="form-group flex-grow-1 mr-2">
+            <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
                 <label for="public_links" class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'URL' : '' }}</label>
                 <input 
                     type="url" 
@@ -1175,7 +1175,7 @@
     // Create a new public link field without changing the + button to - button
     const newField = `
         <div class="public-link-row d-flex align-items-start">
-            <div class="form-group flex-grow-1 mr-2" style="max-width: 522px;">
+            <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
                 <label for="public_links" class=""></label>
                 <input type="url" class="form-control spaced-input" name="public_links[]" placeholder="Enter URL" required>
             </div>
