@@ -407,53 +407,7 @@
         <h3 style="font-size: 22px; font-weight: 600;">Public Links</h3>
     </div>
 
-    <!-- <div id="public-links-container" class="col-sm-10">
-        <div class="public-link-row d-flex align-items-start">
-            <div class="form-group flex-grow-1 mr-2">
-                <label for="public_links" class="required">URL</label>
-                <div>
-                    <input 
-                        type="url" 
-                        class="form-control spaced-input @error('public_links.*') is-invalid @enderror" 
-                        name="public_links[]" 
-                        placeholder="Enter URL" 
-                        value="{{ old('public_links.0') }}" 
-                        required
-                    >
-                </div>
-                @error('public_links.*')
-                    <div class="mt-1">
-                        <span class="text-danger">This field is required</span>
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group flex-grow-1 mr-2">
-                <label for="link_descriptions" class="required">Select Account</label>
-                <div>
-                    <select 
-                        class="form-control spaced-input @error('link_descriptions.*') is-invalid @enderror" 
-                        name="link_descriptions[]" 
-                        required
-                    >
-                        <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                        <option value="Twitter" {{ old('link_descriptions.0') == 'Twitter' ? 'selected' : '' }}>Twitter</option>
-                        <option value="Instagram" {{ old('link_descriptions.0') == 'Instagram' ? 'selected' : '' }}>Instagram</option>
-                        <option value="LinkedIn" {{ old('link_descriptions.0') == 'LinkedIn' ? 'selected' : '' }}>LinkedIn</option>
-                        <option value="Others" {{ old('link_descriptions.0') == 'Others' ? 'selected' : '' }}>Others</option>
-                    </select>
-                </div>
-                @error('link_descriptions.*')
-                    <div class="mt-1">
-                        <span class="text-danger">This field is required</span>
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
-            </div>
-        </div>
-    </div> -->
-
+ 
     <div id="public-links-container" class="col-sm-10">
     @php
         $publicLinks = old('public_links', []);
@@ -1868,93 +1822,104 @@ function removePublicLinkField(button) {
     });
 </script>
 
-
 <script>
-function showError(input, message) {
-    input.classList.add('is-invalid');
-    let error = input.parentElement.querySelector('.text-danger');
-    if (!error) {
-        error = document.createElement('span');
-        error.className = 'text-danger';
-        input.parentElement.appendChild(error);
-    }
-    error.textContent = message;
-}
-
-function clearError(input) {
-    input.classList.remove('is-invalid');
-    const error = input.parentElement.querySelector('.text-danger');
-    if (error) error.remove();
-}
-
-function validateAllLinks(showAlert = false) {
-    const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
-    const descriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
-
-    let isValid = true;
-    let scrolled = false;
-
-    publicLinks.forEach((input, i) => {
-        const link = input.value.trim();
-        const desc = descriptions[i]?.value.trim();
-
-        clearError(input);
-        clearError(descriptions[i]);
-
-        // Pair validation: both filled or both empty
-        if ((link && !desc) || (!link && desc)) {
-            if (!link) showError(input, 'URL is required');
-            if (!desc) showError(descriptions[i], 'Account type is required');
-            isValid = false;
-        }
-
-        // First row always required if more than one
-        if (publicLinks.length > 1 && i === 0 && (!link || !desc)) {
-            if (!link) showError(input, 'URL is required');
-            if (!desc) showError(descriptions[i], 'Account type is required');
-            isValid = false;
-        }
-
-        // URL Pattern Check
-        if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+\/?$/.test(link)) {
-            showError(input, 'Valid Facebook URL required, e.g., https://facebook.com/yourprofile');
-            isValid = false;
-        }
-        if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/?$/.test(link)) {
-            showError(input, 'Valid Twitter/X URL required, e.g., https://twitter.com/yourhandle or https://x.com/yourhandle');
-            isValid = false;
-        }
-        if (link && desc === 'Instagram' && !/^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/.test(link)) {
-            showError(input, 'Valid Instagram URL required, e.g., https://instagram.com/yourprofile');
-            isValid = false;
-        }
-        if (link && desc === 'LinkedIn' && !/^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[a-zA-Z0-9\-_%]+\/?$/.test(link)) {
-            showError(input, 'Valid LinkedIn URL required, e.g., https://linkedin.com/in/yourprofile or https://linkedin.com/company/yourcompany');
-            isValid = false;
-        }
-
-        // Scroll to first invalid
-        if (!isValid && !scrolled && input.classList.contains('is-invalid')) {
-            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            scrolled = true;
-        }
-    });
-
-    if (!isValid && showAlert) {
-        alert('Please fix the highlighted errors before submitting.');
+    function showError(input, message) {
+        input.setCustomValidity(message); // key to trigger HTML5 error tooltip
+        input.reportValidity();           // show native tooltip
+        input.classList.add('is-invalid');
     }
 
-    return isValid;
-}
+    function clearError(input) {
+        input.setCustomValidity('');      // reset native validation
+        input.classList.remove('is-invalid');
+    }
 
-    // Ensure the validation blocks submission
+    function validateAllLinks() {
+        const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
+        const descriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
+
+        let isValid = true;
+
+        publicLinks.forEach((input, i) => {
+            const link = input.value.trim();
+            const descInput = descriptions[i];
+            if (!descInput) return;
+            const desc = descInput.value.trim();
+
+            clearError(input);
+            clearError(descInput);
+
+            // Platform-specific pattern validation
+            // if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+\/?$/.test(link)) {
+            //     showError(input, 'Valid Facebook URL required');
+            //     isValid = false;
+            // }
+            // if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/?$/.test(link)) {
+            //     showError(input, 'Valid Twitter/X URL required');
+            //     isValid = false;
+            // }
+            // if (link && desc === 'Instagram' && !/^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/.test(link)) {
+            //     showError(input, 'Valid Instagram URL required');
+            //     isValid = false;
+            // }
+            // if (link && desc === 'LinkedIn' && !/^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[a-zA-Z0-9\-_%]+\/?$/.test(link)) {
+            //     showError(input, 'Valid LinkedIn URL required');
+            //     isValid = false;
+            // }
+
+
+            // Facebook: Allow profiles, pages, groups, usernames
+            if (
+                link && desc === 'Facebook' &&
+                !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9.\-_/]+\/?$/.test(link)
+            ) {
+                showError(input, 'Valid Facebook URL required, e.g., https://facebook.com/yourpage');
+                isValid = false;
+            }
+
+            // Twitter/X: Allow usernames, orgs, etc.
+            if (
+                link && desc === 'Twitter' &&
+                !/^https?:\/\/(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/?$/.test(link)
+            ) {
+                showError(input, 'Valid Twitter/X URL required, e.g., https://x.com/yourhandle');
+                isValid = false;
+            }
+
+            // Instagram: Allow personal and business profiles
+            if (
+                link && desc === 'Instagram' &&
+                !/^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/.test(link)
+            ) {
+                showError(input, 'Valid Instagram URL required, e.g., https://instagram.com/yourprofile');
+                isValid = false;
+            }
+
+            // LinkedIn: Allow personal profiles, companies, schools, groups, posts, etc.
+            if (
+                link && desc === 'LinkedIn' &&
+                !/^https?:\/\/(www\.)?linkedin\.com\/(in|company|school|groups|showcase|events|posts|feed)\/[a-zA-Z0-9\-_/]+\/?$/.test(link)
+            ) {
+                showError(input, 'Valid LinkedIn URL required, e.g., https://linkedin.com/company/yourcompany');
+                isValid = false;
+            }
+
+        });
+
+        return isValid;
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form');
-        const formid= document.getElementById('submitbutton');
-        formid.addEventListener('submit', function (e) {
-            if (!validateAllLinks(true)) {
+        const form = document.getElementById('investorForm');
+
+        form.addEventListener('submit', function (e) {
+            const isCustomValid = validateAllLinks();
+
+            if (!isCustomValid) {
+                // Let native HTML5 validation + custom errors block submission
                 e.preventDefault();
             }
+            // Don't call form.submit() manually — let native HTML5 handle it if valid
         });
 
         document.getElementById('public-links-container').addEventListener('input', function (e) {
@@ -1970,6 +1935,7 @@ function validateAllLinks(showAlert = false) {
         });
     });
 </script>
+
 
 <script>
     function addPreviousInvestmentField() {
