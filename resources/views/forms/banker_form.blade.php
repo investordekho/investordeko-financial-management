@@ -37,7 +37,7 @@
             </div>
         </div>
 
-    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('form.bank.submit') }}" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;">
+    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('form.bank.submit') }}" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;" novalidate>
 
         @csrf
      <!-- Company Details Section -->
@@ -46,60 +46,50 @@
         <h3 class="h5">Company Details</h3>
     </div>
 
-    <div class="col-sm-3">
-        <label for="company_name" class="form-label">
-            Company Name <span class="text-danger">*</span>
-        </label>
-        <input 
-            type="text" 
-            class="form-control @error('company_name') is-invalid @enderror" 
-            id="company_name" 
-            name="company_name" 
-            value="{{ old('company_name') }}" 
-            required
-        >
-        @error('company_name')
-            <span class="text-danger small">This field is required</span>
-        @enderror
-    </div>
+     <div class="col-sm-3">
+    <label for="company_name" class="form-label">
+        Company Name <span class="text-danger">*</span>
+    </label> 
+    <input 
+        type="text" 
+        class="form-control @error('company_name') is-invalid @enderror" 
+        id="company_name" 
+        name="company_name" 
+        value="{{ old('company_name') }}" 
+        required
+        pattern="^[A-Za-z\s.\-&']+$"
+        title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+        oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+    >
+    @error('company_name')
+    <div class="invalid-feedback">This field is required</div>
+    @enderror
+   
+</div>
 
-    <!-- <div class="col-sm-3">
-        <label for="incorporated_in" class="form-label">
-            Incorporated In <span class="text-danger">*</span>
-        </label>
-        <input 
-            type="number" 
-            class="form-control @error('incorporated_in') is-invalid @enderror" 
-            id="incorporated_in" 
-            name="incorporated_in" 
-            step="1"       
-            min="1800"
-            max="{{ date('Y') }}"
-            oninput="if (this.value < 1) this.value = ''"
-            value="{{ old('incorporated_in') }}" 
-            required
-        >
-        @error('incorporated_in')
-            <span class="text-danger small">This field is required</span>
-        @enderror
-    </div> -->
+
 
     <div class="col-sm-3">
             <label for="incorporated_in" class="form-label">
                 Incorporated In <span class="text-danger">*</span>
             </label>
-            <input 
-                type="number" 
-                class="form-control" 
-                id="incorporated_in" 
-                name="incorporated_in" 
-                step="1"
-                min="1800"
-                max="{{ date('Y') }}"
+            <select 
+                class="form-select shadow-sm rounded-3 @error('incorporated_in') is-invalid @enderror"
+                id="incorporated_in"
+                name="incorporated_in"
                 required
-                oninput="validateYear()"
-            >
-            <div id="incorporated_in_error" class="text-danger mt-1 small"></div>
+                aria-describedby="incorporated_in_error"
+                >
+                <option value="" disabled selected>Select Year</option>
+                @for ($year = date('Y'); $year >=1901; $year--)
+                    <option value="{{ $year }}" {{ old('incorporated_in') == $year ? 'selected' : ''}}>
+                        {{ $year }}
+                    </option>
+                @endfor
+            </select>
+            @error('incorporated_in')
+                <div class="invalid-feedback d-block small">This Field is Required</div>
+            @enderror
     </div>
 
 
@@ -131,10 +121,12 @@
         <input 
             type="file" 
             class="form-control @error('company_profile') is-invalid @enderror" 
-            id="company_profile" 
+            id="company_profile"  
             name="company_profile" 
             required
             value = "{{ old('company_profile')}}"
+            accept=".doc,.docx,.pdf,.ppt,.pptx,.jpg,.jpeg,.png"
+            onchange="validateFileTypeinvestorprofile(this)"
         >
         @error('company_profile')
             <span class="text-danger small">This field is required</span>
@@ -211,7 +203,7 @@
 
     <div class="col-md-3">
         <label for="concerned_person_designation" class="form-label">Designation</label>
-        <select class="form-select" id="concerned_person_designation" name="concerned_person_designation" required>
+        <select class="form-select @error('concerned_person_designation') is-invalid @enderror" id="concerned_person_designation" name="concerned_person_designation" required>
             <option value="" disabled {{ old('concerned_person_designation') ? '' : 'selected' }}>Select Designation</option>
             <option value="Chief Administrative Officer" {{ old('concerned_person_designation') == 'Chief Administrative Officer' ? 'selected' : '' }}>Chief Administrative Officer</option>
             <option value="Chief Analytics Officer" {{ old('concerned_person_designation') == 'Chief Analytics Officer' ? 'selected' : '' }}>Chief Analytics Officer</option>
@@ -267,6 +259,9 @@
             <option value="Supervisor" {{ old('concerned_person_designation') == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
             <option value="Vice President" {{ old('concerned_person_designation') == 'Vice President' ? 'selected' : '' }}>Vice President</option>
         </select>
+        @error('concerned_person_designation')
+            <div class="invalid-feedback d-block">This Field is Required</div>
+        @enderror
     </div>
 </div>
 
@@ -1002,14 +997,75 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Set initial state
-    submitbutton.disabled = !validateYear();
+    // submitbutton.disabled = !validateYear();
 
     // Enable/disable submit button on year input change
     yearInput.addEventListener("input", function () {
         submitbutton.disabled = !validateYear();
     });
 });
-</script>
 
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("investorForm");
+    const companyInput = document.getElementById("company_name");
+    const companyError = document.getElementById("company_name_error");
+
+    form.addEventListener("submit", function (e) {
+        let valid = true;
+
+        if (!companyInput.value.trim()) {
+            companyInput.classList.add("is-invalid");
+            companyError.style.display = "block";
+            valid = false;
+        } else {
+            companyInput.classList.remove("is-invalid");
+            companyError.style.display = "none";
+        }
+
+        if (!valid) e.preventDefault();
+    });
+});
+
+</script>
+<script>
+    function validateFileTypeinvestorprofile(input) {
+        // If called from form submit, input will be the event, not the input element
+        if (input && input.target && input.target.type === 'submit') {
+            input = document.getElementById('company_profile');
+        }
+        const allowedExtensions = /(\.doc|\.docx|\.pdf|\.ppt|\.pptx|\.jpg|\.jpeg|\.png)$/i;
+        if (input && input.value && !allowedExtensions.exec(input.value)) {
+            alert('Invalid file type. Please upload a DOC, DOCX, PDF, PPT, PPTX, JPG, JPEG, or PNG file.');
+            input.value = '';
+            return false;
+        }
+        return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let fileInput = document.getElementById('company_profile');
+        if (fileInput) {
+            fileInput.addEventListener('change', function () {
+                validateFileTypeinvestorprofile(fileInput);
+            });
+        }
+
+        let form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                if (!validateFileTypeinvestorprofile(fileInput)) {
+                    e.preventDefault();
+                }
+            });
+        }
+    });
+</script>
 
 @endsection

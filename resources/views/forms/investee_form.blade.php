@@ -2810,7 +2810,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Real-time validation for LinkedIn input
     linkedinInput.addEventListener('input', function () {
-        let linkedinPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+        let linkedinPattern = /^https?:\/\/(www\.)?linkedin\.com\/(in|company|school|groups|showcase|events|posts|feed)\/[a-zA-Z0-9\-_/]+\/?$/;
         if (!linkedinPattern.test(linkedinInput.value)) {
             linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://www.linkedin.com/in/username/";
         } else {
@@ -2820,9 +2820,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // on change validation for LinkedIn input
     linkedinInput.addEventListener('change', function () {
-        let linkedinPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
+        let linkedinPattern = /^https?:\/\/(www\.)?linkedin\.com\/(in|company|school|groups|showcase|events|posts|feed)\/[a-zA-Z0-9\-_/]+\/?$/;
         if (!linkedinPattern.test(linkedinInput.value)) {
-            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://www.linkedin.com/in/username/";
+            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://linkedin.com/company/yourcompany";
             linkedinInput.focus();
         } else {
             linkedinError.textContent = "";
@@ -2840,8 +2840,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Validate LinkedIn input
-        if (!linkedinInput.value || !/^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/.test(linkedinInput.value)) {
-            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://www.linkedin.com/in/username/";
+        if (!linkedinInput.value || !/^https?:\/\/(www\.)?linkedin\.com\/(in|company|school|groups|showcase|events|posts|feed)\/[a-zA-Z0-9\-_/]+\/?$/.test(linkedinInput.value)) {
+            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://linkedin.com/company/yourcompany";
             isValid = false;
         }
 
