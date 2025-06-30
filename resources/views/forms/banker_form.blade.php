@@ -346,22 +346,7 @@
                         @enderror
                         
                     </div>
-                    <!-- <div class="col-md-4">
-                        <select 
-                            class="form-select @error('link_descriptions.'.$index) is-invalid @enderror" 
-                            name="link_descriptions[]" 
-                            required
-                        >
-                            <option value="" disabled {{ old('link_descriptions.'.$index) ? '' : 'selected' }}>Select Account</option>
-                            <option value="Facebook" {{ old('link_descriptions.'.$index) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                            <option value="Twitter" {{ old('link_descriptions.'.$index) == 'Twitter' ? 'selected' : '' }}>Twitter</option>
-                            <option value="LinkedIn" {{ old('link_descriptions.'.$index) == 'LinkedIn' ? 'selected' : '' }}>LinkedIn</option>
-                            <option value="Others" {{ old('link_descriptions.'.$index) == 'Others' ? 'selected' : '' }}>Others</option>
-                        </select>
-                        @error('link_descriptions.'.$index)
-                            <span class="text-danger small">This field is required</span>
-                        @enderror
-                    </div> -->
+                    
                    <div class="col-md-4">
                         <select 
                             class="form-select @error('link_descriptions.'.$index) is-invalid @enderror mb-2" 
@@ -377,7 +362,7 @@
 
                         <span class="text-danger small d-block" style="min-height: 1rem;">
                             @error('link_descriptions.'.$index)
-                                {{ $message }}
+                                This field is required
                             @enderror
                         </span>
                     </div>
