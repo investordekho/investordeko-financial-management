@@ -827,30 +827,43 @@
 
 
     
-// Function to add a new link field
 function addPublicLinkField() {
     // Get the public links container
     const container = document.getElementById('public-links-container');
 
     // Create a new div for the input group with row structure to match Bootstrap columns
     const newRow = document.createElement('div');
-    newRow.classList.add('row', 'g-0', 'mb-3');
+    newRow.classList.add('row', 'g-3', 'align-items-end', 'mt-2');
 
-    // Create the URL input field with the same col-sm-5 class
+    // Empty col for alignment
+    const emptyDiv = document.createElement('div');
+    emptyDiv.classList.add('col-sm-2', 'mt-5');
+
+    // URL input field (col-md-4)
     const urlDiv = document.createElement('div');
-    urlDiv.classList.add('col-sm-5');
+    urlDiv.classList.add('col-md-4');
+    const urlLabel = document.createElement('label');
+    urlLabel.classList.add('form-label');
+    urlLabel.textContent = 'URL';
+    urlLabel.setAttribute('for', 'public_links');
     const urlInput = document.createElement('input');
     urlInput.type = 'url';
     urlInput.name = 'public_links[]';
-    urlInput.classList.add('form-control', 'spaced-input');
+    urlInput.classList.add('form-control');
     urlInput.placeholder = 'URL';
+    urlInput.required = true;
+    urlDiv.appendChild(urlInput);
 
-    // Create the select dropdown with the same col-sm-5 class
+    // Select dropdown (col-md-4)
     const selectDiv = document.createElement('div');
-    selectDiv.classList.add('col-sm-5');
+    selectDiv.classList.add('col-md-4');
+    const selectLabel = document.createElement('label');
+    selectLabel.classList.add('form-label');
+    selectLabel.textContent = 'Select Account';
+    selectLabel.setAttribute('for', 'link_descriptions');
     const select = document.createElement('select');
     select.name = 'link_descriptions[]';
-    select.classList.add('form-control', 'spaced-input');
+    select.classList.add('form-select');
     select.required = true;
 
     // Add options to the select field
@@ -868,6 +881,10 @@ function addPublicLinkField() {
     twitterOption.value = 'Twitter';
     twitterOption.textContent = 'Twitter';
 
+    const linkedInOption = document.createElement('option');
+    linkedInOption.value = 'LinkedIn';
+    linkedInOption.textContent = 'LinkedIn';
+
     const othersOption = document.createElement('option');
     othersOption.value = 'Others';
     othersOption.textContent = 'Others';
@@ -875,25 +892,25 @@ function addPublicLinkField() {
     select.appendChild(defaultOption);
     select.appendChild(facebookOption);
     select.appendChild(twitterOption);
+    select.appendChild(linkedInOption);
     select.appendChild(othersOption);
 
-    // Create the remove button with the col-sm-2 class to align with Add More Links
+    selectDiv.appendChild(select);
+
+    // Remove button (col-md-2)
     const buttonDiv = document.createElement('div');
-    buttonDiv.classList.add('col-sm-2', 'text-end'); // Align right for consistency with Add More Links
+    buttonDiv.classList.add('col-md-2');
     const removeButton = document.createElement('button');
     removeButton.type = 'button';
     removeButton.classList.add('btn', 'btn-danger');
-    removeButton.textContent = '×';
+    removeButton.textContent = '-';
     removeButton.onclick = function() {
-        removeLinkField(removeButton);
+        removePublicLinkField(removeButton);
     };
-
-    // Append all elements to the respective divs
-    urlDiv.appendChild(urlInput);
-    selectDiv.appendChild(select);
     buttonDiv.appendChild(removeButton);
 
     // Append all divs to the newRow
+    newRow.appendChild(emptyDiv);
     newRow.appendChild(urlDiv);
     newRow.appendChild(selectDiv);
     newRow.appendChild(buttonDiv);
