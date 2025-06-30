@@ -332,9 +332,7 @@
                             <!-- <h3 class="h5">Public Links</h3> -->
                         </div>
                     <div class="col-md-4">
-                        @error('public_links.'.$index)
-                            <span class="text-danger small">This field is required</span>
-                        @enderror
+                       
                         <input 
                             type="url" 
                             class="form-control @error('public_links.'.$index) is-invalid @enderror" 
@@ -343,9 +341,12 @@
                             value="{{ $public_link }}" 
                             required
                         >
+                         @error('public_links.'.$index)
+                            <span class="text-danger small">This field is required</span>
+                        @enderror
                         
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <select 
                             class="form-select @error('link_descriptions.'.$index) is-invalid @enderror" 
                             name="link_descriptions[]" 
@@ -360,8 +361,29 @@
                         @error('link_descriptions.'.$index)
                             <span class="text-danger small">This field is required</span>
                         @enderror
+                    </div> -->
+                   <div class="col-md-4">
+                        <select 
+                            class="form-select @error('link_descriptions.'.$index) is-invalid @enderror mb-2" 
+                            name="link_descriptions[]" 
+                            required
+                        >
+                            <option value="" disabled {{ old('link_descriptions.'.$index) ? '' : 'selected' }}>Select Account</option>
+                            <option value="Facebook" {{ old('link_descriptions.'.$index) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
+                            <option value="Twitter" {{ old('link_descriptions.'.$index) == 'Twitter' ? 'selected' : '' }}>Twitter</option>
+                            <option value="LinkedIn" {{ old('link_descriptions.'.$index) == 'LinkedIn' ? 'selected' : '' }}>LinkedIn</option>
+                            <option value="Others" {{ old('link_descriptions.'.$index) == 'Others' ? 'selected' : '' }}>Others</option>
+                        </select>
+
+                        <span class="text-danger small d-block" style="min-height: 1rem;">
+                            @error('link_descriptions.'.$index)
+                                {{ $message }}
+                            @enderror
+                        </span>
                     </div>
-                    <div class="col-md-2">
+
+
+                    <div class="col-md-2 mb-4">
                         <button type="button" class="btn btn-danger" onclick="removePublicLinkField(this)">-</button>
                     </div>
                 </div>
@@ -824,8 +846,60 @@
     //         </div>`;
     //     container.insertAdjacentHTML('beforeend', newField);
     // }
+    const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
+    const linkDescriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
+    for (let i = 0; i < publicLinks.length; i++) {
+        publicLinks[i].classList.remove('is-invalid');
+        linkDescriptions[i].classList.remove('is-invalid');
+        const linkFilled = publicLinks[i].value.trim() !== '';
+        const descSelected = linkDescriptions[i].value && linkDescriptions[i].value.trim() !== '';
+       
+        if (publicLinks.length === 1) {
+            // Only one row
+            if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
+                if (!linkFilled) publicLinks[i].classList.add('is-invalid');
+                if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
+                isValid = false;
+                publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            // if both empty: allowed (do nothing)
+        }
+        else {
+            // More than one row
+            if (i === 0) {
+                // First row is always required
+                if (!linkFilled) {
+                    publicLinks[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                if (!descSelected) {
+                    linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            } else {
+                // All other rows must be either fully filled or fully empty
+                if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
+                    if (!linkFilled) publicLinks[i].classList.add('is-invalid');
+                    if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else if (!linkFilled && !descSelected) {
+                    // ❌ error on both if completely empty
+                    publicLinks[i].classList.add('is-invalid');
+                    linkDescriptions[i].classList.add('is-invalid');
+                    isValid = false;
+                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        }
+    }
 
-
+    if (!isValid) {
+        event.preventDefault();
+        alert('Please fill all required fields before submitting the form.');
+    }
     
 function addPublicLinkField() {
     // Get the public links container
