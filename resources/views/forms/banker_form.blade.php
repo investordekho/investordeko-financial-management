@@ -1220,5 +1220,187 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let websiteInput = document.getElementById('company_website');
+    let linkedinInput = document.getElementById('linkedin_link');
+    let websiteError = document.getElementById('company_website_error');
+    let linkedinError = document.getElementById('linkedin_link_error');
+    let form = document.querySelector('form');
 
+    // Real-time validation for website input
+    websiteInput.addEventListener('input', function () {
+        // let urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w- .\/?%&=]*)?$/;
+            const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+
+        if (!urlPattern.test(websiteInput.value)) {
+            websiteError.textContent = "Please enter a valid URL. e.g., https://www.example.com";
+        } else {
+            websiteError.textContent = "";
+        }
+    });
+
+    // on change validation for website input
+    websiteInput.addEventListener('change', function () {
+         const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+
+        if (!urlPattern.test(websiteInput.value)) {
+            websiteError.textContent = "Please enter a valid URL. e.g., https://www.example.com";
+            websiteInput.focus();
+        } else {
+            websiteError.textContent = "";
+        }
+    });
+
+    // Real-time validation for LinkedIn input
+    linkedinInput.addEventListener('input', function () {
+        let linkedinPattern = /^https?:\/\/(www\.)?linkedin\.com\/(in|company|school|groups|showcase|events|posts|feed)\/[a-zA-Z0-9\-_/]+\/?$/;
+        if (!linkedinPattern.test(linkedinInput.value)) {
+            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://www.linkedin.com/in/username/";
+        } else {
+            linkedinError.textContent = "";
+        }
+    });
+
+    // on change validation for LinkedIn input
+    linkedinInput.addEventListener('change', function () {
+        let linkedinPattern = /^https?:\/\/(www\.)?linkedin\.com\/(in|company|school|groups|showcase|events|posts|feed)\/[a-zA-Z0-9\-_/]+\/?$/;
+        if (!linkedinPattern.test(linkedinInput.value)) {
+            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://linkedin.com/company/yourcompany";
+            linkedinInput.focus();
+        } else {
+            linkedinError.textContent = "";
+        }
+    });
+
+    // Form submit validation
+    form.addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // Validate website input
+        if (!websiteInput.value || !/^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w- .\/?%&=]*)?$/.test(websiteInput.value)) {
+            websiteError.textContent = "Please enter a valid URL. e.g., https://www.example.com";
+            isValid = false;
+        }
+
+        // Validate LinkedIn input
+        if (!linkedinInput.value || !/^https?:\/\/(www\.)?linkedin\.com\/(in|company|school|groups|showcase|events|posts|feed)\/[a-zA-Z0-9\-_/]+\/?$/.test(linkedinInput.value)) {
+            linkedinError.textContent = "Please enter a valid LinkedIn URL. e.g., https://linkedin.com/company/yourcompany";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+            if (!websiteInput.value) websiteInput.focus();
+            else linkedinInput.focus();
+        }
+    });
+});
+</script>
+<script>
+            function filterQualificationInput(input) {
+                // Allow only letters, spaces, dots, hyphens, ampersands, and apostrophes
+                input.value = input.value.replace(/[^A-Za-z\s.\-&']/g, '');
+            }
+</script>
+
+<script>
+            function filterInvestorInput(input) {
+                // Allow only letters, spaces, commas, periods, ampersands, and hyphens
+                input.value = input.value.replace(/[^A-Za-z\s.,&'-]/g, '');
+            }
+</script>
+
+<script>
+    function showError(input, message) {
+        input.classList.add('is-invalid');
+        let errorDiv = input.parentElement.querySelector('.invalid-feedback');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'invalid-feedback d-block';
+            input.parentElement.appendChild(errorDiv);
+        }
+        errorDiv.textContent = message;
+    }
+
+    function clearError(input) {
+        input.classList.remove('is-invalid');
+        const errorDiv = input.parentElement.querySelector('.invalid-feedback');
+        if (errorDiv) errorDiv.remove();
+    }
+
+    function validateAllLinks(showAlert = false) {
+        let isValid = true;
+        let scrolled = false;
+
+        const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
+        const descriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
+
+        publicLinks.forEach((input, i) => {
+            const link = input.value.trim();
+            const desc = descriptions[i].value.trim();
+
+            clearError(input);
+            clearError(descriptions[i]);
+
+            // One filled, other not
+            if ((link && !desc) || (!link && desc)) {
+                if (!link) showError(input, 'URL is required');
+                if (!desc) showError(descriptions[i], 'Account type is required');
+                isValid = false;
+            }
+
+            // First row required if multiple
+            if (publicLinks.length > 1 && i === 0 && (!link || !desc)) {
+                if (!link) showError(input, 'URL is required');
+                if (!desc) showError(descriptions[i], 'Account type is required');
+                isValid = false;
+            }
+
+            // Pattern check
+            if (link && desc === 'Facebook' && !/^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9._-]+$/.test(link)) {
+                showError(input, 'Valid Facebook URL required. e.g., https://www.facebook.com/username');
+                isValid = false;
+            }
+
+            if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+$/.test(link)) {
+                showError(input, 'Valid Twitter URL required. e.g., https://www.twitter.com/username');
+                isValid = false;
+            }
+
+            // Scroll to first error only
+            if (!isValid && !scrolled && input.classList.contains('is-invalid')) {
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                scrolled = true;
+            }
+        });
+
+        if (!isValid && showAlert) {
+            alert('Please fix the highlighted errors before submitting.');
+        }
+
+        return isValid;
+    }
+
+    // Form submission
+    document.querySelector('form').addEventListener('submit', function (e) {
+        if (!validateAllLinks(true)) {
+            e.preventDefault();
+        }
+    });
+
+    // Input validation on typing
+    document.addEventListener('input', function (e) {
+        if (e.target.name === 'public_links[]') {
+            validateAllLinks();
+        }
+    });
+
+    // Validation on dropdown change
+    document.addEventListener('change', function (e) {
+        if (e.target.name === 'link_descriptions[]') {
+            validateAllLinks();
+        }
+    });
+</script>
 @endsection
