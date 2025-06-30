@@ -567,7 +567,7 @@
         </div>
         <div class="col-md-3 form-group">
             <label for="previous_deal_company_{{ $i }}" class="form-label">
-                Company <span class="text-danger">*</span>
+            Company <span class="text-danger">*</span>
             </label>
             <input type="text" class="form-control @error('previous_deal_company.'.$i) is-invalid @enderror" name="previous_deal_company[]" id="previous_deal_company_{{ $i }}" placeholder="Company" value="{{ $previous_deal_companies[$i] ?? '' }}" required>
             @error('previous_deal_company.'.$i)
@@ -576,157 +576,157 @@
         </div>
         <div class="col-md-3 form-group">
             <label for="previous_deal_sector_{{ $i }}" class="form-label">
-                Sector <span class="text-danger">*</span>
+            Sector <span class="text-danger">*</span>
             </label>
-            <input list="business-options" class="form-control spaced-input" id="previous_deal_sector_{{ $i }}" name="previous_deal_sector[]" value="{{ $previous_deal_sectors[$i] ?? '' }}" required>
+            <input list="business-options" class="form-control spaced-input @error('previous_deal_sector.'.$i) is-invalid @enderror" id="previous_deal_sector_{{ $i }}" name="previous_deal_sector[]" value="{{ $previous_deal_sectors[$i] ?? '' }}" required>
             <datalist id="business-options">
-                <option value="Accounting">Accounting</option>
-                <option value="Airlines/Aviation">Airlines/Aviation</option>
-                <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
-                <option value="Alternative Medicine">Alternative Medicine</option>
-                <option value="Animation">Animation</option>
-                <option value="Apparel/Fashion">Apparel/Fashion</option>
-                <option value="Architecture/Planning">Architecture/Planning</option>
-                <option value="Arts/Crafts">Arts/Crafts</option>
-                <option value="Automotive">Automotive</option>
-                <option value="Aviation/Aerospace">Aviation/Aerospace</option>
-                <option value="Banking/Mortgage">Banking/Mortgage</option>
-                <option value="Biotechnology/Greentech">Biotechnology/Greentech</option>
-                <option value="Broadcast Media">Broadcast Media</option>
-                <option value="Building Materials">Building Materials</option>
-                <option value="Business Supplies/Equipment">Business Supplies/Equipment</option>
-                <option value="Capital Markets/Hedge Fund/Private Equity">Capital Markets/Hedge Fund/Private Equity</option>
-                <option value="Chemicals">Chemicals</option>
-                <option value="Civic/Social Organization">Civic/Social Organization</option>
-                <option value="Civil Engineering">Civil Engineering</option>
-                <option value="Commercial Real Estate">Commercial Real Estate</option>
-                <option value="Computer Games">Computer Games</option>
-                <option value="Computer Hardware">Computer Hardware</option>
-                <option value="Computer Networking">Computer Networking</option>
-                <option value="Computer Software/Engineering">Computer Software/Engineering</option>
-                <option value="Computer/Network Security">Computer/Network Security</option>
-                <option value="Construction">Construction</option>
-                <option value="Consumer Electronics">Consumer Electronics</option>
-                <option value="Consumer Goods">Consumer Goods</option>
-                <option value="Consumer Services">Consumer Services</option>
-                <option value="Cosmetics">Cosmetics</option>
-                <option value="Dairy">Dairy</option>
-                <option value="Defense/Space">Defense/Space</option>
-                <option value="Design">Design</option>
-                <option value="E-Learning">E-Learning</option>
-                <option value="Education Management">Education Management</option>
-                <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
-                <option value="Entertainment/Movie Production">Entertainment/Movie Production</option>
-                <option value="Environmental Services">Environmental Services</option>
-                <option value="Events Services">Events Services</option>
-                <option value="Executive Office">Executive Office</option>
-                <option value="Facilities Services">Facilities Services</option>
-                <option value="Farming">Farming</option>
-                <option value="Financial Services">Financial Services</option>
-                <option value="Fine Art">Fine Art</option>
-                <option value="Fishery">Fishery</option>
-                <option value="Food Production">Food Production</option>
-                <option value="Food/Beverages">Food/Beverages</option>
-                <option value="Fundraising">Fundraising</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Gambling/Casinos">Gambling/Casinos</option>
-                <option value="Glass/Ceramics/Concrete">Glass/Ceramics/Concrete</option>
-                <option value="Government Administration">Government Administration</option>
-                <option value="Government Relations">Government Relations</option>
-                <option value="Graphic Design/Web Design">Graphic Design/Web Design</option>
-                <option value="Health/Fitness">Health/Fitness</option>
-                <option value="Higher Education/Acadamia">Higher Education/Acadamia</option>
-                <option value="Hospital/Health Care">Hospital/Health Care</option>
-                <option value="Hospitality">Hospitality</option>
-                <option value="Human Resources/HR">Human Resources/HR</option>
-                <option value="Import/Export">Import/Export</option>
-                <option value="Individual/Family Services">Individual/Family Services</option>
-                <option value="Industrial Automation">Industrial Automation</option>
-                <option value="Information Services">Information Services</option>
-                <option value="Information Technology/IT">Information Technology/IT</option>
-                <option value="Insurance">Insurance</option>
-                <option value="International Affairs">International Affairs</option>
-                <option value="International Trade/Development">International Trade/Development</option>
-                <option value="Internet">Internet</option>
-                <option value="Investment Banking/Venture">Investment Banking/Venture</option>
-                <option value="Investment Management/Hedge Fund/Private Equity">Investment Management/Hedge Fund/Private Equity</option>
-                <option value="Judiciary">Judiciary</option>
-                <option value="Law Enforcement">Law Enforcement</option>
-                <option value="Law Practice/Law Firms">Law Practice/Law Firms</option>
-                <option value="Legal Services">Legal Services</option>
-                <option value="Legislative Office">Legislative Office</option>
-                <option value="Leisure/Travel">Leisure/Travel</option>
-                <option value="Library">Library</option>
-                <option value="Logistics/Procurement">Logistics/Procurement</option>
-                <option value="Luxury Goods/Jewelry">Luxury Goods/Jewelry</option>
-                <option value="Machinery">Machinery</option>
-                <option value="Management Consulting">Management Consulting</option>
-                <option value="Maritime">Maritime</option>
-                <option value="Market Research">Market Research</option>
-                <option value="Marketing/Advertising/Sales">Marketing/Advertising/Sales</option>
-                <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
-                <option value="Media Production">Media Production</option>
-                <option value="Medical Equipment">Medical Equipment</option>
-                <option value="Medical Practice">Medical Practice</option>
-                <option value="Mental Health Care">Mental Health Care</option>
-                <option value="Military Industry">Military Industry</option>
-                <option value="Mining/Metals">Mining/Metals</option>
-                <option value="Motion Pictures/Film">Motion Pictures/Film</option>
-                <option value="Museums/Institutions">Museums/Institutions</option>
-                <option value="Music">Music</option>
-                <option value="Nanotechnology">Nanotechnology</option>
-                <option value="Newspapers/Journalism">Newspapers/Journalism</option>
-                <option value="Non-Profit/Volunteering">Non-Profit/Volunteering</option>
-                <option value="Oil/Energy/Solar/Greentech">Oil/Energy/Solar/Greentech</option>
-                <option value="Online Publishing">Online Publishing</option>
-                <option value="Other Industry">Other Industry</option>
-                <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
-                <option value="Package/Freight Delivery">Package/Freight Delivery</option>
-                <option value="Packaging/Containers">Packaging/Containers</option>
-                <option value="Paper/Forest Products">Paper/Forest Products</option>
-                <option value="Performing Arts">Performing Arts</option>
-                <option value="Pharmaceuticals">Pharmaceuticals</option>
-                <option value="Philanthropy">Philanthropy</option>
-                <option value="Photography">Photography</option>
-                <option value="Plastics">Plastics</option>
-                <option value="Political Organization">Political Organization</option>
-                <option value="Primary/Secondary Education">Primary/Secondary Education</option>
-                <option value="Printing">Printing</option>
-                <option value="Professional Training">Professional Training</option>
-                <option value="Program Development">Program Development</option>
-                <option value="Public Relations/PR">Public Relations/PR</option>
-                <option value="Public Safety">Public Safety</option>
-                <option value="Publishing Industry">Publishing Industry</option>
-                <option value="Railroad Manufacture">Railroad Manufacture</option>
-                <option value="Ranching">Ranching</option>
-                <option value="Real Estate/Mortgage">Real Estate/Mortgage</option>
-                <option value="Recreational Facilities/Services">Recreational Facilities/Services</option>
-                <option value="Religious Institutions">Religious Institutions</option>
-                <option value="Renewables/Environment">Renewables/Environment</option>
-                <option value="Research Industry">Research Industry</option>
-                <option value="Restaurants">Restaurants</option>
-                <option value="Retail Industry">Retail Industry</option>
-                <option value="Security/Investigations">Security/Investigations</option>
-                <option value="Semiconductors">Semiconductors</option>
-                <option value="Shipbuilding">Shipbuilding</option>
-                <option value="Sporting Goods">Sporting Goods</option>
-                <option value="Sports">Sports</option>
-                <option value="Staffing/Recruiting">Staffing/Recruiting</option>
-                <option value="Supermarkets">Supermarkets</option>
-                <option value="Telecommunications">Telecommunications</option>
-                <option value="Textiles">Textiles</option>
-                <option value="Think Tanks">Think Tanks</option>
-                <option value="Tobacco">Tobacco</option>
-                <option value="Translation/Localization">Translation/Localization</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Utilities">Utilities</option>
-                <option value="Venture Capital/VC">Venture Capital/VC</option>
-                <option value="Veterinary">Veterinary</option>
-                <option value="Warehousing">Warehousing</option>
-                <option value="Wholesale">Wholesale</option>
-                <option value="Wine/Spirits">Wine/Spirits</option>
-                <option value="Wireless">Wireless</option>
-                <option value="Writing/Editing">Writing/Editing</option>
+            <option value="Accounting">Accounting</option>
+            <option value="Airlines/Aviation">Airlines/Aviation</option>
+            <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
+            <option value="Alternative Medicine">Alternative Medicine</option>
+            <option value="Animation">Animation</option>
+            <option value="Apparel/Fashion">Apparel/Fashion</option>
+            <option value="Architecture/Planning">Architecture/Planning</option>
+            <option value="Arts/Crafts">Arts/Crafts</option>
+            <option value="Automotive">Automotive</option>
+            <option value="Aviation/Aerospace">Aviation/Aerospace</option>
+            <option value="Banking/Mortgage">Banking/Mortgage</option>
+            <option value="Biotechnology/Greentech">Biotechnology/Greentech</option>
+            <option value="Broadcast Media">Broadcast Media</option>
+            <option value="Building Materials">Building Materials</option>
+            <option value="Business Supplies/Equipment">Business Supplies/Equipment</option>
+            <option value="Capital Markets/Hedge Fund/Private Equity">Capital Markets/Hedge Fund/Private Equity</option>
+            <option value="Chemicals">Chemicals</option>
+            <option value="Civic/Social Organization">Civic/Social Organization</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Commercial Real Estate">Commercial Real Estate</option>
+            <option value="Computer Games">Computer Games</option>
+            <option value="Computer Hardware">Computer Hardware</option>
+            <option value="Computer Networking">Computer Networking</option>
+            <option value="Computer Software/Engineering">Computer Software/Engineering</option>
+            <option value="Computer/Network Security">Computer/Network Security</option>
+            <option value="Construction">Construction</option>
+            <option value="Consumer Electronics">Consumer Electronics</option>
+            <option value="Consumer Goods">Consumer Goods</option>
+            <option value="Consumer Services">Consumer Services</option>
+            <option value="Cosmetics">Cosmetics</option>
+            <option value="Dairy">Dairy</option>
+            <option value="Defense/Space">Defense/Space</option>
+            <option value="Design">Design</option>
+            <option value="E-Learning">E-Learning</option>
+            <option value="Education Management">Education Management</option>
+            <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
+            <option value="Entertainment/Movie Production">Entertainment/Movie Production</option>
+            <option value="Environmental Services">Environmental Services</option>
+            <option value="Events Services">Events Services</option>
+            <option value="Executive Office">Executive Office</option>
+            <option value="Facilities Services">Facilities Services</option>
+            <option value="Farming">Farming</option>
+            <option value="Financial Services">Financial Services</option>
+            <option value="Fine Art">Fine Art</option>
+            <option value="Fishery">Fishery</option>
+            <option value="Food Production">Food Production</option>
+            <option value="Food/Beverages">Food/Beverages</option>
+            <option value="Fundraising">Fundraising</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Gambling/Casinos">Gambling/Casinos</option>
+            <option value="Glass/Ceramics/Concrete">Glass/Ceramics/Concrete</option>
+            <option value="Government Administration">Government Administration</option>
+            <option value="Government Relations">Government Relations</option>
+            <option value="Graphic Design/Web Design">Graphic Design/Web Design</option>
+            <option value="Health/Fitness">Health/Fitness</option>
+            <option value="Higher Education/Acadamia">Higher Education/Acadamia</option>
+            <option value="Hospital/Health Care">Hospital/Health Care</option>
+            <option value="Hospitality">Hospitality</option>
+            <option value="Human Resources/HR">Human Resources/HR</option>
+            <option value="Import/Export">Import/Export</option>
+            <option value="Individual/Family Services">Individual/Family Services</option>
+            <option value="Industrial Automation">Industrial Automation</option>
+            <option value="Information Services">Information Services</option>
+            <option value="Information Technology/IT">Information Technology/IT</option>
+            <option value="Insurance">Insurance</option>
+            <option value="International Affairs">International Affairs</option>
+            <option value="International Trade/Development">International Trade/Development</option>
+            <option value="Internet">Internet</option>
+            <option value="Investment Banking/Venture">Investment Banking/Venture</option>
+            <option value="Investment Management/Hedge Fund/Private Equity">Investment Management/Hedge Fund/Private Equity</option>
+            <option value="Judiciary">Judiciary</option>
+            <option value="Law Enforcement">Law Enforcement</option>
+            <option value="Law Practice/Law Firms">Law Practice/Law Firms</option>
+            <option value="Legal Services">Legal Services</option>
+            <option value="Legislative Office">Legislative Office</option>
+            <option value="Leisure/Travel">Leisure/Travel</option>
+            <option value="Library">Library</option>
+            <option value="Logistics/Procurement">Logistics/Procurement</option>
+            <option value="Luxury Goods/Jewelry">Luxury Goods/Jewelry</option>
+            <option value="Machinery">Machinery</option>
+            <option value="Management Consulting">Management Consulting</option>
+            <option value="Maritime">Maritime</option>
+            <option value="Market Research">Market Research</option>
+            <option value="Marketing/Advertising/Sales">Marketing/Advertising/Sales</option>
+            <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
+            <option value="Media Production">Media Production</option>
+            <option value="Medical Equipment">Medical Equipment</option>
+            <option value="Medical Practice">Medical Practice</option>
+            <option value="Mental Health Care">Mental Health Care</option>
+            <option value="Military Industry">Military Industry</option>
+            <option value="Mining/Metals">Mining/Metals</option>
+            <option value="Motion Pictures/Film">Motion Pictures/Film</option>
+            <option value="Museums/Institutions">Museums/Institutions</option>
+            <option value="Music">Music</option>
+            <option value="Nanotechnology">Nanotechnology</option>
+            <option value="Newspapers/Journalism">Newspapers/Journalism</option>
+            <option value="Non-Profit/Volunteering">Non-Profit/Volunteering</option>
+            <option value="Oil/Energy/Solar/Greentech">Oil/Energy/Solar/Greentech</option>
+            <option value="Online Publishing">Online Publishing</option>
+            <option value="Other Industry">Other Industry</option>
+            <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
+            <option value="Package/Freight Delivery">Package/Freight Delivery</option>
+            <option value="Packaging/Containers">Packaging/Containers</option>
+            <option value="Paper/Forest Products">Paper/Forest Products</option>
+            <option value="Performing Arts">Performing Arts</option>
+            <option value="Pharmaceuticals">Pharmaceuticals</option>
+            <option value="Philanthropy">Philanthropy</option>
+            <option value="Photography">Photography</option>
+            <option value="Plastics">Plastics</option>
+            <option value="Political Organization">Political Organization</option>
+            <option value="Primary/Secondary Education">Primary/Secondary Education</option>
+            <option value="Printing">Printing</option>
+            <option value="Professional Training">Professional Training</option>
+            <option value="Program Development">Program Development</option>
+            <option value="Public Relations/PR">Public Relations/PR</option>
+            <option value="Public Safety">Public Safety</option>
+            <option value="Publishing Industry">Publishing Industry</option>
+            <option value="Railroad Manufacture">Railroad Manufacture</option>
+            <option value="Ranching">Ranching</option>
+            <option value="Real Estate/Mortgage">Real Estate/Mortgage</option>
+            <option value="Recreational Facilities/Services">Recreational Facilities/Services</option>
+            <option value="Religious Institutions">Religious Institutions</option>
+            <option value="Renewables/Environment">Renewables/Environment</option>
+            <option value="Research Industry">Research Industry</option>
+            <option value="Restaurants">Restaurants</option>
+            <option value="Retail Industry">Retail Industry</option>
+            <option value="Security/Investigations">Security/Investigations</option>
+            <option value="Semiconductors">Semiconductors</option>
+            <option value="Shipbuilding">Shipbuilding</option>
+            <option value="Sporting Goods">Sporting Goods</option>
+            <option value="Sports">Sports</option>
+            <option value="Staffing/Recruiting">Staffing/Recruiting</option>
+            <option value="Supermarkets">Supermarkets</option>
+            <option value="Telecommunications">Telecommunications</option>
+            <option value="Textiles">Textiles</option>
+            <option value="Think Tanks">Think Tanks</option>
+            <option value="Tobacco">Tobacco</option>
+            <option value="Translation/Localization">Translation/Localization</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Venture Capital/VC">Venture Capital/VC</option>
+            <option value="Veterinary">Veterinary</option>
+            <option value="Warehousing">Warehousing</option>
+            <option value="Wholesale">Wholesale</option>
+            <option value="Wine/Spirits">Wine/Spirits</option>
+            <option value="Wireless">Wireless</option>
+            <option value="Writing/Editing">Writing/Editing</option>
             </datalist>
             @error('previous_deal_sector.'.$i)
             <span class="text-danger small">This field is required</span>
@@ -735,21 +735,21 @@
         <div class="col-md-2 mt-2 p-1">
             <label for="previous_deal_type_{{ $i }}" class="required">Deal Type<span class="text-danger">*</span></label>
             <select class="form-control @error('previous_deal_type.'.$i) is-invalid @enderror" name="previous_deal_type[]" id="previous_deal_type_{{ $i }}" required>
-                <option value="" disabled {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i]) ? '' : 'selected' }}>Select Deal Type</option>
-                <option value="M&A" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : '' }}>M&amp;A</option>
-                <option value="Fundraising" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : '' }}>Fundraising</option>
-                <option value="IPO" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : '' }}>IPO</option>
-                <option value="Others" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : '' }}>Others</option>
+            <option value="" disabled {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i]) ? '' : 'selected' }}>Select Deal Type</option>
+            <option value="M&A" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : '' }}>M&amp;A</option>
+            <option value="Fundraising" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : '' }}>Fundraising</option>
+            <option value="IPO" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : '' }}>IPO</option>
+            <option value="Others" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : '' }}>Others</option>
             </select>
-            @if($errors->has('previous_deal_type.'.$i))
+            @if ($errors->has('previous_deal_type.'.$i))
                 <span class="text-danger small">{{ $errors->first('previous_deal_type.'.$i) }}</span>
             @endif
         </div>
         <div class="col-md-1 form-floating mt-2 p-1">
             @if($i == 0)
-                <button type="button" class="btn btn-info mt-4" onclick="addPreviousDealField()">+</button>
+            <button type="button" class="btn btn-info mt-4" onclick="addPreviousDealField()">+</button>
             @else
-                <button type="button" class="btn btn-danger mt-4" onclick="removeField(this)">-</button>
+            <button type="button" class="btn btn-danger mt-4" onclick="removeField(this)">-</button>
             @endif
         </div>
     </div>
@@ -799,31 +799,108 @@
 </div>
 
 <script>
-    function addPublicLinkField() {
-        const container = document.getElementById('public-links-container');
-        const newField = `
-            <div class="row g-3 mt-2">
-                <div class="col-sm-2"></div>
-                <div class="col-md-4 mt-4">
-                    <input type="url" class="form-control" name="public_links[]" placeholder="URL" required>
-                    <label for="public_links"></label>
-                </div>
-                <div class="col-md-4 mt-4 ">
-                    <select class="form-select" name="link_descriptions[]" required>
-                        <option value="" disabled selected>Select Account</option>
-                        <option value="Facebook">Facebook</option>
-                        <option value="Twitter">Twitter</option>
-                        <option value="LinkedIn">LinkedIn</option>
-                        <option value="Others">Others</option>
-                    </select>
-                    <label for="link_descriptions"></label>
-                </div>
-                <div class="col-md-2 mt-4">
-                    <button type="button" class="btn btn-danger mb-4" onclick="removeField(this)">-</button>
-                </div>
-            </div>`;
-        container.insertAdjacentHTML('beforeend', newField);
-    }
+    // function addPublicLinkField() {
+    //     const container = document.getElementById('public-links-container');
+    //     const newField = `
+    //         <div class="row g-3 mt-2">
+    //             <div class="col-sm-2"></div>
+    //             <div class="col-md-4 mt-4">
+    //                 <input type="url" class="form-control" name="public_links[]" placeholder="URL" required>
+    //                 <label for="public_links"></label>
+    //             </div>
+    //             <div class="col-md-4 mt-4 ">
+    //                 <select class="form-select" name="link_descriptions[]" required>
+    //                     <option value="" disabled selected>Select Account</option>
+    //                     <option value="Facebook">Facebook</option>
+    //                     <option value="Twitter">Twitter</option>
+    //                     <option value="LinkedIn">LinkedIn</option>
+    //                     <option value="Others">Others</option>
+    //                 </select>
+    //                 <label for="link_descriptions"></label>
+    //             </div>
+    //             <div class="col-md-2 mt-4">
+    //                 <button type="button" class="btn btn-danger mb-4" onclick="removeField(this)">-</button>
+    //             </div>
+    //         </div>`;
+    //     container.insertAdjacentHTML('beforeend', newField);
+    // }
+
+
+    
+// Function to add a new link field
+function addPublicLinkField() {
+    // Get the public links container
+    const container = document.getElementById('public-links-container');
+
+    // Create a new div for the input group with row structure to match Bootstrap columns
+    const newRow = document.createElement('div');
+    newRow.classList.add('row', 'g-0', 'mb-3');
+
+    // Create the URL input field with the same col-sm-5 class
+    const urlDiv = document.createElement('div');
+    urlDiv.classList.add('col-sm-5');
+    const urlInput = document.createElement('input');
+    urlInput.type = 'url';
+    urlInput.name = 'public_links[]';
+    urlInput.classList.add('form-control', 'spaced-input');
+    urlInput.placeholder = 'URL';
+
+    // Create the select dropdown with the same col-sm-5 class
+    const selectDiv = document.createElement('div');
+    selectDiv.classList.add('col-sm-5');
+    const select = document.createElement('select');
+    select.name = 'link_descriptions[]';
+    select.classList.add('form-control', 'spaced-input');
+    select.required = true;
+
+    // Add options to the select field
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    defaultOption.textContent = 'Select Account';
+
+    const facebookOption = document.createElement('option');
+    facebookOption.value = 'Facebook';
+    facebookOption.textContent = 'Facebook';
+
+    const twitterOption = document.createElement('option');
+    twitterOption.value = 'Twitter';
+    twitterOption.textContent = 'Twitter';
+
+    const othersOption = document.createElement('option');
+    othersOption.value = 'Others';
+    othersOption.textContent = 'Others';
+
+    select.appendChild(defaultOption);
+    select.appendChild(facebookOption);
+    select.appendChild(twitterOption);
+    select.appendChild(othersOption);
+
+    // Create the remove button with the col-sm-2 class to align with Add More Links
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('col-sm-2', 'text-end'); // Align right for consistency with Add More Links
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.classList.add('btn', 'btn-danger');
+    removeButton.textContent = '×';
+    removeButton.onclick = function() {
+        removeLinkField(removeButton);
+    };
+
+    // Append all elements to the respective divs
+    urlDiv.appendChild(urlInput);
+    selectDiv.appendChild(select);
+    buttonDiv.appendChild(removeButton);
+
+    // Append all divs to the newRow
+    newRow.appendChild(urlDiv);
+    newRow.appendChild(selectDiv);
+    newRow.appendChild(buttonDiv);
+
+    // Append the new row to the container
+    container.appendChild(newRow);
+}
 
     function removeField(element) {
         element.closest('.row').remove();
