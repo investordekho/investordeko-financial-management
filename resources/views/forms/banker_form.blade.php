@@ -265,117 +265,167 @@
     </div>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <hr>
-       <!-- Public Links Section -->
+<!-- Public Links Section -->
 <div class="row g-3 align-items-start">
     <div class="col-sm-2 mt-5">
         <h3 class="h5">Public Links</h3>
     </div>
-
-    <!-- URL Field -->
-    <div class="col-md-4">
-        <label for="public_links" class="form-label">
-            URL <span class="text-danger">*</span>
-        </label>
-        <div>
-            <input 
-                type="url" 
-                class="form-control @error('public_links.0') is-invalid @enderror" 
-                name="public_links[]" 
-                placeholder="URL" 
-                value="{{ old('public_links.0') }}" 
-                required
-            >
-            @error('public_links.0')
-                <div class="text-danger small mt-1">This field is required</div>
-            @enderror
-        </div>
-    </div>
-
-    <!-- Select Account Field -->
-    <div class="col-md-4">
-        <label for="link_descriptions" class="form-label">
-            Select Account <span class="text-danger">*</span>
-        </label>
-        <div>
-            <select 
-                class="form-select @error('link_descriptions.0') is-invalid @enderror" 
-                name="link_descriptions[]" 
-                required
-            >
-                <option value="" disabled {{ old('link_descriptions.0') ? '' : 'selected' }}>Select Account</option>
-                <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                <option value="Twitter" {{ old('link_descriptions.0') == 'Twitter' ? 'selected' : '' }}>Twitter</option>
-                <option value="LinkedIn" {{ old('link_descriptions.0') == 'LinkedIn' ? 'selected' : '' }}>LinkedIn</option>
-                <option value="Others" {{ old('link_descriptions.0') == 'Others' ? 'selected' : '' }}>Others</option>
-            </select>
-            @error('link_descriptions.0')
-                <div class="text-danger small mt-1">This field is required</div>
-            @enderror
-        </div>
-    </div>
-
-    <!-- Add Button -->
-    <div class="col-md-2 d-flex align-items-end mt-5">
-        <button type="button" class="btn btn-info w-10" style="height: 38px;" onclick="addPublicLinkField()">+</button>
-    </div>
-</div>
-
-
-<!-- Container for additional public links -->
-<div id="public-links-container">
-    @if(old('public_links'))
-        @foreach(old('public_links') as $index => $public_link)
-            @if($index > 0)
-                <div class="row g-3 align-items-end mt-2">
-                       <div class="col-sm-2 mt-5">
-                            <!-- <h3 class="h5">Public Links</h3> -->
-                        </div>
-                    <div class="col-md-4">
-                       
-                        <input 
-                            type="url" 
-                            class="form-control @error('public_links.'.$index) is-invalid @enderror" 
-                            name="public_links[]" 
-                            placeholder="URL" 
-                            value="{{ $public_link }}" 
-                            required
-                        >
-                         @error('public_links.'.$index)
-                            <span class="text-danger small">This field is required</span>
-                        @enderror
-                        
-                    </div>
-                    
-                   <div class="col-md-4">
-                        <select 
-                            class="form-select @error('link_descriptions.'.$index) is-invalid @enderror mb-2" 
-                            name="link_descriptions[]" 
-                            required
-                        >
-                            <option value="" disabled {{ old('link_descriptions.'.$index) ? '' : 'selected' }}>Select Account</option>
-                            <option value="Facebook" {{ old('link_descriptions.'.$index) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                            <option value="Twitter" {{ old('link_descriptions.'.$index) == 'Twitter' ? 'selected' : '' }}>Twitter</option>
-                            <option value="LinkedIn" {{ old('link_descriptions.'.$index) == 'LinkedIn' ? 'selected' : '' }}>LinkedIn</option>
-                            <option value="Others" {{ old('link_descriptions.'.$index) == 'Others' ? 'selected' : '' }}>Others</option>
-                        </select>
-
-                        <span class="text-danger small d-block" style="min-height: 1rem;">
-                            @error('link_descriptions.'.$index)
-                                This field is required
-                            @enderror
-                        </span>
-                    </div>
-
-
-                    <div class="col-md-2 mb-4">
-                        <button type="button" class="btn btn-danger" onclick="removePublicLinkField(this)">-</button>
-                    </div>
+    <div class="col-sm-10" id="public-links-container">
+        @php
+            $public_links = old('public_links', []);
+            $link_descriptions = old('link_descriptions', []);
+            $link_count = max(count($public_links), count($link_descriptions), 1);
+        @endphp
+        @for($i = 0; $i < $link_count; $i++)
+            <div class="row g-0 mb-3">
+                <div class="col-sm-5">
+                    <input 
+                        class="form-control @error('public_links.'.$i) is-invalid @enderror" 
+                        type="url" 
+                        name="public_links[]" 
+                        placeholder="URL" 
+                        value="{{ old('public_links.'.$i) }}"
+                    >
+                    @error('public_links.'.$i)
+                        <div class="invalid-feedback d-block">This Field is Required</div>
+                    @enderror
                 </div>
-            @endif
-        @endforeach
-    @endif
+                <div class="col-sm-5">
+                    <select 
+                        class="form-control @error('link_descriptions.'.$i) is-invalid @enderror" 
+                        name="link_descriptions[]"
+                    >
+                        <option value="" disabled {{ old('link_descriptions.'.$i) ? '' : 'selected' }}>Select Account</option>
+                        <option value="Facebook" {{ old('link_descriptions.'.$i) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
+                        <option value="Twitter" {{ old('link_descriptions.'.$i) == 'Twitter' ? 'selected' : '' }}>Twitter</option>
+                        <option value="Others" {{ old('link_descriptions.'.$i) == 'Others' ? 'selected' : '' }}>Others</option>
+                    </select>
+                    @error('link_descriptions.'.$i)
+                        <div class="invalid-feedback d-block">This Field is Required</div>
+                    @enderror
+                </div>
+                <div class="col-sm-2 text-end">
+                    @if($i == 0)
+                        <button 
+                            class="btn btn-outline-primary" 
+                            type="button" 
+                            onclick="addPublicLinkField()"
+                        >
+                            + Add More Links
+                        </button>
+                    @else
+                        <button 
+                            class="btn btn-danger" 
+                            type="button" 
+                            onclick="removePublicLinkField(this)"
+                        >
+                            &minus;
+                        </button>
+                    @endif
+                </div>
+            </div>
+        @endfor
+        <!-- Dynamically added rows will appear here -->
+    </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <hr>
 
@@ -886,98 +936,85 @@
         alert('Please fill all required fields before submitting the form.');
     }
     
-function addPublicLinkField() {
-    // Get the public links container
-    const container = document.getElementById('public-links-container');
+    // Function to add a new link field
+    function addPublicLinkField() {
+        // Get the public links container
+        const container = document.getElementById('public-links-container');
 
-    // Create a new div for the input group with row structure to match Bootstrap columns
-    const newRow = document.createElement('div');
-    newRow.classList.add('row', 'g-3', 'align-items-end', 'mt-2');
+        // Create a new div for the input group with row structure to match Bootstrap columns
+        const newRow = document.createElement('div');
+        newRow.classList.add('row', 'g-0', 'mb-3');
 
-    // Empty col for alignment
-    const emptyDiv = document.createElement('div');
-    emptyDiv.classList.add('col-sm-2', 'mt-5');
+        // Create the URL input field with the same col-sm-5 class
+        const urlDiv = document.createElement('div');
+        urlDiv.classList.add('col-sm-5');
+        const urlInput = document.createElement('input');
+        urlInput.type = 'url';
+        urlInput.name = 'public_links[]';
+        urlInput.classList.add('form-control', 'spaced-input');
+        urlInput.placeholder = 'URL';
 
-    // URL input field (col-md-4)
-    const urlDiv = document.createElement('div');
-    urlDiv.classList.add('col-md-4');
-    const urlLabel = document.createElement('label');
-    urlLabel.classList.add('form-label');
-    urlLabel.textContent = 'URL';
-    urlLabel.setAttribute('for', 'public_links');
-    const urlInput = document.createElement('input');
-    urlInput.type = 'url';
-    urlInput.name = 'public_links[]';
-    urlInput.classList.add('form-control');
-    urlInput.placeholder = 'URL';
-    urlInput.required = true;
-    urlDiv.appendChild(urlInput);
+        // Create the select dropdown with the same col-sm-5 class
+        const selectDiv = document.createElement('div');
+        selectDiv.classList.add('col-sm-5');
+        const select = document.createElement('select');
+        select.name = 'link_descriptions[]';
+        select.classList.add('form-control', 'spaced-input');
+        select.required = true;
 
-    // Select dropdown (col-md-4)
-    const selectDiv = document.createElement('div');
-    selectDiv.classList.add('col-md-4');
-    const selectLabel = document.createElement('label');
-    selectLabel.classList.add('form-label');
-    selectLabel.textContent = 'Select Account';
-    selectLabel.setAttribute('for', 'link_descriptions');
-    const select = document.createElement('select');
-    select.name = 'link_descriptions[]';
-    select.classList.add('form-select');
-    select.required = true;
+        // Add options to the select field
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.textContent = 'Select Account';
 
-    // Add options to the select field
-    const defaultOption = document.createElement('option');
-    defaultOption.value = '';
-    defaultOption.disabled = true;
-    defaultOption.selected = true;
-    defaultOption.textContent = 'Select Account';
+        const facebookOption = document.createElement('option');
+        facebookOption.value = 'Facebook';
+        facebookOption.textContent = 'Facebook';
 
-    const facebookOption = document.createElement('option');
-    facebookOption.value = 'Facebook';
-    facebookOption.textContent = 'Facebook';
+        const twitterOption = document.createElement('option');
+        twitterOption.value = 'Twitter';
+        twitterOption.textContent = 'Twitter';
 
-    const twitterOption = document.createElement('option');
-    twitterOption.value = 'Twitter';
-    twitterOption.textContent = 'Twitter';
+        const othersOption = document.createElement('option');
+        othersOption.value = 'Others';
+        othersOption.textContent = 'Others';
 
-    const linkedInOption = document.createElement('option');
-    linkedInOption.value = 'LinkedIn';
-    linkedInOption.textContent = 'LinkedIn';
+        select.appendChild(defaultOption);
+        select.appendChild(facebookOption);
+        select.appendChild(twitterOption);
+        select.appendChild(othersOption);
 
-    const othersOption = document.createElement('option');
-    othersOption.value = 'Others';
-    othersOption.textContent = 'Others';
+        // Create the remove button with the col-sm-2 class to align with Add More Links
+        const buttonDiv = document.createElement('div');
+        buttonDiv.classList.add('col-sm-2', 'text-end'); // Align right for consistency with Add More Links
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.classList.add('btn', 'btn-danger');
+        removeButton.textContent = '×';
+        removeButton.onclick = function() {
+            removeLinkField(removeButton);
+        };
 
-    select.appendChild(defaultOption);
-    select.appendChild(facebookOption);
-    select.appendChild(twitterOption);
-    select.appendChild(linkedInOption);
-    select.appendChild(othersOption);
+        // Append all elements to the respective divs
+        urlDiv.appendChild(urlInput);
+        selectDiv.appendChild(select);
+        buttonDiv.appendChild(removeButton);
 
-    selectDiv.appendChild(select);
+        // Append all divs to the newRow
+        newRow.appendChild(urlDiv);
+        newRow.appendChild(selectDiv);
+        newRow.appendChild(buttonDiv);
 
-    // Remove button (col-md-2)
-    const buttonDiv = document.createElement('div');
-    buttonDiv.classList.add('col-md-2');
-    const removeButton = document.createElement('button');
-    removeButton.type = 'button';
-    removeButton.classList.add('btn', 'btn-danger');
-    removeButton.textContent = '-';
-    removeButton.onclick = function() {
-        removePublicLinkField(removeButton);
-    };
-    buttonDiv.appendChild(removeButton);
-
-    // Append all divs to the newRow
-    newRow.appendChild(emptyDiv);
-    newRow.appendChild(urlDiv);
-    newRow.appendChild(selectDiv);
-    newRow.appendChild(buttonDiv);
-
-    // Append the new row to the container
-    container.appendChild(newRow);
-}
-
+        // Append the new row to the container
+        container.appendChild(newRow);
+    }
+    // Function to remove a link field
+    function removeLinkField(button) {
+        const row = button.closest('.row');
+        row.remove();  // Remove the parent row div
+    }
     function removeField(element) {
         element.closest('.row').remove();
     }
@@ -1382,8 +1419,20 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     }
 
-    // Form submission
+    // Remove empty public link rows before validation and submission
     document.querySelector('form').addEventListener('submit', function (e) {
+        // Remove dynamically added rows that are completely empty
+        const publicLinksRows = document.querySelectorAll('#public-links-container .row');
+        publicLinksRows.forEach(function(row, idx) {
+            // Skip the first row (always required)
+            if (idx === 0) return;
+            const urlInput = row.querySelector('input[name="public_links[]"]');
+            const descSelect = row.querySelector('select[name="link_descriptions[]"]');
+            if (urlInput && descSelect && urlInput.value.trim() === '' && (!descSelect.value || descSelect.value.trim() === '')) {
+                row.remove();
+            }
+        });
+
         if (!validateAllLinks(true)) {
             e.preventDefault();
         }
@@ -1403,4 +1452,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const formid = document.getElementById('investmentBankerForm');
+   formid.addEventListener('submit', function (e) {
+        const isFormValid = validateAllLinks(true);
+        console.log('Validation result:', isFormValid); // Debug: see if validation returned false
+        if (!isFormValid) {
+            e.preventDefault(); // 🔴 This will definitely stop form submission
+        }
+    });
+});
+</script>
+
 @endsection
