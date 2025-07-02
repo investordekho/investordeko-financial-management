@@ -554,45 +554,90 @@
         <span id="fund-raise-size-error" class="text-danger small" style="display:none;">Min should not be greater than equal to Max.</span>
     </div>
 </div>
-<script>
-    function getFundRaiseValue(val) {
-        // Assign numeric values for comparison
-        switch(val) {
-            case '10_lakh': return 1;
-            case '50_lakh': return 2;
-            case '1_cr': return 3;
-            case '10_cr': return 4;
-            case '50_cr': return 5;
-            case '100_cr': return 6;
-            default: return 0;
-        }
-    }
 
-    function validateFundRaiseSize() {
-        var min = document.getElementById('min_fund_raise_size').value;
-        var max = document.getElementById('max_fund_raise_size').value;
-        var error = document.getElementById('fund-raise-size-error');
-        if (min && max && getFundRaiseValue(min) >= getFundRaiseValue(max)) {
-            error.style.display = 'inline';
-        } else {
-            error.style.display = 'none';
-        }
-    }
 
-    // Prevent form submission if invalid
-    document.addEventListener('DOMContentLoaded', function() {
-        var form = document.getElementById('investmentBankerForm');
-        form.addEventListener('submit', function(e) {
-            var min = document.getElementById('min_fund_raise_size').value;
-            var max = document.getElementById('max_fund_raise_size').value;
-            var error = document.getElementById('fund-raise-size-error');
-            if (min && max && getFundRaiseValue(min) > getFundRaiseValue(max)) {
-                error.style.display = 'inline';
-                e.preventDefault();
-            }
-        });
-    });
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <hr>
 <h3 class="h5">Previous Deals</h3>
 <div id="previous-deals-container">
@@ -615,13 +660,34 @@
             <label for="previous_deal_year_{{ $i }}" class="form-label">
                 Year <span class="text-danger">*</span>
             </label>
-            <select class="form-control" name="previous_deal_year[]" id="previous_deal_year_{{ $i }}" required>
+            <!-- <select class="form-control @error('previous_deal_year.'.$i) is-invalid @enderror" name="previous_deal_year[]" id="previous_deal_year_{{ $i }}" required>
                 <option value="" disabled {{ (isset($previous_deal_years[$i]) && $previous_deal_years[$i]) ? '' : 'selected' }}>Select Year</option>
                 @for($y = date('Y'); $y >= 1990; $y--)
                     <option value="{{ $y }}" {{ (isset($previous_deal_years[$i]) && $previous_deal_years[$i] == $y) ? 'selected' : '' }}>{{ $y }}</option>
                 @endfor
+            </select> -->
+            <!-- <input type="text" class="form-control @error('previous_deal_year.'.$i) is-invalid @enderror" name="previous_deal_year[]" id="previous_deal_year_{{ $i }}" placeholder="year" value="{{ $previous_deal_years[$i] ?? '' }}" required> -->
+           <select 
+                class="form-select @error('previous_deal_year.'.$i) is-invalid @enderror"
+                name="previous_deal_year[]" 
+                id="previous_deal_year_{{ $i }}"
+                required
+            >
+                <option value="" hidden {{ empty($previous_deal_years[$i]) ? 'selected' : '' }}>Select Year</option>
+                @for ($year = date('Y'); $year >= 1901; $year--)
+                    <option value="{{ $year }}" {{ (isset($previous_deal_years[$i]) && $previous_deal_years[$i] == $year) ? 'selected' : '' }}>
+                        {{ $year }}
+                    </option>
+                @endfor
             </select>
+
+            @error('previous_deal_year.'.$i)
+                <span class="text-danger small">This field is required</span>
+            @enderror
+
+
         </div>
+        
         <div class="col-md-3 form-group">
             <label for="previous_deal_company_{{ $i }}" class="form-label">
             Company <span class="text-danger">*</span>
@@ -789,19 +855,27 @@
             <span class="text-danger small">This field is required</span>
             @enderror
         </div>
-        <div class="col-md-2 mt-2 p-1">
-            <label for="previous_deal_type_{{ $i }}" class="required">Deal Type<span class="text-danger">*</span></label>
-            <select class="form-control @error('previous_deal_type.'.$i) is-invalid @enderror" name="previous_deal_type[]" id="previous_deal_type_{{ $i }}" required>
-            <option value="" disabled {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i]) ? '' : 'selected' }}>Select Deal Type</option>
-            <option value="M&A" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : '' }}>M&amp;A</option>
-            <option value="Fundraising" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : '' }}>Fundraising</option>
-            <option value="IPO" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : '' }}>IPO</option>
-            <option value="Others" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : '' }}>Others</option>
+       <div class="col-md-2 mt-2 p-1">
+            <label for="previous_deal_type_{{ $i }}" class="required">Deal Type <span class="text-danger">*</span></label>
+
+            <select 
+                class="form-control @error('previous_deal_type.'.$i) is-invalid @enderror" 
+                name="previous_deal_type[]" 
+                id="previous_deal_type_{{ $i }}" 
+                required
+            >
+                <option value="" hidden {{ empty($previous_deal_types[$i]) ? 'selected' : '' }}>Select Deal Type</option>
+                <option value="M&A" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : '' }}>M&amp;A</option>
+                <option value="Fundraising" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : '' }}>Fundraising</option>
+                <option value="IPO" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : '' }}>IPO</option>
+                <option value="Others" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : '' }}>Others</option>
             </select>
-            @if ($errors->has('previous_deal_type.'.$i))
-                <span class="text-danger small">{{ $errors->first('previous_deal_type.'.$i) }}</span>
-            @endif
+
+            @error('previous_deal_type.'.$i)
+                <span class="text-danger small">This field is required</span>
+            @enderror
         </div>
+
         <div class="col-md-1 form-floating mt-2 p-1">
             @if($i == 0)
             <button type="button" class="btn btn-info mt-4" onclick="addPreviousDealField()">+</button>
@@ -812,6 +886,91 @@
     </div>
     @endfor
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <hr>
 <h3 class="h5">How did you hear about Investor Dekho?</h3>
 <div class="form-floating mb-3">
@@ -1466,5 +1625,43 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<script>
+    function getFundRaiseValue(val) {
+        // Assign numeric values for comparison
+        switch(val) {
+            case '10_lakh': return 1;
+            case '50_lakh': return 2;
+            case '1_cr': return 3;
+            case '10_cr': return 4;
+            case '50_cr': return 5;
+            case '100_cr': return 6;
+            default: return 0;
+        }
+    }
 
+    function validateFundRaiseSize() {
+        var min = document.getElementById('min_fund_raise_size').value;
+        var max = document.getElementById('max_fund_raise_size').value;
+        var error = document.getElementById('fund-raise-size-error');
+        if (min && max && getFundRaiseValue(min) >= getFundRaiseValue(max)) {
+            error.style.display = 'inline';
+        } else {
+            error.style.display = 'none';
+        }
+    }
+
+    // Prevent form submission if invalid
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('investmentBankerForm');
+        form.addEventListener('submit', function(e) {
+            var min = document.getElementById('min_fund_raise_size').value;
+            var max = document.getElementById('max_fund_raise_size').value;
+            var error = document.getElementById('fund-raise-size-error');
+            if (min && max && getFundRaiseValue(min) > getFundRaiseValue(max)) {
+                error.style.display = 'inline';
+                e.preventDefault();
+            }
+        });
+    });
+</script>
 @endsection
