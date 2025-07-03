@@ -52,7 +52,7 @@
 <div class="container d-flex justify-content-center">
     <div class="col-md-8 mt-5">
         <h2 class="text-center mb-4">Contact Us for Our Services</h2>
-        <form action="{{ route('service.contact.submit') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('service.contact.submit') }}" method="POST" enctype="multipart/form-data" id="serviceid">
             @csrf
 
             <!-- Name and Email in one line -->
@@ -347,7 +347,7 @@
                             <option value="+263" {{ old('country_code') == '+263' ? 'selected' : '' }}>+263 (ZW)</option>
                         <!-- Add more country codes as needed -->
                     </select>
-                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="10" pattern="[0-9]{10}" placeholder="Enter 10-digit phone number" value="{{ old('phone') }}" required>
+                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="10" pattern="^\+?[0-9]{7,20}$" oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" placeholder="Enter 10-digit phone number" value="{{ old('phone') }}" required>
                 </div>
                 @if($errors->has('phone'))
                 <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
@@ -498,7 +498,7 @@
 
         const emailvalue = document.getElementById('email');
         const form = document.querySelector('form');
-        const formid = document.getElementById('othersForm');
+        const formid = document.getElementById('serviceid');
         const emailError = document.getElementById('email_error');
         //real time email validation
           const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
