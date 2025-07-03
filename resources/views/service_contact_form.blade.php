@@ -2,7 +2,7 @@
 
 @section('content')
 
-@if ($errors->any())
+<!-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -10,7 +10,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif -->
 
 @if (session('success'))
     <div class="alert alert-success">
@@ -52,7 +52,7 @@
 <div class="container d-flex justify-content-center">
     <div class="col-md-8 mt-5">
         <h2 class="text-center mb-4">Contact Us for Our Services</h2>
-        <form action="{{ route('service.contact.submit') }}" method="POST">
+        <form action="{{ route('service.contact.submit') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- Name and Email in one line -->
@@ -61,15 +61,39 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
             </div>
+            @if($errors->has('name'))
+            <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                <ul class="mb-0 ms-2">
+                    @foreach ($errors->get('name') as $error)
+                        <li class="p-0 m-0">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         </div>
 
         <!-- Email -->
         <div class="col-md-6">
             <div class="form-group">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <!-- <input type="email" class="form-control" id="email" name="email" required> -->
+                 <input type="text" class="form-control spaced-input" id="email" name="email" value="{{ old('email') }}"
+                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                        title="Please enter a valid email address (e.g., demo@gmail.com)"
+                        required
+                        autocomplete="email">
+                 <div id="email_error" class="text-danger small"></div>
+                 @if ($errors->has('email'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('email') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                 @endif
             </div>
         </div>
     </div>
@@ -323,8 +347,17 @@
                             <option value="+263" {{ old('country_code') == '+263' ? 'selected' : '' }}>+263 (ZW)</option>
                         <!-- Add more country codes as needed -->
                     </select>
-                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="10" pattern="[0-9]{10}" placeholder="Enter 10-digit phone number" required>
+                    <input type="tel" class="form-control" id="phone" name="phone" maxlength="10" pattern="[0-9]{10}" placeholder="Enter 10-digit phone number" value="{{ old('phone') }}" required>
                 </div>
+                @if($errors->has('phone'))
+                <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                    <ul class="mb-0 ms-2">
+                        @foreach ($errors->get('phone') as $error)
+                            <li class="p-0 m-0">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
             </div>
 
            <!-- Services (Multi-check options, in 3 columns) -->
@@ -334,39 +367,39 @@
         <!-- Row 1 -->
         <div class="col-md-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Bonus Shares" id="serviceBonusShares">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Bonus Shares" id="serviceBonusShares" {{ is_array(old('services')) && in_array('Bonus Shares', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceBonusShares">Bonus Shares</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="CMA Data" id="serviceCMAData">
+                <input class="form-check-input" type="checkbox" name="services[]" value="CMA Data" id="serviceCMAData" {{ is_array(old('services')) && in_array('CMA Data', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceCMAData">CMA Data</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Debt Funding" id="serviceDebtFunding">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Debt Funding" id="serviceDebtFunding" {{ is_array(old('services')) && in_array('Debt Funding', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceDebtFunding">Debt Funding</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Design Registration" id="serviceDesignRegistration">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Design Registration" id="serviceDesignRegistration" {{ is_array(old('services')) && in_array('Design Registration', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceDesignRegistration">Design Registration</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Due Diligence" id="serviceDueDiligence">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Due Diligence" id="serviceDueDiligence" {{ is_array(old('services')) && in_array('Due Diligence', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceDueDiligence">Due Diligence</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Equity Funding" id="serviceEquityFunding">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Equity Funding" id="serviceEquityFunding" {{ is_array(old('services')) && in_array('Equity Funding', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceEquityFunding">Equity Funding</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="ESOP Planning" id="serviceESOPPlanning">
+                <input class="form-check-input" type="checkbox" name="services[]" value="ESOP Planning" id="serviceESOPPlanning" {{ is_array(old('services')) && in_array('ESOP Planning', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceESOPPlanning">ESOP Planning</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Fund Raising" id="serviceFundRaising">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Fund Raising" id="serviceFundRaising" {{ is_array(old('services')) && in_array('Fund Raising', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceFundRaising">Fund Raising</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="GST, TDS, PF, ESI, PT, Customs" id="serviceGST">
+                <input class="form-check-input" type="checkbox" name="services[]" value="GST, TDS, PF, ESI, PT, Customs" id="serviceGST" {{ is_array(old('services')) && in_array('GST, TDS, PF, ESI, PT, Customs', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceGST">GST, TDS, PF, ESI, PT, Customs</label>
             </div>
         </div>
@@ -374,39 +407,39 @@
         <!-- Row 2 -->
         <div class="col-md-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Income Tax Return" id="serviceIncomeTaxReturn">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Income Tax Return" id="serviceIncomeTaxReturn" {{ is_array(old('services')) && in_array('Income Tax Return', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceIncomeTaxReturn">Income Tax Return</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="IPO Listing" id="serviceIPOListing">
+                <input class="form-check-input" type="checkbox" name="services[]" value="IPO Listing" id="serviceIPOListing" {{ is_array(old('services')) && in_array('IPO Listing', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceIPOListing">IPO Listing</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="IPO Planning" id="serviceIPOPlanning">
+                <input class="form-check-input" type="checkbox" name="services[]" value="IPO Planning" id="serviceIPOPlanning" {{ is_array(old('services')) && in_array('IPO Planning', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceIPOPlanning">IPO Planning</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Loan Proposal" id="serviceLoanProposal">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Loan Proposal" id="serviceLoanProposal" {{ is_array(old('services')) && in_array('Loan Proposal', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceLoanProposal">Loan Proposal</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="MCA & ROC Works" id="serviceMCA">
+                <input class="form-check-input" type="checkbox" name="services[]" value="MCA & ROC Works" id="serviceMCA" {{ is_array(old('services')) && in_array('MCA & ROC Works', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceMCA">MCA & ROC Works</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Mergers & Acquisitions" id="serviceMergers">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Mergers & Acquisitions" id="serviceMergers" {{ is_array(old('services')) && in_array('Mergers & Acquisitions', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceMergers">Mergers & Acquisitions</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Patent" id="servicePatent">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Patent" id="servicePatent" {{ is_array(old('services')) && in_array('Patent', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="servicePatent">Patent</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Pitchdeck Making" id="servicePitchdeckMaking">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Pitchdeck Making" id="servicePitchdeckMaking" {{ is_array(old('services')) && in_array('Pitchdeck Making', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="servicePitchdeckMaking">Pitchdeck Making</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Pitching to Investors" id="servicePitchingToInvestors">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Pitching to Investors" id="servicePitchingToInvestors" {{ is_array(old('services')) && in_array('Pitching to Investors', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="servicePitchingToInvestors">Pitching to Investors</label>
             </div>
         </div>
@@ -414,31 +447,31 @@
         <!-- Row 3 -->
         <div class="col-md-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Preparation of Share Holders' Agreement (SHA)" id="serviceSHA">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Preparation of Share Holders' Agreement (SHA)" id="serviceSHA" {{ is_array(old('services')) && in_array("Preparation of Share Holders' Agreement (SHA)", old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceSHA">Preparation of Share Holders' Agreement (SHA)</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Preparation of SWSA" id="serviceSWSA">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Preparation of SWSA" id="serviceSWSA" {{ is_array(old('services')) && in_array('Preparation of SWSA', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceSWSA">Preparation of SWSA</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Public Offering" id="servicePublicOffering">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Public Offering" id="servicePublicOffering" {{ is_array(old('services')) && in_array('Public Offering', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="servicePublicOffering">Public Offering</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Rights Issue" id="serviceRightsIssue">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Rights Issue" id="serviceRightsIssue" {{ is_array(old('services')) && in_array('Rights Issue', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceRightsIssue">Rights Issue</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Structured Finance" id="serviceStructuredFinance">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Structured Finance" id="serviceStructuredFinance" {{ is_array(old('services')) && in_array('Structured Finance', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceStructuredFinance">Structured Finance</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Subsidy" id="serviceSubsidy">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Subsidy" id="serviceSubsidy" {{ is_array(old('services')) && in_array('Subsidy', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceSubsidy">Subsidy</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Trademark" id="serviceTrademark">
+                <input class="form-check-input" type="checkbox" name="services[]" value="Trademark" id="serviceTrademark" {{ is_array(old('services')) && in_array('Trademark', old('services')) ? 'checked' : '' }}>
                 <label class="form-check-label" for="serviceTrademark">Trademark</label>
             </div>
         </div>
@@ -450,7 +483,7 @@
             <!-- Note -->
             <div class="mb-3">
                 <label for="note" class="form-label">Note (if any)</label>
-                <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                <textarea class="form-control" id="note" name="note" rows="3">{{ old('note') }}</textarea>
             </div>
 
             <!-- Submit Button -->
@@ -460,5 +493,57 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
+        const emailvalue = document.getElementById('email');
+        const form = document.querySelector('form');
+        const formid = document.getElementById('othersForm');
+        const emailError = document.getElementById('email_error');
+        //real time email validation
+          const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+
+          emailvalue.addEventListener('input', function () {
+            if(!emailPattern.test(emailvalue.value.trim())){
+                emailError.textContent = "Please enter a valid email address.e.g.,demo@gmail.com";
+            }else{
+                emailError.textContent = "";
+            }
+          });
+        // Real-time email validation
+        emailvalue.addEventListener('change', function () {
+            if (!emailPattern.test(emailvalue.value.trim())) {
+                emailError.textContent = 'Please enter a valid email address. e.g.,demo@gmail.com';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+        formid.addEventListener('submit', function (event) {
+            if (!emailPattern.test(emailvalue.value.trim())) {
+                emailError.textContent = 'Please enter a valid email address. e.g.,demo@gmail.com';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+         if (emailvalue.value.trim() !== '' && !emailPattern.test(emailvalue.value.trim())) {
+                emailError.textContent = 'Please enter a valid email address. e.g.,demo@gmail.com';
+            } else {
+                emailError.textContent = '';
+            }
+        // Form submission validation
+        form.addEventListener('submit', function (event) {
+            if (!emailPattern.test(emailvalue.value.trim())) {
+                event.preventDefault(); // Prevent form submission
+                alert('Please enter a valid email address. e.g.,demo@gmail.com');
+                emailvalue.focus(); // Set focus back to the email field
+            }
+            if (emailvalue.value.trim() === '') {
+                event.preventDefault(); // Prevent form submission
+                alert('Email field cannot be empty.');
+            }
+
+    });
+    });
+</script>
 @endsection

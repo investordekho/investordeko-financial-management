@@ -2,7 +2,7 @@
 
 @section('content')
 
-@if ($errors->any())
+<!-- @if ($errors->any())
     <div class="alert alert-danger shadow-sm">
         <ul class="mb-0">
             @foreach ($errors->all() as $error)
@@ -10,7 +10,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif -->
 
 @if (session('error'))
     <div class="alert alert-danger shadow-sm">
@@ -58,7 +58,7 @@
     </div>
 
     <!-- Form Section -->
-    <form id="othersForm" action="{{ route('form.other.submit') }}" method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded-bottom shadow-sm mt-0">
+    <form id="othersForm" action="{{ route('form.other.submit') }}" method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded-bottom shadow-sm mt-0" novalidate>
         @csrf
 
         <!-- Contact Details -->
@@ -82,15 +82,48 @@
                 <div class="col-md-4">
                     <label id="labelinput" for="full_name" class="required">Full Name</label>
                     <input type="text" class="form-control spaced-input" id="full_name" name="full_name" value="{{ old('full_name') }}" required>
+                     @if ($errors->has('full_name'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('full_name') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4"> 
                     <label id="labelinput" for="email" class="required">Email</label>
-                    <input type="email" class="form-control spaced-input" id="email" name="email" value="{{ old('email') }}" required>
+                    <input type="text" class="form-control spaced-input" id="email" name="email" value="{{ old('email') }}"
+                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in)$"
+                        title="Please enter a valid .in or .com email address"
+                        required
+                        autocomplete="email">
+                        <div id="email_error" class="text-danger small"></div>
+                    @if ($errors->has('email'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('email') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
+
                 <div class="col-md-4">
                     <label id="labelinput" for="phone_number" class="required">Phone Number</label>
                     <input type="text" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="20" value="{{ old('phone_number') }}"   pattern="^\+?[0-9]{7,20}$" 
                 oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" required>
+                  @if ($errors->has('phone_number'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('phone_number') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -101,19 +134,55 @@
             <div class="mb-3">
                 <label id="labelinput" for="address" class="required">Address</label>
                 <input type="text" class="form-control spaced-input" id="address" name="address" value="{{ old('address') }}" required>
+                 @if ($errors->has('address'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('address') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                @endif
             </div>
             <div class="row g-3">
                 <div class="col-md-4">
                     <label id="labelinput" for="city" class="required">City</label>
                     <input type="text" class="form-control spaced-input" id="city" name="city" value="{{ old('city') }}" required>
+                     @if ($errors->has('city'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('city') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                     @endif
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="state" class="required">State</label>
                     <input type="text" class="form-control spaced-input" id="state" name="state" value="{{ old('state') }}" required>
+                     @if ($errors->has('state'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('state') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                     @endif
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="country" class="required">Country</label>
                     <input type="text" class="form-control spaced-input" id="country" name="country" value="{{ old('country') }}" required>
+                     @if ($errors->has('country'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('country') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                     @endif
                 </div>
             </div>
         </div>
@@ -135,6 +204,15 @@
                     <option value="Direct Mail" {{ old('referral_source') == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
                     <option value="Company Website" {{ old('referral_source') == 'Company Website' ? 'selected' : '' }}>Company Website</option>
                 </select>
+                 @if ($errors->has('referral_source'))
+                        <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
+                            <ul class="mb-0 ms-2">
+                                @foreach ($errors->get('referral_source') as $error)
+                                    <li class="p-0 m-0">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                 @endif
                 <label for="referral_source">Referral Source</label>
             </div>
         </div>
@@ -191,5 +269,59 @@
         }
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const emailvalue = document.getElementById('email');
+        const form = document.querySelector('form');
+        const formid = document.getElementById('othersForm');
+        const emailError = document.getElementById('email_error');
+        //real time email validation
+          const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+
+          emailvalue.addEventListener('input', function () {
+            if(!emailPattern.test(emailvalue.value.trim())){
+                emailError.textContent = "Please enter a valid email address.e.g.,demo@gmail.com";
+            }else{
+                emailError.textContent = "";
+            }
+          });
+        // Real-time email validation
+        emailvalue.addEventListener('change', function () {
+            if (!emailPattern.test(emailvalue.value.trim())) {
+                emailError.textContent = 'Please enter a valid email address. e.g.,demo@gmail.com';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+        formid.addEventListener('submit', function (event) {
+            if (!emailPattern.test(emailvalue.value.trim())) {
+                emailError.textContent = 'Please enter a valid email address. e.g.,demo@gmail.com';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+         if (emailvalue.value.trim() !== '' && !emailPattern.test(emailvalue.value.trim())) {
+                emailError.textContent = 'Please enter a valid email address. e.g.,demo@gmail.com';
+            } else {
+                emailError.textContent = '';
+            }
+        // Form submission validation
+        form.addEventListener('submit', function (event) {
+            if (!emailPattern.test(emailvalue.value.trim())) {
+                event.preventDefault(); // Prevent form submission
+                alert('Please enter a valid email address. e.g.,demo@gmail.com');
+                emailvalue.focus(); // Set focus back to the email field
+            }
+            if (emailvalue.value.trim() === '') {
+                event.preventDefault(); // Prevent form submission
+                alert('Email field cannot be empty.');
+            }
+
+    });
+    });
+</script>
+
 
 @endsection
