@@ -464,6 +464,9 @@
             name="location" 
             value="{{ old('location') }}" 
             required
+            pattern="^[a-zA-Z\s]+$"
+            title="Please enter a valid name (letters and spaces only)"
+            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
         >
     </div>
 </div>
@@ -483,6 +486,9 @@
             name="state" 
             value="{{ old('state') }}" 
             required
+            pattern="^[a-zA-Z\s]+$"
+            title="Please enter a valid name (letters and spaces only)"
+            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
         >
     </div>
     <div class="col-md-4">
@@ -499,6 +505,9 @@
             name="country" 
             value="{{ old('country') }}" 
             required
+            pattern="^[a-zA-Z\s]+$"
+            title="Please enter a valid name (letters and spaces only)"
+            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
         >
     </div>
 </div>
