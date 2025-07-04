@@ -135,10 +135,8 @@
             <div class="form-section-title">Address Details</div>
             <div class="mb-3">
                 <label id="labelinput" for="address" class="required">Address</label>
-                <input type="text" class="form-control spaced-input" id="address" name="address" value="{{ old('address') }}" required pattern="^[a-zA-Z\s]+$"
-                    title="Please enter a valid name (letters and spaces only)"
-                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
-                @if ($errors->has('address'))
+                <input type="text" class="form-control spaced-input" id="address" name="address" value="{{ old('address') }}" required >
+                 @if ($errors->has('address'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
                                 @foreach ($errors->get('address') as $error)
