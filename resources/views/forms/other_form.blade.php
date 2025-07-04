@@ -81,7 +81,9 @@
             <div class="row g-3">
                 <div class="col-md-4">
                     <label id="labelinput" for="full_name" class="required">Full Name</label>
-                    <input type="text" class="form-control spaced-input" id="full_name" name="full_name" value="{{ old('full_name') }}" required>
+                    <input type="text" class="form-control spaced-input" id="full_name" name="full_name" value="{{ old('full_name') }}" required  pattern="^[a-zA-Z\s]+$"
+        title="Please enter a valid name (letters and spaces only)"
+        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                      @if ($errors->has('full_name'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
@@ -133,8 +135,10 @@
             <div class="form-section-title">Address Details</div>
             <div class="mb-3">
                 <label id="labelinput" for="address" class="required">Address</label>
-                <input type="text" class="form-control spaced-input" id="address" name="address" value="{{ old('address') }}" required>
-                 @if ($errors->has('address'))
+                <input type="text" class="form-control spaced-input" id="address" name="address" value="{{ old('address') }}" required pattern="^[a-zA-Z\s]+$"
+                    title="Please enter a valid name (letters and spaces only)"
+                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
+                @if ($errors->has('address'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
                                 @foreach ($errors->get('address') as $error)
@@ -147,7 +151,9 @@
             <div class="row g-3">
                 <div class="col-md-4">
                     <label id="labelinput" for="city" class="required">City</label>
-                    <input type="text" class="form-control spaced-input" id="city" name="city" value="{{ old('city') }}" required>
+                    <input type="text" class="form-control spaced-input" id="city" name="city" value="{{ old('city') }}" required pattern="^[a-zA-Z\s]+$"
+        title="Please enter a valid name (letters and spaces only)"
+        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                      @if ($errors->has('city'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
@@ -160,7 +166,9 @@
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="state" class="required">State</label>
-                    <input type="text" class="form-control spaced-input" id="state" name="state" value="{{ old('state') }}" required>
+                    <input type="text" class="form-control spaced-input" id="state" name="state" value="{{ old('state') }}" required pattern="^[a-zA-Z\s]+$"
+        title="Please enter a valid name (letters and spaces only)"
+        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                      @if ($errors->has('state'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
@@ -173,7 +181,9 @@
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="country" class="required">Country</label>
-                    <input type="text" class="form-control spaced-input" id="country" name="country" value="{{ old('country') }}" required>
+                    <input type="text" class="form-control spaced-input" id="country" name="country" value="{{ old('country') }}" required pattern="^[a-zA-Z\s]+$"
+        title="Please enter a valid name (letters and spaces only)"
+        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                      @if ($errors->has('country'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
