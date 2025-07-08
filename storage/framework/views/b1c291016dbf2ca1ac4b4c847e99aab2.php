@@ -468,7 +468,7 @@ unset($__errorArgs, $__bag); ?>"
                     name="link_descriptions[]" 
                     required
                 >
-                    <?php $__currentLoopData = ['Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'Others']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = ['Facebook', 'Twitter/X', 'Instagram', 'LinkedIn', 'Others']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($option); ?>" <?php echo e(($linkDescriptions[$i] ?? '') == $option ? 'selected' : ''); ?>><?php echo e($option); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
@@ -1000,7 +1000,7 @@ endif;
 unset($__errorArgs, $__bag); ?>" id="referral_source" name="referral_source" required>
                                 <option value="" disabled <?php echo e(old('referral_source') ? '' : 'selected'); ?>>Select Source</option>
                                 <option value="Friend/Family" <?php echo e(old('referral_source') == 'Friend/Family' ? 'selected' : ''); ?>>Friend/Family</option>
-                                <option value="Social Media (Facebook, Instagram, Twitter, etc.)" <?php echo e(old('referral_source') == 'Social Media (Facebook, Instagram, Twitter, etc.)' ? 'selected' : ''); ?>>Social Media (Facebook, Instagram, Twitter, etc.)</option>
+                                <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" <?php echo e(old('referral_source') == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : ''); ?>>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
                                 <option value="Online Search (Google, Bing, etc.)" <?php echo e(old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : ''); ?>>Online Search (Google, Bing, etc.)</option>
                                 <option value="Advertisement (TV, Radio, Print)" <?php echo e(old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : ''); ?>>Advertisement (TV, Radio, Print)</option>
                                 <option value="Email Newsletter" <?php echo e(old('referral_source') == 'Email Newsletter' ? 'selected' : ''); ?>>Email Newsletter</option>
@@ -1161,7 +1161,7 @@ function addPublicLinkField(button) {
                     required
                 >
                     <option value="Facebook">Facebook</option>
-                    <option value="Twitter">Twitter</option>
+                    <option value="Twitter/X">Twitter/X</option>
                     <option value="Instagram">Instagram</option>
                     <option value="LinkedIn">LinkedIn</option>
                     <option value="Others">Others</option>
@@ -1420,7 +1420,7 @@ function removePublicLinkField(button) {
 
             // Twitter/X: Allow usernames, orgs, etc.
             if (
-                link && desc === 'Twitter' &&
+                link && desc === 'Twitter/X' &&
                 !/^https?:\/\/(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/?$/.test(link)
             ) {
                 showError(input, 'Valid Twitter/X URL required, e.g., https://x.com/yourhandle');

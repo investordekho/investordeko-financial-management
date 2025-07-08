@@ -356,7 +356,7 @@
                     >
                         <option value="" disabled {{ old('link_descriptions.'.$i) ? '' : 'selected' }}>Select Account</option>
                         <option value="Facebook" {{ old('link_descriptions.'.$i) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                        <option value="Twitter" {{ old('link_descriptions.'.$i) == 'Twitter' ? 'selected' : '' }}>Twitter</option>
+                        <option value="Twitter/X" {{ old('link_descriptions.'.$i) == 'Twitter/X' ? 'selected' : '' }}>Twitter/X</option>
                         <option value="Others" {{ old('link_descriptions.'.$i) == 'Others' ? 'selected' : '' }}>Others</option>
                     </select>
                     @error('link_descriptions.'.$i)
@@ -991,7 +991,7 @@
     >
         <option value="" disabled {{ old('referral_source') ? '' : 'selected' }}>Select Source</option>
         <option value="Friend/Family" {{ old('referral_source') == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
-        <option value="Social Media (Facebook, Instagram, Twitter, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter, etc.)</option>
+        <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
         <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
         <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
         <option value="Email Newsletter" {{ old('referral_source') == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
@@ -1142,8 +1142,8 @@
         facebookOption.textContent = 'Facebook';
 
         const twitterOption = document.createElement('option');
-        twitterOption.value = 'Twitter';
-        twitterOption.textContent = 'Twitter';
+        twitterOption.value = 'Twitter/X';
+        twitterOption.textContent = 'Twitter/X';
 
         const othersOption = document.createElement('option');
         othersOption.value = 'Others';
@@ -1758,8 +1758,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 isValid = false;
             }
 
-            if (link && desc === 'Twitter' && !/^https?:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+$/.test(link)) {
-                showError(input, 'Valid Twitter URL required. e.g., https://www.twitter.com/username');
+            if (link && desc === 'Twitter/X' && !/^https?:\/\/(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/?$/.test(link)) {
+                showError(input, 'Valid Twitter/X URL required. e.g., https://x.com/yourhandle');
                 isValid = false;
             }
 
