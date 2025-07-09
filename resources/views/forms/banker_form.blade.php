@@ -173,6 +173,7 @@
                 <div class="text-danger small mt-1">This field is required</div>
             @enderror
         </div>
+         <div id="concerned_person_email_error" class="text-danger small"></div>
     </div>
 
     <!-- Phone Number Field -->
@@ -187,6 +188,7 @@
                 id="phone_number" 
                 name="phone_number" 
                 maxlength="20" 
+                 minlength="7"
                 pattern="^\+?[0-9]{7,20}$" 
                 oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
                 value="{{ old('phone_number') }}" 
@@ -1863,4 +1865,93 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const emailInput = document.getElementById('email');
+    const form = document.querySelector('form');
+    const formid= document.getElementById('investmentBankerForm');
+    const emailError = document.getElementById('concerned_person_email_error');
+
+    // Real-time validation
+    emailInput.addEventListener('input', function () {
+        const emailValue = emailInput.value.trim();
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        if (!emailPattern.test(emailValue)) {
+            emailError.textContent = "Please enter a valid email address.e.g.,demo@gmail.com";
+        } else {
+            emailError.textContent = "";
+        }
+    });
+
+    // Form submit validation
+    form.addEventListener('submit', function (event) {
+        const emailValue = emailInput.value.trim();
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailPattern.test(emailValue)) {
+            event.preventDefault();
+            emailError.textContent = "Please enter a valid email address.e.g.,demo@gmail.com";
+            emailInput.focus();
+        } else {
+            emailError.textContent = "";
+        }
+    });
+     formid.addEventListener('submit', function (event) {
+        const emailValue = emailInput.value.trim();
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailPattern.test(emailValue)) {
+            event.preventDefault();
+            emailError.textContent = "Please enter a valid email address.e.g.,demo@gmail.com";
+            emailInput.focus();
+        } else {
+            emailError.textContent = "";
+        }
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const phoneInput = document.getElementById('phone_number');
+    const phoneErrorContainer = document.createElement('div');
+    phoneErrorContainer.className = 'text-danger small mt-1';
+    phoneInput.parentNode.appendChild(phoneErrorContainer);
+
+    const phonePattern = /^\+?[0-9]{7,20}$/;
+
+    // Real-time validation
+    phoneInput.addEventListener('input', function () {
+        const phoneValue = phoneInput.value.trim();
+
+        // Remove all non-digits except initial '+'
+        phoneInput.value = phoneValue.replace(/(?!^\+)[^0-9]/g, '');
+
+        if (!phonePattern.test(phoneInput.value)) {
+            phoneErrorContainer.textContent = "Enter a valid phone number (7 to 20 digits, optional +).";
+        } else {
+            phoneErrorContainer.textContent = "";
+        }
+    });
+
+    // Handle both forms
+    const forms = [document.querySelector('form'), document.getElementById('investmentBankerForm')];
+    forms.forEach(function (form) {
+        if (form) {
+            form.addEventListener('submit', function (event) {
+                const phoneValue = phoneInput.value.trim();
+
+                if (!phonePattern.test(phoneValue)) {
+                    event.preventDefault();
+                    phoneErrorContainer.textContent = "Enter a valid phone number (7 to 20 digits, optional +).";
+                    phoneInput.focus();
+                } else {
+                    phoneErrorContainer.textContent = "";
+                }
+            });
+        }
+    });
+});
+</script>
+
 @endsection

@@ -575,6 +575,7 @@
                                         required
                                         value="{{ $previousInvestmentYears[$i] ?? '' }}"
                                         >
+                                        <option value="" {{ !isset($previousInvestmentYears[$i]) || $previousInvestmentYears[$i] == '' ? 'selected' : ''}}>Select Year</option>
                                         @for ($year = 2000; $year <= 2024; $year++)
                                             <option value="{{ $year }}" {{ ($previousInvestmentYears[$i] ?? '') == $year ? 'selected' : '' }}>{{ $year }}</option>
                                         @endfor
@@ -1258,7 +1259,7 @@ function removePublicLinkField(button) {
         });
 
         const currentYear = new Date().getFullYear();
-        let yearOptions = `<option value="" disabled selected>Select Year</option>`;
+        let yearOptions = `<option value="" selected>Select Year</option>`;
         for (let year = 2000; year <= currentYear; year++) {
             yearOptions += `<option value="${year}">${year}</option>`;
         }
@@ -1271,6 +1272,7 @@ function removePublicLinkField(button) {
                 <select class="form-control" name="previous_investment_year[]" required>
                     ${yearOptions}
                 </select>
+                <div class="text-danger d-none year-error">This field is required</div>
             </div>
             <div class="col-sm-3 form-group">
                 <label class="required">Company</label>
@@ -1281,13 +1283,14 @@ function removePublicLinkField(button) {
                 <select class="form-control" name="sector[]" required>
                     ${sectorOptions}
                 </select>
+                <div class="text-danger d-none sector-error">This field is required</div>
             </div>
             <div class="col-sm-3 form-group">
                 <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
             </div>
         `;
-
         container.appendChild(newRow);
+
     }
 
     function removePreviousInvestmentField(button) {
@@ -1298,6 +1301,50 @@ function removePublicLinkField(button) {
 
 
 
+<!-- <script>
+document.querySelector('form').addEventListener('submit', function (e) {
+    let isValid = true;
+
+    document.querySelectorAll('.previous-investment-row').forEach(row => {
+        // YEAR
+        const year = row.querySelector('select[name="previous_investment_year[]"]');
+        const yearError = row.querySelector('.year-error');
+       if (year.value === "" || year.selectedIndex === 0) {
+            year.classList.add('is-invalid');
+            yearError.classList.remove('d-none');
+            isValid = false;
+        } else {
+            year.classList.remove('is-invalid');
+            yearError.classList.add('d-none');
+        }
+
+        // SECTOR
+        const sector = row.querySelector('select[name="sector[]"]');
+        const sectorError = row.querySelector('.sector-error');
+        if (!sector.value) {
+            sector.classList.add('is-invalid');
+            sectorError.classList.remove('d-none');
+            isValid = false;
+        } else {
+            sector.classList.remove('is-invalid');
+            sectorError.classList.add('d-none');
+        }
+
+        // COMPANY (optional client-side)
+        const company = row.querySelector('input[name="previous_investment_company[]"]');
+        if (!company.value.trim()) {
+            company.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            company.classList.remove('is-invalid');
+        }
+    });
+
+    if (!isValid) {
+        e.preventDefault(); // Prevent form submission
+    }
+});
+</script> -->
 
 
 

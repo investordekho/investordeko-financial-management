@@ -2975,5 +2975,60 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const phonePattern = /^\+?[0-9]{7,20}$/;
+
+    // Define all phone inputs you want to validate
+    const phoneInputs = [
+        {
+            input: document.getElementById('phone_number'),
+            formIds: ['form', 'investmentBankerForm']
+        },
+        {
+            input: document.getElementById('concerned_person_phone'),
+            formIds: ['investeeForm']
+        }
+    ];
+
+    phoneInputs.forEach(({ input, formIds }) => {
+        if (!input) return;
+
+        // Create and insert error container
+        const errorContainer = document.createElement('div');
+        errorContainer.className = 'text-danger small mt-1';
+        input.parentNode.appendChild(errorContainer);
+
+        // Real-time validation
+        input.addEventListener('input', function () {
+            input.value = input.value.replace(/(?!^\+)[^0-9]/g, '');
+            const value = input.value.trim();
+
+            if (!phonePattern.test(value)) {
+                errorContainer.textContent = "Enter a valid phone number (7 to 20 digits, optional +).";
+            } else {
+                errorContainer.textContent = "";
+            }
+        });
+
+        // Form submit validation
+        formIds.forEach(id => {
+            const form = document.getElementById(id);
+            if (form) {
+                form.addEventListener('submit', function (event) {
+                    const value = input.value.trim();
+                    if (!phonePattern.test(value)) {
+                        event.preventDefault();
+                        errorContainer.textContent = "Enter a valid phone number (7 to 20 digits, optional +).";
+                        input.focus();
+                    } else {
+                        errorContainer.textContent = "";
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
 
 @endsection

@@ -254,11 +254,12 @@ public function submitInvesteeForm(Request $request)
             'investor_type' => 'required|string',
             'investment_size' => 'required|string',
             'investment_tenure' => 'required|string',
-            'previous_investment_year' => 'array',
+            'previous_investment_year' => 'required|array|min:1',
+            'previous_investment_year.*' => 'required|integer|min:2000|max:' . date('Y'),
             'previous_investment_company' => 'array',
             'previous_investment_company.*' => 'string',
-            'sector' => 'array',
-            'sector.*' => 'string',
+            'sector' => 'required|array|min:1',
+            'sector.*' => 'required|string',
             'referral_source' => 'required|string',
             'terms' => 'accepted'
         ]);
