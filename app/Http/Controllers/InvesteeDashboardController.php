@@ -369,13 +369,13 @@ public function search(Request $request)
 
     // Apply sorting
     $sort = $request->input('sort', null);
-    if ($sort == 'A-Z') {
+    if ($sort == 'Investor Name (Ascending)') {
         $filteredInvestors = $filteredInvestors->sortBy('investor_name')->values();
-    } elseif ($sort == 'Z-A') {
+    } elseif ($sort == 'Investor Name (Descending)') {
         $filteredInvestors = $filteredInvestors->sortByDesc('investor_name')->values();
-    } elseif ($sort == 'investment_size_asc') {
+    } elseif ($sort == 'Investment Size (Low to High)') {
         $filteredInvestors = $filteredInvestors->sortBy(fn($inv) => $inv->investmentDetails->investment_size ?? 0)->values();
-    } elseif ($sort == 'investment_size_desc') {
+    } elseif ($sort == 'Investment Size (High to Low)') {
         $filteredInvestors = $filteredInvestors->sortByDesc(fn($inv) => $inv->investmentDetails->investment_size ?? 0)->values();
     }
 
