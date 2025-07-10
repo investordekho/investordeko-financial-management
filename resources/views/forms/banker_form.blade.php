@@ -359,6 +359,7 @@
                         <option value="" disabled {{ old('link_descriptions.'.$i) ? '' : 'selected' }}>Select Account</option>
                         <option value="Facebook" {{ old('link_descriptions.'.$i) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
                         <option value="Twitter/X" {{ old('link_descriptions.'.$i) == 'Twitter/X' ? 'selected' : '' }}>Twitter/X</option>
+                        <option value="Linkedin" {{ old('link_descriptions.'.$i) == 'Linkedin' ? 'selected' : '' }}>Linkedin</option>
                         <option value="Others" {{ old('link_descriptions.'.$i) == 'Others' ? 'selected' : '' }}>Others</option>
                     </select>
                     @error('link_descriptions.'.$i)
@@ -1147,6 +1148,10 @@
         twitterOption.value = 'Twitter/X';
         twitterOption.textContent = 'Twitter/X';
 
+        const linkedinOption = document.createElement('option');
+        linkedinOption.value = 'Linkedin';
+        linkedinOption.textContent = 'Linkedin';
+
         const othersOption = document.createElement('option');
         othersOption.value = 'Others';
         othersOption.textContent = 'Others';
@@ -1154,6 +1159,7 @@
         select.appendChild(defaultOption);
         select.appendChild(facebookOption);
         select.appendChild(twitterOption);
+        select.appendChild(linkedinOption);
         select.appendChild(othersOption);
 
         // Create the remove button with the col-sm-2 class to align with Add More Links
@@ -1764,6 +1770,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 showError(input, 'Valid Twitter/X URL required. e.g., https://x.com/yourhandle');
                 isValid = false;
             }
+
+            if (link && desc === 'Linkedin' && !/^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[a-zA-Z0-9-_%]+\/?$/.test(link)) {
+                showError(input, 'Valid LinkedIn URL required. e.g., https://linkedin.com/in/yourname or https://linkedin.com/company/yourcompany');
+                isValid = false;
+            }
+
 
             // Scroll to first error only
             if (!isValid && !scrolled && input.classList.contains('is-invalid')) {
