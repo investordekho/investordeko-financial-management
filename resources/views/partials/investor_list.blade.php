@@ -88,15 +88,15 @@
             </div>
         @endforeach
 
-        @if (!$isSubscribed)
-        <div class="col-md-12 text-center mt-4">
+        <!-- @if (!$isSubscribed) -->
+        <!-- <div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
                 <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
                 <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
             </div>
-        </div>
-    @endif
+        </div> -->
+    <!-- @endif -->
         <!-- @if (!$isSubscribed && $investors->count() == 3)
             <div class="col-md-12 text-center">
                 <a href="{{ route('subscription') }}" class="btn btn-secondary">🔒 Unlock More Investors</a>
@@ -113,18 +113,25 @@
     </div>
 
     
-     @if (!$isSubscribed)
-        <div class="col-md-12 text-center mt-4 mb-2">
+     <!-- @if (!$isSubscribed) -->
+        <!-- <div class="col-md-12 text-center mt-4 mb-2">
+            <div class="alert subscription-box">
+                <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+                <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
+                <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+            </div>
+        </div> -->
+    <!-- @endif -->
+    <div class="divider height-4"></div>
+@endif
+<div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
                 <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
                 <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
             </div>
         </div>
-    @endif
-    <div class="divider height-4"></div>
-@endif
-
+         <div class="divider height-4"></div>
 <style>
     .investor-card {
         background: linear-gradient(135deg, #ffffff, #f8f9fa);

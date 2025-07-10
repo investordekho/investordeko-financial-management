@@ -104,15 +104,15 @@
         </div>
     @endforeach
 
-    @if (!$isSubscribed && $investees->count() == 3)
-        <div class="col-md-12 text-center mt-4">
+    <!-- @if (!$isSubscribed && $investees->count() == 3) -->
+        <!-- <div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
                 <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
                 <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
             </div>
-        </div>
-    @endif
+        </div> -->
+    <!-- @endif -->
 
     
 @else
@@ -121,7 +121,17 @@
         <p class="text-center">Please check back later or consider subscribing for more options.</p>
     </div>
 
-    @if (!$isSubscribed && $investees->count() == 3)
+    <!-- @if (!$isSubscribed && $investees->count() == 3) -->
+        <!-- <div class="col-md-12 text-center mt-4">
+            <div class="alert subscription-box">
+                <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+                <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
+                <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+            </div>
+        </div> -->
+    <!-- @endif -->
+    <!-- <div class="divider height-4"></div> -->
+@endif
         <div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
@@ -129,10 +139,7 @@
                 <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
             </div>
         </div>
-    @endif
-    <div class="divider height-4"></div>
-@endif
-
+        <div class="divider height-4"></div>
 <style>
     .investee-card {
         background: linear-gradient(135deg, #ffffff, #f8f9fa);
