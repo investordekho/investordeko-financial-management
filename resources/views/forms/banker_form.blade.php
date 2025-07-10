@@ -149,7 +149,7 @@
                 {{ old('concerned_person_is_me') ? 'checked' : '' }}
                 onclick="fillConcernedPersonDetails()"
             >
-            <label class="form-check-label text-danger small" for="concerned_person_is_me">
+            <label class="form-check-label text-danger small" for="concerned_person_is_me" style="font-size: 12px; color: red;">
                 Same as registered person
             </label>
         </div>
