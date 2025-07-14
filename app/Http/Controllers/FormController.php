@@ -247,9 +247,7 @@ public function submitInvesteeForm(Request $request)
             'concerned_person_phone' => 'required',
             'email' => 'required|email',
             'public_links' => 'array',
-            // 'link_descriptions' => 'nullable|string',
             'public_links.*' => 'url',
-            // 'link_descriptions.*' => 'string',
             'invest_in' => 'required|string',
             'investor_type' => 'required|string',
             'investment_size' => 'required|string',
@@ -375,5 +373,123 @@ public function submitOtherForm(Request $request)
 
     return redirect()->route('dashboard')->with('success', 'Other form submitted successfully!');
 }
+
+public function updateprofileview()
+{
+    $userId = auth()->id();
+    $investor = Investor::where('user_id', $userId)->firstOrFail();
+    $contactDetails = $investor->contactDetails()->first();
+    $investmentDetails = $investor->investmentDetails()->first();
+    $publicLinks = $investor->publicLinks()->get();
+    $previousInvestments = $investor->previousInvestments()->get();
+    $referral = $investor->referrals()->first();
+    $guidanceNeeds = $investor->guidanceNeeds()->first();
+    $investorAddresses = $investor->investorAddresses()->get();
+    // $locationDetail = $investor->locationDetail()->first();
+    return view('updateforms.investor_form', compact('investor', 'contactDetails', 'investmentDetails', 'publicLinks',
+     'previousInvestments', 'referral','guidanceNeeds', 'investorAddresses'));
+}
+public function updateInvestorForm(Request $request)
+{
+    $validatedData = $request->validate([
+        'investor_name' => 'required|string',
+        'sectors_preferred' => 'required|array|min:1',
+        'sectors_preferred.*' => 'string',
+        'address' => 'required|string',
+        'investor_profile' => 'nullable|file',
+        'concerned_person_name' => 'required|string',
+        'concerned_person_designation' => 'required|string',
+        'concerned_person_phone' => 'required',
+        'email' => 'required|email',
+        'public_links' => 'array',
+        'public_links.*' => 'url',
+        'link_descriptions' => 'array',
+        'link_descriptions.*' => 'nullable|string',
+        'invest_in' => 'required|string',
+        'investor_type' => 'required|string',
+        'investment_size' => 'required|string',
+        'investment_tenure' => 'required|string',
+        'previous_investment_year' => 'required|array|min:1',
+        'previous_investment_year.*' => 'required|integer|min:2000|max:' . date('Y'),
+        'previous_investment_company' => 'array',
+        'previous_investment_company.*' => 'nullable|string',
+        'sector' => 'required|array|min:1',
+        'sector.*' => 'required|string',
+        'referral_source' => 'required|string',
+        'terms' => 'accepted'
+    ]);
+
+    $userId = auth()->id();
+
+    $investor = Investor::where('user_id', $userId)->firstOrFail();
+
+    $investor->investor_name = $request->investor_name;
+    $investor->sectors_preferred = implode(',', $request->sectors_preferred);
+    $investor->address = $request->address;
+
+    if ($request->hasFile('investor_profile')) {
+        $investor->investor_profile = $request->file('investor_profile')->store('investor_profiles');
+    }
+
+    $investor->save();
+
+    // Update or create contact details
+    $investor->contactDetails()->updateOrCreate(
+        [],
+        [
+            'concerned_person_name' => $request->concerned_person_name,
+            'concerned_person_designation' => $request->concerned_person_designation,
+            'concerned_person_phone' => $request->concerned_person_phone,
+            'email' => $request->email
+        ]
+    );
+
+    // Update or create investment details
+    $investor->investmentDetails()->updateOrCreate(
+        [],
+        [
+            'invest_in' => $request->invest_in,
+            'investor_type' => $request->investor_type,
+            'investment_size' => $request->investment_size,
+            'investment_tenure' => $request->investment_tenure
+        ]
+    );
+
+    // Delete and re-create public links
+    $investor->publicLinks()->delete();
+    if ($request->has('public_links')) {
+        foreach ($request->public_links as $index => $link) {
+            $investor->publicLinks()->create([
+                'url' => $link,
+                'description' => $request->link_descriptions[$index] ?? null
+            ]);
+        }
+    }
+
+    // Delete and re-create previous investments
+    $investor->previousInvestments()->delete();
+    foreach ($request->previous_investment_year as $index => $year) {
+        $investor->previousInvestments()->create([
+            'previous_investment_year' => $year,
+            'previous_investment_company' => $request->previous_investment_company[$index] ?? null,
+            'sector' => $request->sector[$index],
+            'investors_id' => $investor->id,
+        ]);
+    }
+
+    // Update or create referral
+    $investor->referrals()->delete(); // Assuming only one referral per investor
+    $investor->referrals()->create([
+        'referral_source' => $request->referral_source,
+    ]);
+
+    // Mark the user as having completed the form
+    $user = auth()->user();
+    $user->form_filled = 1;
+    $user->save();
+
+    return redirect()->route('investor.dashboard')->with('success', 'Investor form updated successfully!');
+}
+
 
 }
