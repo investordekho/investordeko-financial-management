@@ -248,6 +248,8 @@ public function submitInvesteeForm(Request $request)
             'email' => 'required|email',
             'public_links' => 'array',
             'public_links.*' => 'url',
+            'link_descriptions' => 'array',
+            'link_descriptions.*' => 'nullable|string',
             'invest_in' => 'required|string',
             'investor_type' => 'required|string',
             'investment_size' => 'required|string',
@@ -269,9 +271,23 @@ public function submitInvesteeForm(Request $request)
         $investor->address = $request->address;
         $investor->user_id = auth()->id(); // Assuming the user is logged in
 
-        // Handle investor profile file upload if provided
+        // // Handle investor profile file upload if provided
+        // if ($request->hasFile('investor_profile')) {
+        //     // $investor->investor_profile = $request->file('investor_profile')->store('investor_profiles');
+        //     $investor->investor_profile = $request->file('investor_profile')->store('investor_profiles', 'public');
+        // }
+
         if ($request->hasFile('investor_profile')) {
-            $investor->investor_profile = $request->file('investor_profile')->store('investor_profiles');
+            $file = $request->file('investor_profile');
+
+            // Optional: delete old file if updating
+            // if ($investor->investor_profile && Storage::disk('public')->exists('investor_profiles/' . $investor->investor_profile)) {
+            //     Storage::disk('public')->delete('investor_profiles/' . $investor->investor_profile);
+            // }
+
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('investor_profiles', $filename, 'public');
+            $investor->investor_profile = $filename; // Save only filename
         }
 
         $investor->save();
@@ -299,39 +315,39 @@ public function submitInvesteeForm(Request $request)
                 foreach ($request->public_links as $index => $link) {
                     $investor->publicLinks()->create([
                         'url' => $link,
-                        'description' => $request->link_descriptions[$index], // Make sure this is filled
+                        'link_description' => $request->link_descriptions[$index], // Make sure this is filled
                     ]);
                 }
             }
 
 
        // Step 6: Handle previous investments (optional section)
-if ($request->has('previous_investment_year')) {
-    foreach ($request->previous_investment_year as $index => $year) {
-        // Assuming you have a relationship defined in the Investor model for previous investments
-        $investor->previousInvestments()->create([
-            'previous_investment_year' => $year,
-            'previous_investment_company' => $request->previous_investment_company[$index],
-            'sector' => $request->sector[$index],
-            'investors_id' => $investor->id, // Assuming 'investors_id' is the foreign key in the previous_investments table
-        ]);
-    }
-}
+        if ($request->has('previous_investment_year')) {
+            foreach ($request->previous_investment_year as $index => $year) {
+                // Assuming you have a relationship defined in the Investor model for previous investments
+                $investor->previousInvestments()->create([
+                    'previous_investment_year' => $year,
+                    'previous_investment_company' => $request->previous_investment_company[$index],
+                    'sector' => $request->sector[$index],
+                    'investors_id' => $investor->id, // Assuming 'investors_id' is the foreign key in the previous_investments table
+                ]);
+            }
+        }
 
-if($request->has('referral_source')) {
-    $referralSource = new Referral();
-    $referralSource->investor_id = $investor->id;
-    $referralSource->referral_source = $request->referral_source;
-    $referralSource->save();
-}
+        if($request->has('referral_source')) {
+            $referralSource = new Referral();
+            $referralSource->investor_id = $investor->id;
+            $referralSource->referral_source = $request->referral_source;
+            $referralSource->save();
+        }
 
-        // Step 7: Redirect after form submission
-$user = auth()->user();
-$user->form_filled = 1; // Mark the form as filled
-$user->save(); // Save the changes to the database
+            // Step 7: Redirect after form submission
+            $user = auth()->user();
+            $user->form_filled = 1; // Mark the form as filled
+            $user->save(); // Save the changes to the database
 
-        // Step 8: Redirect after form submission
-return redirect()->route('investor.dashboard')->with('success', 'Investor form submitted successfully!');
+                    // Step 8: Redirect after form submission
+            return redirect()->route('investor.dashboard')->with('success', 'Investor form submitted successfully!');
 
     }
 
@@ -427,9 +443,22 @@ public function updateInvestorForm(Request $request)
     $investor->sectors_preferred = implode(',', $request->sectors_preferred);
     $investor->address = $request->address;
 
-    if ($request->hasFile('investor_profile')) {
-        $investor->investor_profile = $request->file('investor_profile')->store('investor_profiles');
-    }
+    // if ($request->hasFile('investor_profile')) {
+    //     $investor->investor_profile = $request->file('investor_profile')->store('investor_profiles');
+    // }
+
+      if ($request->hasFile('investor_profile')) {
+            $file = $request->file('investor_profile');
+
+            // Optional: delete old file if updating
+            // if ($investor->investor_profile && Storage::disk('public')->exists('investor_profiles/' . $investor->investor_profile)) {
+            //     Storage::disk('public')->delete('investor_profiles/' . $investor->investor_profile);
+            // }
+
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('investor_profiles', $filename, 'public');
+            $investor->investor_profile = $filename; // Save only filename
+        }
 
     $investor->save();
 
@@ -461,7 +490,7 @@ public function updateInvestorForm(Request $request)
         foreach ($request->public_links as $index => $link) {
             $investor->publicLinks()->create([
                 'url' => $link,
-                'description' => $request->link_descriptions[$index] ?? null
+                'link_description' => $request->link_descriptions[$index] ?? null
             ]);
         }
     }

@@ -146,6 +146,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getprofileverificationcode',[ProfileController::class,'getemailverificationcode'])->name('getprofileverificationcode');
     Route::post('/verifyemailforupdateprofile',[ProfileController::class,'verifyemailupdateprofile'])->name('verifyemailforupdateprofle');
 
+    Route::get('/updateprofile', [FormController::class, 'updateprofileview'])->name('updateprofile');
+    Route::post('/updateinvestorprofile', [FormController::class, 'updateInvestorForm'])->name('updateinvestorprofile');
+
 });
 
 // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');

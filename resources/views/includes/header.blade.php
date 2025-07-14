@@ -451,6 +451,14 @@
                                     <i class="bi bi-gear-fill me-2"></i> Profile Settings
                                 </a>
                             </li>
+
+                            <!-- Update Profile Link -->
+                            <li>
+                                <a class="dropdown-item" href="{{ route('updateprofile') }}">
+                                    <i class="bi bi-person-lines-fill me-2"></i> Update Profile
+                                </a>
+                            </li>
+
                             
                             <!-- Divider -->
                             <li><hr class="dropdown-divider"></li>
