@@ -15,6 +15,9 @@ USE App\Models\investee_guidance_needed_model;
 USE App\Mail\GuidanceNeededInvesteeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 class FormSubmissionController extends Controller
 {
@@ -274,44 +277,143 @@ public function store(Request $request)
     }
 
     // Store attachments (Pitch Deck)
-    if ($request->hasFile('pitch_deck')) {
-        $path = $request->file('pitch_deck')->store('attachments', 'public');
-        Attachment::create([
-            'company_id' => $company->id,
-            'type' => 'pitch_deck',
-            'file_path' => $path,
-        ]);
-    }
+    // if ($request->hasFile('pitch_deck')) {
+    //     $path = $request->file('pitch_deck')->store('attachments', 'public');
+    //     Attachment::create([
+    //         'company_id' => $company->id,
+    //         'type' => 'pitch_deck',
+    //         'file_path' => $path,
+    //     ]);
+    // }
 
     // Store financial attachments
-    if ($request->hasFile('financials')) {
-        foreach ($request->file('financials') as $index => $financial) {
-            // Check fiscal year exists for this index
-            if (!isset($request->fiscal_year[$index])) {
-                continue;
-            }
+    // if ($request->hasFile('financials')) {
+    //     foreach ($request->file('financials') as $index => $financial) {
+    //         // Check fiscal year exists for this index
+    //         if (!isset($request->fiscal_year[$index])) {
+    //             continue;
+    //         }
 
-            $fiscalYear = $request->fiscal_year[$index];
+    //         $fiscalYear = $request->fiscal_year[$index];
 
-            // Store the file and save to the database
-            $path = $financial->store('attachments', 'public');
-            Attachment::create([
-                'company_id' => $company->id,
-                'type' => 'financials',
-                'fiscal_year' => $fiscalYear,
-                'file_path' => $path,
-            ]);
-        }
-    }
+    //         // Store the file and save to the database
+    //         $path = $financial->store('attachments', 'public');
+    //         Attachment::create([
+    //             'company_id' => $company->id,
+    //             'type' => 'financials',
+    //             'fiscal_year' => $fiscalYear,
+    //             'file_path' => $path,
+    //         ]);
+    //     }
+    // }
 
-    if($request->hasFile('other_attachment')){
-        $path = $request->file('other_attachment')->store('attachments','public');
+    // if($request->hasFile('other_attachment')){
+    //     $path = $request->file('other_attachment')->store('attachments','public');
+    //     Attachment::create([
+    //         'company_id'=>$company->id,
+    //         'type'=>'other',
+    //         'file_path'=>$path,
+    //     ]);
+    // }
+
+// Store pitch deck
+// if ($request->hasFile('pitch_deck')) {
+//     $file = $request->file('pitch_deck');
+//     $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+//     $file->storeAs('public/attachments', $filename);
+
+//     Attachment::create([
+//         'company_id' => $company->id,
+//         'type' => 'pitch_deck',
+//         'file_path' => 'attachments/' . $filename,
+//     ]);
+// }
+
+// Store multiple financials
+// if ($request->hasFile('financials')) {
+//     foreach ($request->file('financials') as $index => $financialFile) {
+//         if (!isset($request->fiscal_year[$index])) continue;
+
+//         $fiscalYear = $request->fiscal_year[$index];
+//         $filename = Str::random(40) . '.' . $financialFile->getClientOriginalExtension();
+
+//         $financialFile->storeAs('public/attachments', $filename);
+
+//         Attachment::create([
+//             'company_id' => $company->id,
+//             'type' => 'financials',
+//             'fiscal_year' => $fiscalYear,
+//             'file_path' => 'attachments/' . $filename,
+//         ]);
+//     }
+// }
+
+// Store other attachment
+// if ($request->hasFile('other_attachment')) {
+//     $file = $request->file('other_attachment');
+//     $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+//     $file->storeAs('public/attachments', $filename);
+
+//     Attachment::create([
+//         'company_id' => $company->id,
+//         'type' => 'other',
+//         'file_path' => 'attachments/' . $filename,
+//     ]);
+// }
+
+
+// Store pitch deck
+if ($request->hasFile('pitch_deck')) {
+    $file = $request->file('pitch_deck');
+    $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+    $file->storeAs('attachments', $filename, 'public'); // ✅ specify disk 'public'
+
+    Attachment::create([
+        'company_id' => $company->id,
+        'type' => 'pitch_deck',
+        'file_path' => 'attachments/' . $filename,
+    ]);
+}
+
+
+
+if ($request->hasFile('financials')) {
+    foreach ($request->file('financials') as $index => $financialFile) {
+        if (!isset($request->fiscal_year[$index])) continue;
+
+        $fiscalYear = $request->fiscal_year[$index];
+        $filename = Str::random(40) . '.' . $financialFile->getClientOriginalExtension();
+
+        $financialFile->storeAs('attachments', $filename, 'public'); // ✅ use 'public' disk
+
         Attachment::create([
-            'company_id'=>$company->id,
-            'type'=>'other',
-            'file_path'=>$path,
+            'company_id' => $company->id,
+            'type' => 'financials',
+            'fiscal_year' => $fiscalYear,
+            'file_path' => 'attachments/' . $filename,
         ]);
     }
+}
+
+
+
+if ($request->hasFile('other_attachment')) {
+    $file = $request->file('other_attachment');
+    $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+    $file->storeAs('attachments', $filename, 'public'); // ✅ use 'public' disk
+
+    Attachment::create([
+        'company_id' => $company->id,
+        'type' => 'other',
+        'file_path' => 'attachments/' . $filename,
+    ]);
+}
+
+
 
     // Store referral source
     ReferralSource::create([

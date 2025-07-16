@@ -87,6 +87,7 @@ public function submitInvesteeForm(Request $request)
         'fiscal_year.*' => 'required|string',
         'financials.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx',
         'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx',
+        'other_attachment' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
         'referral_source' => 'required|string',
         'guidance_needed.*' => 'nullable|string',
         'other_links.*' => 'nullable|url',
@@ -203,6 +204,16 @@ public function submitInvesteeForm(Request $request)
         $pitchDeck->fiscal_year = date('Y'); // Assuming you have a fiscal year field in the form
         $pitchDeck->file_path = $request->file('pitch_deck')->store('pitch_decks');
         $pitchDeck->save();
+    }
+
+    // Store other attachments ==========================
+    if ($request->hasFile('other_attachment')) {
+        $otherAttachment = new Attachment();
+        $otherAttachment->investee_id = $investee->id;
+        $otherAttachment->type = 'other'; // Assuming you want to store the file type
+        $otherAttachment->fiscal_year = date('Y'); // Assuming you have a fiscal year field in the form
+        $otherAttachment->file_path = $request->file('other_attachment')->store('other_attachments');
+        $otherAttachment->save();
     }
     // Store referral source =======================
     $referralSource = new ReferralSource();
@@ -402,8 +413,43 @@ public function updateprofileview()
     $guidanceNeeds = $investor->guidanceNeeds()->first();
     $investorAddresses = $investor->investorAddresses()->get();
     // $locationDetail = $investor->locationDetail()->first();
-    return view('updateforms.investor_form', compact('investor', 'contactDetails', 'investmentDetails', 'publicLinks',
-     'previousInvestments', 'referral','guidanceNeeds', 'investorAddresses'));
+
+    $company = Company::where('user_id', $userId)->firstOrFail();
+    $concernedPerson = $company->concernedPerson()->first();
+    $founders = $company->founders()->get();
+    $fundRequirements = $company->fundRequirements()->get();
+    $previousRounds = $company->previousRounds()->get();
+    $attachments = $company->attachments()->get(); 
+    $otherLinks = $company->otherLinks()->get();
+    $attachments = $company->attachments()->get();
+    $referralSource = $company->referralSource()->first();
+    $guidanceNeeded = $company->guidanceNeeded()->get();
+    
+    $pitchDeck = $company->attachments()->where('type', 'pitch_deck')->first();
+    $financials = $company->attachments()->where('type', 'financials')->get();
+    $otherAttachments = $company->attachments()->where('type', 'other')->get(); 
+
+
+    // $categoryid = Auth::user()->category_id;
+    $categoryid = auth()->user()->category_id;  
+    if($categoryid == 1) {
+        return view('updateforms.investee_form', compact(
+            'company', 'concernedPerson', 'founders', 'fundRequirements', 
+            'previousRounds', 'attachments','pitchDeck','financials','otherAttachments', 'otherLinks', 'referralSource', 
+            'guidanceNeeded'
+        ));
+    } elseif ($categoryid == 2) {
+        return view('updateforms.investor_form', compact(
+            'investor', 'contactDetails', 'investmentDetails', 
+            'publicLinks', 'previousInvestments', 'referral', 
+            'guidanceNeeds', 'investorAddresses'
+        ));
+    } elseif ($categoryid == 3) {
+        return view('updateforms.banker_form');
+    } elseif ($categoryid == 4) {
+        return view('updateforms.other_form');
+    }
+    return redirect()->route('dashboard')->with('error', 'Invalid category ID.');
 }
 public function updateInvestorForm(Request $request)
 {
@@ -518,6 +564,151 @@ public function updateInvestorForm(Request $request)
     $user->save();
 
     return redirect()->route('investor.dashboard')->with('success', 'Investor form updated successfully!');
+}
+
+public function updateInvesteeForm(Request $request)
+{
+    $validatedData = $request->validate([
+        'company_name' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'nature_of_business' => 'required|string|max:255',
+        'incorporated_in' => 'required|numeric',
+        'concerned_person_name' => 'required|string|max:255',
+        'concerned_person_designation' => 'required|string|max:255',
+        'concerned_person_email' => 'required|email|max:255',
+        'concerned_person_phone' => 'required',
+        'company_website' => 'required|url',
+        'linkedin' => 'required|url',
+        // Add other validation rules as needed
+    ]);
+
+    $userId = auth()->id();
+    $company = Company::where('user_id', $userId)->firstOrFail();
+
+    $company->company_name = $request->company_name;
+    $company->address = $request->address;
+    $company->nature_of_business = $request->nature_of_business;
+    $company->incorporated_in = $request->incorporated_in;
+    $company->website = $request->company_website;
+    $company->linkedin = $request->linkedin;
+    $company->save();
+
+    // Update concerned person details
+    $concernedPerson = ConcernedPerson::where('company_id', $company->id)->firstOrFail();
+    $concernedPerson->name = $request->concerned_person_name;
+    $concernedPerson->designation = $request->concerned_person_designation;
+    $concernedPerson->email = $request->concerned_person_email;
+    $concernedPerson->phone = $request->concerned_person_phone;
+    $concernedPerson->save();
+
+    // delete and re-create founder details
+    $company->founders()->where('company_id',$company->id)->delete();
+    if ($request->has('founder_name')) {
+        foreach ($request->founder_name as $index => $name) {   
+            $founder = new Founder();
+            $founder->company_id = $company->id;
+            $founder->name = $name;
+            $founder->position = $request->founder_position[$index];
+            $founder->education = $request->founder_education[$index];
+            $founder->experience = $request->founder_experience[$index];
+            $founder->save();
+        }
+    }
+    // delete and re-create fund requirements where id matches
+    $company->fundRequirements()->where('company_id', $company->id)->delete();
+    if ($request->has('fund_usage')) {
+        foreach ($request->fund_usage as $index => $usage) {
+            $fundRequirement = new FundRequirement();
+            $fundRequirement->company_id = $company->id;
+            $fundRequirement->usage = $usage;
+            $fundRequirement->amount = $request->fund_requirement[$index];
+            $fundRequirement->unit = $request->fund_unit[$index];
+            $fundRequirement->save();
+        }
+    }   
+
+    // delete and re-create previous rounds
+    $company->previousRounds()->where('investee_id', $company->id)->delete();
+    if ($request->has('previous_rounds')) {
+        foreach ($request->previous_rounds as $index => $round) {
+            $previousRound = new PreviousRound();
+            $previousRound->investee_id = $company->id;
+            $previousRound->round = $round;
+            $previousRound->investor = $request->investors[$index];     
+            $previousRound->amount_raised = $request->amount_raised[$index];
+            $previousRound->valuation = $request->valuation[$index];
+            $previousRound->save();
+        }
+    }
+    // delete and re-create attachments
+    $company->attachments()->where('investee_id', $company->id)->delete();
+    if ($request->hasFile('financials')) {
+        foreach ($request->file('financials') as $file) {
+            $attachment = new Attachment();
+            $attachment->investee_id = $company->id;
+            $attachment->type = "financials"; // Assuming you want to store the file type
+            $attachment->fiscal_year = $request->fiscal_year; // Assuming you have a fiscal year field in the form
+            $attachment->file_path = $file->store('financials');
+            $attachment->save();
+        }
+    }
+    // delete and re-create other links
+    $company->otherLinks()->where('company_id', $company->id)->delete();
+    if ($request->has('other_links')) {
+        foreach ($request->other_links as $index => $link) {
+            $otherLink = new OtherLink();
+            $otherLink->company_id = $company->id;      
+            $otherLink->link_url = $link;
+            $otherLink->link_description = $request->link_descriptions[$index] ?? null;
+            $otherLink->save();
+        }
+    }
+
+    // delete and re-create attachments for pitch deck if new file is uploaded
+    $company->attachments()->where('investee_id', $company->id)->where('type', 'pitch_deck')->delete();
+    if ($request->hasFile('pitch_deck')) {
+        $pitchDeck = new Attachment();
+        $pitchDeck->investee_id = $company->id;
+        $pitchDeck->type = 'pitch_deck'; // Assuming you want to store the file type
+        $pitchDeck->fiscal_year = date('Y'); // Assuming you have a fiscal year field in the form
+        $pitchDeck->file_path = $request->file      
+        ('pitch_deck')->store('pitch_decks');
+        $pitchDeck->save();
+    }
+    
+
+
+    // update referral source
+    $referralSource = ReferralSource::where('investee_id', $company->id)->first();
+    if ($referralSource) {
+        $referralSource->source = $request->referral_source;
+        $referralSource->save();
+    } else {
+        $referralSource = new ReferralSource();
+        $referralSource->investee_id = $company->id;
+        $referralSource->source = $request->referral_source;
+        $referralSource->save();
+    }   
+
+    $guidanceNeeded = $company->guidanceNeeded()->get();
+    // update or create guidance needed
+    if ($request->has('guidance_needed')) {
+        foreach ($request->guidance_needed as $index => $guidance) {
+            $guidanceNeeded = new GuidanceNeeded();
+            $guidanceNeeded->investee_id = $company->id;        
+            $guidanceNeeded->guidance_needed = $guidance;
+            $guidanceNeeded->save();
+        }
+    }
+
+    // Handle other updates like founders, fund requirements, etc.
+    
+    // Mark the user as having completed the form
+    $user = auth()->user();
+    $user->form_filled = 1; // Assuming this field exists in the User model
+    $user->save();
+
+    return redirect()->route('dashboard')->with('success', 'Investee form updated successfully!');
 }
 
 
