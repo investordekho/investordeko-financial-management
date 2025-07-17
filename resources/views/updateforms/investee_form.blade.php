@@ -2412,13 +2412,16 @@ document.getElementById('other_attachment').addEventListener('change', function(
 
 
 
+@php
+    $selectedReferral = old('referral_source', $referralSource->source_name ?? '');
+@endphp
 
-    
-    <!-- Referral Source Section -->
-    <div class="row mb-2 align-items-end bordered-row">
+<!-- Referral Source Section -->
+<div class="row mb-2 align-items-end bordered-row">
     <div class="heading-with-hr">
-        <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">How did you hear about Investor Dekho? <span style="color:red;">*</span></h3>
-        <!-- <hr> -->
+        <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">
+            How did you hear about Investor Dekho? <span style="color:red;">*</span>
+        </h3>
     </div>
     <div class="form-floating mb-4">
         <label id="labelinput" for="referral_source" class="required"></label>
@@ -2428,23 +2431,25 @@ document.getElementById('other_attachment').addEventListener('change', function(
             name="referral_source" 
             required
         >
-            <option value="" disabled {{ old('referral_source') ? '' : 'selected' }}>Select Source</option>
-            <option value="Friend/Family" {{ old('referral_source') == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
-            <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
-            <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
-            <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
-            <option value="Email Newsletter" {{ old('referral_source') == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
-            <option value="Event/Seminar" {{ old('referral_source') == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
-            <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral (Doctor, Lawyer, etc.)</option>
-            <option value="Blog/Website" {{ old('referral_source') == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
-            <option value="Direct Mail" {{ old('referral_source') == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
-            <option value="Company Website" {{ old('referral_source') == 'Company Website' ? 'selected' : '' }}>Company Website</option>
+            <option value="" disabled {{ $selectedReferral == '' ? 'selected' : '' }}>Select Source</option>
+            <option value="Friend/Family" {{ $selectedReferral == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
+            <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ $selectedReferral == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
+            <option value="Online Search (Google, Bing, etc.)" {{ $selectedReferral == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
+            <option value="Advertisement (TV, Radio, Print)" {{ $selectedReferral == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
+            <option value="Email Newsletter" {{ $selectedReferral == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
+            <option value="Event/Seminar" {{ $selectedReferral == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
+            <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ $selectedReferral == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral (Doctor, Lawyer, etc.)</option>
+            <option value="Blog/Website" {{ $selectedReferral == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
+            <option value="Direct Mail" {{ $selectedReferral == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
+            <option value="Company Website" {{ $selectedReferral == 'Company Website' ? 'selected' : '' }}>Company Website</option>
         </select>
+
         @error('referral_source')
             <span class="text-danger">This Field is Required</span>
         @enderror
     </div>
-    </div>
+</div>
+
 
 
     <div class="row g-3 mb-4 bordered-row">
