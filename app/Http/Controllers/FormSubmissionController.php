@@ -209,6 +209,18 @@ public function store(Request $request)
         'other_attachment'=>'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048', //
     ]);
 
+    // \Log::info('Financial Count:', ['count' => count($request->file('financials'))]);
+    // foreach ($request->file('financials') as $index => $f) {
+    //     \Log::info("File $index: " . $f->getClientOriginalName());
+    // }
+
+    // foreach ($request->file('financials') as $index => $financialFile) {
+    //     \Log::info("Checking fiscal_year index $index", ['value' => $request->fiscal_year[$index] ?? 'MISSING']);
+    // }
+    // foreach ($request->fiscal_year as $i => $fy) {
+    //     \Log::info("Fiscal Year [$i]:", ['value' => $fy]);
+    // }
+
     // Store company details
     $company = Company::create([
         'user_id' => Auth::id(),
@@ -276,142 +288,54 @@ public function store(Request $request)
         }
     }
 
-    // Store attachments (Pitch Deck)
-    // if ($request->hasFile('pitch_deck')) {
-    //     $path = $request->file('pitch_deck')->store('attachments', 'public');
-    //     Attachment::create([
-    //         'company_id' => $company->id,
-    //         'type' => 'pitch_deck',
-    //         'file_path' => $path,
-    //     ]);
-    // }
+ // Store pitch deck
+    if ($request->hasFile('pitch_deck')) {
+        $file = $request->file('pitch_deck');
+        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
 
-    // Store financial attachments
-    // if ($request->hasFile('financials')) {
-    //     foreach ($request->file('financials') as $index => $financial) {
-    //         // Check fiscal year exists for this index
-    //         if (!isset($request->fiscal_year[$index])) {
-    //             continue;
-    //         }
-
-    //         $fiscalYear = $request->fiscal_year[$index];
-
-    //         // Store the file and save to the database
-    //         $path = $financial->store('attachments', 'public');
-    //         Attachment::create([
-    //             'company_id' => $company->id,
-    //             'type' => 'financials',
-    //             'fiscal_year' => $fiscalYear,
-    //             'file_path' => $path,
-    //         ]);
-    //     }
-    // }
-
-    // if($request->hasFile('other_attachment')){
-    //     $path = $request->file('other_attachment')->store('attachments','public');
-    //     Attachment::create([
-    //         'company_id'=>$company->id,
-    //         'type'=>'other',
-    //         'file_path'=>$path,
-    //     ]);
-    // }
-
-// Store pitch deck
-// if ($request->hasFile('pitch_deck')) {
-//     $file = $request->file('pitch_deck');
-//     $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
-
-//     $file->storeAs('public/attachments', $filename);
-
-//     Attachment::create([
-//         'company_id' => $company->id,
-//         'type' => 'pitch_deck',
-//         'file_path' => 'attachments/' . $filename,
-//     ]);
-// }
-
-// Store multiple financials
-// if ($request->hasFile('financials')) {
-//     foreach ($request->file('financials') as $index => $financialFile) {
-//         if (!isset($request->fiscal_year[$index])) continue;
-
-//         $fiscalYear = $request->fiscal_year[$index];
-//         $filename = Str::random(40) . '.' . $financialFile->getClientOriginalExtension();
-
-//         $financialFile->storeAs('public/attachments', $filename);
-
-//         Attachment::create([
-//             'company_id' => $company->id,
-//             'type' => 'financials',
-//             'fiscal_year' => $fiscalYear,
-//             'file_path' => 'attachments/' . $filename,
-//         ]);
-//     }
-// }
-
-// Store other attachment
-// if ($request->hasFile('other_attachment')) {
-//     $file = $request->file('other_attachment');
-//     $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
-
-//     $file->storeAs('public/attachments', $filename);
-
-//     Attachment::create([
-//         'company_id' => $company->id,
-//         'type' => 'other',
-//         'file_path' => 'attachments/' . $filename,
-//     ]);
-// }
-
-
-// Store pitch deck
-if ($request->hasFile('pitch_deck')) {
-    $file = $request->file('pitch_deck');
-    $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
-
-    $file->storeAs('attachments', $filename, 'public'); // ✅ specify disk 'public'
-
-    Attachment::create([
-        'company_id' => $company->id,
-        'type' => 'pitch_deck',
-        'file_path' => 'attachments/' . $filename,
-    ]);
-}
-
-
-
-if ($request->hasFile('financials')) {
-    foreach ($request->file('financials') as $index => $financialFile) {
-        if (!isset($request->fiscal_year[$index])) continue;
-
-        $fiscalYear = $request->fiscal_year[$index];
-        $filename = Str::random(40) . '.' . $financialFile->getClientOriginalExtension();
-
-        $financialFile->storeAs('attachments', $filename, 'public'); // ✅ use 'public' disk
+        $file->storeAs('attachments', $filename, 'public'); // ✅ specify disk 'public'
 
         Attachment::create([
             'company_id' => $company->id,
-            'type' => 'financials',
-            'fiscal_year' => $fiscalYear,
+            'type' => 'pitch_deck',
             'file_path' => 'attachments/' . $filename,
         ]);
     }
-}
 
 
 
-if ($request->hasFile('other_attachment')) {
-    $file = $request->file('other_attachment');
-    $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+    if ($request->hasFile('financials')) {
+        foreach ($request->file('financials') as $index => $financialFile) {
+            if (!isset($request->fiscal_year[$index])) continue;
 
-    $file->storeAs('attachments', $filename, 'public'); // ✅ use 'public' disk
+            $fiscalYear = $request->fiscal_year[$index];
+            $filename = Str::random(40) . '.' . $financialFile->getClientOriginalExtension();
 
-    Attachment::create([
-        'company_id' => $company->id,
-        'type' => 'other',
-        'file_path' => 'attachments/' . $filename,
-    ]);
-}
+            $financialFile->storeAs('attachments', $filename, 'public'); // ✅ use 'public' disk
+
+            Attachment::create([
+                'company_id' => $company->id,
+                'type' => 'financials',
+                'fiscal_year' => $fiscalYear,
+                'file_path' => 'attachments/' . $filename,
+            ]);
+        }
+    }
+
+
+
+    if ($request->hasFile('other_attachment')) {
+        $file = $request->file('other_attachment');
+        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+        $file->storeAs('attachments', $filename, 'public'); // ✅ use 'public' disk
+
+        Attachment::create([
+            'company_id' => $company->id,
+            'type' => 'other',
+            'file_path' => 'attachments/' . $filename,
+        ]);
+    }
 
 
 
