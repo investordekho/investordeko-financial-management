@@ -2361,7 +2361,7 @@
         <div class="row align-items-end mb-3">
             <div class="col-md-3">
                 <label for="fiscal_year">Fiscal Year <span class="text-danger">*</span></label>
-                <select name="fiscal_year[]" class="form-control @error('fiscal_year.0') is-invalid @enderror" required>
+                <select name="fiscal_year[]" class="form-control @error('fiscal_year.0') is-invalid @enderror">
                     <option value="" disabled selected>Select Year</option>
                     @for ($y = 2020; $y <= now()->year; $y++)
                         <option value="{{ $y }}" {{ old('fiscal_year.0') == $y ? 'selected' : '' }}>
@@ -2380,7 +2380,7 @@
                     name="financials[]" 
                     class="form-control @error('financials.0') is-invalid @enderror"
                     accept=".pdf,.doc,.docx,.xls,.xlsx"
-                    required>
+                    >
                 @error('financials.0')
                     <span class="text-danger">This field is required</span>
                 @enderror
