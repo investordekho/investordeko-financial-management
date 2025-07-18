@@ -288,7 +288,7 @@ public function store(Request $request)
         }
     }
 
- // Store pitch deck
+    // Store pitch deck
     if ($request->hasFile('pitch_deck')) {
         $file = $request->file('pitch_deck');
         $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
@@ -345,14 +345,43 @@ public function store(Request $request)
         'source_name' => $request->referral_source,
     ]);
 
+    // if ($request->has('guidance_needed')) {
+    //     foreach ($request->guidance_needed as $index => $guidance) {
+    //         $guidanceNeeded = new investee_guidance_needed_model();
+    //         $guidanceNeeded->company_id = $company->id;
+    //         $guidanceNeeded->guidance_needed = $guidance;
+    //         $guidanceNeeded->save();
+    //     }
+    // }
+
     if ($request->has('guidance_needed')) {
-        foreach ($request->guidance_needed as $index => $guidance) {
+        $predefinedOptions = [
+            'Capital Raise',
+            'Valuation and Financial Modelling',
+            'M&A Advisory',
+            'Pitch deck Preparation',
+            'Investor Pitching',
+            'NA'
+        ];
+
+        foreach ($request->guidance_needed as $guidance) {
             $guidanceNeeded = new investee_guidance_needed_model();
             $guidanceNeeded->company_id = $company->id;
-            $guidanceNeeded->guidance_needed = $guidance;
+
+            if (in_array($guidance, $predefinedOptions)) {
+                // Save standard option
+                $guidanceNeeded->guidance_needed = $guidance;
+            } else {
+                // Save as 'other' and store actual value in other_guidance
+                $guidanceNeeded->guidance_needed = 'other';
+                $guidanceNeeded->other_guidance = $guidance;
+            }
+
             $guidanceNeeded->save();
         }
     }
+
+
     if($request->has('guidance_needed') && Auth::check()){
         $user = Auth::user();
         $email = $user->email;

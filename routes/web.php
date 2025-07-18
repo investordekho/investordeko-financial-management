@@ -148,6 +148,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/updateprofile', [FormController::class, 'updateprofileview'])->name('updateprofile');
     Route::post('/updateinvestorprofile', [FormController::class, 'updateInvestorForm'])->name('updateinvestorprofile');
+    Route::post('/updateinvesteeprofile', [FormController::class, 'updateInvesteeForm'])->name('updateinvesteeprofile');
 
 });
 

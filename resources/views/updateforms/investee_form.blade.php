@@ -26,7 +26,7 @@
    
 </div> 
     
-    <form class="bg-light p-4" id="investeeForm" action="{{ route('form.submit') }}" method="POST" enctype="multipart/form-data" style="box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18), 0 1.5rem 3rem rgba(0,0,0,0.15);" novalidate>
+    <form class="bg-light p-4" id="investeeForm" action="{{ route('updateinvesteeprofile') }}" method="POST" enctype="multipart/form-data" style="box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18), 0 1.5rem 3rem rgba(0,0,0,0.15);" novalidate>
 
     <div class="row justify-content-center mb-4">
         <div class="col-12 col-md-10 col-lg-22" style="max-width: 100%;">
@@ -2243,7 +2243,7 @@
 </div>
 
 <!-- Pitch Deck -->
-<div class="mb-3 col-sm-4">
+<!-- <div class="mb-3 col-sm-4">
     @if (!empty($pitchDeck))
         <a href="{{ asset('storage/' . $pitchDeck->file_path) }}" target="_blank">
             View Pitch Deck
@@ -2261,21 +2261,103 @@
     @error('pitch_deck')
         <span class="text-danger">{{ $message }}</span>
     @enderror
+</div> -->
+<div class="mb-3 col-sm-6">
+    <label for="pitch_deck" class="form-label fw-semibold">
+        Pitch Deck <small class="text-muted">(ppt, pptx, pdf, doc, docx)</small>
+        <span class="text-danger">*</span>
+    </label>
+
+    <input type="hidden" name="delete_pitch_deck" id="delete_pitch_deck" value="0">
+
+    @if (!empty($pitchDeck))
+    <div id="existing_pitch_deck"
+        class="d-flex align-items-center justify-content-between px-3 py-2 mb-3 shadow-sm rounded"
+        style="background-color: #e9f2fb; border-left: 4px solid #0d6efd; max-width: 420px;">
+
+        <div class="d-flex align-items-center">
+            <i class="bi bi-file-earmark-text-fill text-primary me-3" style="font-size: 1.6rem;"></i>
+            <a href="{{ asset('storage/' . $pitchDeck->file_path) }}"
+                target="_blank"
+                class="text-decoration-none fw-semibold text-dark">
+                View Pitch Deck
+            </a>
+        </div>
+
+        <button type="button"
+            class="btn btn-sm btn-outline-danger rounded-circle ms-3"
+            onclick="removePitchDeck()"
+            title="Remove File">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+@endif
+
+
+    <input 
+        type="file" 
+        class="form-control @error('pitch_deck') is-invalid @enderror" 
+        id="pitch_deck" 
+        name="pitch_deck"
+        accept=".ppt,.pptx,.pdf,.doc,.docx"
+        onchange="validatePitchDeckFile(this)">
+    
+    <span id="pitch_deck_error" class="text-danger"></span>
+    @error('pitch_deck')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
 </div>
 
-<!-- Financials -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        window.removePitchDeck = function () {
+            const existingDiv = document.getElementById('existing_pitch_deck');
+            const deleteInput = document.getElementById('delete_pitch_deck');
+
+            if (existingDiv) {
+                existingDiv.remove(); // better than hide
+            }
+
+            if (deleteInput) {
+                deleteInput.value = '1';
+            }
+        };
+    });
+</script>
+
 <div class="mb-3">
     <label for="financials" class="text-danger fw-bold">Financials</label>
     <div id="financials-container">
-        @foreach ($financials as $index => $file)
-            <div class="mb-2">
-                <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank">
-                    View Financials ({{ $file->fiscal_year ?? 'Year' }})
-                </a>
-                <input type="hidden" name="existing_financial_ids[]" value="{{ $file->id }}">
-            </div>
-        @endforeach
 
+      @foreach ($financials as $index => $file) 
+    <div class="d-flex align-items-center justify-content-between px-3 py-2 mb-3 shadow-sm rounded" 
+         id="financial_row_{{ $file->id }}"
+         style="background-color: #fff9db; border-left: 5px solid #ffc107; max-width: 420px;">
+
+        <div class="d-flex align-items-center">
+            <i class="bi bi-file-earmark-text-fill text-warning me-3" style="font-size: 1.5rem;"></i>
+            <a href="{{ asset('storage/' . $file->file_path) }}" 
+               target="_blank" 
+               class="text-decoration-none fw-semibold text-dark">
+                View Financials ({{ $file->fiscal_year ?? 'Year' }})
+            </a>
+        </div>
+
+        <button type="button" 
+                class="btn btn-sm btn-outline-danger rounded-circle ms-3" 
+                onclick="removeFinancial({{ $file->id }})" 
+                title="Remove File">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+
+    <input type="hidden" name="existing_financial_ids[]" value="{{ $file->id }}">
+@endforeach
+
+
+        <input type="hidden" name="delete_financial_ids[]" id="delete_financial_ids">
+
+        {{-- New Upload Inputs --}}
         <div class="row align-items-end mb-3">
             <div class="col-md-3">
                 <label for="fiscal_year">Fiscal Year <span class="text-danger">*</span></label>
@@ -2295,12 +2377,10 @@
                 <label for="financials_file">Choose File <small>(pdf, doc, docx, xls, xlsx)</small> <span class="text-danger">*</span></label>
                 <input 
                     type="file" 
-                    id="financials" 
                     name="financials[]" 
                     class="form-control @error('financials.0') is-invalid @enderror"
                     accept=".pdf,.doc,.docx,.xls,.xlsx"
                     required>
-                <span id="fileTypeError" class="text-danger"></span>
                 @error('financials.0')
                     <span class="text-danger">This field is required</span>
                 @enderror
@@ -2311,21 +2391,58 @@
         </div>
     </div>
 </div>
+<script>
+    let deletedFinancialIds = [];
+
+    function removeFinancial(id) {
+        const row = document.getElementById(`financial_row_${id}`);
+        if (row) {
+            row.remove();
+        }
+
+        deletedFinancialIds.push(id);
+        document.getElementById('delete_financial_ids').value = deletedFinancialIds.join(',');
+    }
+</script>
 
 <!-- Other Attachment -->
 <div class="mb-4">
-    @if ($otherAttachments->count())
-        @foreach ($otherAttachments as $other)
-            <div class="mb-2">
-                <a href="{{ asset('storage/' . $other->file_path) }}" target="_blank">
+    <label for="other_attachment" class="form-label fw-semibold">
+        Other Attachment <small class="text-muted">(pdf, doc, docx, xls, xlsx, ppt, pptx)</small>
+    </label>
+
+   @if ($otherAttachments->count())
+    @foreach ($otherAttachments as $other)
+        <div id="other_row_{{ $other->id }}" 
+             class="d-flex align-items-center justify-content-between shadow-sm px-3 py-3 mb-3 rounded"
+             style="background-color: #b2dedbff;; border: 1px solid #cbd5e1; border-left: 5px solid #0d9488; max-width:35%; max-height:50px;" >
+            
+            <div class="d-flex align-items-center">
+                <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                     style="width: 40px; height: 40px; background-color: #e0f2f1;">
+                    <i class="bi bi-file-earmark-arrow-down-fill" style="font-size: 1.2rem; color: #0d9488;"></i>
+                </div>
+                <a href="{{ asset('storage/' . $other->file_path) }}"
+                   target="_blank"
+                   class="fw-semibold text-decoration-none"
+                   style="color: #334155;">
                     View Other Attachment
                 </a>
             </div>
-        @endforeach
-    @endif
-    <label for="other_attachment" style="color: red;">Other Attachment 
-        <small>(pdf, doc, docx, xls, xlsx, ppt, pptx)</small>
-    </label>
+
+            <button type="button"
+                    class="btn btn-sm btn-outline-danger rounded-circle"
+                    onclick="removeOtherAttachment({{ $other->id }})"
+                    title="Remove File">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <input type="hidden" name="existing_other_ids[]" value="{{ $other->id }}">
+    @endforeach
+    <input type="hidden" name="delete_other_attachment" id="delete_other_attachment" value="0">
+@endif
+
+
     <input 
         type="file" 
         id="other_attachment" 
@@ -2334,9 +2451,25 @@
         accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
     <span id="otherAttachmentError" class="text-danger"></span>
     @error('other_attachment')
-        <span class="text-danger">This field is required</span>
+        <span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
+
+<script>
+    function removeOtherAttachment(id) {
+        const row = document.getElementById(`other_row_${id}`);
+        if (row) {
+            row.remove(); // safer than .style.display = 'none'
+        }
+
+        const deleteInput = document.getElementById('delete_other_attachment');
+        if (deleteInput) {
+            deleteInput.value = '1'; // set delete flag
+        }
+    }
+</script>
+
+
 
 <!-- JS Validation -->
 <script>
@@ -2452,54 +2585,57 @@ document.getElementById('other_attachment').addEventListener('change', function(
 
 
 
-    <div class="row g-3 mb-4 bordered-row">
-                        <div class="heading-with-hr">
-                            <h3 class="required" style="font-size: 22px; font-weight: 600;" >How can we guide you in fund raise?</h3>
-                            <!-- <hr> -->
-                        </div>
-                        <div class="form-group mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="capital_raise" name="guidance_needed[]" value="Capital Raise" 
-                                {{ in_array('Capital Raise', old('guidance_needed', [])) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="capital_raise">Capital Raise</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="valuation_modelling" name="guidance_needed[]" value="Valuation and Financial Modelling"
-                                    {{ in_array('Valuation and Financial Modelling', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="valuation_modelling">Valuation and Financial Modelling</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="ma_advisory" name="guidance_needed[]" value="M&A Advisory"
-                                    {{ in_array('M&A Advisory', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="ma_advisory">M&A Advisory</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="pitch_deck" name="guidance_needed[]" value="Pitch deck Preparation"
-                                    {{ in_array('Pitch deck Preparation', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="pitch_deck">Pitch deck Preparation</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="investor_pitching" name="guidance_needed[]" value="Investor Pitching"
-                                    {{ in_array('Investor Pitching', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="investor_pitching">Investor Pitching</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="na" name="guidance_needed[]" value="NA"
-                                    {{ in_array('NA', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="na">NA</label>
-                            </div>
+                 
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="others_checkbox" name="others_checkbox" {{ old('others_checkbox') ? 'checked' : '' }} value="Others" onclick="toggleOtherField()">
-                                <label class="form-check-label" for="others_checkbox">Others</label>
-                            </div>
-                        </div>
-                        <div class="form-group mb-3" id="other_field" style="display: none;">
-                            <label id="labelinput" for="other_guidance">Please specify (Others)</label>
-                            <input type="text" name="guidance_needed[]" id="other_guidance_input" class="form-control" value="{{ old('other_guidance') }}" placeholder="Please specify your other guidance">
 
-                        </div>
-                    </div>
+<div class="row g-3 mb-4 bordered-row">
+    <div class="heading-with-hr">
+        <h3 class="required" style="font-size: 22px; font-weight: 600;">How can we guide you in fund raise?</h3>
+    </div>
+    <div class="form-group mb-3">
+
+        @php
+            $guidanceOptions = [
+                'Capital Raise',
+                'Valuation and Financial Modelling',
+                'M&A Advisory',
+                'Pitch deck Preparation',
+                'Investor Pitching',
+                'NA'
+            ];
+        @endphp
+
+        @foreach ($guidanceOptions as $option)
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="{{ Str::slug($option, '_') }}"
+                    name="guidance_needed[]" value="{{ $option }}"
+                    {{ in_array($option, old('guidance_needed', $selectedGuidance ?? [])) ? 'checked' : '' }}>
+                <label class="form-check-label" for="{{ Str::slug($option, '_') }}">{{ $option }}</label>
+            </div>
+        @endforeach
+
+        {{-- Others checkbox --}}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="others_checkbox"
+                name="guidance_needed[]" value="Others"
+                {{ in_array('other', $selectedGuidance ?? []) ? 'checked' : '' }}
+                onclick="toggleOtherField()">
+            <label class="form-check-label" for="others_checkbox">Others</label>
+        </div>
+
+    </div>
+
+    {{-- Others input field --}}
+    <div class="form-group mb-3" id="other_field" style="{{ in_array('other', $selectedGuidance ?? []) ? '' : 'display: none;' }}">
+        <label for="other_guidance_input">Please specify (Others)</label>
+        <input type="text" name="other_guidance" id="other_guidance_input" class="form-control"
+            value="{{ old('other_guidance', $otherGuidance) }}" placeholder="Please specify your other guidance">
+    </div>
+</div>
+
+
+
+
 
     <!-- CAPTCHA Section -->
    
@@ -2691,56 +2827,62 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
     }
 });
 
+
 function toggleOtherField() {
     const otherField = document.getElementById('other_field');
-    const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the input box
-
-    if (document.getElementById('others_checkbox').checked) {
-        // Show the input field
-        otherField.style.display = 'block';
-
-        // Clear any previous content
-        otherGuidanceContainer.innerHTML = '';
-
-        // Create the input field dynamically
-        const inputDiv = document.createElement('div');
-        inputDiv.classList.add('form-group'); // Add Bootstrap styling
-
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.classList.add('form-control'); // Add Bootstrap form control class
-        input.name = 'other_guidance';
-        input.id = 'other_guidance_input';
-        input.placeholder = 'Please specify your other guidance';
-
-        // Append the input field to the div
-        inputDiv.appendChild(input);
-
-        // Append the div to the container
-        otherGuidanceContainer.appendChild(inputDiv);
-    } else {
-        // Hide the input field if "Others" is unchecked
-        otherField.style.display = 'none';
-    }
+    const checkbox = document.getElementById('others_checkbox');
+    otherField.style.display = checkbox.checked ? 'block' : 'none';
 }
+// function toggleOtherField() {
+//     const otherField = document.getElementById('other_field');
+//     const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the input box
+
+//     if (document.getElementById('others_checkbox').checked) {
+//         // Show the input field
+//         otherField.style.display = 'block';
+
+//         // Clear any previous content
+//         otherGuidanceContainer.innerHTML = '';
+
+//         // Create the input field dynamically
+//         const inputDiv = document.createElement('div');
+//         inputDiv.classList.add('form-group'); // Add Bootstrap styling
+
+//         const input = document.createElement('input');
+//         input.type = 'text';
+//         input.classList.add('form-control'); // Add Bootstrap form control class
+//         input.name = 'other_guidance';
+//         input.id = 'other_guidance_input';
+//         input.placeholder = 'Please specify your other guidance';
+
+//         // Append the input field to the div
+//         inputDiv.appendChild(input);
+
+//         // Append the div to the container
+//         otherGuidanceContainer.appendChild(inputDiv);
+//     } else {
+//         // Hide the input field if "Others" is unchecked
+//         otherField.style.display = 'none';
+//     }
+// }
 
 // Check if "Others" checkbox was previously checked and input was filled after form reload
-window.onload = function() {
-    const othersCheckbox = document.getElementById('others_checkbox');
-    const otherField = document.getElementById('other_field');
-    const otherGuidanceContainer = document.getElementById('other_guidance');
+// window.onload = function() {
+//     const othersCheckbox = document.getElementById('others_checkbox');
+//     const otherField = document.getElementById('other_field');
+//     const otherGuidanceContainer = document.getElementById('other_guidance');
     
-    if (othersCheckbox.checked) {
-        otherField.style.display = 'block';
+//     if (othersCheckbox.checked) {
+//         otherField.style.display = 'block';
 
-        // Check if there's an existing value in the "other_guidance" input field
-        if (document.getElementById('other_guidance_input')) {
-            const input = document.getElementById('other_guidance_input');
-            input.value = "{{ old('other_guidance') }}"; // Retain value from old input
+//         // Check if there's an existing value in the "other_guidance" input field
+//         if (document.getElementById('other_guidance_input')) {
+//             const input = document.getElementById('other_guidance_input');
+//             input.value = "{{ old('other_guidance') }}"; // Retain value from old input
           
-        }
-    }
-};
+//         }
+//     }
+// };
 
 
 // Function to add a new link field
