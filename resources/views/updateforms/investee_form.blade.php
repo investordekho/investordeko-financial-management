@@ -2378,7 +2378,7 @@
                 <select name="fiscal_year[]" class="form-control @error('fiscal_year.0') is-invalid @enderror">
                     <option value="" disabled selected>Select Year</option>
                     @for ($y = 2020; $y <= now()->year; $y++)
-                        <option value="{{ $y }}" {{ old('fiscal_year.0') == $y ? 'selected' : '' }}>
+                        <option value="{{ $y+1 }}" {{ old('fiscal_year.0') == $y ? 'selected' : '' }}>
                             {{ $y }}-{{ $y+1 }}
                         </option>
                     @endfor
