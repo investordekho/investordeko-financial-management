@@ -613,7 +613,7 @@ public function updateInvesteeForm(Request $request)
     // }
 
     // \Log::info('Guidance Needed:', ['guidance' => $guidanceSelections]);
-  \Log::info('Request Data:', ['delete_financial_ids' => $request->delete_financial_ids]);
+//   \Log::info('Request Data:', ['founder_experience' => $request->founder_experience]);
 
     $request->validate([
         'company_name' => 'required|string',

@@ -3259,7 +3259,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <label for="financials_file">Choose File <small>(pdf, doc, docx, xls, xlsx)</small> <span class="text-danger">*</span></label>
                 <input 
                     type="file" 
@@ -3285,7 +3285,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1" style="display: flex; align-items: center; justify-content: center;">
                 <button type="button" class="btn btn-info" onclick="addFinancialsField()">+</button>
             </div>
         </div>
@@ -4256,11 +4256,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="2024-2025">2024-2025</option>
                 </select>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <label id="labelinput" for="financials" class="required">Choose file</label>
                 <input type="file" class="form-control spaced-input" name="financials[]" accept=".pdf,.doc,.docx" required>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1"  style="display: flex; align-items: center; justify-content: center;">
                 <button class="btn btn-danger float-end" type="button" onclick="removeFinancialsField(this)">×</button>
             </div>
         `;
