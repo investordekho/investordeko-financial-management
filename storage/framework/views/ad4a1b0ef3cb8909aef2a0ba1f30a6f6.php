@@ -3520,13 +3520,13 @@ document.getElementById('other_attachment').addEventListener('change', function(
 
 
 
-
+<!-- 
 <?php
     $selectedReferral = old('referral_source', $referralSource->source_name ?? '');
-?>
+?> -->
 
 <!-- Referral Source Section -->
-<div class="row mb-2 align-items-end bordered-row">
+<!-- <div class="row mb-2 align-items-end bordered-row">
     <div class="heading-with-hr">
         <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">
             How did you hear about Investor Dekho? <span style="color:red;">*</span>
@@ -3571,13 +3571,13 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
     </div>
-</div>
+</div> -->
 
 
 
                  
 
-
+<!-- 
 <div class="row g-3 mb-4 bordered-row">
     <div class="heading-with-hr">
         <h3 class="required" style="font-size: 22px; font-weight: 600;">How can we guide you in fund raise?</h3>
@@ -3622,7 +3622,7 @@ unset($__errorArgs, $__bag); ?>
         <input type="text" name="other_guidance" id="other_guidance_input" class="form-control"
             value="<?php echo e(old('other_guidance', $otherGuidance)); ?>" placeholder="Please specify your other guidance">
     </div>
-</div>
+</div> -->
 
 
 

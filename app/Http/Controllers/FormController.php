@@ -639,7 +639,7 @@ public function updateInvesteeForm(Request $request)
         'fiscal_year.*' => 'nullable|integer|digits:4',
         'financials.*' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
         'pitch_deck' => 'nullable|file|mimes:ppt,pptx,pdf,doc,docx|max:2048',
-        'referral_source' => 'required|string',
+        'referral_source' => 'nullable|string',
         'website' => 'required|url',
         'linkedin' => 'required|url',
         'guidance_needed.*' => 'nullable|string',
