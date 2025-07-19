@@ -1460,6 +1460,10 @@
 
                 <!-- Experience -->
                 <div class="col-md-3">
+                     {{-- JS live validation error --}}
+                    <div class="invalid-feedback js-error" style="display: none;">
+                        Experience must be greater than 0
+                    </div>
                     <label class="required">Experience (Years) <span class="text-danger">*</span></label>
                     <input type="number"
                         class="form-control @error('founder_experience.' . $index) is-invalid @enderror"
@@ -1468,11 +1472,17 @@
                         step="0.1"
                         min="0.1"
                         max="100"
+                        oninput="validateForm()" 
                         required>
+                    
+                    {{-- Laravel backend validation error --}}
                     @error('founder_experience.' . $index)
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
+
+                   
                 </div>
+
 
                 <!-- Remove Button -->
                 <div class="col-md-1 text-end">
@@ -2102,6 +2112,8 @@
             @error("amount_raised.$index")
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
+                    {{-- JS validation error --}}
+            <div class="invalid-feedback js-error" style="display: none;">Amount must be greater than 0</div>
         </div>
 
         <div class="col-md-3">
@@ -2162,12 +2174,13 @@
         <div class="col-md-3">
             <label class="form-label required">Amount Raised (in cr) <span class="text-danger">*</span></label>
             <input 
-                type="number" 
-                class="form-control" 
-                name="amount_raised[]" 
-                min="0.01" 
-                step="0.01" 
-                required
+            type="number" 
+            class="form-control" 
+            name="amount_raised[]" 
+            min="0.01" 
+            step="0.01" 
+            required
+            oninput="if (this.value <= 0) this.value = ''"
             >
         </div>
 
@@ -2180,6 +2193,7 @@
                 min="0.01" 
                 step="0.01" 
                 required
+                oninput="if (this.value <= 0) this.value = ''" required
             >
         </div>
 
@@ -2473,6 +2487,68 @@
 
 <!-- JS Validation -->
 <script>
+
+// on any change in the form call function  oninput="if (this.value <= 0) this.value = ''" 
+        //     <label class="form-label required">Valuation (in cr) <span class="text-danger">*</span></label>
+        //     <input 
+        //         type="number" 
+        //         class="form-control" 
+        //         name="valuation[]" 
+        //         min="0.01" 
+        //         step="0.01" 
+        //         required
+        //         oninput="if (this.value <= 0) this.value = ''" required
+        //     >
+        // </div>
+
+
+
+function validateForm() {
+    const valuations = document.querySelectorAll('input[name="valuation[]"]');
+    const amountRaised = document.querySelectorAll('input[name="amount_raised[]"]');
+    const founderExperience = document.querySelectorAll('input[name="founder_experience[]"]');
+
+    const validateFieldGroup = (fields, message) => {
+        fields.forEach(input => {
+            const errorDiv = input.parentElement.querySelector('.js-error');
+            const value = parseFloat(input.value);
+            if (value <= 0 || isNaN(value)) {
+                input.classList.add('is-invalid');
+                if (errorDiv) {
+                    errorDiv.textContent = message;
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                input.classList.remove('is-invalid');
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                }
+            }
+        });
+    };
+
+    validateFieldGroup(valuations, "Valuation must be greater than 0");
+    validateFieldGroup(amountRaised, "Amount must be greater than 0");
+    validateFieldGroup(founderExperience, "Experience must be greater than 0");
+}
+
+
+const form = document.getElementById('investeeForm');
+form.addEventListener('input', validateForm);
+form.addEventListener('change', validateForm);
+form.addEventListener('submit', function(event) {
+    validateForm();
+    const invalidInputs = form.querySelectorAll('.is-invalid');
+    if (invalidInputs.length > 0) {
+        event.preventDefault();
+        alert('Please correct the errors in the form before submitting.');
+        invalidInputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
+
+
+
 function validatePitchDeckFile(input) {
     const file = input.files[0];
     const errorDiv = document.getElementById('pitch_deck_error');
@@ -2979,12 +3055,15 @@ function removeLinkField(button) {
     
         newRow.innerHTML = `
         
-          
-            <div class="col-md-2">
+           {{-- JS live validation error --}}
+                    <div class="invalid-feedback js-error" style="display: none;">
+                        Experience must be greater than 0
+                    </div>
+            <div class="col-md-2" style="max-width: 185px; margin-right: 12px;">
                 <label id="labelinput" for="founder_name" class="required">Name</label>
                 <input type="text" class="form-control" name="founder_name[]" required>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="max-width: 189px; margin-right: 10px;">
                 <label id="labelinput" for="founder_position" class="required">Position</label>
                 <select class="form-control" name="founder_position[]" required>
                     <option value="" disabled selected>Select Position</option>
@@ -3043,7 +3122,7 @@ function removeLinkField(button) {
                     <option value="Vice President">Vice President</option>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="max-width: 188px; margin-right: 10px;">
                 <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
                 <input type="text" class="form-control" name="founder_education[]" required
                     pattern="^[A-Za-z\s.\-&']+$"
@@ -3052,7 +3131,7 @@ function removeLinkField(button) {
                     >
             </div>
            
-            <div class="col-md-3">
+            <div class="col-md-3" style="max-width: 285px; margin-right: 10px;">
                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
                 <input type="number" class="form-control " name="founder_experience[]" 
                     step="0.1"       
@@ -3061,7 +3140,7 @@ function removeLinkField(button) {
                     oninput="if (this.value < 0.1) this.value = ''" 
                     required>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1" style="max-width: 27px; margin-left: 65px;">
                 <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
             </div>
         `;
@@ -3205,8 +3284,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0.01" step="0.01" required>
-
+                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0.01" step="0.01" oninput="if (this.value<= 0) this.value = '' " required>
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>

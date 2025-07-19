@@ -1725,6 +1725,10 @@ unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="col-md-3">
+                 <!-- 
+                    <div class="invalid-feedback js-error" style="display: none;">
+                        Experience must be greater than 0
+                    </div> -->
                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years) <span style="color:red;">*</span></label>
                 <input 
                     type="number" 
@@ -2290,7 +2294,7 @@ unset($__errorArgs, $__bag); ?>"
                     name="amount_raised[]" 
                     min="0.01" 
                     step="0.01" 
-                    oninput = "if (this.value < 0) this.value = ''"
+                    oninput = "if (this.value <= 0) this.value = ''"
                     value="<?php echo e(old('amount_raised.0')); ?>" 
                     required
                 >
@@ -2304,6 +2308,8 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                   <!-- 
+                 <div class="invalid-feedback js-error" style="display: none;">Amount must be greater than 0</div> -->
             </div>
 
            
@@ -2950,6 +2956,51 @@ unset($__errorArgs, $__bag); ?>
 <!-- Script for Auto-Fill Functionality -->
  <script>
 
+        
+    function validateForm() {
+        const valuations = document.querySelectorAll('input[name="valuation[]"]');
+        const amountRaised = document.querySelectorAll('input[name="amount_raised[]"]');
+        const founderExperience = document.querySelectorAll('input[name="founder_experience[]"]');
+
+        const validateFieldGroup = (fields, message) => {
+            fields.forEach(input => {
+                const errorDiv = input.parentElement.querySelector('.js-error');
+                const value = parseFloat(input.value);
+                if (value <= 0 || isNaN(value)) {
+                    input.classList.add('is-invalid');
+                    if (errorDiv) {
+                        errorDiv.textContent = message;
+                        errorDiv.style.display = 'block';
+                    }
+                } else {
+                    input.classList.remove('is-invalid');
+                    if (errorDiv) {
+                        errorDiv.style.display = 'none';
+                    }
+                }
+            });
+        };
+
+        validateFieldGroup(valuations, "Valuation must be greater than 0");
+        validateFieldGroup(amountRaised, "Amount must be greater than 0");
+        validateFieldGroup(founderExperience, "Experience must be greater than 0");
+    }
+
+
+    const form = document.getElementById('investeeForm');
+    form.addEventListener('input', validateForm);
+    form.addEventListener('change', validateForm);
+    form.addEventListener('submit', function(event) {
+        validateForm();
+        const invalidInputs = form.querySelectorAll('.is-invalid');
+        if (invalidInputs.length > 0) {
+            event.preventDefault();
+            alert('Please correct the errors in the form before submitting.');
+            invalidInputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+
+
     function fillConcernedPersonDetails() {
         const nameField = document.getElementById('concerned_person_name');
         const designationField = document.getElementById('concerned_person_designation');
@@ -3254,7 +3305,10 @@ function removeLinkField(button) {
     
         newRow.innerHTML = `
         
-          
+             
+                    <div class="invalid-feedback js-error" style="display: none;">
+                        Experience must be greater than 0
+                    </div>  
             <div class="col-md-2">
                 <label id="labelinput" for="founder_name" class="required">Name</label>
                 <input type="text" class="form-control" name="founder_name[]" required>
