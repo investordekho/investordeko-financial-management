@@ -931,7 +931,7 @@ public function updateBankerForm(Request $request)
     if ($request->has('previous_deal_year')) {
         $banker->previousDeals()->delete();
         foreach ($request->previous_deal_year as $index => $year) {
-            if (!empty($year)) {
+            if (!empty($year) && isset($request->previous_deal_company[$index]) && isset($request->previous_deal_sector[$index]) && isset($request->previous_deal_type[$index])) {
                  $banker->previousDeals()->create([
                     'banker_id' => $banker->id,
                     'previous_deal_year' => $year,
