@@ -956,6 +956,50 @@ public function updateBankerForm(Request $request)
     return redirect()->route('investee.dashboard')->with('success_message', 'Banker profile updated successfully!');
 }
 
+public function updateOtherForm(Request $request)
+{
+    $userId = auth()->id();
+    if (!$userId) {
+        return redirect()->route('login')->with('error', 'You must be logged in to update your profile.');
+    }
 
+    $other = Other::where('user_id', $userId)->firstOrFail();
+
+    $validatedData = $request->validate([
+        'full_name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone_number' => 'required|string|max:20',
+        'address' => 'required|string|max:500',
+        'city' => 'required|string|max:100',
+        'state' => 'required|string|max:100',
+        'country' => 'required|string|max:100',
+        'referral_source' => 'nullable|string|max:255',
+        // 'agreed_to_terms' => 'accepted',
+        // Add other validation rules for Other form
+    ]);
+
+    // Update other entity
+    $other->update([
+       'full_name' => $request->full_name ?? $other->full_name,
+         'email' => $request->email ?? $other->email,
+        'phone_number' => $request->phone_number ?? $other->phone_number,
+        'address' => $request->address ?? $other->address,
+        'city' => $request->city ?? $other->city,
+        'state' => $request->state ?? $other->state,
+        'country' => $request->country ?? $other->country,
+        'referral_source' => $request->referral_source ?? $other->referral_source,
+        // 'agreed_to_terms' => $request->has('agreed_to_terms
+    ]);
+
+
+
+    // Mark form as filled
+    // $user = Auth::user();
+    // $user->form_filled = true;
+    // $user->save();
+
+    return redirect()->route('investee.dashboard')->with('success', 'Other form updated successfully!');
+
+}
 
 }

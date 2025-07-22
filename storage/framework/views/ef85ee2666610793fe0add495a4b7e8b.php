@@ -1,22 +1,21 @@
-@extends('layouts.app')
+<?php $__env->startSection('content'); ?>
 
-@section('content')
-
-<!-- @if ($errors->any())
+<!-- <?php if($errors->any()): ?>
     <div class="alert alert-danger shadow-sm">
         <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li><?php echo e($error); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
     </div>
-@endif -->
+<?php endif; ?> -->
 
-@if (session('error'))
+<?php if(session('error')): ?>
     <div class="alert alert-danger shadow-sm">
-        {{ session('error') }}
+        <?php echo e(session('error')); ?>
+
     </div>
-@endif
+<?php endif; ?>
 
 <style>
     .required::after {
@@ -58,8 +57,8 @@
     </div>
 
     <!-- Form Section -->
-    <form id="othersForm" action="{{ route('updateotherprofile') }}" method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded-bottom shadow-sm mt-0" novalidate>
-        @csrf
+    <form id="othersForm" action="<?php echo e(route('updateotherprofile')); ?>" method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded-bottom shadow-sm mt-0" novalidate>
+        <?php echo csrf_field(); ?>
 
         <!-- Contact Details -->
         <div class="mb-4">
@@ -73,7 +72,7 @@
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <!-- <div class="form-section-title">Contact Details</div> -->
                 <div class="form-check" style="text-align: left;">
-                    <input type="checkbox" class="form-check-input" id="concerned_person_is_me" name="concerned_person_is_me" onclick="fillConcernedPersonDetails()" value="1" {{ old('concerned_person_is_me') ? 'checked': ''}}>
+                    <input type="checkbox" class="form-check-input" id="concerned_person_is_me" name="concerned_person_is_me" onclick="fillConcernedPersonDetails()" value="1" <?php echo e(old('concerned_person_is_me') ? 'checked': ''); ?>>
                     <label class="form-check-label text-danger" for="concerned_person_is_me">Concerned Person is Me</label>
                 </div>
             </div>
@@ -81,51 +80,51 @@
             <div class="row g-3">
                 <div class="col-md-4">
                     <label id="labelinput" for="full_name" class="required">Full Name</label>
-                    <input type="text" class="form-control spaced-input" id="full_name" name="full_name" value="{{ old('full_name',$other->full_name) }}" required  pattern="^[a-zA-Z\s]+$"
+                    <input type="text" class="form-control spaced-input" id="full_name" name="full_name" value="<?php echo e(old('full_name',$other->full_name)); ?>" required  pattern="^[a-zA-Z\s]+$"
         title="Please enter a valid name (letters and spaces only)"
         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
-                     @if ($errors->has('full_name'))
+                     <?php if($errors->has('full_name')): ?>
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
-                                @foreach ($errors->get('full_name') as $error)
-                                    <li class="p-0 m-0">{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->get('full_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="p-0 m-0"><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-4"> 
                     <label id="labelinput" for="email" class="required">Email</label>
-                    <input type="text" class="form-control spaced-input" id="email" name="email" value="{{ old('email',$other->email) }}"
+                    <input type="text" class="form-control spaced-input" id="email" name="email" value="<?php echo e(old('email',$other->email)); ?>"
                         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in)$"
                         title="Please enter a valid .in or .com email address"
                         required
                         autocomplete="email">
                         <div id="email_error" class="text-danger small"></div>
-                    @if ($errors->has('email'))
+                    <?php if($errors->has('email')): ?>
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
-                                @foreach ($errors->get('email') as $error)
-                                    <li class="p-0 m-0">{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->get('email'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="p-0 m-0"><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
 
                 <div class="col-md-4">
                     <label id="labelinput" for="phone_number" class="required">Phone Number</label>
-                    <input type="text" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="20" value="{{ old('phone_number',$other->phone_number) }}"   pattern="^\+?[0-9]{7,20}$" 
+                    <input type="text" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="20" value="<?php echo e(old('phone_number',$other->phone_number)); ?>"   pattern="^\+?[0-9]{7,20}$" 
                 oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" required>
-                  @if ($errors->has('phone_number'))
+                  <?php if($errors->has('phone_number')): ?>
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
-                                @foreach ($errors->get('phone_number') as $error)
-                                    <li class="p-0 m-0">{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->get('phone_number'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="p-0 m-0"><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -135,62 +134,62 @@
             <div class="form-section-title">Address Details</div>
             <div class="mb-3">
                 <label id="labelinput" for="address" class="required">Address</label>
-                <input type="text" class="form-control spaced-input" id="address" name="address" value="{{ old('address',$other->address) }}" required >
-                 @if ($errors->has('address'))
+                <input type="text" class="form-control spaced-input" id="address" name="address" value="<?php echo e(old('address',$other->address)); ?>" required >
+                 <?php if($errors->has('address')): ?>
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
-                                @foreach ($errors->get('address') as $error)
-                                    <li class="p-0 m-0">{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->get('address'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="p-0 m-0"><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                @endif
+                <?php endif; ?>
             </div>
             <div class="row g-3">
                 <div class="col-md-4">
                     <label id="labelinput" for="city" class="required">City</label>
-                    <input type="text" class="form-control spaced-input" id="city" name="city" value="{{ old('city',$other->city) }}" required pattern="^[a-zA-Z\s]+$"
+                    <input type="text" class="form-control spaced-input" id="city" name="city" value="<?php echo e(old('city',$other->city)); ?>" required pattern="^[a-zA-Z\s]+$"
         title="Please enter a valid name (letters and spaces only)"
         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
-                     @if ($errors->has('city'))
+                     <?php if($errors->has('city')): ?>
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
-                                @foreach ($errors->get('city') as $error)
-                                    <li class="p-0 m-0">{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->get('city'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="p-0 m-0"><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                     @endif
+                     <?php endif; ?>
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="state" class="required">State</label>
-                    <input type="text" class="form-control spaced-input" id="state" name="state" value="{{ old('state',$other->state) }}" required pattern="^[a-zA-Z\s]+$"
+                    <input type="text" class="form-control spaced-input" id="state" name="state" value="<?php echo e(old('state',$other->state)); ?>" required pattern="^[a-zA-Z\s]+$"
         title="Please enter a valid name (letters and spaces only)"
         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
-                     @if ($errors->has('state'))
+                     <?php if($errors->has('state')): ?>
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
-                                @foreach ($errors->get('state') as $error)
-                                    <li class="p-0 m-0">{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->get('state'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="p-0 m-0"><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                     @endif
+                     <?php endif; ?>
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="country" class="required">Country</label>
-                    <input type="text" class="form-control spaced-input" id="country" name="country" value="{{ old('country',$other->country) }}" required pattern="^[a-zA-Z\s]+$"
+                    <input type="text" class="form-control spaced-input" id="country" name="country" value="<?php echo e(old('country',$other->country)); ?>" required pattern="^[a-zA-Z\s]+$"
         title="Please enter a valid name (letters and spaces only)"
         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
-                     @if ($errors->has('country'))
+                     <?php if($errors->has('country')): ?>
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
-                                @foreach ($errors->get('country') as $error)
-                                    <li class="p-0 m-0">{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->get('country'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="p-0 m-0"><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                     @endif
+                     <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -200,27 +199,27 @@
             <div class="form-section-title">How did you hear about Investor Dekho?</div>
             <div class="form-floating">
                 <select class="form-select spaced-input" id="referral_source" name="referral_source" required>
-                    <option value="" disabled {{ old('referral_source',$other->referral_source) ? '' : 'selected' }}>Select Source</option>
-                    <option value="Friend/Family" {{ old('referral_source',$other->referral_source) == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
-                    <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ old('referral_source',$other->referral_source) == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media</option>
-                    <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source',$other->referral_source) == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search</option>
-                    <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source',$other->referral_source) == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement</option>
-                    <option value="Email Newsletter" {{ old('referral_source',$other->referral_source) == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
-                    <option value="Event/Seminar" {{ old('referral_source',$other->referral_source) == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
-                    <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source',$other->referral_source) == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral</option>
-                    <option value="Blog/Website" {{ old('referral_source',$other->referral_source) == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
-                    <option value="Direct Mail" {{ old('referral_source',$other->referral_source) == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
-                    <option value="Company Website" {{ old('referral_source',$other->referral_source) == 'Company Website' ? 'selected' : '' }}>Company Website</option>
+                    <option value="" disabled <?php echo e(old('referral_source',$other->referral_source) ? '' : 'selected'); ?>>Select Source</option>
+                    <option value="Friend/Family" <?php echo e(old('referral_source',$other->referral_source) == 'Friend/Family' ? 'selected' : ''); ?>>Friend/Family</option>
+                    <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" <?php echo e(old('referral_source',$other->referral_source) == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : ''); ?>>Social Media</option>
+                    <option value="Online Search (Google, Bing, etc.)" <?php echo e(old('referral_source',$other->referral_source) == 'Online Search (Google, Bing, etc.)' ? 'selected' : ''); ?>>Online Search</option>
+                    <option value="Advertisement (TV, Radio, Print)" <?php echo e(old('referral_source',$other->referral_source) == 'Advertisement (TV, Radio, Print)' ? 'selected' : ''); ?>>Advertisement</option>
+                    <option value="Email Newsletter" <?php echo e(old('referral_source',$other->referral_source) == 'Email Newsletter' ? 'selected' : ''); ?>>Email Newsletter</option>
+                    <option value="Event/Seminar" <?php echo e(old('referral_source',$other->referral_source) == 'Event/Seminar' ? 'selected' : ''); ?>>Event/Seminar</option>
+                    <option value="Professional Referral (Doctor, Lawyer, etc.)" <?php echo e(old('referral_source',$other->referral_source) == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : ''); ?>>Professional Referral</option>
+                    <option value="Blog/Website" <?php echo e(old('referral_source',$other->referral_source) == 'Blog/Website' ? 'selected' : ''); ?>>Blog/Website</option>
+                    <option value="Direct Mail" <?php echo e(old('referral_source',$other->referral_source) == 'Direct Mail' ? 'selected' : ''); ?>>Direct Mail</option>
+                    <option value="Company Website" <?php echo e(old('referral_source',$other->referral_source) == 'Company Website' ? 'selected' : ''); ?>>Company Website</option>
                 </select>
-                 @if ($errors->has('referral_source'))
+                 <?php if($errors->has('referral_source')): ?>
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
-                                @foreach ($errors->get('referral_source') as $error)
-                                    <li class="p-0 m-0">{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->get('referral_source'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="p-0 m-0"><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                 @endif
+                 <?php endif; ?>
                 <label for="referral_source">Referral Source</label>
             </div>
         </div>
@@ -228,17 +227,31 @@
         <!-- Terms Section -->
         <!-- <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" required>
-            <label class="form-check-label" for="terms">I agree to the <a href="{{ route('terms') }}" target="_blank">Terms and Conditions</a></label>
+            <label class="form-check-label" for="terms">I agree to the <a href="<?php echo e(route('terms')); ?>" target="_blank">Terms and Conditions</a></label>
         </div> -->
          <!-- <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
+                        <input type="checkbox" class="form-check-input <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
                         <label class="form-check-label" for="terms">
                             I agree to the 
-                            <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms and Conditions</a>
+                            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
                         </label>
-                        @error('terms')
+                        <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                             <span class="text-danger">You must agree to the Terms and Conditions</span>
-                        @enderror
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div> -->
 
         <!-- Submit -->
@@ -253,9 +266,9 @@
         const emailField = document.getElementById('email');
 
         if (document.getElementById('concerned_person_is_me').checked) {
-            nameField.value = "{{ Auth::user()->name }}";
-            phoneField.value = "{{ Auth::user()->phone }}";
-            emailField.value = "{{ Auth::user()->email }}";
+            nameField.value = "<?php echo e(Auth::user()->name); ?>";
+            phoneField.value = "<?php echo e(Auth::user()->phone); ?>";
+            emailField.value = "<?php echo e(Auth::user()->email); ?>";
 
             nameField.readOnly = true;
             phoneField.readOnly = true;
@@ -332,4 +345,6 @@
 </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/updateforms/other_form.blade.php ENDPATH**/ ?>
