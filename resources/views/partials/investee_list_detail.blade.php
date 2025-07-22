@@ -342,12 +342,11 @@
 
 
 
-                <hr style="margin: 30px 0; border: none; height: 1px; background: linear-gradient(to right, rgb(229, 255, 0), rgb(212, 78, 0));">
+                <!-- <hr style="margin: 30px 0; border: none; height: 1px; background: linear-gradient(to right, rgb(229, 255, 0), rgb(212, 78, 0));"> -->
 
 <!-- Card Container -->
-<div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: 30px auto;">
-
-    <!-- Title -->
+<div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.2); max-width: 1000px; margin: 30px auto;">
+  <!-- Title -->
     <h4 id="company-fund-requirements" style="text-align: left; font-size: 22px; color: #333; font-weight: 600; border-bottom: 2px solid #007bff; padding-bottom: 8px; margin-bottom: 18px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="section">
         <i class="fa fa-wallet" style="margin-right: 8px; color: #007bff; font-size: 24px;"></i>Fund Requirements
     </h4>
@@ -412,10 +411,10 @@
 
                     <!-- <hr style="margin: 30px 0; border: none; height: 2px; background: linear-gradient(to right, #007bff, #00bcd4);"> -->
 
-                    <hr style="margin: 30px 0; border: none; height: 1px; background: linear-gradient(to right, rgb(229, 255, 0), rgb(212, 78, 0));">
+                    <!-- <hr style="margin: 30px 0; border: none; height: 1px; background: linear-gradient(to right, rgb(229, 255, 0), rgb(212, 78, 0));"> -->
 
 <!-- Card Container for Previous Investment Rounds -->
-<div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: 30px auto;">
+<div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0px 20px 100px rgba(0, 0, 0, 0.2); max-width: 1000px; margin: 30px auto;">
 
     <!-- Title Section -->
     <h4 id="company-previous-rounds" style="text-align: left; font-size: 24px; color: #2c3e50; font-weight: bold; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="section">
@@ -527,7 +526,17 @@
     @foreach($investee->otherLinks as $link)
         <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; padding: 12px; background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease;">
             <!-- Link Title and Icon -->
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+           <div style="
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.15);
+">
+
                 <p style="color: #007bff; font-weight: 600; margin-bottom: 5px; font-size: 16px;">
                     <!-- Dynamic Icon based on Link Description -->
                     @if(stripos($link->link_description, 'facebook') !== false)
@@ -549,7 +558,7 @@
     @endforeach
 </ul>
 
-<hr style="margin: 30px 0; border: none; height: 2px; background: linear-gradient(to right, #ddd, transparent);">
+<!-- <hr style="margin: 30px 0; border: none; height: 2px; background: linear-gradient(to right, #ddd, transparent);"> -->
 
 
 
@@ -602,10 +611,10 @@
                 📌 Referral Sources
             </h4>
             <ul style="list-style: none; padding: 0;">
-                <li style="padding: 12px; margin-bottom: 8px; background-color: #f9f9f9; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);">
-                    <dfn style="font-size: 14px; color: #333;">{{ $investee->source_name ?? 'N/A' }}</dfn>
-                </li>
-            </ul>
+    <li style="padding: 12px; margin-bottom: 8px; background-color: #f9f9f9; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);">
+        <dfn style="font-size: 14px; color: #333;">{{ $investee->source_name ?? 'N/A' }}</dfn>
+    </li>
+</ul>
 
 
 

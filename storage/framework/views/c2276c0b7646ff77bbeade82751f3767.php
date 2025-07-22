@@ -1,12 +1,12 @@
-@php 
+<?php 
     $isSubscribed = isset($subscriber) && $subscriber?->is_subscribed;
-@endphp
+?>
 
-@if($investors->count())
-    @php 
+<?php if($investors->count()): ?>
+    <?php 
         $isSubscribed = $subscriber && $subscriber->is_subscribed;
         $visibleInvestorCount = $isSubscribed ? $investors->count() : min($investors->count(), 3);
-    @endphp
+    ?>
 <style>
     .locked-content {
         filter: blur(5px);
@@ -25,7 +25,7 @@
     <!-- <h2 class="text-center mb-4 fw-bold text-dark">Investors List</h2> -->
 
     <div class="row">
-        @foreach ($investors->take($visibleInvestorCount) as $investor)
+        <?php $__currentLoopData = $investors->take($visibleInvestorCount); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $investor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="col-md-12 mb-4">
                 <div class="investor-card p-4">
                     <div class="row align-items-center">
@@ -33,7 +33,7 @@
                         <!-- Profile Image Section -->
                         <div class="col-md-2 text-center">
                             <div class="profile-wrapper">
-                                <img src="{{ $investor['profile_image'] ? asset('storage/profile_image/' . $investor['profile_image']) : asset('img/default_profile.png') }}" 
+                                <img src="<?php echo e($investor['profile_image'] ? asset('storage/profile_image/' . $investor['profile_image']) : asset('img/default_profile.png')); ?>" 
                                      class="profile-img" 
                                      alt="Investor Profile">
                                 <span class="badge premium-badge">⭐ Premium</span>
@@ -42,11 +42,12 @@
 
                         <!-- Investor Info Section -->
                         <div class="col-md-6">
-                            <h4 class="fw-bold name-text {{ !$isSubscribed ? 'locked-content' : ''}}">
-                                {{ $investor['investor_name'] ?? 'Unknown Investor' }}
+                            <h4 class="fw-bold name-text <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
+                                <?php echo e($investor['investor_name'] ?? 'Unknown Investor'); ?>
+
                             </h4> 
-                            <p class="text-muted details-text {{ !$isSubscribed ? 'locked-content' : '' }}">
-                                <i class="bi bi-geo-alt-fill text-primary me-1"></i> {{ $investor['address'] }}  
+                            <p class="text-muted details-text <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
+                                <i class="bi bi-geo-alt-fill text-primary me-1"></i> <?php echo e($investor['address']); ?>  
                                 <br>
 
                                     <?php
@@ -54,81 +55,82 @@
                                         $sectors = array_map('trim', explode(',', $sectors));
                                     ?>
                                    
-                                    @if( count($sectors) > 0)
+                                    <?php if( count($sectors) > 0): ?>
                                        <ul class="list-inline">
                                          <h7 class="text-muted">Sectors:</h7>
-                                            @foreach($sectors as $sector)
+                                            <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <li class="list-inline-item text-muted" style="border: 1px solid #ddd; padding: 5px; border-radius: 5px; margin-right: 5px; margin-bottom: 5px; background-color: #f8f9fa;">
                                                     <!-- <i class="bi bi-check-circle-fill text-success me-1"></i> -->
-                                                    {{ ucwords(strtolower($sector)) }}
+                                                    <?php echo e(ucwords(strtolower($sector))); ?>
+
                                                 </li>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
-                                    @endif
+                                    <?php endif; ?>
                                    
                             </p>
 
 
                         </div>
 
-                        <div class="col-md-4 text-end {{ !$isSubscribed ? 'locked-content' : ''}}">
-                            @if($isSubscribed)
-                                <a href="{{ route('investeedashboard.investorlistdetail',['id' => $investor['id']])}}" 
+                        <div class="col-md-4 text-end <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
+                            <?php if($isSubscribed): ?>
+                                <a href="<?php echo e(route('investeedashboard.investorlistdetail',['id' => $investor['id']])); ?>" 
                                 class="btn btn-primary btn-sm">🔍 View Details</a>
-                            @else
+                            <?php else: ?>
                                 <span class="btn btn-primary btn-sm disabled" style="cursor: not-allowed; pointer-events: none;">
                                     🔍 View Details
                                 </span>
-                            @endif
+                            <?php endif; ?>
                         </div>
 
 
                     </div>
                 </div>
             </div>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-        <!-- @if (!$isSubscribed) -->
+        <!-- <?php if(!$isSubscribed): ?> -->
         <!-- <div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
                 <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
-                <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
             </div>
         </div> -->
-    <!-- @endif -->
-        <!-- @if (!$isSubscribed && $investors->count() == 3)
+    <!-- <?php endif; ?> -->
+        <!-- <?php if(!$isSubscribed && $investors->count() == 3): ?>
             <div class="col-md-12 text-center">
-                <a href="{{ route('subscription') }}" class="btn btn-secondary">🔒 Unlock More Investors</a>
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-secondary">🔒 Unlock More Investors</a>
             </div>
-        @endif -->
+        <?php endif; ?> -->
 
     </div>
 </div>
 
-@else
-    <div class="container mt-5 {{!$isSubscribed ? 'locked-content' : ''}}">
+<?php else: ?>
+    <div class="container mt-5 <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
         <h2 class="text-center mb-4 fw-bold text-dark">No Investors Found</h2>
         <p class="text-center">Please check back later or consider subscribing for more options.</p>
     </div>
 
     
-     <!-- @if (!$isSubscribed) -->
+     <!-- <?php if(!$isSubscribed): ?> -->
         <!-- <div class="col-md-12 text-center mt-4 mb-2">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
                 <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
-                <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
             </div>
         </div> -->
-    <!-- @endif -->
+    <!-- <?php endif; ?> -->
     <div class="divider height-4"></div>
-@endif
+<?php endif; ?>
 <div class="col-md-12 text-center mt-4">
             <div class="alert subscription-box">
                 <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
                 <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
-                <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
             </div>
         </div>
          <div class="divider height-4"></div>
@@ -229,3 +231,4 @@
 
 
 
+<?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/partials/investor_list.blade.php ENDPATH**/ ?>

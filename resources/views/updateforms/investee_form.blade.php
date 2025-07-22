@@ -26,7 +26,7 @@
    
 </div> 
     
-    <form class="bg-light p-4" id="investeeForm" action="{{ route('form.submit') }}" method="POST" enctype="multipart/form-data" style="box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18), 0 1.5rem 3rem rgba(0,0,0,0.15);" novalidate>
+    <form class="bg-light p-4" id="investeeForm" action="{{ route('updateinvesteeprofile') }}" method="POST" enctype="multipart/form-data" style="box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18), 0 1.5rem 3rem rgba(0,0,0,0.15);" novalidate>
 
     <div class="row justify-content-center mb-4">
         <div class="col-12 col-md-10 col-lg-22" style="max-width: 100%;">
@@ -288,7 +288,7 @@
                 class="form-control shadow-sm rounded-3 @error('company_name') is-invalid @enderror"
                 id="company_name"
                 name="company_name"
-                value="{{ old('company_name') }}"
+                value="{{ old('company_name', $company->company_name ?? '') }}"
                 required
                 pattern="^[A-Za-z\s\.\-&']+$"
                 title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
@@ -307,7 +307,7 @@
                 class="form-control shadow-sm rounded-3 @error('address') is-invalid @enderror"
                 id="address"
                 name="address"
-                value="{{ old('address') }}"
+                value="{{ old('address' , $company->address ?? '') }}"
                 required
             >
             @error('address')
@@ -322,7 +322,7 @@
                 class="form-control shadow-sm rounded-3 @error('nature_of_business') is-invalid @enderror"
                 id="nature_of_business"
                 name="nature_of_business"
-                value="{{ old('nature_of_business') }}"
+                value="{{ old('nature_of_business' , $company->nature_of_business ?? '') }}"
                 required
             >
             @error('nature_of_business')
@@ -485,20 +485,7 @@
             <label for="incorporated_in" class="form-label">
                 Incorporated In <span class="text-danger">*</span>
             </label>
-            <!-- <input 
-                type="number" 
-                class="form-control" 
-                id="incorporated_in" 
-                name="incorporated_in" 
-                step="1"
-                min="1800"
-                max="{{ date('Y') }}"
-                required
-                value="{{ old('incorporated_in') }}"
-                oninput="validateYear()"
-            >
-            <div id="incorporated_in_error" class="text-danger mt-1 small"></div> -->
-            <!-- Select dropdown option for incorporated in -->
+            
             <select 
                 class="form-select shadow-sm rounded-3 @error('incorporated_in') is-invalid @enderror" 
                 id="incorporated_in" 
@@ -508,7 +495,7 @@
             >
                 <option value="" disabled selected>Select Year</option>
                 @for ($year = date('Y'); $year >= 1901; $year--)
-                    <option value="{{ $year }}" {{ old('incorporated_in') == $year ? 'selected' : '' }}>
+                    <option value="{{ $year }}" {{ old('incorporated_in', $company->incorporated_in ?? '') == $year ? 'selected' : '' }}>
                         {{ $year }}
                     </option>
                 @endfor
@@ -679,7 +666,7 @@
                     class="form-control form-control-sm @error('concerned_person_name') is-invalid @enderror" 
                     id="concerned_person_name" 
                     name="concerned_person_name" 
-                    value="{{ old('concerned_person_name') }}" 
+                    value="{{ old('concerned_person_name', $concernedPerson->name ?? '') }}" 
                     required
                     pattern="^[A-Za-z\s\.\-&']+$"
                     title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
@@ -698,7 +685,7 @@
                     class="form-control form-control-sm @error('concerned_person_designation') is-invalid @enderror" 
                     id="concerned_person_designation" 
                     name="concerned_person_designation" 
-                    value="{{ old('concerned_person_designation') }}" 
+                    value="{{ old('concerned_person_designation' , $concernedPerson->designation ?? '') }}" 
                     required
                     pattern="^[A-Za-z\s\.\-&']+$"
                     title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
@@ -723,7 +710,7 @@
                     class="form-control form-control-sm @error('concerned_person_email') is-invalid @enderror" 
                     id="concerned_person_email" 
                     name="concerned_person_email" 
-                    value="{{ old('concerned_person_email') }}" 
+                    value="{{ old('concerned_person_email' , $concernedPerson->email ?? '') }}" 
                     required
                 >
             </div>
@@ -735,7 +722,7 @@
                     class="form-control form-control-sm @error('concerned_person_phone') is-invalid @enderror" 
                     id="concerned_person_phone" 
                     name="concerned_person_phone" 
-                    value="{{ old('concerned_person_phone') }}" 
+                    value="{{ old('concerned_person_phone' , $concernedPerson->phone ?? '') }}" 
                     maxlength="20" 
                     pattern="^\+?[0-9]{7,20}$" 
                     oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
@@ -917,7 +904,7 @@
                 class="form-control @error('website') is-invalid @enderror" 
                 id="company_website" 
                 name="website" 
-                value="{{ old('website') }}" 
+                value="{{ old('website' , $company->website ?? '') }}" 
                 required
                 pattern="^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$"
                 title="Please enter a valid website URL (e.g., https://example.com)"
@@ -938,7 +925,7 @@
                 class="form-control @error('linkedin') is-invalid @enderror" 
                 id="linkedin_link" 
                 name="linkedin" 
-                value="{{ old('linkedin') }}" 
+                value="{{ old('linkedin' , $company->linkedin ?? '') }}" 
                 required
                 placeholder="https://www.linkedin.com/in/username"
             >
@@ -949,8 +936,7 @@
         </div>
     </div>
 
-    <div class="row g-3 mt-3">
-        <!-- Other Links Section -->
+    <!-- <div class="row g-3 mt-3">
         <div class="col-sm-2">
             <h3 class="mt-3" style="font-size: 16px; font-weight: 600;">Other Links</h3>
         </div>
@@ -995,12 +981,95 @@
                     </button>
                 </div>
             </div>
-            <!-- Dynamically added rows will appear here -->
+          
         </div>
+    </div> -->
+
+
+
+<div class="row g-3 mt-3">
+    <!-- Other Links Section -->
+    <div class="col-sm-2">
+        <h3 class="mt-3" style="font-size: 16px; font-weight: 600;">Other Links</h3>
     </div>
 
+    <div class="col-sm-10" id="public-links-container">
+        @forelse ($otherLinks as $index => $link)
+            <div class="row g-0 mb-3">
+                <div class="col-sm-5">
+                    <input 
+                        class="form-control @error("public_links.$index") is-invalid @enderror" 
+                        type="url" 
+                        name="public_links[]" 
+                        placeholder="URL" 
+                        value="{{ old("public_links.$index", $link->link_url) }}"
+                    >
+                    @error("public_links.$index")
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
 
+                <div class="col-sm-5">
+                    <select 
+                        class="form-control @error("link_descriptions.$index") is-invalid @enderror" 
+                        name="link_descriptions[]"
+                    >
+                        <option value="" disabled {{ old("link_descriptions.$index", $link->link_description) ? '' : 'selected' }}>Select Account</option>
+                        <option value="Facebook" {{ old("link_descriptions.$index", $link->link_description) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
+                        <option value="Twitter/X" {{ old("link_descriptions.$index", $link->link_description) == 'Twitter/X' ? 'selected' : '' }}>Twitter/X</option>
+                        <option value="Others" {{ old("link_descriptions.$index", $link->link_description) == 'Others' ? 'selected' : '' }}>Others</option>
+                    </select>
+                    @error("link_descriptions.$index")
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
 
+                <div class="col-sm-2 text-end">
+                    @if ($loop->first)
+                        <button type="button" class="btn btn-outline-primary" onclick="addPublicLinkField()">+ Add More Links</button>
+                    @else
+                        <button type="button" class="btn btn-outline-danger" onclick="removeLinkRow(this)">Remove</button>
+                    @endif
+                </div>
+            </div>
+        @empty
+            <!-- Show one empty row if there are no links -->
+            <div class="row g-0 mb-3">
+                <div class="col-sm-5">
+                    <input 
+                        class="form-control @error('public_links.0') is-invalid @enderror" 
+                        type="url" 
+                        name="public_links[]" 
+                        placeholder="URL" 
+                        value="{{ old('public_links.0') }}"
+                    >
+                    @error('public_links.0')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-sm-5">
+                    <select 
+                        class="form-control @error('link_descriptions.0') is-invalid @enderror" 
+                        name="link_descriptions[]"
+                    >
+                        <option value="" disabled {{ old('link_descriptions.0') ? '' : 'selected' }}>Select Account</option>
+                        <option value="Facebook" {{ old('link_descriptions.0') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
+                        <option value="Twitter/X" {{ old('link_descriptions.0') == 'Twitter/X' ? 'selected' : '' }}>Twitter/X</option>
+                        <option value="Others" {{ old('link_descriptions.0') == 'Others' ? 'selected' : '' }}>Others</option>
+                    </select>
+                    @error('link_descriptions.0')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-sm-2 text-end">
+                    <button type="button" class="btn btn-outline-primary" onclick="addPublicLinkField()">+ Add More Links</button>
+                </div>
+            </div>
+        @endforelse
+    </div>
+</div>
 
 
 
@@ -1186,7 +1255,7 @@
 
 
 
-    <div id="founder-details-container" class="p-3 rounded-4 shadow-sm mb-4" style="background-color: #ffffff; border: 1px solid #e2e8f0;">
+    <!-- <div id="founder-details-container" class="p-3 rounded-4 shadow-sm mb-4" style="background-color: #ffffff; border: 1px solid #e2e8f0;">
         <div class="row g-3 align-items-end">
             <div class="col-sm-12">
                 <h3 class="fs-5 fw-semibold text-dark">Founder Details</h3>
@@ -1295,10 +1364,6 @@
             </div>
 
             <div class="col-md-3">
-                 <!-- {{-- JS live validation error --}}
-                    <div class="invalid-feedback js-error" style="display: none;">
-                        Experience must be greater than 0
-                    </div> -->
                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years) <span style="color:red;">*</span></label>
                 <input 
                     type="number" 
@@ -1327,10 +1392,112 @@
                 </button>
             </div>
         </div>
+    </div> -->
+
+
+
+<div id="founder-details-container" class="p-3 rounded-4 shadow-sm mb-4" style="background-color: #ffffff; border: 1px solid #e2e8f0;">
+    <div class="row g-3 align-items-end">
+        <div class="col-sm-12">
+            <h3 class="fs-5 fw-semibold text-dark">Founder Details</h3>
+        </div>
+
+        @forelse ($founders as $index => $founder)
+            <div class="row g-3 align-items-end mb-2">
+                <input type="hidden" name="founder_ids[]" value="{{ $founder->id }}">
+
+                <!-- Name -->
+                <div class="col-md-2">
+                    <label class="required">Name <span class="text-danger">*</span></label>
+                    <input type="text"
+                        class="form-control @error('founder_name.' . $index) is-invalid @enderror"
+                        name="founder_name[]"
+                        value="{{ old('founder_name.' . $index, $founder->name) }}"
+                        pattern="^[A-Za-z\s\.\-&']+$"
+                        title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                        oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                        required>
+                    @error('founder_name.' . $index)
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Position -->
+                <div class="col-md-2">
+                    <label class="required">Position</label>
+                    <select 
+                        class="form-control @error('founder_position.' . $index) is-invalid @enderror"
+                        name="founder_position[]"
+                        required>
+                        <option value="" disabled>Select Position</option>
+                        @php
+                            $positions = ['Chief Executive Officer', 'Chief Marketing Officer', 'General Manager', 'Others']; // Shortened; you can extend this.
+                        @endphp
+                        @foreach ($positions as $pos)
+                            <option value="{{ $pos }}" {{ old('founder_position.' . $index, $founder->position) == $pos ? 'selected' : '' }}>{{ $pos }}</option>
+                        @endforeach
+                    </select>
+                    @error('founder_position.' . $index)
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Education -->
+                <div class="col-md-2">
+                    <label class="required">Qualification <span class="text-danger">*</span></label>
+                    <input type="text"
+                        class="form-control @error('founder_education.' . $index) is-invalid @enderror"
+                        name="founder_education[]"
+                        value="{{ old('founder_education.' . $index, $founder->education) }}"
+                        pattern="^[A-Za-z\s\.\-&']+$"
+                        title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                        oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                        required>
+                    @error('founder_education.' . $index)
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Experience -->
+                <div class="col-md-3">
+                     {{-- JS live validation error --}}
+                    <div class="invalid-feedback js-error" style="display: none;">
+                        Experience must be greater than 0
+                    </div>
+                    <label class="required">Experience (Years) <span class="text-danger">*</span></label>
+                    <input type="number"
+                        class="form-control @error('founder_experience.' . $index) is-invalid @enderror"
+                        name="founder_experience[]"
+                        value="{{ old('founder_experience.' . $index, $founder->experience) }}"
+                        step="0.1"
+                        min="0.1"
+                        max="100"
+                        oninput="validateForm()" 
+                        required>
+                    
+                    {{-- Laravel backend validation error --}}
+                    @error('founder_experience.' . $index)
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+
+                   
+                </div>
+
+
+                <!-- Remove Button -->
+                <div class="col-md-1 text-end">
+                    @if($loop->first)
+                        <button type="button" class="btn btn-success mt-2" onclick="addFounderField()">+</button>
+                    @else
+                        <button type="button" class="btn btn-danger mt-2" onclick="removeFounderRow(this)">−</button>
+                    @endif
+                </div>
+            </div>
+        @empty
+            <p class="text-muted">No founder details available.</p>
+        @endforelse
     </div>
-
-
-
+</div>
 
 
 
@@ -1370,13 +1537,13 @@
 
 
     
-    <hr>
+    <!-- <hr>
 
-     <!-- Requirements of Fund Section -->
+    
    <div id="funds-container" class="mb-4">
     <div class="heading-with-hr">
         <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">Requirements of Fund</h3>
-        <!-- <hr> -->
+       
     </div>
     <div class="row mb-3 align-items-end">
         <div class="col-md-3">
@@ -1449,11 +1616,144 @@
         readonly
     >
     <label id="labelinput" for="fund_requirement" class="required">Total Fund Raised</label>
+    </div> -->
+
+
+
+
+<div id="funds-container" class="mb-4">
+    <div class="heading-with-hr">
+        <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">Requirements of Fund</h3>
     </div>
 
+    @forelse ($fundRequirements as $index => $fund)
+    <div class="row mb-3 align-items-end">
+        <input type="hidden" name="fund_ids[]" value="{{ $fund->id }}">
 
+        <!-- Usage -->
+        <div class="col-md-3">
+            <label id="labelinput" class="required">Usage of Fund <span style="color:red;">*</span></label>
+            <select 
+                class="form-control spaced-input @error("fund_usage.$index") is-invalid @enderror" 
+                name="fund_usage[]" 
+                required
+            >
+                <option value="" disabled {{ old("fund_usage.$index", $fund->usage) ? '' : 'selected' }}>Select Usage</option>
+                <option value="Capex" {{ old("fund_usage.$index", $fund->usage) == 'Capex' ? 'selected' : '' }}>Capex</option>
+                <option value="Opex" {{ old("fund_usage.$index", $fund->usage) == 'Opex' ? 'selected' : '' }}>Opex</option>
+                <option value="Acquisition" {{ old("fund_usage.$index", $fund->usage) == 'Acquisition' ? 'selected' : '' }}>Acquisition</option>
+                <option value="Debt Requirement" {{ old("fund_usage.$index", $fund->usage) == 'Debt Requirement' ? 'selected' : '' }}>Debt Requirement</option>
+                <option value="Others" {{ old("fund_usage.$index", $fund->usage) == 'Others' ? 'selected' : '' }}>Others</option>
+            </select>
+            @error("fund_usage.$index")
+                <span class="text-danger d-block">{{ $message }}</span>
+            @enderror
+        </div>
 
+        <!-- Amount + Unit -->
+        <div class="col-md-8">
+            <label id="labelinput" class="required">Fund Requirement <span style="color:red;">*</span></label>
+            <div class="input-group">
+                <input 
+                    class="form-control spaced-input @error("fund_requirement.$index") is-invalid @enderror" 
+                    type="number" 
+                    name="fund_requirement[]" 
+                    value="{{ old("fund_requirement.$index", $fund->amount) }}" 
+                    min="1"
+                    step="0.01"
+                    required
+                    oninput="if (this.value < 1) this.value = ''"
+                >
+                
+                <select 
+                    class="form-select spaced-input @error("fund_unit.$index") is-invalid @enderror" 
+                    name="fund_unit[]" 
+                    required
+                >
+                    <option value="crores" {{ old("fund_unit.$index", $fund->unit) == 'crores' ? 'selected' : '' }}>Cr</option>
+                    <option value="lakhs" {{ old("fund_unit.$index", $fund->unit) == 'lakhs' ? 'selected' : '' }}>Lakh</option>
+                </select>
+            </div>
+            @error("fund_requirement.$index")
+                <span class="text-danger d-block mt-1">{{ $message }}</span>
+            @enderror
+            @error("fund_unit.$index")
+                <span class="text-danger d-block mt-1">{{ $message }}</span>
+            @enderror
+        </div>
 
+        <!-- Add/Remove -->
+        <div class="col-md-1 mt-3 text-end">
+            @if ($loop->first)
+                <button id="addfundButton" class="btn btn-info" type="button" onclick="addFundField()">+ </button>
+            @else
+                <button class="btn btn-danger" type="button" onclick="removeFundRow(this)">−</button>
+            @endif
+        </div>
+    </div>
+    @empty
+    <!-- Show 1 empty row if none exist -->
+    <div class="row mb-3 align-items-end">
+        <div class="col-md-3">
+            <label id="labelinput" class="required">Usage of Fund <span style="color:red;">*</span></label>
+            <select 
+                class="form-control spaced-input @error('fund_usage.0') is-invalid @enderror" 
+                name="fund_usage[]" 
+                required
+            >
+                <option value="" disabled selected>Select Usage</option>
+                <option value="Capex">Capex</option>
+                <option value="Opex">Opex</option>
+                <option value="Acquisition">Acquisition</option>
+                <option value="Debt Requirement">Debt Requirement</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+
+        <div class="col-md-8">
+            <label id="labelinput" class="required">Fund Requirement <span style="color:red;">*</span></label>
+            <div class="input-group">
+                <input 
+                    class="form-control spaced-input @error('fund_requirement.0') is-invalid @enderror" 
+                    type="number" 
+                    name="fund_requirement[]" 
+                    value="{{ old('fund_requirement.0') }}" 
+                    min="1"
+                    step="0.01"
+                    required
+                    oninput="if (this.value < 1) this.value = ''"
+                >
+                
+                <select 
+                    class="form-select spaced-input @error('fund_unit.0') is-invalid @enderror" 
+                    name="fund_unit[]" 
+                    required
+                >
+                    <option value="crores">Cr</option>
+                    <option value="lakhs">Lakh</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-1 mt-3">
+            <button id="addfundButton" class="btn btn-info float-end" type="button" onclick="addFundField()">+ </button>
+        </div>
+    </div>
+    @endforelse
+</div>
+
+<!-- Total Fund Raised (readonly) -->
+<div class="form-floating mb-1">
+    <input 
+        type="text" 
+        class="form-control spaced-input" 
+        id="total_fund_raised" 
+        name="total_fund_raised" 
+        value="{{ old('total_fund_raised') }}" 
+        readonly
+    >
+    <label id="labelinput" for="fund_requirement" class="required">Total Fund Raised</label>
+</div>
 
 
 
@@ -1656,7 +1956,7 @@
 
 
 
-
+<!-- 
     <div id="previous-rounds-container" class="mb-4 p-4 bg-white rounded-lg border shadow-sm" style="border-radius: 10px;">
  
         <div class="row mb-3">
@@ -1717,15 +2017,13 @@
                     name="amount_raised[]" 
                     min="0.01" 
                     step="0.01" 
-                    oninput = "if (this.value <= 0) this.value = ''"
+                    oninput = "if (this.value < 0) this.value = ''"
                     value="{{ old('amount_raised.0') }}" 
                     required
                 >
                 @error('amount_raised.0')
                     <div class="invalid-feedback">This Field is Required</div>
                 @enderror
-                   <!-- {{-- JS validation error --}}
-                 <div class="invalid-feedback js-error" style="display: none;">Amount must be greater than 0</div> -->
             </div>
 
            
@@ -1751,171 +2049,160 @@
                 <button class="btn btn-info float-end" type="button" onclick="addPreviousRoundField()">+</button>
             </div>
         </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Attachments Section -->
-    <div class="heading-with-hr">
-    <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">Attachments</h3>
-    <!-- <hr> -->
-    </div>
-    <div class="mb-1">
-    <label id="labelinput" for="pitch_deck" class="required" style="color: red;">Pitch Deck<small> (ppt, pptx, pdf, doc, docx)</small> <span style="color:red;">*</span></label>
-    <input 
-        type="file" 
-        class="form-control spaced-input @error('pitch_deck') is-invalid @enderror" 
-        id="pitch_deck" 
-        name="pitch_deck" 
-        value="{{ old('pitch_deck.0')}}"
-        accept=".ppt,.pptx,.pdf,.doc,.docx" 
-        required
-        onchange="validatePitchDeckFile(this)"
-    >
-    <div id="pitch_deck_error" class="text-danger"></div>
-    @error('pitch_deck')
-        <span class="text-danger">This Field is Required</span>
-    @enderror
-
-    <script>
-    function validatePitchDeckFile(input) {
-        const file = input.files[0];
-        const errorDiv = document.getElementById('pitch_deck_error');
-        if (!file) {
-            errorDiv.textContent = '';
-            return;
-        }
-        const allowedExtensions = /\.(ppt|pptx|pdf|doc|docx)$/i;
-        if (!allowedExtensions.test(file.name)) {
-            errorDiv.textContent = 'Invalid file type. Only ppt, pptx, pdf, doc, or docx files are allowed.';
-            input.value = '';
-        } else {
-            errorDiv.textContent = '';
-        }
-    }
-    </script>
-    </div>
-
-
-    <!-- <div class="mb-1">
-        <label id="labelinput" for="financials" class="required" style="color:red;">Financials</label>
-        <div id="financials-container">
-                        <div class="row mb-4 align-items-end">
-                                    <div class="col-md-3">
-                                        <label id="labelinput" for="fiscal_year" class="required">Fiscal Year<span style="color:red;">*</span></label>
-                                        <select 
-                                            class="form-control spaced-input @error('fiscal_year.0') is-invalid @enderror" 
-                                            name="fiscal_year[]" 
-                                            required
-                                        >
-                                            <option value="" disabled {{ old('fiscal_year.0') ? '' : 'selected' }}>Select Year</option>
-                                            <option value="2020" {{ old('fiscal_year.0') == '2020' ? 'selected' : '' }}>2020-2021</option>
-                                            <option value="2021" {{ old('fiscal_year.0') == '2021' ? 'selected' : '' }}>2021-2022</option>
-                                            <option value="2022" {{ old('fiscal_year.0') == '2022' ? 'selected' : '' }}>2022-2023</option>
-                                            <option value="2023" {{ old('fiscal_year.0') == '2023' ? 'selected' : '' }}>2023-2024</option>
-                                        </select>
-                                        @error('fiscal_year.0')
-                                            <span class="text-danger">This Field is Required</span>
-                                        @enderror
-                                    </div>
-                                 
-                                    <div class="col-md-8">
-                                        <label id="labelinput" for="financials" class="required">Choose file<small> (pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
-                                       
-                                        <span id="fileTypeError" class="text-danger"></span>
-                                            <input 
-                                                type="file" 
-                                                id="financials"
-                                                class="form-control spaced-input @error('financials.0') is-invalid @enderror" 
-                                                name="financials[]" 
-                                                accept=".pdf,.doc,.docx,.xls,.xlsx" 
-                                                required
-                                                value="{{ old('financials.0')}}"
-                                            >
-
-                                            @error('financials.0')
-                                                <span class="text-danger">This Field is Required</span>
-                                            @enderror
-
-                                            <script>
-                                            document.getElementById('financials').addEventListener('change', function(event) {
-                                                const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
-                                                const fileInput = event.target;
-                                                const file = fileInput.files[0];
-                                                const errorSpan = document.getElementById('fileTypeError');
-                                                if (file) {
-                                                    const fileExtension = file.name.split('.').pop().toLowerCase();
-                                                    if (!allowedExtensions.includes(fileExtension)) {
-                                                        errorSpan.textContent = 'Invalid file type selected!';
-                                                        fileInput.value = ''; 
-                                                    } else {
-                                                        errorSpan.textContent = '';
-                                                    }
-                                                } else {
-                                                    errorSpan.textContent = '';
-                                                }
-                                            });
-                                            </script>                
-                                    </div>
-            
-                                    <div class="col-md-1">
-                                        <button class="btn btn-info float-end" type="button" onclick="addFinancialsField()">+ </button>
-                                    </div>
-                        </div>
-        </div>
     </div> -->
 
 
+<div id="previous-rounds-container" class="mb-4 p-4 bg-white rounded-lg border shadow-sm">
+    <div class="row mb-3">
+        <div class="col-12">
+            <h3 class="mb-1 fs-5 fw-semibold text-dark">Previous Rounds</h3>
+        </div>
+    </div>
+
+    @forelse ($previousRounds as $index => $round)
+    <div class="row mb-3">
+        <input type="hidden" name="previous_round_ids[]" value="{{ $round->id }}">
+
+        <div class="col-md-2">
+            <label class="form-label required">Previous Round <span class="text-danger">*</span></label>
+            <select 
+                class="form-select @error("previous_rounds.$index") is-invalid @enderror" 
+                name="previous_rounds[]" 
+                required
+            >
+                <option value="" disabled {{ old("previous_rounds.$index", $round->round) ? '' : 'selected' }}>Select Round</option>
+                @foreach(['Pre seed round', 'Seed Round', 'Series A round', 'Series B round', 'Series C round', 'Series D round', 'Series E and beyond'] as $option)
+                    <option value="{{ $option }}" {{ old("previous_rounds.$index", $round->round) == $option ? 'selected' : '' }}>{{ $option }}</option>
+                @endforeach
+            </select>
+            @error("previous_rounds.$index")
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label required">Investors <span class="text-danger">*</span></label>
+            <input 
+                type="text" 
+                class="form-control @error("investors.$index") is-invalid @enderror" 
+                name="investors[]" 
+                value="{{ old("investors.$index", $round->investors) }}" 
+                required
+                pattern="^[A-Za-z\s\.\-&']+$"
+                title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+            >
+            @error("investors.$index")
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label required">Amount Raised (in cr) <span class="text-danger">*</span></label>
+            <input 
+                type="number" 
+                class="form-control @error("amount_raised.$index") is-invalid @enderror" 
+                name="amount_raised[]" 
+                value="{{ old("amount_raised.$index", $round->amount_raised) }}" 
+                min="0.01" 
+                step="0.01" 
+                oninput="if (this.value < 0) this.value = ''"
+                required
+            >
+            @error("amount_raised.$index")
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+                    {{-- JS validation error --}}
+            <div class="invalid-feedback js-error" style="display: none;">Amount must be greater than 0</div>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label required">Valuation (in cr) <span class="text-danger">*</span></label>
+            <input 
+                type="number" 
+                class="form-control @error("valuation.$index") is-invalid @enderror" 
+                name="valuation[]" 
+                value="{{ old("valuation.$index", $round->valuation) }}" 
+                min="0.01" 
+                step="0.01" 
+                oninput="if (this.value <= 0) this.value = ''"
+                required
+            >
+            @error("valuation.$index")
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-1 mt-3">
+            @if($loop->first)
+                <button class="btn btn-info float-end" type="button" onclick="addPreviousRoundField()">+</button>
+            @else
+                <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">−</button>
+            @endif
+        </div>
+    </div>
+    @empty
+    <!-- Show one empty row if no previous rounds exist -->
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label class="form-label required">Previous Round <span class="text-danger">*</span></label>
+            <select 
+                class="form-select" 
+                name="previous_rounds[]" 
+                required
+            >
+                <option value="" selected disabled>Select Round</option>
+                @foreach(['Pre seed round', 'Seed Round', 'Series A round', 'Series B round', 'Series C round', 'Series D round', 'Series E and beyond'] as $option)
+                    <option value="{{ $option }}">{{ $option }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label required">Investors <span class="text-danger">*</span></label>
+            <input 
+                type="text" 
+                class="form-control" 
+                name="investors[]" 
+                pattern="^[A-Za-z\s\.\-&']+$"
+                title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                required
+            >
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label required">Amount Raised (in cr) <span class="text-danger">*</span></label>
+            <input 
+            type="number" 
+            class="form-control" 
+            name="amount_raised[]" 
+            min="0.01" 
+            step="0.01" 
+            required
+            oninput="if (this.value <= 0) this.value = ''"
+            >
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label required">Valuation (in cr) <span class="text-danger">*</span></label>
+            <input 
+                type="number" 
+                class="form-control" 
+                name="valuation[]" 
+                min="0.01" 
+                step="0.01" 
+                required
+                oninput="if (this.value <= 0) this.value = ''" required
+            >
+        </div>
+
+        <div class="col-md-1 mt-3">
+            <button class="btn btn-info float-end" type="button" onclick="addPreviousRoundField()">+</button>
+        </div>
+    </div>
+    @endforelse
+</div>
 
 
 
@@ -1936,89 +2223,378 @@
 
 
 
-   <div class="mb-1">
-    <label id="labelinput" class="required" style="color:red;">Financials</label>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Attachments Section -->
+<div class="heading-with-hr">
+    <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">Attachments</h3>
+</div>
+
+<!-- Pitch Deck -->
+<!-- <div class="mb-3 col-sm-4">
+    @if (!empty($pitchDeck))
+        <a href="{{ asset('storage/' . $pitchDeck->file_path) }}" target="_blank">
+            View Pitch Deck
+        </a>
+    @endif
+    <label for="pitch_deck">Pitch Deck <small>(ppt, pptx, pdf, doc, docx)</small> <span class="text-danger">*</span></label>
+    <input 
+        type="file" 
+        class="form-control @error('pitch_deck') is-invalid @enderror" 
+        id="pitch_deck" 
+        name="pitch_deck"
+        accept=".ppt,.pptx,.pdf,.doc,.docx"
+        onchange="validatePitchDeckFile(this)">
+    <span id="pitch_deck_error" class="text-danger"></span>
+    @error('pitch_deck')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+</div> -->
+<div class="mb-3 col-sm-6">
+    <label for="pitch_deck" class="form-label fw-semibold">
+        Pitch Deck <small class="text-muted">(ppt, pptx, pdf, doc, docx)</small>
+        <span class="text-danger">*</span>
+    </label>
+
+    <input type="hidden" name="delete_pitch_deck" id="delete_pitch_deck" value="0">
+
+    @if (!empty($pitchDeck))
+    <div id="existing_pitch_deck"
+        class="d-flex align-items-center justify-content-between px-3 py-2 mb-3 shadow-sm rounded"
+        style="background-color: #e9f2fb; border-left: 4px solid #0d6efd; max-width: 420px;">
+
+        <div class="d-flex align-items-center">
+            <i class="bi bi-file-earmark-text-fill text-primary me-3" style="font-size: 1.6rem;"></i>
+            <a href="{{ asset('storage/' . $pitchDeck->file_path) }}"
+                target="_blank"
+                class="text-decoration-none fw-semibold text-dark">
+                View Pitch Deck
+            </a>
+        </div>
+
+        <button type="button"
+            class="btn btn-sm btn-outline-danger rounded-circle ms-3"
+            onclick="removePitchDeck()"
+            title="Remove File">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+@endif
+
+
+    <input 
+        type="file" 
+        class="form-control @error('pitch_deck') is-invalid @enderror" 
+        id="pitch_deck" 
+        name="pitch_deck"
+        accept=".ppt,.pptx,.pdf,.doc,.docx"
+        onchange="validatePitchDeckFile(this)">
+    
+    <span id="pitch_deck_error" class="text-danger"></span>
+    @error('pitch_deck')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        window.removePitchDeck = function () {
+            const existingDiv = document.getElementById('existing_pitch_deck');
+            const deleteInput = document.getElementById('delete_pitch_deck');
+
+            if (existingDiv) {
+                existingDiv.remove(); // better than hide
+            }
+
+            if (deleteInput) {
+                deleteInput.value = '1';
+            }
+        };
+    });
+</script>
+
+<div class="mb-3">
+    <label for="financials" class="text-danger fw-bold">Financials</label>
     <div id="financials-container">
-        <div class="row mb-4 align-items-end financial-entry">
+
+      @foreach ($financials as $index => $file) 
+    <div class="d-flex align-items-center justify-content-between px-3 py-2 mb-3 shadow-sm rounded" 
+         id="financial_row_{{ $file->id }}"
+         style="background-color: #fff9db; border-left: 5px solid #ffc107; max-width: 420px;">
+
+        <div class="d-flex align-items-center">
+            <i class="bi bi-file-earmark-text-fill text-warning me-3" style="font-size: 1.5rem;"></i>
+            <a href="{{ asset('storage/' . $file->file_path) }}" 
+               target="_blank" 
+               class="text-decoration-none fw-semibold text-dark">
+                View Financials ({{ $file->fiscal_year ?? 'Year' }})
+            </a>
+        </div>
+
+        <button type="button" 
+                class="btn btn-sm btn-outline-danger rounded-circle ms-3" 
+                onclick="removeFinancial({{ $file->id }})" 
+                title="Remove File">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+
+    <input type="hidden" name="existing_financial_ids[]" value="{{ $file->id }}">
+@endforeach
+
+
+        <input type="hidden" name="delete_financial_ids[]" id="delete_financial_ids">
+
+        {{-- New Upload Inputs --}}
+        <div class="row align-items-end mb-3">
             <div class="col-md-3">
-                <label class="required">Fiscal Year <span style="color:red;">*</span></label>
-                <select name="fiscal_year[]" class="form-control spaced-input" required>
-                    <option value="" disabled >Select Year</option>
-                    <option value="2020">2020-2021</option>
-                    <option value="2021">2021-2022</option>
-                    <option value="2022">2022-2023</option>
-                    <option value="2023">2023-2024</option>
+                <label for="fiscal_year">Fiscal Year <span class="text-danger">*</span></label>
+                <select name="fiscal_year[]" class="form-control @error('fiscal_year.0') is-invalid @enderror">
+                    <option value="" disabled selected>Select Year</option>
+                    @for ($y = 2020; $y <= now()->year; $y++)
+                        <option value="{{ $y+1 }}" {{ old('fiscal_year.0') == $y ? 'selected' : '' }}>
+                            {{ $y }}-{{ $y+1 }}
+                        </option>
+                    @endfor
                 </select>
+                @error('fiscal_year.0')
+                    <span class="text-danger">This field is required</span>
+                @enderror
             </div>
-            <div class="col-md-8">
-                <label class="required">Choose File <small>(pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
-                <input type="file" name="financials[]" accept=".pdf,.doc,.docx,.xls,.xlsx" class="form-control spaced-input" required>
+            <div class="col-md-5">
+                <label for="financials_file">Choose File <small>(pdf, doc, docx, xls, xlsx)</small> <span class="text-danger">*</span></label>
+                <input 
+                    type="file" 
+                    name="financials[]" 
+                    class="form-control @error('financials.0') is-invalid @enderror"
+                    accept=".pdf,.doc,.docx,.xls,.xlsx"
+                    >
+                @error('financials.0')
+                    <span class="text-danger">This field is required</span>
+                @enderror
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1" style="display: flex; align-items: center; justify-content: center;">
                 <button type="button" class="btn btn-info" onclick="addFinancialsField()">+</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    let deletedFinancialIds = [];
 
+    function removeFinancial(id) {
+        const row = document.getElementById(`financial_row_${id}`);
+        if (row) {
+            row.remove();
+        }
+
+        deletedFinancialIds.push(id);
+        document.getElementById('delete_financial_ids').value = deletedFinancialIds.join(',');
+    }
+</script>
+
+<!-- Other Attachment -->
+<div class="mb-4">
+    <label for="other_attachment" class="form-label fw-semibold">
+        Other Attachment <small class="text-muted">(pdf, doc, docx, xls, xlsx, ppt, pptx)</small>
+    </label>
+
+   @if ($otherAttachments->count())
+    @foreach ($otherAttachments as $other)
+        <div id="other_row_{{ $other->id }}" 
+             class="d-flex align-items-center justify-content-between shadow-sm px-3 py-3 mb-3 rounded"
+             style="background-color: #b2dedbff;; border: 1px solid #cbd5e1; border-left: 5px solid #0d9488; max-width:35%; max-height:50px;" >
+            
+            <div class="d-flex align-items-center">
+                <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                     style="width: 40px; height: 40px; background-color: #e0f2f1;">
+                    <i class="bi bi-file-earmark-arrow-down-fill" style="font-size: 1.2rem; color: #0d9488;"></i>
+                </div>
+                <a href="{{ asset('storage/' . $other->file_path) }}"
+                   target="_blank"
+                   class="fw-semibold text-decoration-none"
+                   style="color: #334155;">
+                    View Other Attachment
+                </a>
+            </div>
+
+            <button type="button"
+                    class="btn btn-sm btn-outline-danger rounded-circle"
+                    onclick="removeOtherAttachment({{ $other->id }})"
+                    title="Remove File">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <input type="hidden" name="existing_other_ids[]" value="{{ $other->id }}">
+    @endforeach
+    <input type="hidden" name="delete_other_attachment" id="delete_other_attachment" value="0">
+@endif
+
+
+    <input 
+        type="file" 
+        id="other_attachment" 
+        name="other_attachment" 
+        class="form-control @error('other_attachment') is-invalid @enderror"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+    <span id="otherAttachmentError" class="text-danger"></span>
+    @error('other_attachment')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
 
 <script>
-function addFinancialsField(fiscalValue = '') {
-    const container = document.getElementById('financials-container');
+    function removeOtherAttachment(id) {
+        const row = document.getElementById(`other_row_${id}`);
+        if (row) {
+            row.remove(); // safer than .style.display = 'none'
+        }
 
-    const newRow = document.createElement('div');
-    newRow.className = 'row mb-4 align-items-end financial-entry';
-
-    const options = [
-        { value: '2020', label: '2020-2021' },
-        { value: '2021', label: '2021-2022' },
-        { value: '2022', label: '2022-2023' },
-        { value: '2023', label: '2023-2024' }
-    ];
-
-    let optionsHtml = `<option value="" disabled  ${fiscalValue === '' ? 'selected' : ''}>Select Year</option>`;
-
-    for (let opt of options) {
-        const selected = (opt.value === fiscalValue) ? 'selected' : '';
-        optionsHtml += `<option value="${opt.value}" ${selected}>${opt.label}</option>`;
-    }
-
-    newRow.innerHTML = `
-        <div class="col-md-3">
-            <label class="required">Fiscal Year <span style="color:red;">*</span></label>
-            <select name="fiscal_year[]" class="form-control spaced-input" required>
-                ${optionsHtml}
-            </select>
-        </div>
-        <div class="col-md-8">
-            <label class="required">Choose File <small>(pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
-            <input type="file" name="financials[]" accept=".pdf,.doc,.docx,.xls,.xlsx" class="form-control spaced-input" required>
-        </div>
-        <div class="col-md-1">
-            <button type="button" class="btn btn-danger" onclick="removeFinancialField(this)">–</button>
-        </div>
-    `;
-
-    container.appendChild(newRow);
-}
-
-
-function removeFinancialField(button) {
-    button.closest('.financial-entry').remove();
-}
-
-function validateFinancials() {
-    const selects = document.querySelectorAll('select[name="fiscal_year[]"]');
-    for (let i = 0; i < selects.length; i++) {
-        if (!selects[i].value) {
-            alert(`Please select a fiscal year for entry #${i + 1}`);
-            selects[i].focus();
-            return false;
+        const deleteInput = document.getElementById('delete_other_attachment');
+        if (deleteInput) {
+            deleteInput.value = '1'; // set delete flag
         }
     }
-    return true;
+</script>
+
+
+
+<!-- JS Validation -->
+<script>
+
+// on any change in the form call function  oninput="if (this.value <= 0) this.value = ''" 
+        //     <label class="form-label required">Valuation (in cr) <span class="text-danger">*</span></label>
+        //     <input 
+        //         type="number" 
+        //         class="form-control" 
+        //         name="valuation[]" 
+        //         min="0.01" 
+        //         step="0.01" 
+        //         required
+        //         oninput="if (this.value <= 0) this.value = ''" required
+        //     >
+        // </div>
+
+
+
+function validateForm() {
+    const valuations = document.querySelectorAll('input[name="valuation[]"]');
+    const amountRaised = document.querySelectorAll('input[name="amount_raised[]"]');
+    const founderExperience = document.querySelectorAll('input[name="founder_experience[]"]');
+
+    const validateFieldGroup = (fields, message) => {
+        fields.forEach(input => {
+            const errorDiv = input.parentElement.querySelector('.js-error');
+            const value = parseFloat(input.value);
+            if (value <= 0 || isNaN(value)) {
+                input.classList.add('is-invalid');
+                if (errorDiv) {
+                    errorDiv.textContent = message;
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                input.classList.remove('is-invalid');
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                }
+            }
+        });
+    };
+
+    validateFieldGroup(valuations, "Valuation must be greater than 0");
+    validateFieldGroup(amountRaised, "Amount must be greater than 0");
+    validateFieldGroup(founderExperience, "Experience must be greater than 0");
 }
 
+
+const form = document.getElementById('investeeForm');
+form.addEventListener('input', validateForm);
+form.addEventListener('change', validateForm);
+form.addEventListener('submit', function(event) {
+    validateForm();
+    const invalidInputs = form.querySelectorAll('.is-invalid');
+    if (invalidInputs.length > 0) {
+        event.preventDefault();
+        alert('Please correct the errors in the form before submitting.');
+        invalidInputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
+
+
+
+function validatePitchDeckFile(input) {
+    const file = input.files[0];
+    const errorDiv = document.getElementById('pitch_deck_error');
+    if (file) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const allowed = ['ppt', 'pptx', 'pdf', 'doc', 'docx'];
+        if (!allowed.includes(ext)) {
+            errorDiv.textContent = 'Invalid file type. Only ppt, pptx, pdf, doc, or docx files allowed.';
+            input.value = '';
+        } else {
+            errorDiv.textContent = '';
+        }
+    } else {
+        errorDiv.textContent = '';
+    }
+}
+
+document.getElementById('financials').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const errorSpan = document.getElementById('fileTypeError');
+    const allowed = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
+    if (file) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (!allowed.includes(ext)) {
+            errorSpan.textContent = 'Invalid file type selected!';
+            event.target.value = '';
+        } else {
+            errorSpan.textContent = '';
+        }
+    }
+});
+
+document.getElementById('other_attachment').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const errorSpan = document.getElementById('otherAttachmentError');
+    const allowed = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+    if (file) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (!allowed.includes(ext)) {
+            errorSpan.textContent = 'Invalid file type selected!';
+            event.target.value = '';
+        } else {
+            errorSpan.textContent = '';
+        }
+    }
+});
 </script>
 
 
@@ -2044,113 +2620,17 @@ function validateFinancials() {
 
 
 
+<!-- 
+@php
+    $selectedReferral = old('referral_source', $referralSource->source_name ?? '');
+@endphp -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="mb-4">
-    <label id="labelinput" for="other_attachment" style="color: red;">Other Attachment<small> (pdf, doc, docx, xls, xlsx, ppt, pptx)</small></label>
-    <input 
-    type="file" 
-    class="form-control spaced-input @error('other_attachment') is-invalid @enderror" 
-    id="other_attachment" 
-    name="other_attachment"
-    value="{{ old('other_attachment')}}"
-    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" 
-    >
-    <span id="otherAttachmentError" class="text-danger"></span>
-    @error('other_attachment')
-        <span class="text-danger">This Field is Required</span>
-    @enderror
-
-    <script>
-        document.getElementById('other_attachment').addEventListener('change', function(event) {
-            const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
-            const fileInput = event.target;
-            const file = fileInput.files[0];
-            const errorSpan = document.getElementById('otherAttachmentError');
-            if (file) {
-                const fileExtension = file.name.split('.').pop().toLowerCase();
-                if (!allowedExtensions.includes(fileExtension)) {
-                    errorSpan.textContent = 'Invalid file type selected!';
-                    fileInput.value = ''; // Clear the file input
-                } else {
-                    errorSpan.textContent = '';
-                }
-            } else {
-                errorSpan.textContent = '';
-            }
-        });
-    </script>
-    <!-- <input 
-        type="file" 
-        class="form-control spaced-input @error('other_attachment') is-invalid @enderror" 
-        id="other_attachment" 
-        name="other_attachment"
-        value = "{{ old('other_attachment')}}"
-        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" 
-    >
-    @error('other_attachment')
-        <span class="text-danger">This Field is Required</span>
-    @enderror -->
-    </div>
-    <!-- <hr> -->
-
-    <!-- Referral Source Section -->
-    <div class="row mb-2 align-items-end bordered-row">
+<!-- Referral Source Section -->
+<!-- <div class="row mb-2 align-items-end bordered-row">
     <div class="heading-with-hr">
-        <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">How did you hear about Investor Dekho? <span style="color:red;">*</span></h3>
-        <!-- <hr> -->
+        <h3 class="mb-1" style="font-size: 22px; font-weight: 600;">
+            How did you hear about Investor Dekho? <span style="color:red;">*</span>
+        </h3>
     </div>
     <div class="form-floating mb-4">
         <label id="labelinput" for="referral_source" class="required"></label>
@@ -2160,73 +2640,78 @@ function validateFinancials() {
             name="referral_source" 
             required
         >
-            <option value="" disabled {{ old('referral_source') ? '' : 'selected' }}>Select Source</option>
-            <option value="Friend/Family" {{ old('referral_source') == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
-            <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
-            <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
-            <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
-            <option value="Email Newsletter" {{ old('referral_source') == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
-            <option value="Event/Seminar" {{ old('referral_source') == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
-            <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral (Doctor, Lawyer, etc.)</option>
-            <option value="Blog/Website" {{ old('referral_source') == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
-            <option value="Direct Mail" {{ old('referral_source') == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
-            <option value="Company Website" {{ old('referral_source') == 'Company Website' ? 'selected' : '' }}>Company Website</option>
+            <option value="" disabled {{ $selectedReferral == '' ? 'selected' : '' }}>Select Source</option>
+            <option value="Friend/Family" {{ $selectedReferral == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
+            <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ $selectedReferral == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
+            <option value="Online Search (Google, Bing, etc.)" {{ $selectedReferral == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
+            <option value="Advertisement (TV, Radio, Print)" {{ $selectedReferral == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
+            <option value="Email Newsletter" {{ $selectedReferral == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
+            <option value="Event/Seminar" {{ $selectedReferral == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
+            <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ $selectedReferral == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral (Doctor, Lawyer, etc.)</option>
+            <option value="Blog/Website" {{ $selectedReferral == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
+            <option value="Direct Mail" {{ $selectedReferral == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
+            <option value="Company Website" {{ $selectedReferral == 'Company Website' ? 'selected' : '' }}>Company Website</option>
         </select>
+
         @error('referral_source')
             <span class="text-danger">This Field is Required</span>
         @enderror
     </div>
+</div> -->
+
+
+
+                 
+
+<!-- 
+<div class="row g-3 mb-4 bordered-row">
+    <div class="heading-with-hr">
+        <h3 class="required" style="font-size: 22px; font-weight: 600;">How can we guide you in fund raise?</h3>
+    </div>
+    <div class="form-group mb-3">
+
+        @php
+            $guidanceOptions = [
+                'Capital Raise',
+                'Valuation and Financial Modelling',
+                'M&A Advisory',
+                'Pitch deck Preparation',
+                'Investor Pitching',
+                'NA'
+            ];
+        @endphp
+
+        @foreach ($guidanceOptions as $option)
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="{{ Str::slug($option, '_') }}"
+                    name="guidance_needed[]" value="{{ $option }}"
+                    {{ in_array($option, old('guidance_needed', $selectedGuidance ?? [])) ? 'checked' : '' }}>
+                <label class="form-check-label" for="{{ Str::slug($option, '_') }}">{{ $option }}</label>
+            </div>
+        @endforeach
+
+        {{-- Others checkbox --}}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="others_checkbox"
+                name="guidance_needed[]" value="Others"
+                {{ in_array('other', $selectedGuidance ?? []) ? 'checked' : '' }}
+                onclick="toggleOtherField()">
+            <label class="form-check-label" for="others_checkbox">Others</label>
+        </div>
+
     </div>
 
+    {{-- Others input field --}}
+    <div class="form-group mb-3" id="other_field" style="{{ in_array('other', $selectedGuidance ?? []) ? '' : 'display: none;' }}">
+        <label for="other_guidance_input">Please specify (Others)</label>
+        <input type="text" name="other_guidance" id="other_guidance_input" class="form-control"
+            value="{{ old('other_guidance', $otherGuidance) }}" placeholder="Please specify your other guidance">
+    </div>
+</div> -->
 
-    <div class="row g-3 mb-4 bordered-row">
-                        <div class="heading-with-hr">
-                            <h3 class="required" style="font-size: 22px; font-weight: 600;" >How can we guide you in fund raise?</h3>
-                            <!-- <hr> -->
-                        </div>
-                        <div class="form-group mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="capital_raise" name="guidance_needed[]" value="Capital Raise" 
-                                {{ in_array('Capital Raise', old('guidance_needed', [])) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="capital_raise">Capital Raise</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="valuation_modelling" name="guidance_needed[]" value="Valuation and Financial Modelling"
-                                    {{ in_array('Valuation and Financial Modelling', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="valuation_modelling">Valuation and Financial Modelling</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="ma_advisory" name="guidance_needed[]" value="M&A Advisory"
-                                    {{ in_array('M&A Advisory', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="ma_advisory">M&A Advisory</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="pitch_deck" name="guidance_needed[]" value="Pitch deck Preparation"
-                                    {{ in_array('Pitch deck Preparation', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="pitch_deck">Pitch deck Preparation</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="investor_pitching" name="guidance_needed[]" value="Investor Pitching"
-                                    {{ in_array('Investor Pitching', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="investor_pitching">Investor Pitching</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="na" name="guidance_needed[]" value="NA"
-                                    {{ in_array('NA', old('guidance_needed', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="na">NA</label>
-                            </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="others_checkbox" name="others_checkbox" {{ old('others_checkbox') ? 'checked' : '' }} value="Others" onclick="toggleOtherField()">
-                                <label class="form-check-label" for="others_checkbox">Others</label>
-                            </div>
-                        </div>
-                        <div class="form-group mb-3" id="other_field" style="display: none;">
-                            <label id="labelinput" for="other_guidance">Please specify (Others)</label>
-                            <input type="text" name="guidance_needed[]" id="other_guidance_input" class="form-control" value="{{ old('other_guidance') }}" placeholder="Please specify your other guidance">
 
-                        </div>
-                    </div>
+
 
     <!-- CAPTCHA Section -->
    
@@ -2259,51 +2744,6 @@ function validateFinancials() {
 
 <!-- Script for Auto-Fill Functionality -->
  <script>
-
-        
-    function validateForm() {
-        const valuations = document.querySelectorAll('input[name="valuation[]"]');
-        const amountRaised = document.querySelectorAll('input[name="amount_raised[]"]');
-        const founderExperience = document.querySelectorAll('input[name="founder_experience[]"]');
-
-        const validateFieldGroup = (fields, message) => {
-            fields.forEach(input => {
-                const errorDiv = input.parentElement.querySelector('.js-error');
-                const value = parseFloat(input.value);
-                if (value <= 0 || isNaN(value)) {
-                    input.classList.add('is-invalid');
-                    if (errorDiv) {
-                        errorDiv.textContent = message;
-                        errorDiv.style.display = 'block';
-                    }
-                } else {
-                    input.classList.remove('is-invalid');
-                    if (errorDiv) {
-                        errorDiv.style.display = 'none';
-                    }
-                }
-            });
-        };
-
-        validateFieldGroup(valuations, "Valuation must be greater than 0");
-        validateFieldGroup(amountRaised, "Amount must be greater than 0");
-        validateFieldGroup(founderExperience, "Experience must be greater than 0");
-    }
-
-
-    const form = document.getElementById('investeeForm');
-    form.addEventListener('input', validateForm);
-    form.addEventListener('change', validateForm);
-    form.addEventListener('submit', function(event) {
-        validateForm();
-        const invalidInputs = form.querySelectorAll('.is-invalid');
-        if (invalidInputs.length > 0) {
-            event.preventDefault();
-            alert('Please correct the errors in the form before submitting.');
-            invalidInputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
-
 
     function fillConcernedPersonDetails() {
         const nameField = document.getElementById('concerned_person_name');
@@ -2463,56 +2903,62 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
     }
 });
 
+
 function toggleOtherField() {
     const otherField = document.getElementById('other_field');
-    const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the input box
-
-    if (document.getElementById('others_checkbox').checked) {
-        // Show the input field
-        otherField.style.display = 'block';
-
-        // Clear any previous content
-        otherGuidanceContainer.innerHTML = '';
-
-        // Create the input field dynamically
-        const inputDiv = document.createElement('div');
-        inputDiv.classList.add('form-group'); // Add Bootstrap styling
-
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.classList.add('form-control'); // Add Bootstrap form control class
-        input.name = 'other_guidance';
-        input.id = 'other_guidance_input';
-        input.placeholder = 'Please specify your other guidance';
-
-        // Append the input field to the div
-        inputDiv.appendChild(input);
-
-        // Append the div to the container
-        otherGuidanceContainer.appendChild(inputDiv);
-    } else {
-        // Hide the input field if "Others" is unchecked
-        otherField.style.display = 'none';
-    }
+    const checkbox = document.getElementById('others_checkbox');
+    otherField.style.display = checkbox.checked ? 'block' : 'none';
 }
+// function toggleOtherField() {
+//     const otherField = document.getElementById('other_field');
+//     const otherGuidanceContainer = document.getElementById('other_guidance'); // This will hold the input box
+
+//     if (document.getElementById('others_checkbox').checked) {
+//         // Show the input field
+//         otherField.style.display = 'block';
+
+//         // Clear any previous content
+//         otherGuidanceContainer.innerHTML = '';
+
+//         // Create the input field dynamically
+//         const inputDiv = document.createElement('div');
+//         inputDiv.classList.add('form-group'); // Add Bootstrap styling
+
+//         const input = document.createElement('input');
+//         input.type = 'text';
+//         input.classList.add('form-control'); // Add Bootstrap form control class
+//         input.name = 'other_guidance';
+//         input.id = 'other_guidance_input';
+//         input.placeholder = 'Please specify your other guidance';
+
+//         // Append the input field to the div
+//         inputDiv.appendChild(input);
+
+//         // Append the div to the container
+//         otherGuidanceContainer.appendChild(inputDiv);
+//     } else {
+//         // Hide the input field if "Others" is unchecked
+//         otherField.style.display = 'none';
+//     }
+// }
 
 // Check if "Others" checkbox was previously checked and input was filled after form reload
-window.onload = function() {
-    const othersCheckbox = document.getElementById('others_checkbox');
-    const otherField = document.getElementById('other_field');
-    const otherGuidanceContainer = document.getElementById('other_guidance');
+// window.onload = function() {
+//     const othersCheckbox = document.getElementById('others_checkbox');
+//     const otherField = document.getElementById('other_field');
+//     const otherGuidanceContainer = document.getElementById('other_guidance');
     
-    if (othersCheckbox.checked) {
-        otherField.style.display = 'block';
+//     if (othersCheckbox.checked) {
+//         otherField.style.display = 'block';
 
-        // Check if there's an existing value in the "other_guidance" input field
-        if (document.getElementById('other_guidance_input')) {
-            const input = document.getElementById('other_guidance_input');
-            input.value = "{{ old('other_guidance') }}"; // Retain value from old input
+//         // Check if there's an existing value in the "other_guidance" input field
+//         if (document.getElementById('other_guidance_input')) {
+//             const input = document.getElementById('other_guidance_input');
+//             input.value = "{{ old('other_guidance') }}"; // Retain value from old input
           
-        }
-    }
-};
+//         }
+//     }
+// };
 
 
 // Function to add a new link field
@@ -2609,15 +3055,15 @@ function removeLinkField(button) {
     
         newRow.innerHTML = `
         
-             {{-- JS live validation error --}}
+           {{-- JS live validation error --}}
                     <div class="invalid-feedback js-error" style="display: none;">
                         Experience must be greater than 0
-                    </div>  
-            <div class="col-md-2">
+                    </div>
+            <div class="col-md-2" style="max-width: 185px; margin-right: 12px;">
                 <label id="labelinput" for="founder_name" class="required">Name</label>
                 <input type="text" class="form-control" name="founder_name[]" required>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="max-width: 189px; margin-right: 10px;">
                 <label id="labelinput" for="founder_position" class="required">Position</label>
                 <select class="form-control" name="founder_position[]" required>
                     <option value="" disabled selected>Select Position</option>
@@ -2676,7 +3122,7 @@ function removeLinkField(button) {
                     <option value="Vice President">Vice President</option>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="max-width: 188px; margin-right: 10px;">
                 <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
                 <input type="text" class="form-control" name="founder_education[]" required
                     pattern="^[A-Za-z\s.\-&']+$"
@@ -2685,7 +3131,7 @@ function removeLinkField(button) {
                     >
             </div>
            
-            <div class="col-md-3">
+            <div class="col-md-3" style="max-width: 285px; margin-right: 10px;">
                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
                 <input type="number" class="form-control " name="founder_experience[]" 
                     step="0.1"       
@@ -2694,7 +3140,7 @@ function removeLinkField(button) {
                     oninput="if (this.value < 0.1) this.value = ''" 
                     required>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1" style="max-width: 27px; margin-left: 65px;">
                 <button class="btn btn-danger float-end mt-4" type="button" onclick="removeFounderField(this)">×</button>
             </div>
         `;
@@ -2838,8 +3284,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0.01" step="0.01" required>
-
+                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0.01" step="0.01" oninput="if (this.value<= 0) this.value = '' " required>
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
@@ -2863,7 +3308,43 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    // Function to add a new financials field set
+    window.addFinancialsField = function () {
+        const container = document.getElementById('financials-container');
+        const newRow = document.createElement('div');
+        newRow.className = 'row mb-4 align-items-end';
 
+        newRow.innerHTML = `
+            <div class="col-md-3">
+                <label id="labelinput" for="financial_year" class="required">Fiscal Year</label>
+                <select class="form-control spaced-input" name="financial_year[]" required>
+                    <option value="" disabled selected>Select Year</option>
+                    <option value="2020-2021">2020-2021</option>
+                    <option value="2021-2022">2021-2022</option>
+                    <option value="2022-2023">2022-2023</option>
+                    <option value="2023-2024">2023-2024</option>
+                    <option value="2024-2025">2024-2025</option>
+                </select>
+            </div>
+            <div class="col-md-5">
+                <label id="labelinput" for="financials" class="required">Choose file</label>
+                <input type="file" class="form-control spaced-input" name="financials[]" accept=".pdf,.doc,.docx" required>
+            </div>
+            <div class="col-md-1"  style="display: flex; align-items: center; justify-content: center;">
+                <button class="btn btn-danger float-end" type="button" onclick="removeFinancialsField(this)">×</button>
+            </div>
+        `;
+
+        container.appendChild(newRow);
+    };
+
+    // Function to remove a financials field set
+    window.removeFinancialsField = function (button) {
+        const row = button.closest('.row');
+        row.remove();
+    };
+});
 
 
 

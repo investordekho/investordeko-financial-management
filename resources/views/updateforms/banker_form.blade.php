@@ -37,7 +37,7 @@
             </div>
         </div>
 
-    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('form.bank.submit') }}" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;" novalidate>
+    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('updatebankerprofile') }}" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;" novalidate>
 
         @csrf
      <!-- Company Details Section -->
@@ -55,7 +55,7 @@
         class="form-control @error('company_name') is-invalid @enderror" 
         id="company_name" 
         name="company_name" 
-        value="{{ old('company_name') }}" 
+        value="{{ old('company_name',$banker->company_name ?? '') }}" 
         required
         pattern="^[A-Za-z\s.\-&']+$"
         title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
@@ -82,7 +82,7 @@
                 >
                 <option value="" disabled selected>Select Year</option>
                 @for ($year = date('Y'); $year >=1901; $year--)
-                    <option value="{{ $year }}" {{ old('incorporated_in') == $year ? 'selected' : ''}}>
+                    <option value="{{ $year }}" {{ old('incorporated_in',$banker->incorporated_in) == $year ? 'selected' : ''}}>
                         {{ $year }}
                     </option>
                 @endfor
@@ -103,11 +103,11 @@
             name="ib_team_size" 
             required
         >
-            <option value="" disabled {{ old('ib_team_size') ? '' : 'selected' }}>Select Size</option>
-            <option value="1-10" {{ old('ib_team_size') == '1-10' ? 'selected' : '' }}>1-10</option>
-            <option value="11-50" {{ old('ib_team_size') == '11-50' ? 'selected' : '' }}>11-50</option>
-            <option value="51-100" {{ old('ib_team_size') == '51-100' ? 'selected' : '' }}>51-100</option>
-            <option value="100+" {{ old('ib_team_size') == '100+' ? 'selected' : '' }}>100+</option>
+            <option value="" disabled {{ old('ib_team_size',$banker->ib_team_size ?? '') ? '' : 'selected' }}>Select Size</option>
+            <option value="1-10" {{ old('ib_team_size',$banker->ib_team_size ?? '') == '1-10' ? 'selected' : '' }}>1-10</option>
+            <option value="11-50" {{ old('ib_team_size',$banker->ib_team_size ?? '') == '11-50' ? 'selected' : '' }}>11-50</option>
+            <option value="51-100" {{ old('ib_team_size',$banker->ib_team_size ?? '') == '51-100' ? 'selected' : '' }}>51-100</option>
+            <option value="100+" {{ old('ib_team_size',$banker->ib_team_size ?? '') == '100+' ? 'selected' : '' }}>100+</option>
         </select>
         @error('ib_team_size')
             <span class="text-danger small">This field is required</span>
@@ -115,6 +115,7 @@
     </div>
 
     <div class="col-sm-2">
+      
         <label for="company_profile" class="form-label">
             Company Profile <span class="text-danger">*</span>
         </label>
@@ -124,10 +125,15 @@
             id="company_profile"  
             name="company_profile" 
             required
-            value = "{{ old('company_profile')}}"
+            value = "{{ old('company_profile') }}"
             accept=".doc,.docx,.pdf,.ppt,.pptx,.jpg,.jpeg,.png"
             onchange="validateFileTypeinvestorprofile(this)"
         >
+          @if(!empty($banker->company_profile))
+            <a href="{{ asset('storage/' . $banker->company_profile) }}" target="_blank">
+                View Company Profile
+            </a>
+        @endif
         @error('company_profile')
             <span class="text-danger small">This field is required</span>
         @enderror
@@ -166,7 +172,7 @@
                 class="form-control @error('email') is-invalid @enderror" 
                 id="email" 
                 name="email" 
-                value="{{ old('email') }}" 
+                value="{{ old('email',$bankerContactDetails->email) }}" 
                 required
             >
             @error('email')
@@ -191,7 +197,7 @@
                  minlength="7"
                 pattern="^\+?[0-9]{7,20}$" 
                 oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
-                value="{{ old('phone_number') }}" 
+                value="{{ old('phone_number',$bankerContactDetails->phone_number) }}" 
                 required
             >
             @error('phone_number')
@@ -206,60 +212,60 @@
     <div class="col-md-3">
         <label for="concerned_person_designation" class="form-label">Designation</label>
         <select class="form-select @error('concerned_person_designation') is-invalid @enderror" id="concerned_person_designation" name="concerned_person_designation" required>
-            <option value="" disabled {{ old('concerned_person_designation') ? '' : 'selected' }}>Select Designation</option>
-            <option value="Chief Administrative Officer" {{ old('concerned_person_designation') == 'Chief Administrative Officer' ? 'selected' : '' }}>Chief Administrative Officer</option>
-            <option value="Chief Analytics Officer" {{ old('concerned_person_designation') == 'Chief Analytics Officer' ? 'selected' : '' }}>Chief Analytics Officer</option>
-            <option value="Chief Brand Officer" {{ old('concerned_person_designation') == 'Chief Brand Officer' ? 'selected' : '' }}>Chief Brand Officer</option>
-            <option value="Chief Business Development Officer" {{ old('concerned_person_designation') == 'Chief Business Development Officer' ? 'selected' : '' }}>Chief Business Development Officer</option>
-            <option value="Chief Business Officer" {{ old('concerned_person_designation') == 'Chief Business Officer' ? 'selected' : '' }}>Chief Business Officer</option>
-            <option value="Chief Commercial Officer" {{ old('concerned_person_designation') == 'Chief Commercial Officer' ? 'selected' : '' }}>Chief Commercial Officer</option>
-            <option value="Chief Communications Officer" {{ old('concerned_person_designation') == 'Chief Communications Officer' ? 'selected' : '' }}>Chief Communications Officer</option>
-            <option value="Chief Compliance Officer" {{ old('concerned_person_designation') == 'Chief Compliance Officer' ? 'selected' : '' }}>Chief Compliance Officer</option>
-            <option value="Chief Content Officer" {{ old('concerned_person_designation') == 'Chief Content Officer' ? 'selected' : '' }}>Chief Content Officer</option>
-            <option value="Chief Creative Officer" {{ old('concerned_person_designation') == 'Chief Creative Officer' ? 'selected' : '' }}>Chief Creative Officer</option>
-            <option value="Chief Customer Officer" {{ old('concerned_person_designation') == 'Chief Customer Officer' ? 'selected' : '' }}>Chief Customer Officer</option>
-            <option value="Chief Data Officer" {{ old('concerned_person_designation') == 'Chief Data Officer' ? 'selected' : '' }}>Chief Data Officer</option>
-            <option value="Chief Design Officer" {{ old('concerned_person_designation') == 'Chief Design Officer' ? 'selected' : '' }}>Chief Design Officer</option>
-            <option value="Chief Digital Officer" {{ old('concerned_person_designation') == 'Chief Digital Officer' ? 'selected' : '' }}>Chief Digital Officer</option>
-            <option value="Chief Diversity Officer" {{ old('concerned_person_designation') == 'Chief Diversity Officer' ? 'selected' : '' }}>Chief Diversity Officer</option>
-            <option value="Chief Executive Officer" {{ old('concerned_person_designation') == 'Chief Executive Officer' ? 'selected' : '' }}>Chief Executive Officer</option>
-            <option value="Chief Experience Officer" {{ old('concerned_person_designation') == 'Chief Experience Officer' ? 'selected' : '' }}>Chief Experience Officer</option>
-            <option value="Chief Financial Officer" {{ old('concerned_person_designation') == 'Chief Financial Officer' ? 'selected' : '' }}>Chief Financial Officer</option>
-            <option value="Chief Gaming Officer" {{ old('concerned_person_designation') == 'Chief Gaming Officer' ? 'selected' : '' }}>Chief Gaming Officer</option>
-            <option value="Chief Genealogical Officer" {{ old('concerned_person_designation') == 'Chief Genealogical Officer' ? 'selected' : '' }}>Chief Genealogical Officer</option>
-            <option value="Chief Human Resources Officer" {{ old('concerned_person_designation') == 'Chief Human Resources Officer' ? 'selected' : '' }}>Chief Human Resources Officer</option>
-            <option value="Chief Information Officer" {{ old('concerned_person_designation') == 'Chief Information Officer' ? 'selected' : '' }}>Chief Information Officer</option>
-            <option value="Chief Information Officer (Higher Education)" {{ old('concerned_person_designation') == 'Chief Information Officer (Higher Education)' ? 'selected' : '' }}>Chief Information Officer (Higher Education)</option>
-            <option value="Chief Information Security Officer" {{ old('concerned_person_designation') == 'Chief Information Security Officer' ? 'selected' : '' }}>Chief Information Security Officer</option>
-            <option value="Chief Innovation Officer" {{ old('concerned_person_designation') == 'Chief Innovation Officer' ? 'selected' : '' }}>Chief Innovation Officer</option>
-            <option value="Chief Investment Officer" {{ old('concerned_person_designation') == 'Chief Investment Officer' ? 'selected' : '' }}>Chief Investment Officer</option>
-            <option value="Chief Knowledge Officer" {{ old('concerned_person_designation') == 'Chief Knowledge Officer' ? 'selected' : '' }}>Chief Knowledge Officer</option>
-            <option value="Chief Learning Officer" {{ old('concerned_person_designation') == 'Chief Learning Officer' ? 'selected' : '' }}>Chief Learning Officer</option>
-            <option value="Chief Marketing Officer" {{ old('concerned_person_designation') == 'Chief Marketing Officer' ? 'selected' : '' }}>Chief Marketing Officer</option>
-            <option value="Chief Operating Officer" {{ old('concerned_person_designation') == 'Chief Operating Officer' ? 'selected' : '' }}>Chief Operating Officer</option>
-            <option value="Chief Privacy Officer" {{ old('concerned_person_designation') == 'Chief Privacy Officer' ? 'selected' : '' }}>Chief Privacy Officer</option>
-            <option value="Chief Process Officer" {{ old('concerned_person_designation') == 'Chief Process Officer' ? 'selected' : '' }}>Chief Process Officer</option>
-            <option value="Chief Product Officer" {{ old('concerned_person_designation') == 'Chief Product Officer' ? 'selected' : '' }}>Chief Product Officer</option>
-            <option value="Chief Reputation Officer" {{ old('concerned_person_designation') == 'Chief Reputation Officer' ? 'selected' : '' }}>Chief Reputation Officer</option>
-            <option value="Chief Research Officer" {{ old('concerned_person_designation') == 'Chief Research Officer' ? 'selected' : '' }}>Chief Research Officer</option>
-            <option value="Chief Restructuring Officer" {{ old('concerned_person_designation') == 'Chief Restructuring Officer' ? 'selected' : '' }}>Chief Restructuring Officer</option>
-            <option value="Chief Risk Officer" {{ old('concerned_person_designation') == 'Chief Risk Officer' ? 'selected' : '' }}>Chief Risk Officer</option>
-            <option value="Chief Science Officer" {{ old('concerned_person_designation') == 'Chief Science Officer' ? 'selected' : '' }}>Chief Science Officer</option>
-            <option value="Chief Scientific Officer" {{ old('concerned_person_designation') == 'Chief Scientific Officer' ? 'selected' : '' }}>Chief Scientific Officer</option>
-            <option value="Chief Security Officer" {{ old('concerned_person_designation') == 'Chief Security Officer' ? 'selected' : '' }}>Chief Security Officer</option>
-            <option value="Chief Services Officer" {{ old('concerned_person_designation') == 'Chief Services Officer' ? 'selected' : '' }}>Chief Services Officer</option>
-            <option value="Chief Strategy Officer" {{ old('concerned_person_designation') == 'Chief Strategy Officer' ? 'selected' : '' }}>Chief Strategy Officer</option>
-            <option value="Chief Sustainability Officer" {{ old('concerned_person_designation') == 'Chief Sustainability Officer' ? 'selected' : '' }}>Chief Sustainability Officer</option>
-            <option value="Chief Technology Officer" {{ old('concerned_person_designation') == 'Chief Technology Officer' ? 'selected' : '' }}>Chief Technology Officer</option>
-            <option value="Chief Visibility Officer" {{ old('concerned_person_designation') == 'Chief Visibility Officer' ? 'selected' : '' }}>Chief Visibility Officer</option>
-            <option value="Chief Visionary Officer" {{ old('concerned_person_designation') == 'Chief Visionary Officer' ? 'selected' : '' }}>Chief Visionary Officer</option>
-            <option value="Chief Web Officer" {{ old('concerned_person_designation') == 'Chief Web Officer' ? 'selected' : '' }}>Chief Web Officer</option>
-            <option value="General Manager" {{ old('concerned_person_designation') == 'General Manager' ? 'selected' : '' }}>General Manager</option>
-            <option value="Manager" {{ old('concerned_person_designation') == 'Manager' ? 'selected' : '' }}>Manager</option>
-            <option value="Others" {{ old('concerned_person_designation') == 'Others' ? 'selected' : '' }}>Others</option>
-            <option value="Secretary" {{ old('concerned_person_designation') == 'Secretary' ? 'selected' : '' }}>Secretary</option>
-            <option value="Supervisor" {{ old('concerned_person_designation') == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
-            <option value="Vice President" {{ old('concerned_person_designation') == 'Vice President' ? 'selected' : '' }}>Vice President</option>
+            <option value="" disabled {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) ? '' : 'selected' }}>Select Designation</option>
+            <option value="Chief Administrative Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Administrative Officer' ? 'selected' : '' }}>Chief Administrative Officer</option>
+            <option value="Chief Analytics Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Analytics Officer' ? 'selected' : '' }}>Chief Analytics Officer</option>
+            <option value="Chief Brand Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Brand Officer' ? 'selected' : '' }}>Chief Brand Officer</option>
+            <option value="Chief Business Development Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Business Development Officer' ? 'selected' : '' }}>Chief Business Development Officer</option>
+            <option value="Chief Business Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Business Officer' ? 'selected' : '' }}>Chief Business Officer</option>
+            <option value="Chief Commercial Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Commercial Officer' ? 'selected' : '' }}>Chief Commercial Officer</option>
+            <option value="Chief Communications Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Communications Officer' ? 'selected' : '' }}>Chief Communications Officer</option>
+            <option value="Chief Compliance Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Compliance Officer' ? 'selected' : '' }}>Chief Compliance Officer</option>
+            <option value="Chief Content Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Content Officer' ? 'selected' : '' }}>Chief Content Officer</option>
+            <option value="Chief Creative Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Creative Officer' ? 'selected' : '' }}>Chief Creative Officer</option>
+            <option value="Chief Customer Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Customer Officer' ? 'selected' : '' }}>Chief Customer Officer</option>
+            <option value="Chief Data Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Data Officer' ? 'selected' : '' }}>Chief Data Officer</option>
+            <option value="Chief Design Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Design Officer' ? 'selected' : '' }}>Chief Design Officer</option>
+            <option value="Chief Digital Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Digital Officer' ? 'selected' : '' }}>Chief Digital Officer</option>
+            <option value="Chief Diversity Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Diversity Officer' ? 'selected' : '' }}>Chief Diversity Officer</option>
+            <option value="Chief Executive Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Executive Officer' ? 'selected' : '' }}>Chief Executive Officer</option>
+            <option value="Chief Experience Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Experience Officer' ? 'selected' : '' }}>Chief Experience Officer</option>
+            <option value="Chief Financial Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Financial Officer' ? 'selected' : '' }}>Chief Financial Officer</option>
+            <option value="Chief Gaming Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Gaming Officer' ? 'selected' : '' }}>Chief Gaming Officer</option>
+            <option value="Chief Genealogical Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Genealogical Officer' ? 'selected' : '' }}>Chief Genealogical Officer</option>
+            <option value="Chief Human Resources Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Human Resources Officer' ? 'selected' : '' }}>Chief Human Resources Officer</option>
+            <option value="Chief Information Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Information Officer' ? 'selected' : '' }}>Chief Information Officer</option>
+            <option value="Chief Information Officer (Higher Education)" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Information Officer (Higher Education)' ? 'selected' : '' }}>Chief Information Officer (Higher Education)</option>
+            <option value="Chief Information Security Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Information Security Officer' ? 'selected' : '' }}>Chief Information Security Officer</option>
+            <option value="Chief Innovation Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Innovation Officer' ? 'selected' : '' }}>Chief Innovation Officer</option>
+            <option value="Chief Investment Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Investment Officer' ? 'selected' : '' }}>Chief Investment Officer</option>
+            <option value="Chief Knowledge Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Knowledge Officer' ? 'selected' : '' }}>Chief Knowledge Officer</option>
+            <option value="Chief Learning Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Learning Officer' ? 'selected' : '' }}>Chief Learning Officer</option>
+            <option value="Chief Marketing Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Marketing Officer' ? 'selected' : '' }}>Chief Marketing Officer</option>
+            <option value="Chief Operating Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Operating Officer' ? 'selected' : '' }}>Chief Operating Officer</option>
+            <option value="Chief Privacy Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Privacy Officer' ? 'selected' : '' }}>Chief Privacy Officer</option>
+            <option value="Chief Process Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Process Officer' ? 'selected' : '' }}>Chief Process Officer</option>
+            <option value="Chief Product Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Product Officer' ? 'selected' : '' }}>Chief Product Officer</option>
+            <option value="Chief Reputation Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Reputation Officer' ? 'selected' : '' }}>Chief Reputation Officer</option>
+            <option value="Chief Research Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Research Officer' ? 'selected' : '' }}>Chief Research Officer</option>
+            <option value="Chief Restructuring Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Restructuring Officer' ? 'selected' : '' }}>Chief Restructuring Officer</option>
+            <option value="Chief Risk Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Risk Officer' ? 'selected' : '' }}>Chief Risk Officer</option>
+            <option value="Chief Science Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Science Officer' ? 'selected' : '' }}>Chief Science Officer</option>
+            <option value="Chief Scientific Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Scientific Officer' ? 'selected' : '' }}>Chief Scientific Officer</option>
+            <option value="Chief Security Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Security Officer' ? 'selected' : '' }}>Chief Security Officer</option>
+            <option value="Chief Services Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Services Officer' ? 'selected' : '' }}>Chief Services Officer</option>
+            <option value="Chief Strategy Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Strategy Officer' ? 'selected' : '' }}>Chief Strategy Officer</option>
+            <option value="Chief Sustainability Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Sustainability Officer' ? 'selected' : '' }}>Chief Sustainability Officer</option>
+            <option value="Chief Technology Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Technology Officer' ? 'selected' : '' }}>Chief Technology Officer</option>
+            <option value="Chief Visibility Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Visibility Officer' ? 'selected' : '' }}>Chief Visibility Officer</option>
+            <option value="Chief Visionary Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Visionary Officer' ? 'selected' : '' }}>Chief Visionary Officer</option>
+            <option value="Chief Web Officer" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Web Officer' ? 'selected' : '' }}>Chief Web Officer</option>
+            <option value="General Manager" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'General Manager' ? 'selected' : '' }}>General Manager</option>
+            <option value="Manager" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Manager' ? 'selected' : '' }}>Manager</option>
+            <option value="Others" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Others' ? 'selected' : '' }}>Others</option>
+            <option value="Secretary" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Secretary' ? 'selected' : '' }}>Secretary</option>
+            <option value="Supervisor" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
+            <option value="Vice President" {{ old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Vice President' ? 'selected' : '' }}>Vice President</option>
         </select>
         @error('concerned_person_designation')
             <div class="invalid-feedback d-block">This Field is Required</div>
@@ -335,32 +341,33 @@
         @php
             $public_links = old('public_links', []);
             $link_descriptions = old('link_descriptions', []);
-            $link_count = max(count($public_links), count($link_descriptions), 1);
+            $link_count = max(count($public_links), count($link_descriptions), isset($bankerPublicLinks) ? count($bankerPublicLinks) : 0, 1);
         @endphp
         @for($i = 0; $i < $link_count; $i++)
             <div class="row g-0 mb-3">
-                <div class="col-sm-5">
-                    <input 
-                        class="form-control @error('public_links.'.$i) is-invalid @enderror" 
-                        type="url" 
-                        name="public_links[]" 
-                        placeholder="URL" 
-                        value="{{ old('public_links.'.$i) }}"
-                    >
-                    @error('public_links.'.$i)
-                        <div class="invalid-feedback d-block">This Field is Required</div>
-                    @enderror
-                </div>
+            <div class="col-sm-5">
+                <input 
+                class="form-control @error('public_links.'.$i) is-invalid @enderror" 
+                type="url" 
+                name="public_links[]" 
+                placeholder="URL" 
+                value="{{ old('public_links.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->url : '') }}"
+                >
+                @error('public_links.'.$i)
+                <div class="invalid-feedback d-block">This Field is Required</div>
+                @enderror
+            </div>
                 <div class="col-sm-5">
                     <select 
                         class="form-control @error('link_descriptions.'.$i) is-invalid @enderror" 
                         name="link_descriptions[]"
+                        required
                     >
-                        <option value="" disabled {{ old('link_descriptions.'.$i) ? '' : 'selected' }}>Select Account</option>
-                        <option value="Facebook" {{ old('link_descriptions.'.$i) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                        <option value="Twitter/X" {{ old('link_descriptions.'.$i) == 'Twitter/X' ? 'selected' : '' }}>Twitter/X</option>
-                        <option value="Linkedin" {{ old('link_descriptions.'.$i) == 'Linkedin' ? 'selected' : '' }}>Linkedin</option>
-                        <option value="Others" {{ old('link_descriptions.'.$i) == 'Others' ? 'selected' : '' }}>Others</option>
+                        <option value="" disabled {{ old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') ? '' : 'selected' }}>Select Account</option>
+                        <option value="Facebook" {{ old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') == 'Facebook' ? 'selected' : '' }}>Facebook</option>
+                        <option value="Twitter/X" {{ old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') == 'Twitter/X' ? 'selected' : '' }}>Twitter/X</option>
+                        <option value="Linkedin" {{ old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') == 'Linkedin' ? 'selected' : '' }}>Linkedin</option>
+                        <option value="Others" {{ old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') == 'Others' ? 'selected' : '' }}>Others</option>
                     </select>
                     @error('link_descriptions.'.$i)
                         <div class="invalid-feedback d-block">This Field is Required</div>
@@ -449,7 +456,7 @@
             class="form-control @error('address') is-invalid @enderror" 
             id="address" 
             name="address" 
-            value="{{ old('address') }}" 
+            value="{{ old('address',$banker->address ?? '') }}" 
             required
         >
     </div>
@@ -465,7 +472,7 @@
             class="form-control @error('location') is-invalid @enderror" 
             id="location" 
             name="location" 
-            value="{{ old('location') }}" 
+            value="{{ old('location',$banker->location ?? '') }}" 
             required
             pattern="^[a-zA-Z\s]+$"
             title="Please enter a valid name (letters and spaces only)"
@@ -487,7 +494,7 @@
             class="form-control @error('state') is-invalid @enderror" 
             id="state" 
             name="state" 
-            value="{{ old('state') }}" 
+            value="{{ old('state',$banker->state ?? '') }}" 
             required
             pattern="^[a-zA-Z\s]+$"
             title="Please enter a valid name (letters and spaces only)"
@@ -506,7 +513,7 @@
             class="form-control @error('country') is-invalid @enderror" 
             id="country" 
             name="country" 
-            value="{{ old('country') }}" 
+            value="{{ old('country',$banker->country ?? '') }}" 
             required
             pattern="^[a-zA-Z\s]+$"
             title="Please enter a valid name (letters and spaces only)"
@@ -534,11 +541,11 @@
             required
             onchange="validateFundRaiseSize()"
         >
-            <option value="" disabled {{ old('min_fund_raise_size') ? '' : 'selected' }}>Min</option>
-            <option value="10_lakh" {{ old('min_fund_raise_size') == '10_lakh' ? 'selected' : '' }}>10 lakh</option>
-            <option value="50_lakh" {{ old('min_fund_raise_size') == '50_lakh' ? 'selected' : '' }}>50 lakh</option>
-            <option value="1_cr" {{ old('min_fund_raise_size') == '1_cr' ? 'selected' : '' }}>1 cr</option>
-            <option value="10_cr" {{ old('min_fund_raise_size') == '10_cr' ? 'selected' : '' }}>10 cr</option>
+            <option value="" disabled {{ old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') ? '' : 'selected' }}>Min</option>
+            <option value="10_lakh" {{ old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') == '10_lakh' ? 'selected' : '' }}>10 lakh</option>
+            <option value="50_lakh" {{ old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') == '50_lakh' ? 'selected' : '' }}>50 lakh</option>
+            <option value="1_cr" {{ old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') == '1_cr' ? 'selected' : '' }}>1 cr</option>
+            <option value="10_cr" {{ old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') == '10_cr' ? 'selected' : '' }}>10 cr</option>
         </select>
     </div>
     <div class="col-md-6">
@@ -555,11 +562,11 @@
             required
             onchange="validateFundRaiseSize()"
         >
-            <option value="" disabled {{ old('max_fund_raise_size') ? '' : 'selected' }}>Max</option>
-            <option value="1_cr" {{ old('max_fund_raise_size') == '1_cr' ? 'selected' : '' }}>1 cr</option>
-            <option value="10_cr" {{ old('max_fund_raise_size') == '10_cr' ? 'selected' : '' }}>10 cr</option>
-            <option value="50_cr" {{ old('max_fund_raise_size') == '50_cr' ? 'selected' : '' }}>50 cr</option>
-            <option value="100_cr" {{ old('max_fund_raise_size') == '100_cr' ? 'selected' : '' }}>100 cr+</option>
+            <option value="" disabled {{ old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') ? '' : 'selected' }}>Max</option>
+            <option value="1_cr" {{ old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') == '1_cr' ? 'selected' : '' }}>1 cr</option>
+            <option value="10_cr" {{ old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') == '10_cr' ? 'selected' : '' }}>10 cr</option>
+            <option value="50_cr" {{ old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') == '50_cr' ? 'selected' : '' }}>50 cr</option>
+            <option value="100_cr" {{ old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') == '100_cr' ? 'selected' : '' }}>100 cr+</option>
         </select>
     </div>
     <div class="col-12">
@@ -654,10 +661,10 @@
 <h3 class="h5">Previous Deals</h3>
 <div id="previous-deals-container">
     @php
-        $previous_deal_years = old('previous_deal_year', []);
-        $previous_deal_companies = old('previous_deal_company', []);
-        $previous_deal_sectors = old('previous_deal_sector', []);
-        $previous_deal_types = old('previous_deal_type', []);
+        $previous_deal_years = old('previous_deal_year', $bankerPreviousDeals->pluck('previous_deal_year')->toArray() ?? []);
+        $previous_deal_companies = old('previous_deal_company', $bankerPreviousDeals->pluck('previous_deal_company')->toArray() ?? []);
+        $previous_deal_sectors = old('previous_deal_sector', $bankerPreviousDeals->pluck('previous_deal_sector')->toArray() ?? []);
+        $previous_deal_types = old('previous_deal_type', $bankerPreviousDeals->pluck('previous_deal_type')->toArray() ?? []);
         $count = max(
             count($previous_deal_years),
             count($previous_deal_companies),
@@ -983,7 +990,7 @@
 
 
 
-<hr>
+<!-- <hr>
 <h3 class="h5">How did you hear about Investor Dekho?</h3>
 <div class="form-floating mb-3">
     <select 
@@ -1008,10 +1015,10 @@
     @error('referral_source')
         <span class="text-danger small">This field is required</span>
     @enderror
-</div>
+</div> -->
 
 
- <div class="form-check mb-4">
+ <!-- <div class="form-check mb-4">
                         <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
                         <label class="form-check-label" for="terms">
                             I agree to the 
@@ -1020,7 +1027,7 @@
                         @error('terms')
                             <span class="text-danger">You must agree to the Terms and Conditions</span>
                         @enderror
-                    </div>
+                    </div> -->
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>

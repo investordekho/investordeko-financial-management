@@ -207,31 +207,46 @@
                         </div>
 
                     </div>
-                      <div class="row g-3">
-                    <!-- Phone Number Field Covering Full Line -->
-                    <div class="form-auto mb-1">
-                        <div class="input-group" style="margin-bottom: -10px;">
-                            <div class="mr-3" style="margin-right: 10px;">
-                                <!-- Phone Label on Top -->
-                                <label for="country_code">Phone <span class="text-danger mb-4">*</span></label>
-                                <!-- Country Code Dropdown -->
-                                <div style="position: relative; width: 160px;" id="country_code_input" name="country_code_input">
-                                    <select class="form-select p-1" name="country_code" id="country_code" required style="max-width: 160px;">
-                                        <option value="">Select Country</option>
-                                                                                              
-                                   
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- Phone Number Input -->
-                            <input type="tel" class="form-control phone mt-3" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Enter your phone number" required pattern="[0-9]{10,14}" maxlength="14" minlength="10" oninput="validatePhoneLength(this)">
-                        </div>
-                        <label for="phone"></label>
-                        @error('phone')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    </div>
+                    <div class="row g-3">
+    <!-- Phone Number Field Covering Full Line -->
+    <div class="form-auto mb-1">
+        <!-- Input Group Holds Label, Select, and Input -->
+        <div class="input-group" style="margin-bottom: -10px;">
+            <div class="mr-3" style="margin-right: 10px;">
+                <!-- Phone Label -->
+                <label for="country_code">Phone <span class="text-danger">*</span></label>
+                <!-- Country Code Dropdown -->
+                <div style="position: relative; width: 160px;" id="country_code_input">
+                    <select class="form-select p-1" name="country_code" id="country_code" required style="max-width: 160px;">
+                        <option value="">Select Country</option>
+                        <!-- Add country codes -->
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Phone Number Input -->
+            <div class="flex-grow-1 d-flex flex-column">
+                <!-- Error Message Div (starts hidden) -->
+                <div id="phone-error" class="text-danger mt-1" style="display: none; fontsize:0.8rem;"></div>
+
+                <input type="tel" class="form-control phone mt-3" id="phone" name="phone"
+                    value="{{ old('phone') }}"
+                    placeholder="Enter your phone number e.g. 1234567890"
+                    required
+                    pattern="[0-9]{10,14}"
+                    maxlength="14"
+                    minlength="10"
+                    oninput="validatePhoneLength(this)">
+                
+                
+                @error('phone')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+</div>
+
 
                     <!-- Password and Password Confirmation Fields on the Same Line -->
                     <div class="row g-3" style="margin-top: 3px;">
@@ -248,7 +263,7 @@
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password" required>
                             
                             <div id="passwordmsgid" style="display:none;">
-                                <div class="text-danger">Password do not match</div>
+                                <div class="text-danger" style="font-size:0.8rem;">Password do not match</div>
                                 <!-- @error('password_confirmation')
                                 <div class="text-danger">Password do not match</div>
                                 @enderror -->
@@ -1611,6 +1626,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!emailPattern.test(value)) {
             emailInput.classList.add("is-invalid");
             emailError.textContent = "Enter a valid email like example@gmail.com";
+            //decrease size of text content
+            emailError.style.fontSize = "0.8rem";
             return false;
         } else {
             emailInput.classList.remove("is-invalid");
@@ -1648,6 +1665,33 @@ document.addEventListener("DOMContentLoaded", function () {
     fullNameInput.addEventListener("input", validateName);
 });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const phone = document.getElementById("phone");
+    const phoneError = document.getElementById("phone-error");
+    phoneError.style.fontSize = "0.8rem";
+    function validatePhone() {
+        const value = phone.value.trim();
+        const phonePattern = /^[0-9]{10,14}$/;
+        if (!phonePattern.test(value)) {
+            phone.classList.add("is-invalid");
+            phoneError.textContent = "Enter a valid phone number.";
+            phoneError.style.display = "block";
+            return false;
+        } else {
+            phone.classList.remove("is-invalid");
+            phoneError.textContent = "";
+            phoneError.style.display = "none";
+            return true;
+        }
+    }
+
+    phone.addEventListener("input", validatePhone);
+    phone.addEventListener("blur", validatePhone);
+});
+</script>
+
 
 
 @endsection

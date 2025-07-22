@@ -56,7 +56,7 @@
                     
 
     <form id="investorForm"
-      action="{{ route('form.investor.submit') }}"
+      action="{{ route('updateinvestorprofile') }}"
       method="POST"
       enctype="multipart/form-data"
       style="background: linear-gradient(135deg, #ffffff, #f0f0f0); 
@@ -85,22 +85,22 @@
                         <h3 style="font-size: 22px; font-weight: 600;">Investor Profile</h3>
                     </div>
                    <div class="col-sm-2">
-    <label id="labelinput" for="investor_name" class="required">Investor Name</label>
-    <input
-        type="text"
-        class="form-control spaced-input @error('investor_name') is-invalid @enderror"
-        id="investor_name"
-        name="investor_name"
-        value="{{ old('investor_name') }}"
-        required
-        pattern="^[a-zA-Z\s]+$"
-        title="Please enter a valid name (letters and spaces only)"
-        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
-    >
-    @error('investor_name')
-        <span class="text-danger">This field is required</span>
-    @enderror
-</div>
+                        <label id="labelinput" for="investor_name" class="required">Investor Name</label>
+                        <input
+                            type="text"
+                            class="form-control spaced-input @error('investor_name') is-invalid @enderror"
+                            id="investor_name"
+                            name="investor_name"
+                            value="{{ old('investor_name', $investor->investor_name ?? '') }}"
+                            required
+                            pattern="^[a-zA-Z\s]+$"
+                            title="Please enter a valid name (letters and spaces only)"
+                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                        >
+                        @error('investor_name')
+                            <span class="text-danger">This field is required</span>
+                        @enderror
+                    </div>
 
 
 
@@ -116,99 +116,122 @@
 
 <div class="col-sm-3 form-group">
     <label id="labelinput" for="sectors_preferred" class="required">Sectors Preferred</label>
+
+    @php
+        $selectedSectors = old('sectors_preferred') ?? explode(',', $investor->sectors_preferred ?? '');
+        $sectors = [
+            'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+            'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+            'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+            'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+            'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+            'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+            'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+            'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+            'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+            'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+            'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+            'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+            'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+            'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+            'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+            'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+            'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+            'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+            'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+            'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+            'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+            'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+            'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+            'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+            'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+            'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+            'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+        ];
+    @endphp
+
+    {{-- Readonly visible input --}}
     <input
         type="text"
-        class="form-control spaced-input {{ $errors->has('sectors_preferred') ? 'is-invalid' : '' }}"
+        class="form-control spaced-input @error('sectors_preferred') is-invalid @enderror"
         id="sectors_preferred_input"
         placeholder="Select sectors"
         readonly
         onclick="toggleDropdown()"
-        value="{{ old('sectors_preferred') ? implode(', ', old('sectors_preferred')) : '' }}"
+        value="{{ implode(', ', $selectedSectors) }}"
     >
-    
     @error('sectors_preferred')
         <span class="text-danger" style="font-size: 13px;">{{ $message }}</span>
     @enderror
 
+    {{-- Checkbox dropdown --}}
     <div id="sectors_preferred_list" class="dropdown-list"
         style="display:none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 0px; max-width: 95%; background-color: white; z-index: 10; position: absolute;">
-        @php
-            $sectors = [
-                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
-                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
-                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
-                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
-                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
-                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
-                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
-                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
-                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
-                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
-                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
-                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
-                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
-                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
-                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
-                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
-                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
-                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
-                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
-                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
-                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
-                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
-                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
-                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
-                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
-                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
-                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
-                            ];
-        @endphp
-
         @foreach($sectors as $sector)
             <label>
                 <input
                     type="checkbox"
                     class="sector-checkbox"
                     value="{{ $sector }}"
-                    {{ old('sectors_preferred') && in_array($sector, old('sectors_preferred')) ? 'checked' : '' }}
-                > 
-                {{ $sector }}
+                    {{ in_array($sector, $selectedSectors) ? 'checked' : '' }}
+                > {{ $sector }}
             </label><br>
         @endforeach
     </div>
 
-    {{-- Container for dynamic hidden inputs --}}
+    {{-- Hidden fields for submission --}}
     <div id="sectors_preferred_hidden_container">
-        @if(old('sectors_preferred'))
-            @foreach(old('sectors_preferred') as $sector)
-                <input type="hidden" name="sectors_preferred[]" value="{{ $sector }}">
-            @endforeach
-        @endif
+        @foreach($selectedSectors as $sector)
+            <input type="hidden" name="sectors_preferred[]" value="{{ $sector }}">
+        @endforeach
     </div>
 </div>
 
-    <div class="col-sm-2">
-    <label id="labelinput" for="Address" class="required">Address</label>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <div class="col-sm-2">
+    <label id="labelinput" for="address" class="required">Address</label>
     <input 
         type="text" 
         class="form-control spaced-input @error('address') is-invalid @enderror" 
-        id="Address" 
+        id="address" 
         name="address" 
-        value="{{ old('address') }}" 
+        value="{{ old('address', $investor->address ?? '') }}" 
         required
     >
     @error('address')
-        <span class="text-danger">This field is required</span>
+        <span class="text-danger">{{ $message ?: 'This field is required' }}</span>
     @enderror
 </div>
+
+
 <div class="col-sm-3">
+    @if(!empty($investor->investor_profile))
+        <a href="{{ asset('storage/investor_profiles/' . $investor->investor_profile) }}" target="_blank">
+            View Investor Profile
+        </a>
+    @endif
     <label id="labelinput" for="investor_profile">Investor Profile</label>
     <input 
         type="file" 
         class="form-control spaced-input @error('investor_profile') is-invalid @enderror" 
         id="investor_profile" 
         name="investor_profile"
-        required
         accept=".doc,.docx,.pdf,.ppt,.pptx,.jpg,.jpeg,.png"
         onchange="validateFileTypeinvestorprofile(this)"
     >
@@ -217,8 +240,9 @@
     @enderror
 </div>
 
+
 <hr>
-                  <div class="row g-3 mb-4">
+<div class="row g-3 mb-4">
     <div class="col-sm-2">
         <h3 style="font-size: 22px; font-weight: 600;">Contact Details</h3>
         <input 
@@ -230,8 +254,11 @@
             {{ old('concerned_person_is_me') ? 'checked' : '' }}
             onclick="fillConcernedPersonDetails()"
         >
-        <label class="form-check-label" for="concerned_person_is_me" style="font-size: 12px; color: red;">Same as registered person</label>
+        <label class="form-check-label" for="concerned_person_is_me" style="font-size: 12px; color: red;">
+            Same as registered person
+        </label>
     </div>
+
     <div class="col-sm-3">
         <label id="labelinput" for="concerned_person_name" class="required">Concerned Person</label>
         <input 
@@ -239,7 +266,7 @@
             class="form-control spaced-input @error('concerned_person_name') is-invalid @enderror" 
             id="concerned_person_name" 
             name="concerned_person_name" 
-            value="{{ old('concerned_person_name') }}" 
+            value="{{ old('concerned_person_name', $contactDetails->concerned_person_name ?? '') }}" 
             required
             pattern="^[a-zA-Z\s]+$"
             title="Please enter a valid name (letters and spaces only)"
@@ -250,6 +277,7 @@
             <span class="text-danger">This field is required</span>
         @enderror
     </div>
+
     <div class="col-sm-2">
         <label id="labelinput" for="concerned_person_designation" class="required">Designation</label>
         <input 
@@ -257,7 +285,7 @@
             class="form-control spaced-input @error('concerned_person_designation') is-invalid @enderror" 
             id="concerned_person_designation" 
             name="concerned_person_designation" 
-            value="{{ old('concerned_person_designation') }}" 
+            value="{{ old('concerned_person_designation', $contactDetails->concerned_person_designation ?? '') }}" 
             required
             pattern="^[a-zA-Z\s]+$"
             title="Please enter a valid designation (letters and spaces only)"
@@ -268,6 +296,7 @@
             <span class="text-danger">This field is required</span>
         @enderror
     </div>
+
     <div class="col-sm-2">
         <label id="labelinput" for="concerned_person_phone" class="required">Phone No.</label>
         <input 
@@ -278,13 +307,14 @@
             maxlength="20" 
             pattern="^\+?[0-9]{7,20}$"
             oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
-            value="{{ old('concerned_person_phone') }}" 
+            value="{{ old('concerned_person_phone', $contactDetails->concerned_person_phone ?? '') }}" 
             required
         >
         @error('concerned_person_phone')
             <span class="text-danger">This field is required</span>
         @enderror
     </div>
+
     <div class="col-sm-3">
         <label id="labelinput" for="email" class="required">Email</label>
         <input 
@@ -292,7 +322,7 @@
             class="form-control spaced-input @error('email') is-invalid @enderror" 
             id="email" 
             name="email" 
-            value="{{ old('email') }}" 
+            value="{{ old('email', $contactDetails->email ?? '') }}" 
             required
         >
         <div id="email_error" class="text-danger small"></div>
@@ -302,19 +332,112 @@
     </div>
 </div>
 
+                  <!-- <div class="row g-3 mb-4">
+                        <div class="col-sm-2">
+                            <h3 style="font-size: 22px; font-weight: 600;">Contact Details</h3>
+                            <input 
+                                type="checkbox" 
+                                class="form-check-input" 
+                                id="concerned_person_is_me" 
+                                name="concerned_person_is_me"
+                                value="1"
+                                {{ old('concerned_person_is_me') ? 'checked' : '' }}
+                                onclick="fillConcernedPersonDetails()"
+                            >
+                            <label class="form-check-label" for="concerned_person_is_me" style="font-size: 12px; color: red;">Same as registered person</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label id="labelinput" for="concerned_person_name" class="required">Concerned Person</label>
+                            <input 
+                                type="text" 
+                                class="form-control spaced-input @error('concerned_person_name') is-invalid @enderror" 
+                                id="concerned_person_name" 
+                                name="concerned_person_name" 
+                                value="{{ old('concerned_person_name') }}" 
+                                required
+                                pattern="^[a-zA-Z\s]+$"
+                                title="Please enter a valid name (letters and spaces only)"
+                                oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                autocomplete="off"
+                            >
+                            @error('concerned_person_name')
+                                <span class="text-danger">This field is required</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-2">
+                            <label id="labelinput" for="concerned_person_designation" class="required">Designation</label>
+                            <input 
+                                type="text" 
+                                class="form-control spaced-input @error('concerned_person_designation') is-invalid @enderror" 
+                                id="concerned_person_designation" 
+                                name="concerned_person_designation" 
+                                value="{{ old('concerned_person_designation') }}" 
+                                required
+                                pattern="^[a-zA-Z\s]+$"
+                                title="Please enter a valid designation (letters and spaces only)"
+                                oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                autocomplete="off"
+                            >
+                            @error('concerned_person_designation')
+                                <span class="text-danger">This field is required</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-2">
+                            <label id="labelinput" for="concerned_person_phone" class="required">Phone No.</label>
+                            <input 
+                                type="text" 
+                                class="form-control spaced-input @error('concerned_person_phone') is-invalid @enderror" 
+                                id="concerned_person_phone" 
+                                name="concerned_person_phone" 
+                                maxlength="20" 
+                                pattern="^\+?[0-9]{7,20}$"
+                                oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
+                                value="{{ old('concerned_person_phone') }}" 
+                                required
+                            >
+                            @error('concerned_person_phone')
+                                <span class="text-danger">This field is required</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-3">
+                            <label id="labelinput" for="email" class="required">Email</label>
+                            <input 
+                                type="email" 
+                                class="form-control spaced-input @error('email') is-invalid @enderror" 
+                                id="email" 
+                                name="email" 
+                                value="{{ old('email') }}" 
+                                required
+                            >
+                            <div id="email_error" class="text-danger small"></div>
+                            @error('email')
+                                <span class="text-danger">This field is required</span>
+                            @enderror
+                        </div>
+                    </div> -->
+
 
                  <div class="row g-3 mb-3 bordered-row">
-    <div class="col-sm-2">
-        <label></label>
-        <h3 style="font-size: 22px; font-weight: 600;">Public Links</h3>
-    </div>
+                <div class="col-sm-2">
+                    <label></label>
+                    <h3 style="font-size: 22px; font-weight: 600;">Public Links</h3>
+                </div>
 
- 
-    <div id="public-links-container" class="col-sm-10">
+ <!-- <pre>
+    {!! json_encode($publicLinks->map(function($item) {
+        return [
+            'url' => $item->url,
+            'link_description' => $item->link_description,
+        ];
+    }), JSON_PRETTY_PRINT) !!}
+</pre> -->
+
+   <div id="public-links-container" class="col-sm-10">
     @php
-        $publicLinks = old('public_links', []);
-        $linkDescriptions = old('link_descriptions', []);
-        $count = max(count($publicLinks), 1);
+        // Retrieve old input or fallback to DB values
+        $urls = old('public_links') ?? $publicLinks->pluck('url')->toArray();
+        $descriptions = old('link_descriptions') ?? $publicLinks->pluck('link_description')->toArray();
+        $count = max(count($urls), 1);
     @endphp
 
     @for ($i = 0; $i < $count; $i++)
@@ -326,7 +449,7 @@
                     class="form-control spaced-input @error("public_links.$i") is-invalid @enderror" 
                     name="public_links[]" 
                     placeholder="Enter URL" 
-                    value="{{ $publicLinks[$i] ?? '' }}" 
+                    value="{{ $urls[$i] ?? '' }}" 
                     required
                 >
                 @error("public_links.$i")
@@ -342,7 +465,9 @@
                     required
                 >
                     @foreach(['Facebook', 'Twitter/X', 'Instagram', 'LinkedIn', 'Others'] as $option)
-                        <option value="{{ $option }}" {{ ($linkDescriptions[$i] ?? '') == $option ? 'selected' : '' }}>{{ $option }}</option>
+                        <option value="{{ $option }}" {{ ($descriptions[$i] ?? '') == $option ? 'selected' : '' }}>
+                            {{ $option }}
+                        </option>
                     @endforeach
                 </select>
                 @error("link_descriptions.$i")
@@ -361,78 +486,88 @@
     @endfor
 </div>
 
-</div>
-
 
 
                     <!-- Investment Details Section -->
-                  <div class="row g-3 mb-4">
+                <div class="row g-3 mb-4">
     <div class="heading-with-hr">
         <h3 style="font-size: 22px; font-weight: 600;">Investment Details</h3>
         <hr>
     </div>
+
+    {{-- Invest In --}}
     <div class="col-sm-3 form-group">
-        <label id="labelinput" for="invest_in" class="required">Invest In</label>
+        <label for="invest_in" class="required">Invest In</label>
         <select 
             class="form-control spaced-input @error('invest_in') is-invalid @enderror" 
             id="invest_in" 
             name="invest_in" 
             required
         >
-            <option value="listed shares" {{ old('invest_in') == 'listed shares' ? 'selected' : '' }}>Listed shares</option>
-            <option value="unlisted shares" {{ old('invest_in') == 'unlisted shares' ? 'selected' : '' }}>Unlisted shares</option>
-            <option value="both" {{ old('invest_in') == 'both' ? 'selected' : '' }}>Both</option>
+            @php $selectedInvestIn = old('invest_in') ?? $investmentDetails->invest_in ?? ''; @endphp
+            <option value="listed shares" {{ $selectedInvestIn == 'listed shares' ? 'selected' : '' }}>Listed shares</option>
+            <option value="unlisted shares" {{ $selectedInvestIn == 'unlisted shares' ? 'selected' : '' }}>Unlisted shares</option>
+            <option value="both" {{ $selectedInvestIn == 'both' ? 'selected' : '' }}>Both</option>
         </select>
         @error('invest_in')
             <span class="text-danger">This field is required</span>
         @enderror
     </div>
+
+    {{-- Investor Type --}}
     <div class="col-sm-3 form-group">
-        <label id="labelinput" for="investor_type" class="required">Investor Type</label>
+        <label for="investor_type" class="required">Investor Type</label>
         <select 
             class="form-control spaced-input @error('investor_type') is-invalid @enderror" 
             id="investor_type" 
             name="investor_type" 
             required
         >
-            <option value="Angel Investor" {{ old('investor_type') == 'Angel Investor' ? 'selected' : '' }}>Angel Investor</option>
-            <option value="Private Equity" {{ old('investor_type') == 'Private Equity' ? 'selected' : '' }}>Private Equity</option>
-            <option value="Venture Capital" {{ old('investor_type') == 'Venture Capital' ? 'selected' : '' }}>Venture Capital</option>
-            <option value="Family Office" {{ old('investor_type') == 'Family Office' ? 'selected' : '' }}>Family Office</option>
+            @php $selectedType = old('investor_type') ?? $investmentDetails->investor_type ?? ''; @endphp
+            <option value="Angel Investor" {{ $selectedType == 'Angel Investor' ? 'selected' : '' }}>Angel Investor</option>
+            <option value="Private Equity" {{ $selectedType == 'Private Equity' ? 'selected' : '' }}>Private Equity</option>
+            <option value="Venture Capital" {{ $selectedType == 'Venture Capital' ? 'selected' : '' }}>Venture Capital</option>
+            <option value="Family Office" {{ $selectedType == 'Family Office' ? 'selected' : '' }}>Family Office</option>
         </select>
         @error('investor_type')
             <span class="text-danger">This field is required</span>
         @enderror
     </div>
+
+    {{-- Investment Size --}}
     <div class="col-sm-3 form-group">
-        <label id="labelinput" for="investment_size" class="required">Avg. Investment Size</label>
+        <label for="investment_size" class="required">Avg. Investment Size</label>
         <select 
             class="form-control spaced-input @error('investment_size') is-invalid @enderror" 
             id="investment_size" 
             name="investment_size" 
             required
         >
-            <option value="10 cr" {{ old('investment_size') == '10 cr' ? 'selected' : '' }}>Less than 10 Cr</option>
-            <option value="10-50 Cr" {{ old('investment_size') == '10-50 Cr' ? 'selected' : '' }}>10 - 50 Cr</option>
-            <option value="50-100 Cr" {{ old('investment_size') == '50-100 Cr' ? 'selected' : '' }}>50 - 100 Cr</option>
-            <option value=">100+ Cr" {{ old('investment_size') == '>100+ Cr' ? 'selected' : '' }}>More than 100 Cr</option>
+            @php $selectedSize = old('investment_size') ?? $investmentDetails->investment_size ?? ''; @endphp
+            <option value="10 cr" {{ $selectedSize == '10 cr' ? 'selected' : '' }}>Less than 10 Cr</option>
+            <option value="10-50 Cr" {{ $selectedSize == '10-50 Cr' ? 'selected' : '' }}>10 - 50 Cr</option>
+            <option value="50-100 Cr" {{ $selectedSize == '50-100 Cr' ? 'selected' : '' }}>50 - 100 Cr</option>
+            <option value=">100+ Cr" {{ $selectedSize == '>100+ Cr' ? 'selected' : '' }}>More than 100 Cr</option>
         </select>
         @error('investment_size')
             <span class="text-danger">This field is required</span>
         @enderror
     </div>
+
+    {{-- Investment Tenure --}}
     <div class="col-sm-3 form-group">
-        <label id="labelinput" for="investment_tenure" class="required">Avg. Investment Tenure</label>
+        <label for="investment_tenure" class="required">Avg. Investment Tenure</label>
         <select 
             class="form-control spaced-input @error('investment_tenure') is-invalid @enderror" 
             id="investment_tenure" 
             name="investment_tenure" 
             required
         >
-            <option value="1 Years" {{ old('investment_tenure') == '1 Years' ? 'selected' : '' }}>Less than 1 year</option>
-            <option value="3 Years" {{ old('investment_tenure') == '3 Years' ? 'selected' : '' }}>1 - 3 years</option>
-            <option value="5 Years" {{ old('investment_tenure') == '5 Years' ? 'selected' : '' }}>3 - 5 years</option>
-            <option value="7 Years" {{ old('investment_tenure') == '7 Years' ? 'selected' : '' }}>5 - 7 years</option>
+            @php $selectedTenure = old('investment_tenure') ?? $investmentDetails->investment_tenure ?? ''; @endphp
+            <option value="1 Years" {{ $selectedTenure == '1 Years' ? 'selected' : '' }}>Less than 1 year</option>
+            <option value="3 Years" {{ $selectedTenure == '3 Years' ? 'selected' : '' }}>1 - 3 years</option>
+            <option value="5 Years" {{ $selectedTenure == '5 Years' ? 'selected' : '' }}>3 - 5 years</option>
+            <option value="7 Years" {{ $selectedTenure == '7 Years' ? 'selected' : '' }}>5 - 7 years</option>
         </select>
         @error('investment_tenure')
             <span class="text-danger">This field is required</span>
@@ -548,120 +683,136 @@
 
 
 
+
                     <!-- Previous Investments Section -->
-                  <div class="row g-3 bordered-row">
-                        <div class="heading-with-hr">
-                            <h3 style="font-size: 22px; font-weight: 600;">Previous Investments</h3>
-                            <hr>
-                        </div>
-                        <!-- Previous Investments Section -->
-                        <div id="previous-investments-container">
-
-                            @php
-                                $previousInvestmentYears = old('previous_investment_year', []);
-                                $previousInvestmentCompanies = old('previous_investment_company', []);
-                                $sectors = old('sector', []);
-                                $count = max(count($previousInvestmentCompanies), 1);
-                            @endphp
-                            
-                           @for( $i =0; $i< $count; $i++)
-                            <div class="row g-3 previous-investment-row">
-                                <div class="col-sm-3 form-group">
-                                    <label id="labelinput" for="previous_investment_year" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Year' : ''}}</label>
-                                     <select 
-                                        class="form-control spaced-input @error('previous_investment_year.' . $i) is-invalid @enderror" 
-                                        id="previous_investment_year" 
-                                        name="previous_investment_year[]" 
-                                        required
-                                        value="{{ $previousInvestmentYears[$i] ?? '' }}"
-                                        >
-                                        <option value="" {{ !isset($previousInvestmentYears[$i]) || $previousInvestmentYears[$i] == '' ? 'selected' : ''}}>Select Year</option>
-                                        @for ($year = 2000; $year <= 2024; $year++)
-                                            <option value="{{ $year }}" {{ ($previousInvestmentYears[$i] ?? '') == $year ? 'selected' : '' }}>{{ $year }}</option>
-                                        @endfor
-                                    </select>
-
-                                    @error('previous_investment_year.' . $i)
-                                        <span class="text-danger">This field is required</span>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3 form-group">
-                                    <label id="labelinput" for="previous_investment_company" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Company' : ''}}</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control spaced-input @error('previous_investment_company.' . $i) is-invalid @enderror" 
-                                        id="previous_investment_company" 
-                                        name="previous_investment_company[]" 
-                                        value="{{ $previousInvestmentCompanies[$i] ?? '' }}" 
-                                        required
-                                    >
-                                    @error('previous_investment_company.' . $i)
-                                        <span class="text-danger">This field is required</span>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3 form-group">
-                                    <label id="labelinput" for="sector" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Sector' : ''}}</label>
-                                    <select 
-                                        class="form-control spaced-input @error('sector.' . $i) is-invalid @enderror" 
-                                        id="sector" 
-                                        name="sector[]" 
-                                        required
-                                    >
-                                        <!-- @if ($i == 0)
-                                            <option value="" selected hidden>Select Sector</option>
-                                        @endif -->
-                                        <!-- <option value="" {{ empty($sectors[$i]) ? 'selected' : '' }}>Select Sector</option> -->
-                                        <option value="" {{ !isset($sectors[$i]) || $sectors[$i] == '' ? 'selected' : '' }}>Select Sector</option>
-
-                                        @php
-                                            $sectorOptions = [
-                                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
-                                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
-                                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
-                                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
-                                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
-                                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
-                                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
-                                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
-                                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
-                                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
-                                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
-                                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
-                                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
-                                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
-                                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
-                                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
-                                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
-                                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
-                                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
-                                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
-                                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
-                                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
-                                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
-                                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
-                                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
-                                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
-                                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
-                                            ];
-                                        @endphp
-                                        @foreach($sectorOptions as $option)
-                                            <option value="{{ $option }}" {{ (isset($sectors[$i]) && $sectors[$i] == $option) ? 'selected' : '' }}>{{ $option }}</option>
-                                        @endforeach
-                                    </select>
-                                    
-                                    @error('sector.' . $i)
-                                        <span class="text-danger">This field is required</span>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3 form-group">
-                                    @if ($i == 0)
-                                        <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
-                                    @else
-                                        <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
-                                    @endif
-                                </div>
+                         <div class="row g-3 bordered-row">
+                            <div class="heading-with-hr">
+                                <h3 style="font-size: 22px; font-weight: 600;">Previous Investments</h3>
+                                <hr>
                             </div>
-                            @endfor
+                            <!-- Previous Investments Section -->
+                            <div id="previous-investments-container">
+
+                                <!-- @php
+                                    $previousInvestmentYears = old('previous_investment_year', []);
+                                    $previousInvestmentCompanies = old('previous_investment_company', []);
+                                    $sectors = old('sector', []);
+                                    $count = max(count($previousInvestmentCompanies), 1);
+                                @endphp
+                                 -->
+
+                                 @php
+    if (old('previous_investment_company')) {
+        $previousInvestmentYears = old('previous_investment_year');
+        $previousInvestmentCompanies = old('previous_investment_company');
+        $sectors = old('sector');
+    } else {
+        $previousInvestmentYears = $previousInvestments->pluck('previous_investment_year')->toArray();
+        $previousInvestmentCompanies = $previousInvestments->pluck('previous_investment_company')->toArray();
+        $sectors = $previousInvestments->pluck('sector')->toArray();
+    }
+
+    $count = max(count($previousInvestmentCompanies), 1);
+@endphp
+
+                            @for( $i =0; $i< $count; $i++)
+                                <div class="row g-3 previous-investment-row">
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="previous_investment_year" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Year' : ''}}</label>
+                                        <select 
+                                            class="form-control spaced-input @error('previous_investment_year.' . $i) is-invalid @enderror" 
+                                            id="previous_investment_year" 
+                                            name="previous_investment_year[]" 
+                                            required
+                                            value="{{ $previousInvestmentYears[$i] ?? '' }}"
+                                            >
+                                            <option value="" {{ !isset($previousInvestmentYears[$i]) || $previousInvestmentYears[$i] == '' ? 'selected' : ''}}>Select Year</option>
+                                            @for ($year = 2000; $year <= 2024; $year++)
+                                                <option value="{{ $year }}" {{ ($previousInvestmentYears[$i] ?? '') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                            @endfor
+                                        </select>
+
+                                        @error('previous_investment_year.' . $i)
+                                            <span class="text-danger">This field is required</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="previous_investment_company" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Company' : ''}}</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control spaced-input @error('previous_investment_company.' . $i) is-invalid @enderror" 
+                                            id="previous_investment_company" 
+                                            name="previous_investment_company[]" 
+                                            value="{{ $previousInvestmentCompanies[$i] ?? '' }}" 
+                                            required
+                                        >
+                                        @error('previous_investment_company.' . $i)
+                                            <span class="text-danger">This field is required</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label id="labelinput" for="sector" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Sector' : ''}}</label>
+                                        <select 
+                                            class="form-control spaced-input @error('sector.' . $i) is-invalid @enderror" 
+                                            id="sector" 
+                                            name="sector[]" 
+                                            required
+                                        >
+                                            <!-- @if ($i == 0)
+                                                <option value="" selected hidden>Select Sector</option>
+                                            @endif -->
+                                            <!-- <option value="" {{ empty($sectors[$i]) ? 'selected' : '' }}>Select Sector</option> -->
+                                            <option value="" {{ !isset($sectors[$i]) || $sectors[$i] == '' ? 'selected' : '' }}>Select Sector</option>
+
+                                            @php
+                                                $sectorOptions = [
+                                                    'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+                                                    'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+                                                    'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+                                                    'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+                                                    'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+                                                    'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+                                                    'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+                                                    'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+                                                    'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+                                                    'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+                                                    'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+                                                    'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+                                                    'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+                                                    'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+                                                    'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+                                                    'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+                                                    'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+                                                    'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+                                                    'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+                                                    'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+                                                    'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+                                                    'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+                                                    'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+                                                    'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+                                                    'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+                                                    'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+                                                    'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+                                                ];
+                                            @endphp
+                                            @foreach($sectorOptions as $option)
+                                                <option value="{{ $option }}" {{ (isset($sectors[$i]) && $sectors[$i] == $option) ? 'selected' : '' }}>{{ $option }}</option>
+                                            @endforeach
+                                        </select>
+                                        
+                                        @error('sector.' . $i)
+                                            <span class="text-danger">This field is required</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        @if ($i == 0)
+                                            <button type="button" class="btn btn-info mt-4" onclick="addPreviousInvestmentField(this)">+ Add More</button>
+                                        @else
+                                            <button type="button" class="btn btn-danger mt-4" onclick="removePreviousInvestmentField(this)">×</button>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endfor
                         </div>    
 
 
@@ -749,34 +900,43 @@
 
 
 
+@php
+    $selectedReferral = old('referral_source') ?? ($referral->referral_source ?? '');
+@endphp
 
+<!-- Referral and Guidance Section -->
+<div class="row g-3">
+    <div class="heading-with-hr">
+        <h3 style="font-size: 22px; font-weight: 600;">How did you hear about Investor Dekho?</h3>
+        <hr>
+    </div>
+    <div class="form-floating">
+        <label id="labelinput" for="referral_source" class="required">Referral Source</label>
+        <select class="form-control spaced-input @error('referral_source') is-invalid @enderror" id="referral_source" name="referral_source" required>
+            <option value="" disabled {{ $selectedReferral == '' ? 'selected' : '' }}>Select Source</option>
+            @foreach([
+                'Friend/Family',
+                'Social Media (Facebook, Instagram, Twitter/X, etc.)',
+                'Online Search (Google, Bing, etc.)',
+                'Advertisement (TV, Radio, Print)',
+                'Email Newsletter',
+                'Event/Seminar',
+                'Professional Referral (Doctor, Lawyer, etc.)',
+                'Blog/Website',
+                'Direct Mail',
+                'Company Website'
+            ] as $option)
+                <option value="{{ $option }}" {{ $selectedReferral === $option ? 'selected' : '' }}>
+                    {{ $option }}
+                </option>
+            @endforeach
+        </select>
+        @error('referral_source')
+            <span class="text-danger">This field is required</span>
+        @enderror 
+    </div>
+</div>
 
-                    <!-- Referral and Guidance Section -->
-                    <div class="row g-3">
-                        <div class="heading-with-hr">
-                            <h3 style="font-size: 22px; font-weight: 600;">How did you hear about Investor Dekho?</h3>
-                            <hr>
-                        </div>
-                        <div class="form-floating">
-                            <label id="labelinput" for="referral_source" class="required">Referral Source</label>
-                            <select class="form-control spaced-input @error('referral_source') is-invalid @enderror" id="referral_source" name="referral_source" required>
-                                <option value="" disabled {{ old('referral_source') ? '' : 'selected' }}>Select Source</option>
-                                <option value="Friend/Family" {{ old('referral_source') == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
-                                <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
-                                <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
-                                <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
-                                <option value="Email Newsletter" {{ old('referral_source') == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
-                                <option value="Event/Seminar" {{ old('referral_source') == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
-                                <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral (Doctor, Lawyer, etc.)</option>
-                                <option value="Blog/Website" {{ old('referral_source') == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
-                                <option value="Direct Mail" {{ old('referral_source') == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
-                                <option value="Company Website" {{ old('referral_source') == 'Company Website' ? 'selected' : '' }}>Company Website</option>
-                            </select>
-                            @error('referral_source')
-                                <span class="text-danger">This Field is required</span>
-                            @enderror 
-                        </div>
-                    </div>
 
                    
                    
