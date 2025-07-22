@@ -32,6 +32,10 @@ use Illuminate\Support\Str;
 USE App\Models\investee_guidance_needed_model;
 USE App\Mail\GuidanceNeededInvesteeMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+
+
+
 
 class FormController extends Controller
 {
@@ -442,6 +446,17 @@ public function updateprofileview()
     $otherAttachments = $company->attachments()->where('type', 'other')->get(); 
 
 
+    // Banker data
+    $banker = Banker::where('user_id', $userId)->first();
+    $bankerContactDetails = $banker ? $banker->contactDetails()->first() : null;
+    $bankerPublicLinks = $banker ? $banker->publicLinks()->get() : collect();
+    $bankerPreviousDeals = $banker ? $banker->previousDeals()->get() : collect();
+    $bankerReferral = $banker ? $banker->referrals()->first() : null;
+
+
+    // other data
+    $other = Other::where('user_id', $userId)->first();
+
     // $categoryid = Auth::user()->category_id;
     $categoryid = auth()->user()->category_id;  
     if($categoryid == 1) {
@@ -458,9 +473,16 @@ public function updateprofileview()
             'guidanceNeeds', 'investorAddresses'
         ));
     } elseif ($categoryid == 3) {
-        return view('updateforms.banker_form');
+        // Assuming you have a Banker model and its related data
+        return view('updateforms.banker_form', compact(
+            'banker', 'bankerContactDetails', 'bankerPublicLinks', 
+            'bankerPreviousDeals', 'bankerReferral'
+        ));
+        
     } elseif ($categoryid == 4) {
-        return view('updateforms.other_form');
+        return view('updateforms.other_form', compact(
+            'other'
+        ));
     }
     return redirect()->route('dashboard')->with('error', 'Invalid category ID.');
 }
@@ -613,145 +635,145 @@ public function updateInvesteeForm(Request $request)
     // }
 
     // \Log::info('Guidance Needed:', ['guidance' => $guidanceSelections]);
-//   \Log::info('Request Data:', ['founder_experience' => $request->founder_experience]);
+    //   \Log::info('Request Data:', ['founder_experience' => $request->founder_experience]);
 
-    $request->validate([
-        'company_name' => 'required|string',
-        'address' => 'required|string',
-        'nature_of_business' => 'required|string',
-        'incorporated_in' => 'required|integer',
-        'concerned_person_name' => 'required|string',
-        'concerned_person_email' => 'required|email',
-        'concerned_person_designation' => 'required|string',
-        'concerned_person_phone' => 'required|string',
-        'founder_name.*' => 'required|string',
-        'founder_position.*' => 'required|string',
-        'founder_education.*' => 'required|string',
-        'founder_experience.*' => 'required|numeric',
-        'fund_usage.*' => 'required|string',
-        'fund_requirement.*' => 'required|numeric',
-        'previous_rounds.*' => 'required|string',
-        'investors.*' => 'required|string',
-        'amount_raised.*' => 'required|numeric',
-        'valuation.*' => 'required|numeric',
-        'public_links.*' => 'nullable|url',
-        'link_descriptions.*' => 'nullable|string',
-        'fiscal_year.*' => 'nullable|integer|digits:4',
-        'financials.*' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
-        'pitch_deck' => 'nullable|file|mimes:ppt,pptx,pdf,doc,docx|max:2048',
-        'referral_source' => 'nullable|string',
-        'website' => 'required|url',
-        'linkedin' => 'required|url',
-        'guidance_needed.*' => 'nullable|string',
-        'other_attachment' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048',
-    ]);
-
-    // $user->form_filled = true;
-    // $user->save();
-
-    // Update company
-    $company->update([
-        'company_name' => $request->company_name,
-        'address' => $request->address,
-        'nature_of_business' => $request->nature_of_business,
-        'incorporated_in' => $request->incorporated_in,
-        'website' => $request->website,
-        'linkedin' => $request->linkedin,
-    ]);
-
-    // Update Concerned Person
-    $company->concernedPerson()->updateOrCreate([], [
-        'name' => $request->concerned_person_name,
-        'designation' => $request->concerned_person_designation,
-        'email' => $request->concerned_person_email,
-        'phone' => $request->concerned_person_phone,
-    ]);
-
-    // Update founders
-    $company->founders()->delete();
-    foreach ($request->founder_name as $i => $name) {
-        $company->founders()->create([
-            'name' => $name,
-            'position' => $request->founder_position[$i],
-            'education' => $request->founder_education[$i],
-            'experience' => $request->founder_experience[$i],
+        $request->validate([
+            'company_name' => 'required|string',
+            'address' => 'required|string',
+            'nature_of_business' => 'required|string',
+            'incorporated_in' => 'required|integer',
+            'concerned_person_name' => 'required|string',
+            'concerned_person_email' => 'required|email',
+            'concerned_person_designation' => 'required|string',
+            'concerned_person_phone' => 'required|string',
+            'founder_name.*' => 'required|string',
+            'founder_position.*' => 'required|string',
+            'founder_education.*' => 'required|string',
+            'founder_experience.*' => 'required|numeric',
+            'fund_usage.*' => 'required|string',
+            'fund_requirement.*' => 'required|numeric',
+            'previous_rounds.*' => 'required|string',
+            'investors.*' => 'required|string',
+            'amount_raised.*' => 'required|numeric',
+            'valuation.*' => 'required|numeric',
+            'public_links.*' => 'nullable|url',
+            'link_descriptions.*' => 'nullable|string',
+            'fiscal_year.*' => 'nullable|integer|digits:4',
+            'financials.*' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
+            'pitch_deck' => 'nullable|file|mimes:ppt,pptx,pdf,doc,docx|max:2048',
+            'referral_source' => 'nullable|string',
+            'website' => 'required|url',
+            'linkedin' => 'required|url',
+            'guidance_needed.*' => 'nullable|string',
+            'other_attachment' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048',
         ]);
+
+        // $user->form_filled = true;
+        // $user->save();
+
+        // Update company
+        $company->update([
+            'company_name' => $request->company_name,
+            'address' => $request->address,
+            'nature_of_business' => $request->nature_of_business,
+            'incorporated_in' => $request->incorporated_in,
+            'website' => $request->website,
+            'linkedin' => $request->linkedin,
+        ]);
+
+        // Update Concerned Person
+        $company->concernedPerson()->updateOrCreate([], [
+            'name' => $request->concerned_person_name,
+            'designation' => $request->concerned_person_designation,
+            'email' => $request->concerned_person_email,
+            'phone' => $request->concerned_person_phone,
+        ]);
+
+        // Update founders
+        $company->founders()->delete();
+        foreach ($request->founder_name as $i => $name) {
+            $company->founders()->create([
+                'name' => $name,
+                'position' => $request->founder_position[$i],
+                'education' => $request->founder_education[$i],
+                'experience' => $request->founder_experience[$i],
+            ]);
+        }
+
+        // Update fund requirements
+        $company->fundRequirements()->delete();
+        foreach ($request->fund_usage as $i => $usage) {
+            $company->fundRequirements()->create([
+                'usage' => $usage,
+                'amount' => $request->fund_requirement[$i],
+                'unit' => $request->fund_unit[$i] ?? null,
+            ]);
+        }
+
+        // Update previous rounds
+        $company->previousRounds()->delete();
+        foreach ($request->previous_rounds as $i => $round) {
+            $company->previousRounds()->create([
+                'round' => $round,
+                'investors' => $request->investors[$i],
+                'amount_raised' => $request->amount_raised[$i],
+                'valuation' => $request->valuation[$i],
+            ]);
+        }
+
+        // Update public links
+        $company->otherLinks()->delete();
+        foreach ($request->public_links as $i => $link) {
+            if (!empty($link)) {
+                $company->otherLinks()->create([
+                    'link_url' => $link,
+                    'link_description' => $request->link_descriptions[$i] ?? 'other',
+                ]);
+            }
+        }
+
+        // Handle pitch deck
+        if ($request->delete_pitch_deck == '1' && $company->attachments()->where('type', 'pitch_deck')->exists() && $request->hasFile('pitch_deck')) {
+            $company->attachments()->where('type', 'pitch_deck')->delete();
+        }
+        if ($request->hasFile('pitch_deck')) {
+            $company->attachments()->where('type', 'pitch_deck')->delete();
+            $pitchFile = $request->file('pitch_deck');
+            $pitchName = Str::random(40) . '.' . $pitchFile->getClientOriginalExtension();
+            $pitchFile->storeAs('attachments', $pitchName, 'public');
+            $company->attachments()->create([
+                'type' => 'pitch_deck',
+                'file_path' => 'attachments/' . $pitchName,
+            ]);
+        }
+
+        // Handle financial deletions
+    if ($request->filled('delete_financial_ids')) {
+        // Convert the first array element (comma-separated string) to an array of integers
+        $deleteIds = array_map('intval', explode(',', $request->delete_financial_ids[0]));
+
+        // Log to confirm the parsed IDs (optional)
+        \Log::info('Parsed Financial IDs to Delete:', ['ids' => $deleteIds]);
+
+        // Delete the specified financial attachments
+        $company->attachments()->whereIn('id', $deleteIds)->delete();
     }
 
-    // Update fund requirements
-    $company->fundRequirements()->delete();
-    foreach ($request->fund_usage as $i => $usage) {
-        $company->fundRequirements()->create([
-            'usage' => $usage,
-            'amount' => $request->fund_requirement[$i],
-            'unit' => $request->fund_unit[$i] ?? null,
-        ]);
-    }
+    // Handle new financial uploads
+    if ($request->hasFile('financials')) {
+        foreach ($request->file('financials') as $i => $file) {
+            if (!isset($request->fiscal_year[$i])) continue;
 
-    // Update previous rounds
-    $company->previousRounds()->delete();
-    foreach ($request->previous_rounds as $i => $round) {
-        $company->previousRounds()->create([
-            'round' => $round,
-            'investors' => $request->investors[$i],
-            'amount_raised' => $request->amount_raised[$i],
-            'valuation' => $request->valuation[$i],
-        ]);
-    }
+            $name = Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('attachments', $name, 'public');
 
-    // Update public links
-    $company->otherLinks()->delete();
-    foreach ($request->public_links as $i => $link) {
-        if (!empty($link)) {
-            $company->otherLinks()->create([
-                'link_url' => $link,
-                'link_description' => $request->link_descriptions[$i] ?? 'other',
+            $company->attachments()->create([
+                'type' => 'financials',
+                'file_path' => 'attachments/' . $name,
+                'fiscal_year' => $request->fiscal_year[$i],
             ]);
         }
     }
-
-    // Handle pitch deck
-    if ($request->delete_pitch_deck == '1' && $company->attachments()->where('type', 'pitch_deck')->exists() && $request->hasFile('pitch_deck')) {
-        $company->attachments()->where('type', 'pitch_deck')->delete();
-    }
-    if ($request->hasFile('pitch_deck')) {
-        $company->attachments()->where('type', 'pitch_deck')->delete();
-        $pitchFile = $request->file('pitch_deck');
-        $pitchName = Str::random(40) . '.' . $pitchFile->getClientOriginalExtension();
-        $pitchFile->storeAs('attachments', $pitchName, 'public');
-        $company->attachments()->create([
-            'type' => 'pitch_deck',
-            'file_path' => 'attachments/' . $pitchName,
-        ]);
-    }
-
-    // Handle financial deletions
-if ($request->filled('delete_financial_ids')) {
-    // Convert the first array element (comma-separated string) to an array of integers
-    $deleteIds = array_map('intval', explode(',', $request->delete_financial_ids[0]));
-
-    // Log to confirm the parsed IDs (optional)
-    \Log::info('Parsed Financial IDs to Delete:', ['ids' => $deleteIds]);
-
-    // Delete the specified financial attachments
-    $company->attachments()->whereIn('id', $deleteIds)->delete();
-}
-
-// Handle new financial uploads
-if ($request->hasFile('financials')) {
-    foreach ($request->file('financials') as $i => $file) {
-        if (!isset($request->fiscal_year[$i])) continue;
-
-        $name = Str::random(40) . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('attachments', $name, 'public');
-
-        $company->attachments()->create([
-            'type' => 'financials',
-            'file_path' => 'attachments/' . $name,
-            'fiscal_year' => $request->fiscal_year[$i],
-        ]);
-    }
-}
 
 
     // Handle other attachment
@@ -825,6 +847,114 @@ if ($request->hasFile('financials')) {
     return redirect()->route('investee.dashboard')->with('success', 'Form updated successfully!');
 }
 
+
+public function updateBankerForm(Request $request)
+{
+    $userid = auth()->id();
+    if (!$userid) {
+        return redirect()->route('login')->with('error', 'You must be logged in to update your profile.');
+    }
+
+    $banker = Banker::where('user_id', $userid)->firstOrFail();
+
+    $validatedData = $request->validate([
+        'company_name' => 'nullable|string|max:255',
+        'incorporated_in' => 'nullable|integer|min:1900|max:' . date('Y'),
+        'ib_team_size' => 'nullable|string',
+        'company_profile' => 'nullable|file',
+        'address' => 'nullable|string|max:500',
+        'location' => 'nullable|string|max:100',
+        'state' => 'nullable|string|max:100',
+        'country' => 'nullable|string|max:100',
+        'min_fund_raise_size' => 'nullable|string',
+        'max_fund_raise_size' => 'nullable|string',
+        'email' => 'nullable|email',
+        'phone_number' => 'nullable',
+        'concerned_person_designation' => 'nullable|string',
+        'public_links.*' => 'nullable|url',
+        'link_descriptions.*' => 'nullable|string',
+        'previous_deal_year.*' => 'nullable|integer|min:1900|max:' . date('Y'),
+        'previous_deal_company.*' => 'nullable|string',
+        'previous_deal_sector.*' => 'nullable|string',
+        'previous_deal_type.*' => 'nullable|string|in:M&A,Fundraising,IPO,Others',
+        'referral_source' => 'nullable|string',
+    ]);
+
+    // Handle file upload
+    $filePath = $banker->company_profile;
+    if ($request->hasFile('company_profile')) {
+        if ($filePath && Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
+        }
+        $file = $request->file('company_profile');
+        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('attachments', $filename, 'public');
+        $filePath = 'attachments/' . $filename;
+    }
+
+    // Update banker
+    $banker->update([
+        'company_name' => $request->company_name ?? $banker->company_name,
+        'incorporated_in' => $request->incorporated_in ?? $banker->incorporated_in,
+        'ib_team_size' => $request->ib_team_size ?? $banker->ib_team_size,
+        'company_profile' => $filePath,
+        'address' => $request->address ?? $banker->address,
+        'location' => $request->location ?? $banker->location,
+        'state' => $request->state ?? $banker->state,
+        'country' => $request->country ?? $banker->country,
+        'min_fund_raise_size' => $request->min_fund_raise_size ?? $banker->min_fund_raise_size,
+        'max_fund_raise_size' => $request->max_fund_raise_size ?? $banker->max_fund_raise_size,
+    ]);
+
+    // Update or create contact using relationship
+    $banker->contactDetails()->updateOrCreate([], [
+        'email' => $request->email,
+        'phone_number' => $request->phone_number,
+        'concerned_person_designation' => $request->concerned_person_designation,
+    ]);
+
+    // Public links (delete all and re-insert)
+    if ($request->filled('public_links')) {
+        $banker->publicLinks()->delete();
+        foreach ($request->public_links as $index => $url) {
+            if (!empty($url)) {
+                $banker->publicLinks()->create([
+                    'banker_id' => $banker->id,
+                    'url' => $url,
+                    'link_description' => $request->link_descriptions[$index] ?? '',
+                ]);
+            }
+        }
+    }
+
+    // Previous deals
+    if ($request->has('previous_deal_year')) {
+        $banker->previousDeals()->delete();
+        foreach ($request->previous_deal_year as $index => $year) {
+            if (!empty($year)) {
+                 $banker->previousDeals()->create([
+                    'banker_id' => $banker->id,
+                    'previous_deal_year' => $year,
+                    'previous_deal_company' => $request->previous_deal_company[$index] ?? '',
+                    'previous_deal_sector' => $request->previous_deal_sector[$index] ?? '',
+                    'previous_deal_type' => $request->previous_deal_type[$index] ?? '',
+                ]);
+            }
+        }
+    }
+
+    // Referral source using relationship
+    // $banker->referral()->updateOrCreate([], [
+    //     'referral_source' => $request->referral_source,
+    // ]);
+
+    // Mark form as filled
+    // $user = Auth::user();
+    // $user->form_filled = true;
+    // $user->save();
+
+    return redirect()->route('investee.dashboard')->with('success_message', 'Banker profile updated successfully!');
+}
 
 
 

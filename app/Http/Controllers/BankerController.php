@@ -15,6 +15,9 @@ use App\Models\Company;
 use App\Models\Subscriber;
 use App\Models\LocationDetail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BankerController extends Controller
 {
@@ -76,6 +79,20 @@ class BankerController extends Controller
         if ($request->hasFile('company_profile')) {
             $filePath = $request->file('company_profile')->store('company_profiles', 'public');
         }
+
+
+        $filePath = null;
+
+        if ($request->hasFile('company_profile')) {
+            $file = $request->file('company_profile');
+            $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('attachments', $filename, 'public'); // ✅ specify disk 'public'
+            $filePath = 'attachments/' . $filename; 
+        }
+
+
+
+
 
         // Step 3: Store banker information
         $banker = Banker::create([
