@@ -1018,7 +1018,7 @@
 </div> -->
 
 
- <div class="form-check mb-4">
+ <!-- <div class="form-check mb-4">
                         <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
                         <label class="form-check-label" for="terms">
                             I agree to the 
@@ -1027,7 +1027,7 @@
                         @error('terms')
                             <span class="text-danger">You must agree to the Terms and Conditions</span>
                         @enderror
-                    </div>
+                    </div> -->
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>

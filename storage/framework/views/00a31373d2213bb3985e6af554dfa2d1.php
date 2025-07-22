@@ -1313,7 +1313,7 @@ unset($__errorArgs, $__bag); ?>
 </div> -->
 
 
- <div class="form-check mb-4">
+ <!-- <div class="form-check mb-4">
                         <input type="checkbox" class="form-check-input <?php $__errorArgs = ['terms'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -1336,7 +1336,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
+                    </div> -->
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>
