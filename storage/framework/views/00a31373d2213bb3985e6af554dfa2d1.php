@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 <!-- <div class="container p-2 bg-light">
@@ -37,9 +35,9 @@
             </div>
         </div>
 
-    <form class="form-group bg-light" id="investmentBankerForm" action="{{ route('form.bank.submit') }}" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;" novalidate>
+    <form class="form-group bg-light" id="investmentBankerForm" action="<?php echo e(route('updatebankerprofile')); ?>" method="POST" enctype="multipart/form-data" style="padding: 2.5rem;" novalidate>
 
-        @csrf
+        <?php echo csrf_field(); ?>
      <!-- Company Details Section -->
 <div class="row g-3">
     <div class="col-sm-2">
@@ -52,18 +50,32 @@
     </label> 
     <input 
         type="text" 
-        class="form-control @error('company_name') is-invalid @enderror" 
+        class="form-control <?php $__errorArgs = ['company_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
         id="company_name" 
         name="company_name" 
-        value="{{ old('company_name') }}" 
+        value="<?php echo e(old('company_name',$banker->company_name ?? '')); ?>" 
         required
         pattern="^[A-Za-z\s.\-&']+$"
         title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
         oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
     >
-    @error('company_name')
+    <?php $__errorArgs = ['company_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
     <div class="invalid-feedback">This field is required</div>
-    @enderror
+    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
    
 </div>
 
@@ -74,22 +86,37 @@
                 Incorporated In <span class="text-danger">*</span>
             </label>
             <select 
-                class="form-select shadow-sm rounded-3 @error('incorporated_in') is-invalid @enderror"
+                class="form-select shadow-sm rounded-3 <?php $__errorArgs = ['incorporated_in'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 id="incorporated_in"
                 name="incorporated_in"
                 required
                 aria-describedby="incorporated_in_error"
                 >
                 <option value="" disabled selected>Select Year</option>
-                @for ($year = date('Y'); $year >=1901; $year--)
-                    <option value="{{ $year }}" {{ old('incorporated_in') == $year ? 'selected' : ''}}>
-                        {{ $year }}
+                <?php for($year = date('Y'); $year >=1901; $year--): ?>
+                    <option value="<?php echo e($year); ?>" <?php echo e(old('incorporated_in',$banker->incorporated_in) == $year ? 'selected' : ''); ?>>
+                        <?php echo e($year); ?>
+
                     </option>
-                @endfor
+                <?php endfor; ?>
             </select>
-            @error('incorporated_in')
+            <?php $__errorArgs = ['incorporated_in'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="invalid-feedback d-block small">This Field is Required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
 
 
@@ -98,39 +125,73 @@
             IB Team Size <span class="text-danger">*</span>
         </label>
         <select 
-            class="form-select @error('ib_team_size') is-invalid @enderror" 
+            class="form-select <?php $__errorArgs = ['ib_team_size'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="ib_team_size" 
             name="ib_team_size" 
             required
         >
-            <option value="" disabled {{ old('ib_team_size') ? '' : 'selected' }}>Select Size</option>
-            <option value="1-10" {{ old('ib_team_size') == '1-10' ? 'selected' : '' }}>1-10</option>
-            <option value="11-50" {{ old('ib_team_size') == '11-50' ? 'selected' : '' }}>11-50</option>
-            <option value="51-100" {{ old('ib_team_size') == '51-100' ? 'selected' : '' }}>51-100</option>
-            <option value="100+" {{ old('ib_team_size') == '100+' ? 'selected' : '' }}>100+</option>
+            <option value="" disabled <?php echo e(old('ib_team_size',$banker->ib_team_size ?? '') ? '' : 'selected'); ?>>Select Size</option>
+            <option value="1-10" <?php echo e(old('ib_team_size',$banker->ib_team_size ?? '') == '1-10' ? 'selected' : ''); ?>>1-10</option>
+            <option value="11-50" <?php echo e(old('ib_team_size',$banker->ib_team_size ?? '') == '11-50' ? 'selected' : ''); ?>>11-50</option>
+            <option value="51-100" <?php echo e(old('ib_team_size',$banker->ib_team_size ?? '') == '51-100' ? 'selected' : ''); ?>>51-100</option>
+            <option value="100+" <?php echo e(old('ib_team_size',$banker->ib_team_size ?? '') == '100+' ? 'selected' : ''); ?>>100+</option>
         </select>
-        @error('ib_team_size')
+        <?php $__errorArgs = ['ib_team_size'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
 
     <div class="col-sm-2">
+      
         <label for="company_profile" class="form-label">
             Company Profile <span class="text-danger">*</span>
         </label>
         <input 
             type="file" 
-            class="form-control @error('company_profile') is-invalid @enderror" 
+            class="form-control <?php $__errorArgs = ['company_profile'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="company_profile"  
             name="company_profile" 
             required
-            value = "{{ old('company_profile')}}"
+            value = "<?php echo e(old('company_profile')); ?>"
             accept=".doc,.docx,.pdf,.ppt,.pptx,.jpg,.jpeg,.png"
             onchange="validateFileTypeinvestorprofile(this)"
         >
-        @error('company_profile')
+          <?php if(!empty($banker->company_profile)): ?>
+            <a href="<?php echo e(asset('storage/' . $banker->company_profile)); ?>" target="_blank">
+                View Company Profile
+            </a>
+        <?php endif; ?>
+        <?php $__errorArgs = ['company_profile'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
        
     </div>
 </div>
@@ -146,7 +207,8 @@
                 id="concerned_person_is_me" 
                 name="concerned_person_is_me"
                 value="1" 
-                {{ old('concerned_person_is_me') ? 'checked' : '' }}
+                <?php echo e(old('concerned_person_is_me') ? 'checked' : ''); ?>
+
                 onclick="fillConcernedPersonDetails()"
             >
             <label class="form-check-label text-danger small" for="concerned_person_is_me" style="font-size: 12px; color: red;">
@@ -163,15 +225,29 @@
         <div>
             <input 
                 type="email" 
-                class="form-control @error('email') is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="email" 
                 name="email" 
-                value="{{ old('email') }}" 
+                value="<?php echo e(old('email',$bankerContactDetails->email)); ?>" 
                 required
             >
-            @error('email')
+            <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="text-danger small mt-1">This field is required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
          <div id="concerned_person_email_error" class="text-danger small"></div>
     </div>
@@ -184,19 +260,33 @@
         <div>
             <input 
                 type="text" 
-                class="form-control @error('phone_number') is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['phone_number'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 id="phone_number" 
                 name="phone_number" 
                 maxlength="20" 
                  minlength="7"
                 pattern="^\+?[0-9]{7,20}$" 
                 oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" 
-                value="{{ old('phone_number') }}" 
+                value="<?php echo e(old('phone_number',$bankerContactDetails->phone_number)); ?>" 
                 required
             >
-            @error('phone_number')
+            <?php $__errorArgs = ['phone_number'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <div class="text-danger small mt-1">This field is required</div>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 
@@ -205,65 +295,79 @@
 
     <div class="col-md-3">
         <label for="concerned_person_designation" class="form-label">Designation</label>
-        <select class="form-select @error('concerned_person_designation') is-invalid @enderror" id="concerned_person_designation" name="concerned_person_designation" required>
-            <option value="" disabled {{ old('concerned_person_designation') ? '' : 'selected' }}>Select Designation</option>
-            <option value="Chief Administrative Officer" {{ old('concerned_person_designation') == 'Chief Administrative Officer' ? 'selected' : '' }}>Chief Administrative Officer</option>
-            <option value="Chief Analytics Officer" {{ old('concerned_person_designation') == 'Chief Analytics Officer' ? 'selected' : '' }}>Chief Analytics Officer</option>
-            <option value="Chief Brand Officer" {{ old('concerned_person_designation') == 'Chief Brand Officer' ? 'selected' : '' }}>Chief Brand Officer</option>
-            <option value="Chief Business Development Officer" {{ old('concerned_person_designation') == 'Chief Business Development Officer' ? 'selected' : '' }}>Chief Business Development Officer</option>
-            <option value="Chief Business Officer" {{ old('concerned_person_designation') == 'Chief Business Officer' ? 'selected' : '' }}>Chief Business Officer</option>
-            <option value="Chief Commercial Officer" {{ old('concerned_person_designation') == 'Chief Commercial Officer' ? 'selected' : '' }}>Chief Commercial Officer</option>
-            <option value="Chief Communications Officer" {{ old('concerned_person_designation') == 'Chief Communications Officer' ? 'selected' : '' }}>Chief Communications Officer</option>
-            <option value="Chief Compliance Officer" {{ old('concerned_person_designation') == 'Chief Compliance Officer' ? 'selected' : '' }}>Chief Compliance Officer</option>
-            <option value="Chief Content Officer" {{ old('concerned_person_designation') == 'Chief Content Officer' ? 'selected' : '' }}>Chief Content Officer</option>
-            <option value="Chief Creative Officer" {{ old('concerned_person_designation') == 'Chief Creative Officer' ? 'selected' : '' }}>Chief Creative Officer</option>
-            <option value="Chief Customer Officer" {{ old('concerned_person_designation') == 'Chief Customer Officer' ? 'selected' : '' }}>Chief Customer Officer</option>
-            <option value="Chief Data Officer" {{ old('concerned_person_designation') == 'Chief Data Officer' ? 'selected' : '' }}>Chief Data Officer</option>
-            <option value="Chief Design Officer" {{ old('concerned_person_designation') == 'Chief Design Officer' ? 'selected' : '' }}>Chief Design Officer</option>
-            <option value="Chief Digital Officer" {{ old('concerned_person_designation') == 'Chief Digital Officer' ? 'selected' : '' }}>Chief Digital Officer</option>
-            <option value="Chief Diversity Officer" {{ old('concerned_person_designation') == 'Chief Diversity Officer' ? 'selected' : '' }}>Chief Diversity Officer</option>
-            <option value="Chief Executive Officer" {{ old('concerned_person_designation') == 'Chief Executive Officer' ? 'selected' : '' }}>Chief Executive Officer</option>
-            <option value="Chief Experience Officer" {{ old('concerned_person_designation') == 'Chief Experience Officer' ? 'selected' : '' }}>Chief Experience Officer</option>
-            <option value="Chief Financial Officer" {{ old('concerned_person_designation') == 'Chief Financial Officer' ? 'selected' : '' }}>Chief Financial Officer</option>
-            <option value="Chief Gaming Officer" {{ old('concerned_person_designation') == 'Chief Gaming Officer' ? 'selected' : '' }}>Chief Gaming Officer</option>
-            <option value="Chief Genealogical Officer" {{ old('concerned_person_designation') == 'Chief Genealogical Officer' ? 'selected' : '' }}>Chief Genealogical Officer</option>
-            <option value="Chief Human Resources Officer" {{ old('concerned_person_designation') == 'Chief Human Resources Officer' ? 'selected' : '' }}>Chief Human Resources Officer</option>
-            <option value="Chief Information Officer" {{ old('concerned_person_designation') == 'Chief Information Officer' ? 'selected' : '' }}>Chief Information Officer</option>
-            <option value="Chief Information Officer (Higher Education)" {{ old('concerned_person_designation') == 'Chief Information Officer (Higher Education)' ? 'selected' : '' }}>Chief Information Officer (Higher Education)</option>
-            <option value="Chief Information Security Officer" {{ old('concerned_person_designation') == 'Chief Information Security Officer' ? 'selected' : '' }}>Chief Information Security Officer</option>
-            <option value="Chief Innovation Officer" {{ old('concerned_person_designation') == 'Chief Innovation Officer' ? 'selected' : '' }}>Chief Innovation Officer</option>
-            <option value="Chief Investment Officer" {{ old('concerned_person_designation') == 'Chief Investment Officer' ? 'selected' : '' }}>Chief Investment Officer</option>
-            <option value="Chief Knowledge Officer" {{ old('concerned_person_designation') == 'Chief Knowledge Officer' ? 'selected' : '' }}>Chief Knowledge Officer</option>
-            <option value="Chief Learning Officer" {{ old('concerned_person_designation') == 'Chief Learning Officer' ? 'selected' : '' }}>Chief Learning Officer</option>
-            <option value="Chief Marketing Officer" {{ old('concerned_person_designation') == 'Chief Marketing Officer' ? 'selected' : '' }}>Chief Marketing Officer</option>
-            <option value="Chief Operating Officer" {{ old('concerned_person_designation') == 'Chief Operating Officer' ? 'selected' : '' }}>Chief Operating Officer</option>
-            <option value="Chief Privacy Officer" {{ old('concerned_person_designation') == 'Chief Privacy Officer' ? 'selected' : '' }}>Chief Privacy Officer</option>
-            <option value="Chief Process Officer" {{ old('concerned_person_designation') == 'Chief Process Officer' ? 'selected' : '' }}>Chief Process Officer</option>
-            <option value="Chief Product Officer" {{ old('concerned_person_designation') == 'Chief Product Officer' ? 'selected' : '' }}>Chief Product Officer</option>
-            <option value="Chief Reputation Officer" {{ old('concerned_person_designation') == 'Chief Reputation Officer' ? 'selected' : '' }}>Chief Reputation Officer</option>
-            <option value="Chief Research Officer" {{ old('concerned_person_designation') == 'Chief Research Officer' ? 'selected' : '' }}>Chief Research Officer</option>
-            <option value="Chief Restructuring Officer" {{ old('concerned_person_designation') == 'Chief Restructuring Officer' ? 'selected' : '' }}>Chief Restructuring Officer</option>
-            <option value="Chief Risk Officer" {{ old('concerned_person_designation') == 'Chief Risk Officer' ? 'selected' : '' }}>Chief Risk Officer</option>
-            <option value="Chief Science Officer" {{ old('concerned_person_designation') == 'Chief Science Officer' ? 'selected' : '' }}>Chief Science Officer</option>
-            <option value="Chief Scientific Officer" {{ old('concerned_person_designation') == 'Chief Scientific Officer' ? 'selected' : '' }}>Chief Scientific Officer</option>
-            <option value="Chief Security Officer" {{ old('concerned_person_designation') == 'Chief Security Officer' ? 'selected' : '' }}>Chief Security Officer</option>
-            <option value="Chief Services Officer" {{ old('concerned_person_designation') == 'Chief Services Officer' ? 'selected' : '' }}>Chief Services Officer</option>
-            <option value="Chief Strategy Officer" {{ old('concerned_person_designation') == 'Chief Strategy Officer' ? 'selected' : '' }}>Chief Strategy Officer</option>
-            <option value="Chief Sustainability Officer" {{ old('concerned_person_designation') == 'Chief Sustainability Officer' ? 'selected' : '' }}>Chief Sustainability Officer</option>
-            <option value="Chief Technology Officer" {{ old('concerned_person_designation') == 'Chief Technology Officer' ? 'selected' : '' }}>Chief Technology Officer</option>
-            <option value="Chief Visibility Officer" {{ old('concerned_person_designation') == 'Chief Visibility Officer' ? 'selected' : '' }}>Chief Visibility Officer</option>
-            <option value="Chief Visionary Officer" {{ old('concerned_person_designation') == 'Chief Visionary Officer' ? 'selected' : '' }}>Chief Visionary Officer</option>
-            <option value="Chief Web Officer" {{ old('concerned_person_designation') == 'Chief Web Officer' ? 'selected' : '' }}>Chief Web Officer</option>
-            <option value="General Manager" {{ old('concerned_person_designation') == 'General Manager' ? 'selected' : '' }}>General Manager</option>
-            <option value="Manager" {{ old('concerned_person_designation') == 'Manager' ? 'selected' : '' }}>Manager</option>
-            <option value="Others" {{ old('concerned_person_designation') == 'Others' ? 'selected' : '' }}>Others</option>
-            <option value="Secretary" {{ old('concerned_person_designation') == 'Secretary' ? 'selected' : '' }}>Secretary</option>
-            <option value="Supervisor" {{ old('concerned_person_designation') == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
-            <option value="Vice President" {{ old('concerned_person_designation') == 'Vice President' ? 'selected' : '' }}>Vice President</option>
+        <select class="form-select <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="concerned_person_designation" name="concerned_person_designation" required>
+            <option value="" disabled <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) ? '' : 'selected'); ?>>Select Designation</option>
+            <option value="Chief Administrative Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Administrative Officer' ? 'selected' : ''); ?>>Chief Administrative Officer</option>
+            <option value="Chief Analytics Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Analytics Officer' ? 'selected' : ''); ?>>Chief Analytics Officer</option>
+            <option value="Chief Brand Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Brand Officer' ? 'selected' : ''); ?>>Chief Brand Officer</option>
+            <option value="Chief Business Development Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Business Development Officer' ? 'selected' : ''); ?>>Chief Business Development Officer</option>
+            <option value="Chief Business Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Business Officer' ? 'selected' : ''); ?>>Chief Business Officer</option>
+            <option value="Chief Commercial Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Commercial Officer' ? 'selected' : ''); ?>>Chief Commercial Officer</option>
+            <option value="Chief Communications Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Communications Officer' ? 'selected' : ''); ?>>Chief Communications Officer</option>
+            <option value="Chief Compliance Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Compliance Officer' ? 'selected' : ''); ?>>Chief Compliance Officer</option>
+            <option value="Chief Content Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Content Officer' ? 'selected' : ''); ?>>Chief Content Officer</option>
+            <option value="Chief Creative Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Creative Officer' ? 'selected' : ''); ?>>Chief Creative Officer</option>
+            <option value="Chief Customer Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Customer Officer' ? 'selected' : ''); ?>>Chief Customer Officer</option>
+            <option value="Chief Data Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Data Officer' ? 'selected' : ''); ?>>Chief Data Officer</option>
+            <option value="Chief Design Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Design Officer' ? 'selected' : ''); ?>>Chief Design Officer</option>
+            <option value="Chief Digital Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Digital Officer' ? 'selected' : ''); ?>>Chief Digital Officer</option>
+            <option value="Chief Diversity Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Diversity Officer' ? 'selected' : ''); ?>>Chief Diversity Officer</option>
+            <option value="Chief Executive Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Executive Officer' ? 'selected' : ''); ?>>Chief Executive Officer</option>
+            <option value="Chief Experience Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Experience Officer' ? 'selected' : ''); ?>>Chief Experience Officer</option>
+            <option value="Chief Financial Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Financial Officer' ? 'selected' : ''); ?>>Chief Financial Officer</option>
+            <option value="Chief Gaming Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Gaming Officer' ? 'selected' : ''); ?>>Chief Gaming Officer</option>
+            <option value="Chief Genealogical Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Genealogical Officer' ? 'selected' : ''); ?>>Chief Genealogical Officer</option>
+            <option value="Chief Human Resources Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Human Resources Officer' ? 'selected' : ''); ?>>Chief Human Resources Officer</option>
+            <option value="Chief Information Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Information Officer' ? 'selected' : ''); ?>>Chief Information Officer</option>
+            <option value="Chief Information Officer (Higher Education)" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Information Officer (Higher Education)' ? 'selected' : ''); ?>>Chief Information Officer (Higher Education)</option>
+            <option value="Chief Information Security Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Information Security Officer' ? 'selected' : ''); ?>>Chief Information Security Officer</option>
+            <option value="Chief Innovation Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Innovation Officer' ? 'selected' : ''); ?>>Chief Innovation Officer</option>
+            <option value="Chief Investment Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Investment Officer' ? 'selected' : ''); ?>>Chief Investment Officer</option>
+            <option value="Chief Knowledge Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Knowledge Officer' ? 'selected' : ''); ?>>Chief Knowledge Officer</option>
+            <option value="Chief Learning Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Learning Officer' ? 'selected' : ''); ?>>Chief Learning Officer</option>
+            <option value="Chief Marketing Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Marketing Officer' ? 'selected' : ''); ?>>Chief Marketing Officer</option>
+            <option value="Chief Operating Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Operating Officer' ? 'selected' : ''); ?>>Chief Operating Officer</option>
+            <option value="Chief Privacy Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Privacy Officer' ? 'selected' : ''); ?>>Chief Privacy Officer</option>
+            <option value="Chief Process Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Process Officer' ? 'selected' : ''); ?>>Chief Process Officer</option>
+            <option value="Chief Product Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Product Officer' ? 'selected' : ''); ?>>Chief Product Officer</option>
+            <option value="Chief Reputation Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Reputation Officer' ? 'selected' : ''); ?>>Chief Reputation Officer</option>
+            <option value="Chief Research Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Research Officer' ? 'selected' : ''); ?>>Chief Research Officer</option>
+            <option value="Chief Restructuring Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Restructuring Officer' ? 'selected' : ''); ?>>Chief Restructuring Officer</option>
+            <option value="Chief Risk Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Risk Officer' ? 'selected' : ''); ?>>Chief Risk Officer</option>
+            <option value="Chief Science Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Science Officer' ? 'selected' : ''); ?>>Chief Science Officer</option>
+            <option value="Chief Scientific Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Scientific Officer' ? 'selected' : ''); ?>>Chief Scientific Officer</option>
+            <option value="Chief Security Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Security Officer' ? 'selected' : ''); ?>>Chief Security Officer</option>
+            <option value="Chief Services Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Services Officer' ? 'selected' : ''); ?>>Chief Services Officer</option>
+            <option value="Chief Strategy Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Strategy Officer' ? 'selected' : ''); ?>>Chief Strategy Officer</option>
+            <option value="Chief Sustainability Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Sustainability Officer' ? 'selected' : ''); ?>>Chief Sustainability Officer</option>
+            <option value="Chief Technology Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Technology Officer' ? 'selected' : ''); ?>>Chief Technology Officer</option>
+            <option value="Chief Visibility Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Visibility Officer' ? 'selected' : ''); ?>>Chief Visibility Officer</option>
+            <option value="Chief Visionary Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Visionary Officer' ? 'selected' : ''); ?>>Chief Visionary Officer</option>
+            <option value="Chief Web Officer" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Chief Web Officer' ? 'selected' : ''); ?>>Chief Web Officer</option>
+            <option value="General Manager" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'General Manager' ? 'selected' : ''); ?>>General Manager</option>
+            <option value="Manager" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Manager' ? 'selected' : ''); ?>>Manager</option>
+            <option value="Others" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Others' ? 'selected' : ''); ?>>Others</option>
+            <option value="Secretary" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Secretary' ? 'selected' : ''); ?>>Secretary</option>
+            <option value="Supervisor" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Supervisor' ? 'selected' : ''); ?>>Supervisor</option>
+            <option value="Vice President" <?php echo e(old('concerned_person_designation',$bankerContactDetails->concerned_person_designation) == 'Vice President' ? 'selected' : ''); ?>>Vice President</option>
         </select>
-        @error('concerned_person_designation')
+        <?php $__errorArgs = ['concerned_person_designation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <div class="invalid-feedback d-block">This Field is Required</div>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 
@@ -332,42 +436,71 @@
         <h3 class="h5">Public Links</h3>
     </div>
     <div class="col-sm-10" id="public-links-container">
-        @php
+        <?php
             $public_links = old('public_links', []);
             $link_descriptions = old('link_descriptions', []);
-            $link_count = max(count($public_links), count($link_descriptions), 1);
-        @endphp
-        @for($i = 0; $i < $link_count; $i++)
+            $link_count = max(count($public_links), count($link_descriptions), isset($bankerPublicLinks) ? count($bankerPublicLinks) : 0, 1);
+        ?>
+        <?php for($i = 0; $i < $link_count; $i++): ?>
             <div class="row g-0 mb-3">
-                <div class="col-sm-5">
-                    <input 
-                        class="form-control @error('public_links.'.$i) is-invalid @enderror" 
-                        type="url" 
-                        name="public_links[]" 
-                        placeholder="URL" 
-                        value="{{ old('public_links.'.$i) }}"
-                    >
-                    @error('public_links.'.$i)
-                        <div class="invalid-feedback d-block">This Field is Required</div>
-                    @enderror
-                </div>
+            <div class="col-sm-5">
+                <input 
+                class="form-control <?php $__errorArgs = ['public_links.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
+                type="url" 
+                name="public_links[]" 
+                placeholder="URL" 
+                value="<?php echo e(old('public_links.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->url : '')); ?>"
+                >
+                <?php $__errorArgs = ['public_links.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div class="invalid-feedback d-block">This Field is Required</div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
                 <div class="col-sm-5">
                     <select 
-                        class="form-control @error('link_descriptions.'.$i) is-invalid @enderror" 
+                        class="form-control <?php $__errorArgs = ['link_descriptions.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                         name="link_descriptions[]"
+                        required
                     >
-                        <option value="" disabled {{ old('link_descriptions.'.$i) ? '' : 'selected' }}>Select Account</option>
-                        <option value="Facebook" {{ old('link_descriptions.'.$i) == 'Facebook' ? 'selected' : '' }}>Facebook</option>
-                        <option value="Twitter/X" {{ old('link_descriptions.'.$i) == 'Twitter/X' ? 'selected' : '' }}>Twitter/X</option>
-                        <option value="Linkedin" {{ old('link_descriptions.'.$i) == 'Linkedin' ? 'selected' : '' }}>Linkedin</option>
-                        <option value="Others" {{ old('link_descriptions.'.$i) == 'Others' ? 'selected' : '' }}>Others</option>
+                        <option value="" disabled <?php echo e(old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') ? '' : 'selected'); ?>>Select Account</option>
+                        <option value="Facebook" <?php echo e(old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') == 'Facebook' ? 'selected' : ''); ?>>Facebook</option>
+                        <option value="Twitter/X" <?php echo e(old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') == 'Twitter/X' ? 'selected' : ''); ?>>Twitter/X</option>
+                        <option value="Linkedin" <?php echo e(old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') == 'Linkedin' ? 'selected' : ''); ?>>Linkedin</option>
+                        <option value="Others" <?php echo e(old('link_descriptions.'.$i, isset($bankerPublicLinks[$i]) ? $bankerPublicLinks[$i]->link_description : '') == 'Others' ? 'selected' : ''); ?>>Others</option>
                     </select>
-                    @error('link_descriptions.'.$i)
+                    <?php $__errorArgs = ['link_descriptions.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                         <div class="invalid-feedback d-block">This Field is Required</div>
-                    @enderror
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
                 <div class="col-sm-2 text-end">
-                    @if($i == 0)
+                    <?php if($i == 0): ?>
                         <button 
                             class="btn btn-outline-primary" 
                             type="button" 
@@ -375,7 +508,7 @@
                         >
                             + Add More Links
                         </button>
-                    @else
+                    <?php else: ?>
                         <button 
                             class="btn btn-danger" 
                             type="button" 
@@ -383,10 +516,10 @@
                         >
                             &minus;
                         </button>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
-        @endfor
+        <?php endfor; ?>
         <!-- Dynamically added rows will appear here -->
     </div>
 </div>
@@ -441,15 +574,29 @@
         <label for="address" class="form-label">
             Address <span class="text-danger">*</span>
         </label>
-        @error('address')
+        <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         <input 
             type="text" 
-            class="form-control @error('address') is-invalid @enderror" 
+            class="form-control <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="address" 
             name="address" 
-            value="{{ old('address') }}" 
+            value="<?php echo e(old('address',$banker->address ?? '')); ?>" 
             required
         >
     </div>
@@ -457,15 +604,29 @@
         <label for="location" class="form-label">
             City <span class="text-danger">*</span>
         </label>
-        @error('location')
+        <?php $__errorArgs = ['location'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         <input 
             type="text" 
-            class="form-control @error('location') is-invalid @enderror" 
+            class="form-control <?php $__errorArgs = ['location'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="location" 
             name="location" 
-            value="{{ old('location') }}" 
+            value="<?php echo e(old('location',$banker->location ?? '')); ?>" 
             required
             pattern="^[a-zA-Z\s]+$"
             title="Please enter a valid name (letters and spaces only)"
@@ -479,15 +640,29 @@
         <label for="state" class="form-label">
             State <span class="text-danger">*</span>
         </label>
-        @error('state')
+        <?php $__errorArgs = ['state'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         <input 
             type="text" 
-            class="form-control @error('state') is-invalid @enderror" 
+            class="form-control <?php $__errorArgs = ['state'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="state" 
             name="state" 
-            value="{{ old('state') }}" 
+            value="<?php echo e(old('state',$banker->state ?? '')); ?>" 
             required
             pattern="^[a-zA-Z\s]+$"
             title="Please enter a valid name (letters and spaces only)"
@@ -498,15 +673,29 @@
         <label for="country" class="form-label">
             Country <span class="text-danger">*</span>
         </label>
-        @error('country')
+        <?php $__errorArgs = ['country'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         <input 
             type="text" 
-            class="form-control @error('country') is-invalid @enderror" 
+            class="form-control <?php $__errorArgs = ['country'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="country" 
             name="country" 
-            value="{{ old('country') }}" 
+            value="<?php echo e(old('country',$banker->country ?? '')); ?>" 
             required
             pattern="^[a-zA-Z\s]+$"
             title="Please enter a valid name (letters and spaces only)"
@@ -524,42 +713,70 @@
         <label for="min_fund_raise_size" class="form-label">
             Min <span class="text-danger">*</span>
         </label>
-        @error('min_fund_raise_size')
+        <?php $__errorArgs = ['min_fund_raise_size'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         <select 
-            class="form-select @error('min_fund_raise_size') is-invalid @enderror" 
+            class="form-select <?php $__errorArgs = ['min_fund_raise_size'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="min_fund_raise_size" 
             name="min_fund_raise_size" 
             required
             onchange="validateFundRaiseSize()"
         >
-            <option value="" disabled {{ old('min_fund_raise_size') ? '' : 'selected' }}>Min</option>
-            <option value="10_lakh" {{ old('min_fund_raise_size') == '10_lakh' ? 'selected' : '' }}>10 lakh</option>
-            <option value="50_lakh" {{ old('min_fund_raise_size') == '50_lakh' ? 'selected' : '' }}>50 lakh</option>
-            <option value="1_cr" {{ old('min_fund_raise_size') == '1_cr' ? 'selected' : '' }}>1 cr</option>
-            <option value="10_cr" {{ old('min_fund_raise_size') == '10_cr' ? 'selected' : '' }}>10 cr</option>
+            <option value="" disabled <?php echo e(old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') ? '' : 'selected'); ?>>Min</option>
+            <option value="10_lakh" <?php echo e(old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') == '10_lakh' ? 'selected' : ''); ?>>10 lakh</option>
+            <option value="50_lakh" <?php echo e(old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') == '50_lakh' ? 'selected' : ''); ?>>50 lakh</option>
+            <option value="1_cr" <?php echo e(old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') == '1_cr' ? 'selected' : ''); ?>>1 cr</option>
+            <option value="10_cr" <?php echo e(old('min_fund_raise_size',$banker->min_fund_raise_size ?? '') == '10_cr' ? 'selected' : ''); ?>>10 cr</option>
         </select>
     </div>
     <div class="col-md-6">
         <label for="max_fund_raise_size" class="form-label">
             Max <span class="text-danger">*</span>
         </label>
-        @error('max_fund_raise_size')
+        <?php $__errorArgs = ['max_fund_raise_size'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-        @enderror
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         <select 
-            class="form-select @error('max_fund_raise_size') is-invalid @enderror" 
+            class="form-select <?php $__errorArgs = ['max_fund_raise_size'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
             id="max_fund_raise_size" 
             name="max_fund_raise_size" 
             required
             onchange="validateFundRaiseSize()"
         >
-            <option value="" disabled {{ old('max_fund_raise_size') ? '' : 'selected' }}>Max</option>
-            <option value="1_cr" {{ old('max_fund_raise_size') == '1_cr' ? 'selected' : '' }}>1 cr</option>
-            <option value="10_cr" {{ old('max_fund_raise_size') == '10_cr' ? 'selected' : '' }}>10 cr</option>
-            <option value="50_cr" {{ old('max_fund_raise_size') == '50_cr' ? 'selected' : '' }}>50 cr</option>
-            <option value="100_cr" {{ old('max_fund_raise_size') == '100_cr' ? 'selected' : '' }}>100 cr+</option>
+            <option value="" disabled <?php echo e(old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') ? '' : 'selected'); ?>>Max</option>
+            <option value="1_cr" <?php echo e(old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') == '1_cr' ? 'selected' : ''); ?>>1 cr</option>
+            <option value="10_cr" <?php echo e(old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') == '10_cr' ? 'selected' : ''); ?>>10 cr</option>
+            <option value="50_cr" <?php echo e(old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') == '50_cr' ? 'selected' : ''); ?>>50 cr</option>
+            <option value="100_cr" <?php echo e(old('max_fund_raise_size',$banker->max_fund_raise_size ?? '') == '100_cr' ? 'selected' : ''); ?>>100 cr+</option>
         </select>
     </div>
     <div class="col-12">
@@ -653,11 +870,11 @@
 <hr>
 <h3 class="h5">Previous Deals</h3>
 <div id="previous-deals-container">
-    @php
-        $previous_deal_years = old('previous_deal_year', []);
-        $previous_deal_companies = old('previous_deal_company', []);
-        $previous_deal_sectors = old('previous_deal_sector', []);
-        $previous_deal_types = old('previous_deal_type', []);
+    <?php
+        $previous_deal_years = old('previous_deal_year', $bankerPreviousDeals->pluck('previous_deal_year')->toArray() ?? []);
+        $previous_deal_companies = old('previous_deal_company', $bankerPreviousDeals->pluck('previous_deal_company')->toArray() ?? []);
+        $previous_deal_sectors = old('previous_deal_sector', $bankerPreviousDeals->pluck('previous_deal_sector')->toArray() ?? []);
+        $previous_deal_types = old('previous_deal_type', $bankerPreviousDeals->pluck('previous_deal_type')->toArray() ?? []);
         $count = max(
             count($previous_deal_years),
             count($previous_deal_companies),
@@ -665,55 +882,105 @@
             count($previous_deal_types),
             1
         );
-    @endphp
-    @for($i = 0; $i < $count; $i++)
+    ?>
+    <?php for($i = 0; $i < $count; $i++): ?>
     <div class="row g-1 mb-1">
         <div class="col-md-3 form-group">
-            <label for="previous_deal_year_{{ $i }}" class="form-label">
+            <label for="previous_deal_year_<?php echo e($i); ?>" class="form-label">
                 Year <span class="text-danger">*</span>
             </label>
-            <!-- <select class="form-control @error('previous_deal_year.'.$i) is-invalid @enderror" name="previous_deal_year[]" id="previous_deal_year_{{ $i }}" required>
-                <option value="" disabled {{ (isset($previous_deal_years[$i]) && $previous_deal_years[$i]) ? '' : 'selected' }}>Select Year</option>
-                @for($y = date('Y'); $y >= 1990; $y--)
-                    <option value="{{ $y }}" {{ (isset($previous_deal_years[$i]) && $previous_deal_years[$i] == $y) ? 'selected' : '' }}>{{ $y }}</option>
-                @endfor
+            <!-- <select class="form-control <?php $__errorArgs = ['previous_deal_year.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="previous_deal_year[]" id="previous_deal_year_<?php echo e($i); ?>" required>
+                <option value="" disabled <?php echo e((isset($previous_deal_years[$i]) && $previous_deal_years[$i]) ? '' : 'selected'); ?>>Select Year</option>
+                <?php for($y = date('Y'); $y >= 1990; $y--): ?>
+                    <option value="<?php echo e($y); ?>" <?php echo e((isset($previous_deal_years[$i]) && $previous_deal_years[$i] == $y) ? 'selected' : ''); ?>><?php echo e($y); ?></option>
+                <?php endfor; ?>
             </select> -->
-            <!-- <input type="text" class="form-control @error('previous_deal_year.'.$i) is-invalid @enderror" name="previous_deal_year[]" id="previous_deal_year_{{ $i }}" placeholder="year" value="{{ $previous_deal_years[$i] ?? '' }}" required> -->
+            <!-- <input type="text" class="form-control <?php $__errorArgs = ['previous_deal_year.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="previous_deal_year[]" id="previous_deal_year_<?php echo e($i); ?>" placeholder="year" value="<?php echo e($previous_deal_years[$i] ?? ''); ?>" required> -->
            <select 
-                class="form-select @error('previous_deal_year.'.$i) is-invalid @enderror"
+                class="form-select <?php $__errorArgs = ['previous_deal_year.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                 name="previous_deal_year[]" 
-                id="previous_deal_year_{{ $i }}"
+                id="previous_deal_year_<?php echo e($i); ?>"
                 required
             >
-                <option value="" hidden {{ empty($previous_deal_years[$i]) ? 'selected' : '' }}>Select Year</option>
-                @for ($year = date('Y'); $year >= 1901; $year--)
-                    <option value="{{ $year }}" {{ (isset($previous_deal_years[$i]) && $previous_deal_years[$i] == $year) ? 'selected' : '' }}>
-                        {{ $year }}
+                <option value="" hidden <?php echo e(empty($previous_deal_years[$i]) ? 'selected' : ''); ?>>Select Year</option>
+                <?php for($year = date('Y'); $year >= 1901; $year--): ?>
+                    <option value="<?php echo e($year); ?>" <?php echo e((isset($previous_deal_years[$i]) && $previous_deal_years[$i] == $year) ? 'selected' : ''); ?>>
+                        <?php echo e($year); ?>
+
                     </option>
-                @endfor
+                <?php endfor; ?>
             </select>
 
-            @error('previous_deal_year.'.$i)
+            <?php $__errorArgs = ['previous_deal_year.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger small">This field is required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
 
         </div>
         
         <div class="col-md-3 form-group">
-            <label for="previous_deal_company_{{ $i }}" class="form-label">
+            <label for="previous_deal_company_<?php echo e($i); ?>" class="form-label">
             Company <span class="text-danger">*</span>
             </label>
-            <input type="text" class="form-control @error('previous_deal_company.'.$i) is-invalid @enderror" name="previous_deal_company[]" id="previous_deal_company_{{ $i }}" placeholder="Company" value="{{ $previous_deal_companies[$i] ?? '' }}" required>
-            @error('previous_deal_company.'.$i)
+            <input type="text" class="form-control <?php $__errorArgs = ['previous_deal_company.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="previous_deal_company[]" id="previous_deal_company_<?php echo e($i); ?>" placeholder="Company" value="<?php echo e($previous_deal_companies[$i] ?? ''); ?>" required>
+            <?php $__errorArgs = ['previous_deal_company.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
         <div class="col-md-3 form-group">
-            <label for="previous_deal_sector_{{ $i }}" class="form-label">
+            <label for="previous_deal_sector_<?php echo e($i); ?>" class="form-label">
             Sector <span class="text-danger">*</span>
             </label>
-            <input list="business-options" class="form-control spaced-input @error('previous_deal_sector.'.$i) is-invalid @enderror" id="previous_deal_sector_{{ $i }}" name="previous_deal_sector[]" value="{{ $previous_deal_sectors[$i] ?? '' }}" required>
+            <input list="business-options" class="form-control spaced-input <?php $__errorArgs = ['previous_deal_sector.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="previous_deal_sector_<?php echo e($i); ?>" name="previous_deal_sector[]" value="<?php echo e($previous_deal_sectors[$i] ?? ''); ?>" required>
             <datalist id="business-options">
             <option value="Accounting">Accounting</option>
             <option value="Airlines/Aviation">Airlines/Aviation</option>
@@ -863,40 +1130,61 @@
             <option value="Wireless">Wireless</option>
             <option value="Writing/Editing">Writing/Editing</option>
             </datalist>
-            @error('previous_deal_sector.'.$i)
+            <?php $__errorArgs = ['previous_deal_sector.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
             <span class="text-danger small">This field is required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
        <div class="col-md-2 mt-2 p-1">
-            <label for="previous_deal_type_{{ $i }}" class="required">Deal Type <span class="text-danger">*</span></label>
+            <label for="previous_deal_type_<?php echo e($i); ?>" class="required">Deal Type <span class="text-danger">*</span></label>
 
             <select 
-                class="form-control @error('previous_deal_type.'.$i) is-invalid @enderror" 
+                class="form-control <?php $__errorArgs = ['previous_deal_type.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                 name="previous_deal_type[]" 
-                id="previous_deal_type_{{ $i }}" 
+                id="previous_deal_type_<?php echo e($i); ?>" 
                 required
             >
-                <option value="" hidden {{ empty($previous_deal_types[$i]) ? 'selected' : '' }}>Select Deal Type</option>
-                <option value="M&A" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : '' }}>M&amp;A</option>
-                <option value="Fundraising" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : '' }}>Fundraising</option>
-                <option value="IPO" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : '' }}>IPO</option>
-                <option value="Others" {{ (isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : '' }}>Others</option>
+                <option value="" hidden <?php echo e(empty($previous_deal_types[$i]) ? 'selected' : ''); ?>>Select Deal Type</option>
+                <option value="M&A" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'M&A') ? 'selected' : ''); ?>>M&amp;A</option>
+                <option value="Fundraising" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Fundraising') ? 'selected' : ''); ?>>Fundraising</option>
+                <option value="IPO" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'IPO') ? 'selected' : ''); ?>>IPO</option>
+                <option value="Others" <?php echo e((isset($previous_deal_types[$i]) && $previous_deal_types[$i] == 'Others') ? 'selected' : ''); ?>>Others</option>
             </select>
 
-            @error('previous_deal_type.'.$i)
+            <?php $__errorArgs = ['previous_deal_type.'.$i];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                 <span class="text-danger small">This field is required</span>
-            @enderror
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="col-md-1 form-floating mt-2 p-1">
-            @if($i == 0)
+            <?php if($i == 0): ?>
             <button type="button" class="btn btn-info mt-4" onclick="addPreviousDealField()">+</button>
-            @else
+            <?php else: ?>
             <button type="button" class="btn btn-danger mt-4" onclick="removeField(this)">-</button>
-            @endif
+            <?php endif; ?>
         </div>
     </div>
-    @endfor
+    <?php endfor; ?>
 </div>
 
 
@@ -983,44 +1271,72 @@
 
 
 
-<hr>
+<!-- <hr>
 <h3 class="h5">How did you hear about Investor Dekho?</h3>
 <div class="form-floating mb-3">
     <select 
-        class="form-control @error('referral_source') is-invalid @enderror" 
+        class="form-control <?php $__errorArgs = ['referral_source'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
         id="referral_source" 
         name="referral_source" 
         required
     >
-        <option value="" disabled {{ old('referral_source') ? '' : 'selected' }}>Select Source</option>
-        <option value="Friend/Family" {{ old('referral_source') == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
-        <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
-        <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search (Google, Bing, etc.)</option>
-        <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement (TV, Radio, Print)</option>
-        <option value="Email Newsletter" {{ old('referral_source') == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
-        <option value="Event/Seminar" {{ old('referral_source') == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
-        <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral (Doctor, Lawyer, etc.)</option>
-        <option value="Blog/Website" {{ old('referral_source') == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
-        <option value="Direct Mail" {{ old('referral_source') == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
-        <option value="Company Website" {{ old('referral_source') == 'Company Website' ? 'selected' : '' }}>Company Website</option>
+        <option value="" disabled <?php echo e(old('referral_source') ? '' : 'selected'); ?>>Select Source</option>
+        <option value="Friend/Family" <?php echo e(old('referral_source') == 'Friend/Family' ? 'selected' : ''); ?>>Friend/Family</option>
+        <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" <?php echo e(old('referral_source') == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : ''); ?>>Social Media (Facebook, Instagram, Twitter/X, etc.)</option>
+        <option value="Online Search (Google, Bing, etc.)" <?php echo e(old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : ''); ?>>Online Search (Google, Bing, etc.)</option>
+        <option value="Advertisement (TV, Radio, Print)" <?php echo e(old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : ''); ?>>Advertisement (TV, Radio, Print)</option>
+        <option value="Email Newsletter" <?php echo e(old('referral_source') == 'Email Newsletter' ? 'selected' : ''); ?>>Email Newsletter</option>
+        <option value="Event/Seminar" <?php echo e(old('referral_source') == 'Event/Seminar' ? 'selected' : ''); ?>>Event/Seminar</option>
+        <option value="Professional Referral (Doctor, Lawyer, etc.)" <?php echo e(old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : ''); ?>>Professional Referral (Doctor, Lawyer, etc.)</option>
+        <option value="Blog/Website" <?php echo e(old('referral_source') == 'Blog/Website' ? 'selected' : ''); ?>>Blog/Website</option>
+        <option value="Direct Mail" <?php echo e(old('referral_source') == 'Direct Mail' ? 'selected' : ''); ?>>Direct Mail</option>
+        <option value="Company Website" <?php echo e(old('referral_source') == 'Company Website' ? 'selected' : ''); ?>>Company Website</option>
     </select>
     <label for="referral_source">Referral Source <span class="text-danger">*</span></label>
-    @error('referral_source')
+    <?php $__errorArgs = ['referral_source'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
         <span class="text-danger small">This field is required</span>
-    @enderror
-</div>
+    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+</div> -->
 
 
- <div class="form-check mb-4">
-                        <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
+ <!-- <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="terms" name="terms" value="1" <?php echo e(old('terms') ? 'checked' : ''); ?> required>
                         <label class="form-check-label" for="terms">
                             I agree to the 
-                            <a href="{{ route('terms') }}" target="_blank" rel="noopener">Terms and Conditions</a>
+                            <a href="<?php echo e(route('terms')); ?>" target="_blank" rel="noopener">Terms and Conditions</a>
                         </label>
-                        @error('terms')
+                        <?php $__errorArgs = ['terms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                             <span class="text-danger">You must agree to the Terms and Conditions</span>
-                        @enderror
-                    </div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div> -->
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary py-3 px-5 w-100">Submit</button>
     </form>
@@ -1473,12 +1789,12 @@ function addPreviousDealField() {
   
     checkedbox.addEventListener('change',function(){ 
                if(this.checked){
-            @if(Auth::check())
-                phoneField.value = "{{ Auth::user()->phone }}";
-                emailField.value = "{{ Auth::user()->email }}";
-             @else
+            <?php if(Auth::check()): ?>
+                phoneField.value = "<?php echo e(Auth::user()->phone); ?>";
+                emailField.value = "<?php echo e(Auth::user()->email); ?>";
+             <?php else: ?>
               alert('Please login to fill the details');
-                @endif           
+                <?php endif; ?>           
             phoneField.readOnly = true;
             emailField.readOnly = true;
         }else{
@@ -1966,4 +2282,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/updateforms/banker_form.blade.php ENDPATH**/ ?>

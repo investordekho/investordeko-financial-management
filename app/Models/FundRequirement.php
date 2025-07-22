@@ -12,6 +12,7 @@ class FundRequirement extends Model
     protected $fillable = [
         'company_id',  // Add company_id here
         'usage',
+        'requirement',
         'amount',
         'unit',
     ];

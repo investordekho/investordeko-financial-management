@@ -12,7 +12,12 @@ use App\Models\Attachment;
 use App\Models\ReferralSource;
 use Illuminate\Http\Request;
 USE App\Models\investee_guidance_needed_model;
+USE App\Mail\GuidanceNeededInvesteeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 class FormSubmissionController extends Controller
 {
@@ -185,7 +190,7 @@ public function store(Request $request)
         'founder_name.*' => 'required|string', //
         'founder_position.*'=>'required|string', //
         'founder_education.*'=>'required|string', //
-        'founder_experience.*'=>'required|integer',//
+        'founder_experience.*' => 'required|numeric', //
         'fund_usage.*' => 'required|string', //
         'fund_requirement.*' => 'required|numeric', //
         'previous_rounds.*' => 'required|string', //
@@ -203,6 +208,18 @@ public function store(Request $request)
         'guidance_needed.*' => 'nullable|string', //
         'other_attachment'=>'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048', //
     ]);
+
+    // \Log::info('Financial Count:', ['count' => count($request->file('financials'))]);
+    // foreach ($request->file('financials') as $index => $f) {
+    //     \Log::info("File $index: " . $f->getClientOriginalName());
+    // }
+
+    // foreach ($request->file('financials') as $index => $financialFile) {
+    //     \Log::info("Checking fiscal_year index $index", ['value' => $request->fiscal_year[$index] ?? 'MISSING']);
+    // }
+    // foreach ($request->fiscal_year as $i => $fy) {
+    //     \Log::info("Fiscal Year [$i]:", ['value' => $fy]);
+    // }
 
     // Store company details
     $company = Company::create([
@@ -242,7 +259,8 @@ public function store(Request $request)
             'usage' => $usage,
             'requirement' => $request->fund_requirement[$index],
             'unit' => isset($request->fund_unit[$index]) ? $request->fund_unit[$index] : null,
-            'amount' => isset($request->amount[$index]) ? $request->amount[$index] : 0,
+            'amount' => isset($request->fund_requirement[$index]) ? $request->fund_requirement[$index] : 0,
+            // 'amount' => isset($request->amount[$index]) ? $request->amount[$index] : 0,
         ]);
     }
 
@@ -270,45 +288,56 @@ public function store(Request $request)
         }
     }
 
-    // Store attachments (Pitch Deck)
+    // Store pitch deck
     if ($request->hasFile('pitch_deck')) {
-        $path = $request->file('pitch_deck')->store('attachments', 'public');
+        $file = $request->file('pitch_deck');
+        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+        $file->storeAs('attachments', $filename, 'public'); // ✅ specify disk 'public'
+
         Attachment::create([
             'company_id' => $company->id,
             'type' => 'pitch_deck',
-            'file_path' => $path,
+            'file_path' => 'attachments/' . $filename,
         ]);
     }
 
-    // Store financial attachments
+
+
     if ($request->hasFile('financials')) {
-        foreach ($request->file('financials') as $index => $financial) {
-            // Check fiscal year exists for this index
-            if (!isset($request->fiscal_year[$index])) {
-                continue;
-            }
+        foreach ($request->file('financials') as $index => $financialFile) {
+            if (!isset($request->fiscal_year[$index])) continue;
 
             $fiscalYear = $request->fiscal_year[$index];
+            $filename = Str::random(40) . '.' . $financialFile->getClientOriginalExtension();
 
-            // Store the file and save to the database
-            $path = $financial->store('attachments', 'public');
+            $financialFile->storeAs('attachments', $filename, 'public'); // ✅ use 'public' disk
+
             Attachment::create([
                 'company_id' => $company->id,
                 'type' => 'financials',
                 'fiscal_year' => $fiscalYear,
-                'file_path' => $path,
+                'file_path' => 'attachments/' . $filename,
             ]);
         }
     }
 
-    if($request->hasFile('other_attachment')){
-        $path = $request->file('other_attachment')->store('attachments','public');
+
+
+    if ($request->hasFile('other_attachment')) {
+        $file = $request->file('other_attachment');
+        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+        $file->storeAs('attachments', $filename, 'public'); // ✅ use 'public' disk
+
         Attachment::create([
-            'company_id'=>$company->id,
-            'type'=>'other',
-            'file_path'=>$path,
+            'company_id' => $company->id,
+            'type' => 'other',
+            'file_path' => 'attachments/' . $filename,
         ]);
     }
+
+
 
     // Store referral source
     ReferralSource::create([
@@ -316,15 +345,64 @@ public function store(Request $request)
         'source_name' => $request->referral_source,
     ]);
 
+    // if ($request->has('guidance_needed')) {
+    //     foreach ($request->guidance_needed as $index => $guidance) {
+    //         $guidanceNeeded = new investee_guidance_needed_model();
+    //         $guidanceNeeded->company_id = $company->id;
+    //         $guidanceNeeded->guidance_needed = $guidance;
+    //         $guidanceNeeded->save();
+    //     }
+    // }
+
     if ($request->has('guidance_needed')) {
-        foreach ($request->guidance_needed as $index => $guidance) {
+        $predefinedOptions = [
+            'Capital Raise',
+            'Valuation and Financial Modelling',
+            'M&A Advisory',
+            'Pitch deck Preparation',
+            'Investor Pitching',
+            'NA'
+        ];
+
+        foreach ($request->guidance_needed as $guidance) {
             $guidanceNeeded = new investee_guidance_needed_model();
             $guidanceNeeded->company_id = $company->id;
-            $guidanceNeeded->guidance_needed = $guidance;
+
+            if (in_array($guidance, $predefinedOptions)) {
+                // Save standard option
+                $guidanceNeeded->guidance_needed = $guidance;
+            } else {
+                // Save as 'other' and store actual value in other_guidance
+                $guidanceNeeded->guidance_needed = 'other';
+                $guidanceNeeded->other_guidance = $guidance;
+            }
+
             $guidanceNeeded->save();
         }
     }
 
+
+    if($request->has('guidance_needed') && Auth::check()){
+        $user = Auth::user();
+        $email = $user->email;
+        $subscriptionRequest = [
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'phone' => $user->phone,
+            'email' => $user->email,
+            'concern_person_name' => $request->concerned_person_name,
+            'concern_person_phone' => $request->concerned_person_phone,
+            'concern_person_email' => $request->concerned_person_email,
+            'concern_person_designation' => $request->concerned_person_designation,          
+            'company_name' => $request->company_name,
+            'company_website' => $request->website ?? null,
+            'guidance_needed' => is_array($request->guidance_needed)
+                ? implode(', ', $request->guidance_needed)
+                : $request->guidance_needed,
+        ];
+        // mail to admin 
+        Mail::to('investordekhopoojad@gmail.com')->send(new GuidanceNeededInvesteeMail($subscriptionRequest));
+    }
     if ($user->category_id == 1) { 
        
         return redirect()->route('investee.dashboard')->with('success', 'Form submitted successfully!');
