@@ -3,13 +3,24 @@
 <div class="container">
     <h2 class="text-center mb-4">Profile Settings</h2>
 
-    <!-- Success Message -->
-    <?php if(session('success_message')): ?>
-        <div class="alert alert-success">
-            <?php echo e(session('success_message')); ?>
+   <?php if(session('success_message')): ?>
+    <div class="alert alert-success" id="success-alert">
+        <?php echo e(session('success_message')); ?>
 
-        </div>
-    <?php endif; ?>
+    </div>
+
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function () {
+            const successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                setTimeout(() => {
+                    successAlert.style.display = 'none';
+                }, 5000); // 5000ms = 5 seconds
+            }
+        });
+    </script>
+<?php endif; ?>
 
     <!-- Error Message -->
     <?php if(session('error_message')): ?>

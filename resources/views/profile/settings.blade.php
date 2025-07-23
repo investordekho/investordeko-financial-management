@@ -5,12 +5,23 @@
 <div class="container">
     <h2 class="text-center mb-4">Profile Settings</h2>
 
-    <!-- Success Message -->
-    @if(session('success_message'))
-        <div class="alert alert-success">
-            {{ session('success_message') }}
-        </div>
-    @endif
+   @if(session('success_message'))
+    <div class="alert alert-success" id="success-alert">
+        {{ session('success_message') }}
+    </div>
+
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function () {
+            const successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                setTimeout(() => {
+                    successAlert.style.display = 'none';
+                }, 10000); // 5000ms = 5 seconds
+            }
+        });
+    </script>
+@endif
 
     <!-- Error Message -->
     @if(session('error_message'))
