@@ -410,18 +410,12 @@ public function submitOtherForm(Request $request)
 
 public function updateprofileview()
 {
-    $userId = auth()->id();
-    // $userId = auth()->user()->id;
-    $investor = Investor::where('user_id', $userId)->firstOrFail();
-    $contactDetails = $investor->contactDetails()->first();
-    $investmentDetails = $investor->investmentDetails()->first();
-    $publicLinks = $investor->publicLinks()->get();
-    $previousInvestments = $investor->previousInvestments()->get();
-    $referral = $investor->referrals()->first();
-    $guidanceNeeds = $investor->guidanceNeeds()->first();
-    $investorAddresses = $investor->investorAddresses()->get();
-    // $locationDetail = $investor->locationDetail()->first();
+    // $userId = auth()->id();
+    $userId = auth()->user()->id;
+    $categoryid = auth()->user()->category_id;  
 
+    if($categoryid == 1) {
+        
     $company = Company::where('user_id', $userId)->firstOrFail();
     $concernedPerson = $company->concernedPerson()->first();
     $founders = $company->founders()->get();
@@ -446,7 +440,22 @@ public function updateprofileview()
     $financials = $company->attachments()->where('type', 'financials')->get();
     $otherAttachments = $company->attachments()->where('type', 'other')->get(); 
 
+    }
+    if($categoryid == 2) {
+        // Assuming you have an Investor model and its related data
+    $investor = Investor::where('user_id', $userId)->firstOrFail();
+    $contactDetails = $investor->contactDetails()->first();
+    $investmentDetails = $investor->investmentDetails()->first();
+    $publicLinks = $investor->publicLinks()->get();
+    $previousInvestments = $investor->previousInvestments()->get();
+    $referral = $investor->referrals()->first();
+    $guidanceNeeds = $investor->guidanceNeeds()->first();
+    $investorAddresses = $investor->investorAddresses()->get();
+    // $locationDetail = $investor->locationDetail()->first();
 
+    }
+    if($categoryid == 3) {
+        // Assuming you have a Banker model and its related data
     // Banker data
     $banker = Banker::where('user_id', $userId)->first();
     $bankerContactDetails = $banker ? $banker->contactDetails()->first() : null;
@@ -454,12 +463,13 @@ public function updateprofileview()
     $bankerPreviousDeals = $banker ? $banker->previousDeals()->get() : collect();
     $bankerReferral = $banker ? $banker->referrals()->first() : null;
 
-
+    }
     // other data
+    if($categoryid == 4) {
+        // Assuming you have an Other model and its related data
     $other = Other::where('user_id', $userId)->first();
-
+    }
     // $categoryid = Auth::user()->category_id;
-    $categoryid = auth()->user()->category_id;  
     if($categoryid == 1) {
         return view('updateforms.investee_form', compact(
             'company', 'concernedPerson', 'founders', 'fundRequirements', 
