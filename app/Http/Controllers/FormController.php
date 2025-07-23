@@ -411,6 +411,7 @@ public function submitOtherForm(Request $request)
 public function updateprofileview()
 {
     $userId = auth()->id();
+    // $userId = auth()->user()->id;
     $investor = Investor::where('user_id', $userId)->firstOrFail();
     $contactDetails = $investor->contactDetails()->first();
     $investmentDetails = $investor->investmentDetails()->first();
