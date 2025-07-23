@@ -38,6 +38,9 @@
                     </div>
                     <button type="submit" class="btn btn-primary py-3 px-5 w-100">Verify OTP</button>
                 </form>
+                <div class="text-center mt-3">
+                    <a href="<?php echo e(route('otp.resend',['phone'=> old('phone',session('phone'))])); ?>" class="text-decoration-none">Resend OTP</a>
+                </div>
             </div>
         </div>
     </div>
