@@ -41,5 +41,11 @@ class PageController extends Controller
     {
         return view('privacy');
     }
+
+    public function servicesperticular(Request $request)
+    {
+        return view('services',['data'=>$request->query('data')]);
+    }
+
 }
 ?>

@@ -200,3 +200,4 @@ Route::post('/resetpassword',[ForgetPasswordController::class,'resetPassword'])-
 //     ];
 // });
 
+Route::get('/servicesperticular', [PageController::class, 'servicesperticular'])->name('servicesperticular');

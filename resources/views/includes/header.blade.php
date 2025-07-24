@@ -274,7 +274,7 @@
                         <div class="dropdown-menu dropdown-menu-columns border-light m-0" style="left: 50% !important; transform: translateX(-50%) !important; width: max-content; padding: 1rem;">
                             <div class="row">
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('services') }}"><i class="fa-solid fa-chart-line"></i> Fund Raising</a></h5>
+                                    <h5><a href="{{ route('servicesperticular',['data'=>1]) }}"><i class="fa-solid fa-chart-line"></i> Fund Raising</a></h5>
                                     <ul style="list-style: none;">
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#equityFundingModal">Equity Funding</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#debtFundingModal">Debt Funding</a></li>
@@ -284,7 +284,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('services') }}"><i class="fas fa-dollar-sign"></i> Public Offering</a></h5>
+                                    <h5><a href="{{ route('servicesperticular',['data'=>2] ) }}"><i class="fas fa-dollar-sign"></i> Public Offering</a></h5>
                                     <ul style="list-style: none;">
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoPlanningModal">IPO Planning</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoListingModal">IPO Listing</a></li>
@@ -295,9 +295,9 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('services') }}"><i class="fas fa-gavel"></i> Intellectual Property</a></h5>
+                                    <h5><a href="{{ route('servicesperticular',['data'=>3]) }}"><i class="fas fa-gavel"></i> Intellectual Property</a></h5>
                                     <ul style="list-style: none;">
-                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#trademarkModal">Trademark</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#designRegistrationModal">Design Registration</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#dscModal">DSC</a></li>
@@ -308,7 +308,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('services') }}"><i class="fas fa-tools"></i> Compliance Services</a></h5>
+                                    <h5><a href="{{ route('servicesperticular',['data'=>4]) }}"><i class="fas fa-tools"></i> Compliance Services</a></h5>
                                     <ul style="list-style: none;">
                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#incomeTaxModal">Income Tax Return</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#gstCustomsModal">GST, TDS, PF, ESI, PT, Customs</a></li>
@@ -321,7 +321,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('services') }}"><i class="fa-solid fa-file-alt"></i> Financial Services</a></h5>
+                                    <h5><a href="{{ route('servicesperticular',['data'=>5]) }}"><i class="fa-solid fa-file-alt"></i> Financial Services</a></h5>
                                     <ul style="list-style: none;">
                                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#loanProposalModal">Loan Proposal</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#cmaDataModal">CMA Data</a></li>
@@ -335,7 +335,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('services') }}"><i class="fa-solid fa-file-alt"></i> Other Services</a></h5>
+                                    <h5><a href="{{ route('servicesperticular',['data'=>6]) }}"><i class="fa-solid fa-file-alt"></i> Other Services</a></h5>
                                     <ul style="list-style: none;">
                                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#structuredFinanceModal">Structured Finance</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#swsAgreementModal">Preparation of SWSA</a></li>

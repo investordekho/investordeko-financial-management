@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <!-- Custom Styles for Services Section -->
 <style>
@@ -129,7 +127,7 @@
         <div class="col-md-4">
             <div class="service-card" onclick="showPopup('Fund Raising', fundRaisingContent)">
                 <i class="fa-solid fa-chart-line service-icon"></i>
-                <h2>Fund Raising</h2>
+                <h2>Fund Raising<?php echo e($data); ?></h2>
             </div>
         </div>
 
@@ -210,7 +208,7 @@
             <p>We represent our clients in pitching to investors. We deliver persuasive presentations that showcase the company's value proposition, address potential risks, and answer investors' questions. We negotiate terms and conditions with investors to secure the best possible deal for our clients.</p>
         </div>
           <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -234,7 +232,7 @@
             <p>We help companies to design and implement Employee Stock Option (ESOP) plans. We advise on the structure of the ESOP plan, valuation of the company's shares, and tax implications for both the company and employees.</p>
         </div>
           <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -258,7 +256,7 @@
             <p>We help companies prepare for and execute online listings, such as IPOs or secondary offerings. We also provide advice on corporate governance and compliance requirements for online listings.</p>
         </div>
           <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -290,7 +288,7 @@
         <p>We assist businesses in obtaining an Importer-Exporter Code (IEC), a necessary requirement for international trade activities. We guide businesses through the application process and provide advice on customs procedures.</p>
     </div>
       <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -322,7 +320,7 @@
         <p>We offer comprehensive Techno Economic Viability (TEV) studies to our clients, encompassing market analysis, financial projections, and risk assessment. These studies provide valuable insights into a project's potential for success, aiding clients in making informed investment decisions and securing necessary funding.</p>
     </div>
       <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -342,7 +340,7 @@
         <p>Due diligence is a process of conducting a thorough investigation and analysis of a company or investment opportunity. We conduct due diligence on behalf of our clients to assess the risks and potential rewards of a transaction. This involves reviewing the company's financial statements, business operations, management team, legal and regulatory compliance, and market conditions. We use our expertise to identify potential issues and provide recommendations to our clients. Due diligence is a critical step in ensuring that investment decisions are made on a sound and informed basis.</p>
     </div>
     <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -357,7 +355,7 @@
 </script>
 <script>
 
-     let data = @json($data);
+     let data = <?php echo json_encode($data, 15, 512) ?>;
 if(data == 1){
     showPopup('Fund Raising', fundRaisingContent);
 } else if(data == 2){
@@ -373,4 +371,6 @@ if(data == 1){
 }
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/services.blade.php ENDPATH**/ ?>
