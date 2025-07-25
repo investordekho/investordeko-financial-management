@@ -104,12 +104,20 @@
                         <!-- Subject Field -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" 
+                                <!-- <input type="text" 
                                     class="form-control" 
                                     id="subject" 
                                     name="subject" 
                                     placeholder="Subject" 
+                                    required> -->
+                                    <input type="text" 
+                                    class="form-control {{ $errors->has('subject') ? 'is-invalid' : '' }}" 
+                                    id="subject" 
+                                    name="subject" 
+                                    placeholder="Subject" 
+                                    value="{{ old('subject') }}" 
                                     required>
+
                                 <label for="subject">Subject</label>
                             </div>
                         </div>
@@ -117,12 +125,19 @@
                         <!-- Message Field -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <textarea class="form-control" 
+                                <!-- <textarea class="form-control" 
                                         placeholder="Leave a message here" 
                                         id="message" 
                                         name="message" 
                                         style="height: 100px" 
-                                        required></textarea>
+                                        required></textarea> -->
+                                        <textarea class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}" 
+                                        placeholder="Leave a message here" 
+                                        id="message" 
+                                        name="message" 
+                                        style="height: 100px" 
+                                        required>{{ old('message') }}</textarea>
+
                                 <label for="message">Message</label>
                             </div>
                         </div>
