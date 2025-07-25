@@ -197,6 +197,7 @@
                                 placeholder="Enter your email"
                                 pattern="^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$"
                                 required
+                                title="Please enter a valid email address (e.g.,example@gmail.com)"
                             >                            
                             <?php if($errors->has('email')): ?>
                                 <div class="invalid-feedback d-block">

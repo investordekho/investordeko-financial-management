@@ -11,6 +11,8 @@ use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+
 class ProfileController extends Controller
 {
     /**
@@ -33,7 +35,12 @@ class ProfileController extends Controller
         // Validate the form data
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            // 'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+             'email' => 'required',
+                        'string',
+                        'max:255',
+                        'email:rfc,dns',
+                        Rule::unique('users', 'email')->ignore($user->id),
             'phone' => 'required|string|max:20',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);

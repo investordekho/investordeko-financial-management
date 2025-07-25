@@ -416,7 +416,7 @@ unset($__errorArgs, $__bag); ?>
     </div>
 
  
-    <div id="public-links-container" class="col-sm-10">
+ <div id="public-links-container" class="col-12">
     <?php
         $publicLinks = old('public_links', []);
         $linkDescriptions = old('link_descriptions', []);
@@ -424,12 +424,12 @@ unset($__errorArgs, $__bag); ?>
     ?>
 
     <?php for($i = 0; $i < $count; $i++): ?>
-        <div class="public-link-row d-flex align-items-start mb-2">
-            <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
-                <label for="public_links" class="<?php echo e($i == 0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'URL' : ''); ?></label>
+        <div class="public-link-row row mb-3">
+            <div class="form-group col-12 col-md-5">
+                <label class="<?php echo e($i == 0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'URL' : ''); ?></label>
                 <input 
                     type="url" 
-                    class="form-control spaced-input <?php $__errorArgs = ["public_links.$i"];
+                    class="form-control <?php $__errorArgs = ["public_links.$i"];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -454,10 +454,10 @@ endif;
 unset($__errorArgs, $__bag); ?>
             </div>
 
-            <div class="form-group flex-grow-1 mr-2">
-                <label for="link_descriptions" class="<?php echo e($i == 0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'Select Account' : ''); ?></label>
+            <div class="form-group col-12 col-md-5">
+                <label class="<?php echo e($i == 0 ? 'required' : ''); ?>"><?php echo e($i == 0 ? 'Select Account' : ''); ?></label>
                 <select 
-                    class="form-control spaced-input <?php $__errorArgs = ["link_descriptions.$i"];
+                    class="form-control <?php $__errorArgs = ["link_descriptions.$i"];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -484,16 +484,17 @@ endif;
 unset($__errorArgs, $__bag); ?>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-12 col-md-2 d-flex align-items-end">
                 <?php if($i == 0): ?>
-                    <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
+                    <button type="button" class="btn btn-info w-100" onclick="addPublicLinkField(this)">+</button>
                 <?php else: ?>
-                    <button type="button" class="btn btn-danger remove-btn mt-4" onclick="removePublicLinkField(this)">-</button>
+                    <button type="button" class="btn btn-danger w-100" onclick="removePublicLinkField(this)">-</button>
                 <?php endif; ?>
             </div>
         </div>
     <?php endfor; ?>
 </div>
+
 
 </div>
 
@@ -1143,21 +1144,21 @@ unset($__errorArgs, $__bag); ?>
 // }
 function addPublicLinkField(button) {
     const newField = `
-        <div class="public-link-row d-flex align-items-start mb-2">
-            <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
-                <label for="public_links"></label>
+        <div class="public-link-row row mb-3">
+            <div class="form-group col-12 col-md-5">
+                <label></label>
                 <input 
                     type="url" 
-                    class="form-control spaced-input" 
+                    class="form-control" 
                     name="public_links[]" 
                     placeholder="Enter URL" 
                     required
                 >
             </div>
-            <div class="form-group flex-grow-1 mr-2">
-                <label for="link_descriptions"></label>
+            <div class="form-group col-12 col-md-5">
+                <label></label>
                 <select 
-                    class="form-control spaced-input" 
+                    class="form-control" 
                     name="link_descriptions[]" 
                     required
                 >
@@ -1168,10 +1169,10 @@ function addPublicLinkField(button) {
                     <option value="Others">Others</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 col-md-2 d-flex align-items-end">
                 <button 
                     type="button" 
-                    class="btn btn-danger remove-btn mt-4" 
+                    class="btn btn-danger w-100" 
                     onclick="removePublicLinkField(this)">-</button>
             </div>
         </div>
@@ -1179,6 +1180,7 @@ function addPublicLinkField(button) {
 
     document.getElementById('public-links-container').insertAdjacentHTML('beforeend', newField);
 }
+
 
 function removePublicLinkField(button) {
     // Remove the row containing this button
