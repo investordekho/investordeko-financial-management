@@ -38,7 +38,20 @@ class InvesteeDashboardController extends Controller
     $userId = auth()->user()->id;
     $category_id = auth()->user()->category_id;
     $subscriber = Subscriber::where('user_id', $userId)->first();
+    $formed_filled = auth()->user()->form_filled;
 
+    if($formed_filled==0 && $category_id == 1){
+        return redirect()->route('form.investee');
+    }
+    if($formed_filled == 0 && $category_id == 2){
+        return redirect()->route('form.investor');
+    }
+    if($formed_filled == 0 && $category_id == 3){
+        return redirect()->route('form.banker');
+    }
+    if($formed_filled == 0 && $category_id == 4){
+        return redirect()->route('form.other');
+    }
     // Fetch investors with related data
     $investorsQuery = Investor::with([
         'contactDetails', 'publicLinks', 'previousInvestments',

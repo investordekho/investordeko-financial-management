@@ -37,10 +37,33 @@ class InvestorDashboardController extends Controller
 }
    public function index()
    {
-       $userId = auth()->user()->id;
+   
 
-       $category_id = auth()->user()->category_id;
+ $userId = auth()->id(); // cleaner and safe
+    $user = \App\Models\User::find($userId); // Get fresh data from DB
 
+    if (!$user) {
+        return redirect()->route('login')->withErrors('User not found.');
+    }
+
+    $formed_filled = $user->form_filled;
+    $category_id = $user->category_id;
+    // log the user ID and category ID
+    \Log::info('User ID: ' . $userId . ', Category ID: ' . $category_id);
+    // Check if the user has filled the form based on their category
+    \Log::info('Form filled status: ' . $formed_filled);
+    if ($formed_filled == 0) {
+        switch ($category_id) {
+            case 1:
+                return redirect()->route('form.investee');
+            case 2:
+                return redirect()->route('form.investor');
+            case 3:
+                return redirect()->route('form.banker');
+            case 4:
+                return redirect()->route('form.other');
+        }
+    }
        $subscriber = Subscriber::where('user_id',$userId)->first();
        $investeesQuery = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource']);
        $sectors = SectorDetail::all();

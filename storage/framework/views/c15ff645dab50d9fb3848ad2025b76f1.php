@@ -127,7 +127,7 @@
         <div class="col-md-4">
             <div class="service-card" onclick="showPopup('Fund Raising', fundRaisingContent)">
                 <i class="fa-solid fa-chart-line service-icon"></i>
-                <h2>Fund Raising<?php echo e($data); ?></h2>
+                <h2>Fund Raising</h2>
             </div>
         </div>
 
@@ -355,7 +355,7 @@
 </script>
 <script>
 
-     let data = <?php echo json_encode($data, 15, 512) ?>;
+     let data = <?php echo json_encode($data ?? 0, 15, 512) ?>;
 if(data == 1){
     showPopup('Fund Raising', fundRaisingContent);
 } else if(data == 2){

@@ -357,7 +357,7 @@
 </script>
 <script>
 
-     let data = @json($data);
+     let data = @json($data ?? 0);
 if(data == 1){
     showPopup('Fund Raising', fundRaisingContent);
 } else if(data == 2){
