@@ -310,7 +310,7 @@
     </div>
 
  
-    <div id="public-links-container" class="col-sm-10">
+ <div id="public-links-container" class="col-12">
     @php
         $publicLinks = old('public_links', []);
         $linkDescriptions = old('link_descriptions', []);
@@ -318,12 +318,12 @@
     @endphp
 
     @for ($i = 0; $i < $count; $i++)
-        <div class="public-link-row d-flex align-items-start mb-2">
-            <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
-                <label for="public_links" class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'URL' : '' }}</label>
+        <div class="public-link-row row mb-3">
+            <div class="form-group col-12 col-md-5">
+                <label class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'URL' : '' }}</label>
                 <input 
                     type="url" 
-                    class="form-control spaced-input @error("public_links.$i") is-invalid @enderror" 
+                    class="form-control @error("public_links.$i") is-invalid @enderror" 
                     name="public_links[]" 
                     placeholder="Enter URL" 
                     value="{{ $publicLinks[$i] ?? '' }}" 
@@ -334,10 +334,10 @@
                 @enderror
             </div>
 
-            <div class="form-group flex-grow-1 mr-2">
-                <label for="link_descriptions" class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'Select Account' : '' }}</label>
+            <div class="form-group col-12 col-md-5">
+                <label class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'Select Account' : '' }}</label>
                 <select 
-                    class="form-control spaced-input @error("link_descriptions.$i") is-invalid @enderror" 
+                    class="form-control @error("link_descriptions.$i") is-invalid @enderror" 
                     name="link_descriptions[]" 
                     required
                 >
@@ -350,16 +350,17 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-12 col-md-2 d-flex align-items-end">
                 @if ($i == 0)
-                    <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
+                    <button type="button" class="btn btn-info w-100" onclick="addPublicLinkField(this)">+</button>
                 @else
-                    <button type="button" class="btn btn-danger remove-btn mt-4" onclick="removePublicLinkField(this)">-</button>
+                    <button type="button" class="btn btn-danger w-100" onclick="removePublicLinkField(this)">-</button>
                 @endif
             </div>
         </div>
     @endfor
 </div>
+
 
 </div>
 
@@ -883,21 +884,21 @@
 // }
 function addPublicLinkField(button) {
     const newField = `
-        <div class="public-link-row d-flex align-items-start mb-2">
-            <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
-                <label for="public_links"></label>
+        <div class="public-link-row row mb-3">
+            <div class="form-group col-12 col-md-5">
+                <label></label>
                 <input 
                     type="url" 
-                    class="form-control spaced-input" 
+                    class="form-control" 
                     name="public_links[]" 
                     placeholder="Enter URL" 
                     required
                 >
             </div>
-            <div class="form-group flex-grow-1 mr-2">
-                <label for="link_descriptions"></label>
+            <div class="form-group col-12 col-md-5">
+                <label></label>
                 <select 
-                    class="form-control spaced-input" 
+                    class="form-control" 
                     name="link_descriptions[]" 
                     required
                 >
@@ -908,10 +909,10 @@ function addPublicLinkField(button) {
                     <option value="Others">Others</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 col-md-2 d-flex align-items-end">
                 <button 
                     type="button" 
-                    class="btn btn-danger remove-btn mt-4" 
+                    class="btn btn-danger w-100" 
                     onclick="removePublicLinkField(this)">-</button>
             </div>
         </div>
@@ -919,6 +920,7 @@ function addPublicLinkField(button) {
 
     document.getElementById('public-links-container').insertAdjacentHTML('beforeend', newField);
 }
+
 
 function removePublicLinkField(button) {
     // Remove the row containing this button
