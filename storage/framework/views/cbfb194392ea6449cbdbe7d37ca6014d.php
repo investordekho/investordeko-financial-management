@@ -297,7 +297,7 @@
                                 <div class="col-sm-3 dropdown-menu-column">
                                     <h5><a href="<?php echo e(route('servicesperticular',['data'=>3])); ?>"><i class="fas fa-gavel"></i> Intellectual Property</a></h5>
                                     <ul style="list-style: none;">
-                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#trademarkModal">Trademark</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#designRegistrationModal">Design Registration</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#dscModal">DSC</a></li>
@@ -458,11 +458,13 @@
                             </li>
 
                             <!-- Update Profile Link -->
-                            <li>
-                                <a class="dropdown-item" href="<?php echo e(route('updateprofile')); ?>">
-                                    <i class="bi bi-person-lines-fill me-2"></i> Update Profile
-                                </a>
-                            </li>
+                            <?php if(Auth::user()->form_filled == 1): ?>
+                                <li>
+                                    <a class="dropdown-item" href="<?php echo e(route('updateprofile')); ?>">
+                                        <i class="bi bi-person-lines-fill me-2"></i> Update Profile
+                                    </a>
+                                </li>
+                            <?php endif; ?>
 
                             
                             <!-- Divider -->
