@@ -238,5 +238,34 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<script>
+    const emojiRegex = /([\u2700-\u27BF]|[\uE000-\uF8FF]|\u24C2|[\uD83C-\uDBFF\uDC00-\uDFFF])/g;
+
+    const subjectInput = document.getElementById('subject');
+    const messageInput = document.getElementById('message');
+
+    // Remove emojis from Subject
+    subjectInput.addEventListener('input', function () {
+        if (emojiRegex.test(this.value)) {
+            this.value = this.value.replace(emojiRegex, '');
+            this.setCustomValidity("Subject cannot contain emojis.");
+            this.reportValidity();
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+
+    // Remove emojis from Message
+    messageInput.addEventListener('input', function () {
+        if (emojiRegex.test(this.value)) {
+            this.value = this.value.replace(emojiRegex, '');
+            this.setCustomValidity("Message cannot contain emojis.");
+            this.reportValidity();
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+</script>
+
 
 @endsection
