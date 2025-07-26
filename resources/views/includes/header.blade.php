@@ -453,11 +453,13 @@
                             </li>
 
                             <!-- Update Profile Link -->
-                            <li>
-                                <a class="dropdown-item" href="{{ route('updateprofile') }}">
-                                    <i class="bi bi-person-lines-fill me-2"></i> Update Profile
-                                </a>
-                            </li>
+                            @if(Auth::user()->form_filled == 1)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('updateprofile') }}">
+                                        <i class="bi bi-person-lines-fill me-2"></i> Update Profile
+                                    </a>
+                                </li>
+                            @endif
 
                             
                             <!-- Divider -->
