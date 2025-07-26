@@ -477,9 +477,9 @@
 
             <div class="form-group">
                 @if ($i == 0)
-                    <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
+                    <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)"> + Add More Links</button>
                 @else
-                    <button type="button" class="btn btn-danger remove-btn mt-4" onclick="removePublicLinkField(this)">-</button>
+                    <button type="button" class="btn btn-danger remove-btn mt-4" onclick="removePublicLinkField(this)">Remove</button>
                 @endif
             </div>
         </div>
@@ -1072,7 +1072,7 @@ function addPublicLinkField(button) {
                 <button 
                     type="button" 
                     class="btn btn-danger remove-btn mt-4" 
-                    onclick="removePublicLinkField(this)">-</button>
+                    onclick="removePublicLinkField(this)">Remove</button>
             </div>
         </div>
     `;
