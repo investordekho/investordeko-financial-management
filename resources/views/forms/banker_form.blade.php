@@ -1111,6 +1111,13 @@
     function addPublicLinkField() {
         // Get the public links container
         const container = document.getElementById('public-links-container');
+        // Count current link rows
+        const currentRows = container.querySelectorAll('.row').length;
+        // Only allow up to 10 rows (1 initial + 9 more)
+        if (currentRows >= 10) {
+            alert('You can add a maximum of 10 public links.');
+            return;
+        }
 
         // Create a new div for the input group with row structure to match Bootstrap columns
         const newRow = document.createElement('div');

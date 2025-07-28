@@ -486,9 +486,9 @@ unset($__errorArgs, $__bag); ?>
 
             <div class="form-group col-12 col-md-2 d-flex align-items-end">
                 <?php if($i == 0): ?>
-                    <button type="button" class="btn btn-info w-100" onclick="addPublicLinkField(this)">+</button>
+                    <button type="button" class="btn btn-info w-100" onclick="addPublicLinkField(this)"> + Add More Links</button>
                 <?php else: ?>
-                    <button type="button" class="btn btn-danger w-100" onclick="removePublicLinkField(this)">-</button>
+                    <button type="button" class="btn btn-danger w-100" onclick="removePublicLinkField(this)">- Remove</button>
                 <?php endif; ?>
             </div>
         </div>
@@ -1143,6 +1143,15 @@ unset($__errorArgs, $__bag); ?>
 //     document.getElementById('public-links-container').insertAdjacentHTML('beforeend', newField);
 // }
 function addPublicLinkField(button) {
+    const container = document.getElementById('public-links-container');
+    const currentCount = container.querySelectorAll('.public-link-row').length;
+    const maxLinks = 10; // 1 initial + 9 more
+
+    if (currentCount >= maxLinks) {
+        alert('You can add up to 10 public links only.');
+        return;
+    }
+
     const newField = `
         <div class="public-link-row row mb-3">
             <div class="form-group col-12 col-md-5">
@@ -1173,12 +1182,12 @@ function addPublicLinkField(button) {
                 <button 
                     type="button" 
                     class="btn btn-danger w-100" 
-                    onclick="removePublicLinkField(this)">-</button>
+                    onclick="removePublicLinkField(this)">Remove</button>
             </div>
         </div>
     `;
 
-    document.getElementById('public-links-container').insertAdjacentHTML('beforeend', newField);
+    container.insertAdjacentHTML('beforeend', newField);
 }
 
 

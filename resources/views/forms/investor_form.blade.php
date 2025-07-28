@@ -883,6 +883,15 @@
 //     document.getElementById('public-links-container').insertAdjacentHTML('beforeend', newField);
 // }
 function addPublicLinkField(button) {
+    const container = document.getElementById('public-links-container');
+    const currentCount = container.querySelectorAll('.public-link-row').length;
+    const maxLinks = 10; // 1 initial + 9 more
+
+    if (currentCount >= maxLinks) {
+        alert('You can add up to 10 public links only.');
+        return;
+    }
+
     const newField = `
         <div class="public-link-row row mb-3">
             <div class="form-group col-12 col-md-5">
@@ -918,7 +927,7 @@ function addPublicLinkField(button) {
         </div>
     `;
 
-    document.getElementById('public-links-container').insertAdjacentHTML('beforeend', newField);
+    container.insertAdjacentHTML('beforeend', newField);
 }
 
 
