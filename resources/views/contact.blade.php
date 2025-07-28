@@ -23,7 +23,7 @@
         <div class="row g-5">
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                 <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Contact</p>
-                <h1 class="display-5 mb-4">If You Have Any Query, Please Contact Us</h1>
+                <h1 class="display-5 mb-4">If You Have Any Queries, Please Contact Us</h1>
 
                 <!-- Display success or error messages -->
                 @if(session('successMessage'))
