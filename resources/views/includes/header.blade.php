@@ -229,17 +229,22 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
         <!-- Left Section: Logo -->
-        <div class="col-md-1 d-flex align-items-center">
+        <div class="d-flex align-items-center">
             <a class="navbar-brand" href="{{ route('home') }}">
                <img src="{{ asset('img/Investor-logo.png') }}" alt="Logo" style="height: 90px;">
-                
             </a>
         </div>
 
+        <!-- Navbar Toggler for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+<!-- The navbar collapse script is included at the bottom of the file after jQuery and Bootstrap JS are loaded -->
+
+
         <!-- Middle Section: Menu -->
-        <div class="col-md-9 d-flex justify-content-end">
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav">
 
                 @auth
                     <!-- <li class="nav-item">
@@ -1254,9 +1259,23 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Include jQuery -->
+<!-- Include jQuery before Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Collapse navbar on nav-link click (for mobile)
+    $(function () {
+        $('.navbar-nav .nav-link').on('click', function () {
+            if ($('.navbar-toggler').is(':visible')) {
+                $('#navbarNavDropdown').collapse('hide');
+            }
+        });
+
+        // Place your additional JS code here
+        // Example: Show an alert when the document is ready
+        // alert('Custom JS code runs after Bootstrap and jQuery are loaded.');
+    });
+</script>
 
 
  <script>
