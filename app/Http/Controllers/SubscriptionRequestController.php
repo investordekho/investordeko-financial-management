@@ -159,7 +159,8 @@ class SubscriptionRequestController extends Controller
             $SubscriptionRequest->updated_at = now();
             $SubscriptionRequest->save();
             if($SubscriptionRequest->status == 'approved'){
-                $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+                // $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+                $subscriber = Subscriber::where('user_id', $subscriptionRequest->user_id)->first();
                 if($subscriber)
                 {
                     $subscriber->is_subscribed = 1;
@@ -195,7 +196,8 @@ class SubscriptionRequestController extends Controller
             $subscriptionRequest->status = $request->input('status');
             $subscriptionRequest->save();
             if($subscriptionRequest->status == 'approved'){
-                $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+                // $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+                $subscriber = Subscriber::where('user_id', $subscriptionRequest->user_id)->first();
                 if($subscriber)
                 {
                     $subscriber->is_subscribed = 1;
