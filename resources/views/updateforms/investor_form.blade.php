@@ -441,7 +441,7 @@
     @endphp
 
     @for ($i = 0; $i < $count; $i++)
-        <div class="public-link-row d-flex align-items-start mb-2">
+        <div class="public-link-row d-block d-md-flex align-items-start mb-3">
             <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
                 <label for="public_links" class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'URL' : '' }}</label>
                 <input 
@@ -1046,7 +1046,7 @@
 // }
 function addPublicLinkField(button) {
     const newField = `
-        <div class="public-link-row d-flex align-items-start mb-2">
+        <div class="public-link-row d-block d-md-flex align-items-start mb-3">
             <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
                 <label for="public_links"></label>
                 <input 
