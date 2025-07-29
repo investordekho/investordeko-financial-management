@@ -219,6 +219,126 @@
       .dropdown-menu {
           z-index: 2000;
       }
+
+
+   @media (max-width: 768px) {
+    .dropdown-menu {
+        width: 100% !important;
+        left: 0 !important;
+        transform: none !important;
+    }
+
+    .dropdown-menu .row {
+        display: block;
+    }
+
+    .dropdown-menu .col-sm-3.dropdown-menu-column {
+        width: 100% !important;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .dropdown-menu .dropdown-header {
+        font-weight: 600;
+        padding-top: 0.5rem;
+    }
+
+    .dropdown-menu .dropdown-item {
+        padding-left: 1rem;
+    }
+}
+/* General Styles for Dropdown Menu */
+.dropdown-menu {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide toggle button in desktop view */
+#navbarToggle {
+    display: none;
+}
+
+/* Default dropdown columns */
+.dropdown-menu-column {
+    padding: 0.75rem;
+}
+
+/* Dropdown items */
+.dropdown-item {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #212529;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+/* Dropdown header */
+.dropdown-header {
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    color: #343a40;
+}
+
+/* Mobile View Styles */
+@media (max-width: 768px) {
+    /* Show toggle button only in mobile view */
+    #navbarToggle {
+        display: inline-block;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        margin: 0.5rem;
+    }
+
+    .dropdown-menu {
+        width: 100% !important;
+        max-width: 600px;
+        margin: 0 auto;
+        left: 0 !important;
+        transform: none !important;
+        padding: 1rem;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        animation: dropdownFade 0.3s ease-in-out;
+    }
+
+    .dropdown-menu .row {
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .dropdown-menu-column {
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+    }
+}
+
+/* Smooth animation */
+@keyframes dropdownFade {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
     </style>
 </head>
 
