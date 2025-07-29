@@ -182,6 +182,25 @@
   display: block;
 }
 
+#navbarToggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Show only on screens less than or equal to 768px */
+@media (max-width: 768px) {
+  #navbarToggle {
+    display: block;
+  }
+
+  /* Optional: stack the menu items for mobile */
+  #navbarNavDropdown {
+    flex-direction: column;
+  }
+}
 
 
     </style>
