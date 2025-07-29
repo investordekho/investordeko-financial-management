@@ -165,6 +165,23 @@
 }
 
 
+#navbarNavDropdown {
+  display: none;
+  flex-direction: column;
+}
+
+#navbarNavDropdown.show {
+  display: flex;
+}
+
+#profileDropdownMenu {
+  display: none;
+}
+
+#profileDropdownMenu.show {
+  display: block;
+}
+
 
 
     </style>
@@ -236,9 +253,10 @@
         </div>
 
         <!-- Navbar Toggler for mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
+        <button id="navbarToggle">☰</button>
 <!-- The navbar collapse script is included at the bottom of the file after jQuery and Bootstrap JS are loaded -->
 
 
@@ -370,50 +388,44 @@
                 @else
                     <!-- Show User Dropdown if authenticated -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <!-- Display Profile Image if exists, otherwise show default image -->
+                       <a class="nav-link dropdown-toggle d-flex align-items-center" 
+   href="#" 
+   id="profileToggleBtn" 
+   role="button">
+         <!-- Display Profile Image if exists, otherwise show default image -->
                             <!-- @if (Auth::user()->profile_image)
                                 <img src="{{ asset('storage/profile_image/' . Auth::user()->profile_image) }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             @else
                                 <img src="{{ asset('storage/profile_image/default_profile_image.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
                             @endif -->
-@php
-    $profileImage = Auth::user()->profile_image;
-    $imagePath = 'storage/profile_image/' . $profileImage;
-@endphp
-
-@if ($profileImage)
-    <img 
-        src="{{ asset($imagePath) }}" 
-        alt="Profile Image" 
-        width="40" 
-        height="40" 
-        class="rounded-circle" 
-        style="object-fit: cover;"
-        onerror="this.onerror=null;this.src='{{ asset('storage/profile_image/default_profile_image.png') }}';"
-    >
-@else
-    <img 
-        src="{{ asset('storage/profile_image/default_profile_image.png') }}" 
-        alt="Default Profile Image" 
-        width="40" 
-        height="40" 
-        class="rounded-circle" 
-        style="object-fit: cover;"
-    >
-@endif
-
-
-                              <!-- @php
-                              $profileImage = Auth::user()->profile_image;
-                              $imagePath = 'storage/profile_image/' . $profileImage;
+                            @php
+                                $profileImage = Auth::user()->profile_image;
+                                $imagePath = 'storage/profile_image/' . $profileImage;
                             @endphp
-                            
-                            @if ($profileImage && file_exists(public_path($imagePath)))
-                              <img src="{{ asset($imagePath) }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
+
+                            @if ($profileImage)
+                                <img 
+                                    src="{{ asset($imagePath) }}" 
+                                    alt="Profile Image" 
+                                    width="40" 
+                                    height="40" 
+                                    class="rounded-circle" 
+                                    style="object-fit: cover;"
+                                    onerror="this.onerror=null;this.src='{{ asset('storage/profile_image/default_profile_image.png') }}';"
+                                >
                             @else
-                              <img src="{{ asset('storage/profile_image/default_profile_image.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
-                            @endif -->
+                                <img 
+                                    src="{{ asset('storage/profile_image/default_profile_image.png') }}" 
+                                    alt="Default Profile Image" 
+                                    width="40" 
+                                    height="40" 
+                                    class="rounded-circle" 
+                                    style="object-fit: cover;"
+                                >
+                            @endif
+
+
+                            
                             <span class="ms-2">{{ Auth::user()->name }}</span>
                         </a>
                         <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
@@ -1263,19 +1275,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Collapse navbar on nav-link click (for mobile)
-    $(function () {
-        $('.navbar-nav .nav-link').on('click', function () {
-            if ($('.navbar-toggler').is(':visible')) {
-                $('#navbarNavDropdown').collapse('hide');
-            }
-        });
-
-        // Place your additional JS code here
-        // Example: Show an alert when the document is ready
-        // alert('Custom JS code runs after Bootstrap and jQuery are loaded.');
-    });
+document.getElementById('navbarToggle').addEventListener('click', function () {
+    const menu = document.getElementById('navbarNavDropdown'); // ✅ Correct ID
+    menu.classList.toggle('show');
+});
 </script>
+
 
 
  <script>
@@ -1286,5 +1291,25 @@
             }
         });
     </script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const profileBtn = document.getElementById("profileToggleBtn");
+    const profileMenu = document.getElementById("profileDropdownMenu");
+
+    profileBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        profileMenu.classList.toggle("show");
+    });
+
+    // Optional: Close if clicked outside
+    document.addEventListener("click", function (e) {
+        if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+            profileMenu.classList.remove("show");
+        }
+    });
+});
+</script>
+
 </body>
 </html>
