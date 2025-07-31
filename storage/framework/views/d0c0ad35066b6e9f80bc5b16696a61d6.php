@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="container py-5">
     <h1 class="text-center mb-5 display-6 fw-bold">Order Confirmation</h1>
 
@@ -8,7 +6,7 @@
     <div class="text-center mb-5">
         <p class="fs-5 mb-2">
           
-        @php
+        <?php
             if (Auth::user()->category_id == 1) {
                 $category = 'You are about to subscribe to the investor data :';
             } elseif (Auth::user()->category_id == 2) {
@@ -16,14 +14,14 @@
             } else {
                 $category = 'You are about to subscribe to the investee and investor data :';
             }
-        @endphp
+        ?>
           
-            <strong class="text-dark">{{$category}}</strong>
-            <span class="text-muted">{{ $plan }}</span>
+            <strong class="text-dark"><?php echo e($category); ?></strong>
+            <span class="text-muted"><?php echo e($plan); ?></span>
         </p>
         <p class="fs-5">
             <strong class="text-dark">Amount:</strong>
-            <span class="text-muted">{{ $totalprice }}</span>
+            <span class="text-muted"><?php echo e($totalprice); ?></span>
         </p>
     </div>
 
@@ -50,7 +48,7 @@
                 <div class="card-body text-center p-4">
                     <h4 class="text-primary fw-semibold mb-4">QR Code / UPI</h4>
                     <p class="text-muted mb-4">Scan the QR code below to make the payment</p>
-                    <img src="{{ asset('img/payment.jpeg') }}" alt="QR Code" class="img-fluid rounded-3 border" style="max-width: 200px;">
+                    <img src="<?php echo e(asset('img/payment.jpeg')); ?>" alt="QR Code" class="img-fluid rounded-3 border" style="max-width: 200px;">
                 </div>
             </div>
         </div>
@@ -66,10 +64,10 @@
     <div class="card shadow-sm border-0 rounded-4 mx-auto p-4" style="max-width: 600px;">
         <h5 class="text-primary fw-semibold mb-3 text-center">Confirm Your Payment</h5>
         <p class="text-muted text-center mb-4">Please provide the details from which you made the payment</p>
-        <form action="{{ route('createsubscriptionrequest')}}" method="POST" enctype="multipart/form-data" id="payment_detail">
-            @csrf
-            <input type="hidden" name="no_of_data" value="{{ $plan}}">
-            <input type="hidden" name="plan_amount" value="{{$totalprice}}">
+        <form action="<?php echo e(route('createsubscriptionrequest')); ?>" method="POST" enctype="multipart/form-data" id="payment_detail">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="no_of_data" value="<?php echo e($plan); ?>">
+            <input type="hidden" name="plan_amount" value="<?php echo e($totalprice); ?>">
             <div class="mb-3">
                 <label class="form-label">Payment Method</label>
                 <select name="payment_method" class="form-select" id="payment_method" required>
@@ -108,13 +106,13 @@
                 </button>
             </div>  
         </form>
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <?php if(session('success')): ?>
+            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+        <?php endif; ?>
 
-        @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
+        <?php if(session('error')): ?>
+            <div class="alert alert-danger"><?php echo e(session('error')); ?></div>
+        <?php endif; ?>
 
     </div>
 
@@ -192,4 +190,6 @@
     });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/payment/paymentcredentials.blade.php ENDPATH**/ ?>

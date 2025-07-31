@@ -1,6 +1,7 @@
-@if(session('success'))
+<?php if(session('success')): ?>
     <div class="alert alert-success alert-dismissible fade show mt-3" role="alert" id="success-alert">
-        {{ session('success') }}
+        <?php echo e(session('success')); ?>
+
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
@@ -14,7 +15,7 @@
             }
         }, 4000);
     </script>
-@endif
+<?php endif; ?>
 
 
 <!-- Hero Section -->
@@ -26,7 +27,7 @@
                 <p style="font-size: 18px; margin-bottom: 30px;">Unlock opportunities for growth and innovation</p>
             </div>
             <div class="col-md-6 text-center">
-                @guest
+                <?php if(auth()->guard()->guest()): ?>
                 <div class="d-flex justify-content-center justify-content-md-start mt-4">
                     <label class="me-3">
                         <input type="radio" name="user-type" class="me-1" value="Investees"> Investees
@@ -40,24 +41,29 @@
                 </div>
 
                 <form class="d-flex justify-content-center justify-content-md-start mt-4" id="searchForm" method="POST" action="#" style="max-width: 600px;">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <input type="text" id="searchInput" name="search_query" placeholder="Search for Startups/Angel Investor/VC" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px 0 0 5px;">
                     <button type="submit" style="padding: 10px 20px; background-color: #ffc107; border: none; border-radius: 0 5px 5px 0; color: white; font-weight: bold;">Search</button>
                 </form>
-                @else
+                <?php else: ?>
                 <div class="mt-4">
                     <a href="
-                        @if(Auth::user()->category_id == 1)
-                            {{ route('investee.dashboard') }}
-                        @elseif(Auth::user()->category_id == 2)
-                            {{ route('investor.dashboard') }}
-                        @elseif(Auth::user()->category_id == 3)
-                            {{ route('investee.dashboard') }}
-                        @elseif(Auth::user()->category_id == 4)
-                            {{ route('investee.dashboard') }}
-                        @else
-                            {{ route('home') }}
-                        @endif
+                        <?php if(Auth::user()->category_id == 1): ?>
+                            <?php echo e(route('investee.dashboard')); ?>
+
+                        <?php elseif(Auth::user()->category_id == 2): ?>
+                            <?php echo e(route('investor.dashboard')); ?>
+
+                        <?php elseif(Auth::user()->category_id == 3): ?>
+                            <?php echo e(route('investee.dashboard')); ?>
+
+                        <?php elseif(Auth::user()->category_id == 4): ?>
+                            <?php echo e(route('investee.dashboard')); ?>
+
+                        <?php else: ?>
+                            <?php echo e(route('home')); ?>
+
+                        <?php endif; ?>
                     " 
                     class="btn btn-professional"
                     style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; color: #fff;">
@@ -106,7 +112,7 @@
                     });
                     </script>
                 </div>
-                @endguest
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -124,7 +130,7 @@
             </div>
             <div class="col-md-6 text-center">
 
-                   @guest
+                   <?php if(auth()->guard()->guest()): ?>
                 <div class="d-flex justify-content-center justify-content-md-start mt-4">
                     <label class="me-3">
                         <input type="radio" name="user-type" class="me-1" value="Investees"> Investees
@@ -138,27 +144,32 @@
                 </div>
 
                 <form class="d-flex justify-content-center justify-content-md-start mt-4" id="searchForm" method="POST" action="#" style="max-width: 600px;">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <input type="text" id="searchInput" name="search_query" placeholder="Search for Startups/Angel Investor/VC" style="flex: 1; padding: 10px; border: none; border-radius: 5px 0 0 5px;">
                     <button type="submit" style="padding: 10px 20px; background-color: #ffc107; border: none; border-radius: 0 5px 5px 0; color: white; font-weight: bold;">Search</button>
                 </form>
-                @else
+                <?php else: ?>
                 <div class="mt-4">
                     <a href="
-                        @if(Auth::user()->category_id == 1)
-                            {{ route('investee.dashboard') }}
-                        @elseif(Auth::user()->category_id == 2)
-                            {{ route('investor.dashboard') }}
-                        @elseif(Auth::user()->category_id == 3)
-                            {{ route('banker.dashboard') }}
-                        @elseif(Auth::user()->category_id == 4)
-                            {{ route('banker.dashboard') }}
-                        @else
-                            {{ route('home') }}
-                        @endif
+                        <?php if(Auth::user()->category_id == 1): ?>
+                            <?php echo e(route('investee.dashboard')); ?>
+
+                        <?php elseif(Auth::user()->category_id == 2): ?>
+                            <?php echo e(route('investor.dashboard')); ?>
+
+                        <?php elseif(Auth::user()->category_id == 3): ?>
+                            <?php echo e(route('banker.dashboard')); ?>
+
+                        <?php elseif(Auth::user()->category_id == 4): ?>
+                            <?php echo e(route('banker.dashboard')); ?>
+
+                        <?php else: ?>
+                            <?php echo e(route('home')); ?>
+
+                        <?php endif; ?>
                     " class="btn btn-light" style="padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 50px; background-color: #28a745; color: white;">Go to Dashboard</a>
                 </div>
-                @endguest
+                <?php endif; ?>
                 
               
             </div>
@@ -208,7 +219,7 @@
         const searchInput = document.getElementById('searchInput');
 
         // Get user category from the backend using Laravel Blade
-        const userCategory = "{{ auth()->check() ? auth()->user()->category : '' }}";
+        const userCategory = "<?php echo e(auth()->check() ? auth()->user()->category : ''); ?>";
 
         // Set the placeholder based on the user category
         if (userCategory) {
@@ -286,7 +297,7 @@
 <!-- Services Section -->
 <section class="services-section py-5" style="background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%); animation: fadeIn 1.2s;">
     <div class="container">
-        @guest
+        <?php if(auth()->guard()->guest()): ?>
        <div class="row justify-content-center" style="padding: 10 15px 10px 10px; margin-bottom: 60px;">
     <div class="col-md-5 mb-4" style="padding: 10 15px 10px 10px; margin-bottom: 40px;"> 
         <div class="card h-100 border-0 shadow-lg text-center service-flap animate-flap flip-card" style="padding: 10 15px 10px 10px; height: 100%;">
@@ -295,13 +306,13 @@
                     <i class="fa-solid fa-user-tie mb-2 text-primary" style="font-size: 1.5rem;"></i>
                     <h5 class="card-title mb-2 fw-bold" style="font-size: 1rem;">Find Investors</h5>
                     <p class="card-text mb-3 text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Connect with verified angel investors, VCs, and funding partners to accelerate your startup's growth.</p>
-                    <a href="{{ route('register') }}" class="btn btn-outline-primary px-3 fw-semibold" style="font-size: 0.85rem;">Browse Investors</a>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-primary px-3 fw-semibold" style="font-size: 0.85rem;">Browse Investors</a>
                 </div>
                 <div class="flip-card-back card-body" style="padding: 2rem;">
                     <i class="fa-solid fa-handshake mb-2 text-primary" style="font-size: 1.5rem;"></i>
                     <h5 class="card-title mb-2 fw-bold" style="font-size: 1rem;">Why Join?</h5>
                     <p class="card-text mb-3 text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Access a curated investor network and receive expert fundraising guidance for your business.</p>
-                    <a href="{{ route('register') }}" class="btn btn-primary px-3 fw-semibold" style="font-size: 0.85rem;">Join Now</a>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-primary px-3 fw-semibold" style="font-size: 0.85rem;">Join Now</a>
                 </div>
             </div>
         </div>
@@ -313,13 +324,13 @@
                     <i class="fa-solid fa-lightbulb mb-2 text-success" style="font-size: 1.5rem;"></i>
                     <h5 class="card-title mb-2 fw-bold" style="font-size: 1rem;">Find Startups</h5>
                     <p class="card-text mb-3 text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Discover innovative startups and unlock exclusive investment opportunities tailored for you.</p>
-                    <a href="{{ route('register') }}" class="btn btn-outline-success px-3 fw-semibold" style="font-size: 0.85rem;">Browse Startups</a>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-success px-3 fw-semibold" style="font-size: 0.85rem;">Browse Startups</a>
                 </div>
                 <div class="flip-card-back card-body" style="padding: 2rem;">
                     <i class="fa-solid fa-rocket mb-2 text-success" style="font-size: 1.5rem;"></i>
                     <h5 class="card-title mb-2 fw-bold" style="font-size: 1rem;">Why Invest?</h5>
                     <p class="card-text mb-3 text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Diversify your portfolio and support high-growth ventures with verified business insights.</p>
-                    <a href="{{ route('register') }}" class="btn btn-success px-3 fw-semibold" style="font-size: 0.85rem;">Get Started</a>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-success px-3 fw-semibold" style="font-size: 0.85rem;">Get Started</a>
                 </div>
             </div>
         </div>
@@ -358,7 +369,7 @@
 }
 </style>
 
-        @endguest
+        <?php endif; ?>
     </div>
 </section>
 <style>
@@ -503,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- scrolling text  related to services -zm,xxxxxxxxxxxxxxxxxxxxxxxxxxxsf dnsjuiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizncfp[00yyyyyyyyyyyyyyyyyyyyyyyyhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh-->
 <!-- Professional Scrolling Info Bar -->
-@php
+<?php
     // Dynamic messages for the scrolling info bar
     $scrollingMessages = [
         [
@@ -549,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'badgeColor' => null
         ],
     ];
-@endphp
+?>
 
 <div class="container-fluid py-2 scrolling-info-bar shadow-sm" style="background: linear-gradient(90deg, #f8fafc 0%, #e9ecef 100%); border-bottom: 1px solid #dee2e6; position: relative; z-index: 1050;">
     <div class="row align-items-center justify-content-between">
@@ -560,16 +571,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="fa-solid fa-circle-info me-1"></i> InvestorDekho
                     </span>
                     <span class="mx-2 text-secondary">|</span>
-                    @foreach($scrollingMessages as $msg)
+                    <?php $__currentLoopData = $scrollingMessages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $msg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <span class="me-3">
-                            <i class="fa-solid {{ $msg['icon'] }} me-1"></i>
-                            {{ $msg['text'] }}
-                            @if($msg['badge'])
-                                <span class="badge bg-{{ $msg['badgeColor'] }} ms-1" style="font-size:0.75em;vertical-align:middle;">{{ $msg['badge'] }}</span>
-                            @endif
+                            <i class="fa-solid <?php echo e($msg['icon']); ?> me-1"></i>
+                            <?php echo e($msg['text']); ?>
+
+                            <?php if($msg['badge']): ?>
+                                <span class="badge bg-<?php echo e($msg['badgeColor']); ?> ms-1" style="font-size:0.75em;vertical-align:middle;"><?php echo e($msg['badge']); ?></span>
+                            <?php endif; ?>
                         </span>
                         <span class="mx-2 text-secondary">|</span>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <span class="me-2">
                         <i class="fa-solid fa-bolt text-warning me-1"></i>
                         <span class="d-none d-md-inline">Get a free consultation today!</span>
@@ -578,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
         <div class="col-auto d-none d-md-flex align-items-center">
-            <a href="{{ route('contact') }}" class="btn btn-gradient px-3 py-1 rounded-pill shadow-sm ms-2" style="font-weight: 500; font-size: 1.01rem;">
+            <a href="<?php echo e(route('contact')); ?>" class="btn btn-gradient px-3 py-1 rounded-pill shadow-sm ms-2" style="font-weight: 500; font-size: 1.01rem;">
                 <i class="fa-solid fa-headset me-2"></i>Contact Us
             </a>
             <!-- <button id="close-scrolling-bar" class="btn btn-link text-muted ms-2 p-0" style="font-size:1.3rem;" aria-label="Dismiss info bar">
@@ -732,7 +744,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 margin-right: 0;
                 z-index: 2;
             ">
-                <img src="{{ asset('storage/screenshots/fr2.jpg') }}" alt="Fund Raising" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+                <img src="<?php echo e(asset('storage/screenshots/fr2.jpg')); ?>" alt="Fund Raising" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
             </div>
             <div style="height: 140px;"></div> 
             
@@ -783,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 margin-right: 0;
                 z-index: 2;
             ">
-                <img src="{{ asset('storage/screenshots/ipo5.jpg') }}" alt="Public Offering" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+                <img src="<?php echo e(asset('storage/screenshots/ipo5.jpg')); ?>" alt="Public Offering" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
             <h5 class="service-title mb-3 d-flex align-items-center justify-content-center" style="width: 100%;">
@@ -830,7 +842,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 margin-right: 0;
                 z-index: 2;
             ">
-                <img src="{{ asset('storage/screenshots/rs4.jpg') }}" alt="Intellectual Property and Legal Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+                <img src="<?php echo e(asset('storage/screenshots/rs4.jpg')); ?>" alt="Intellectual Property and Legal Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
             
@@ -886,7 +898,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 margin-right: 0;
                 z-index: 2;
             ">
-                <img src="{{ asset('storage/screenshots/compliance2.jpg') }}" alt="Compliance and Regulatory Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+                <img src="<?php echo e(asset('storage/screenshots/compliance2.jpg')); ?>" alt="Compliance and Regulatory Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
             
@@ -949,7 +961,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 margin-right: 0;
                 z-index: 2;
             ">
-                <img src="{{ asset('storage/screenshots/as2.jpg') }}" alt="Financial and Accounting Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+                <img src="<?php echo e(asset('storage/screenshots/as2.jpg')); ?>" alt="Financial and Accounting Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
             
@@ -1012,7 +1024,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 margin-right: 0;
                 z-index: 2;
             ">
-                <img src="{{ asset('storage/screenshots/as5.jpg') }}" alt="Other Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+                <img src="<?php echo e(asset('storage/screenshots/as5.jpg')); ?>" alt="Other Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
             
@@ -1109,3 +1121,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </div>
 </div>
+<?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/includes/content.blade.php ENDPATH**/ ?>
