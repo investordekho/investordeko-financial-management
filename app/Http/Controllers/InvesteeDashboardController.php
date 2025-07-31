@@ -8,6 +8,8 @@ use App\Models\Subscriber;
 use App\Models\User;
 use App\Models\SubscriptionRequest;
 use App\Models\Payment_detail;
+use Illuminate\Support\Facades\Log;
+
 class InvesteeDashboardController extends Controller
 {
     /**
@@ -38,7 +40,20 @@ class InvesteeDashboardController extends Controller
     $userId = auth()->user()->id;
     $category_id = auth()->user()->category_id;
     $subscriber = Subscriber::where('user_id', $userId)->first();
+    $formed_filled = auth()->user()->form_filled;
 
+    if($formed_filled==0 && $category_id == 1){
+        return redirect()->route('form.investee');
+    }
+    if($formed_filled == 0 && $category_id == 2){
+        return redirect()->route('form.investor');
+    }
+    if($formed_filled == 0 && $category_id == 3){
+        return redirect()->route('form.banker');
+    }
+    if($formed_filled == 0 && $category_id == 4){
+        return redirect()->route('form.other');
+    }
     // Fetch investors with related data
     $investorsQuery = Investor::with([
         'contactDetails', 'publicLinks', 'previousInvestments',
@@ -264,75 +279,37 @@ public function search(Request $request)
             //     }); 
             // }
 
-                $investmentSizes = $request->input('investment_size', []);
+      $investmentSizes = $request->input('investment_size', []);
 
-                if (!empty($investmentSizes)) {
-                    $match = $match && collect($investmentSizes)->contains(function ($sizeOption) use ($investmentDetails) {
-                        $amountStr = strtolower(trim($investmentDetails->investment_size));
-                        $amountStr = str_replace(['₹', ',', ' '], '', $amountStr);
+if (!empty($investmentSizes)) {
+    Log::info('Selected Investment Sizes from request:', $investmentSizes);
 
-                        $minAmount = null;
-                        $maxAmount = null;
+    $dbSize = $this->parseInvestmentSizeToNumber($investmentDetails->investment_size ?? '');
 
-                        // Check if it's a range
-                        if (str_contains($amountStr, '–') || str_contains($amountStr, '-')) {
-                            $parts = preg_split('/–|-/', $amountStr);
-                            if (count($parts) == 2) {
-                                foreach ($parts as $index => $part) {
-                                    $part = trim($part);
-                                    if (str_ends_with($part, 'cr') || str_ends_with($part, 'crore')) {
-                                        $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                        $partValue = $num * 10_000_000;
-                                    } elseif (str_ends_with($part, 'm') || str_ends_with($part, 'million')) {
-                                        $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                        $partValue = $num * 1_000_000;
-                                    } elseif (str_ends_with($part, 'k') || str_ends_with($part, 'thousand')) {
-                                        $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                        $partValue = $num * 1_000;
-                                    } else {
-                                        $partValue = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                    }
+    Log::info('Parsed investment size from DB:', ['input' => $investmentDetails->investment_size, 'numeric' => $dbSize]);
 
-                                    if ($index == 0) $minAmount = $partValue;
-                                    if ($index == 1) $maxAmount = $partValue;
-                                }
-                            }
-                        } else {
-                            // Single amount
-                            $part = $amountStr;
-                            if (str_ends_with($part, 'cr') || str_ends_with($part, 'crore')) {
-                                $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                $minAmount = $maxAmount = $num * 10_000_000;
-                            } elseif (str_ends_with($part, 'm') || str_ends_with($part, 'million')) {
-                                $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                $minAmount = $maxAmount = $num * 1_000_000;
-                            } elseif (str_ends_with($part, 'k') || str_ends_with($part, 'thousand')) {
-                                $num = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                $minAmount = $maxAmount = $num * 1_000;
-                            } else {
-                                $minAmount = $maxAmount = (float) filter_var($part, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                            }
-                        }
+    $matchesAny = collect($investmentSizes)->contains(function ($range) use ($dbSize) {
+        if ($range === '<1000000') {
+            return $dbSize < 1000000;
+        } elseif ($range === '1000000-5000000') {
+            return $dbSize >= 1000000 && $dbSize <= 5000000;
+        } elseif ($range === '5000000-10000000') {
+            return $dbSize > 5000000 && $dbSize <= 10000000;
+        } elseif ($range === '>10000000') {
+            return $dbSize > 10000000;
+        }
+        return false;
+    });
 
-                        if ($minAmount === null || $maxAmount === null) {
-                            return false;
-                        }
+    $match = $match && $matchesAny;
 
-                        switch (strtolower($sizeOption)) {
-                            case 'below 10 lakh':
-                                return $minAmount < 1_000_000 || $maxAmount < 1_000_000;
-                            case '10-50 lakh':
-                                return ($minAmount <= 5_000_000 && $maxAmount >= 1_000_000);
-                            case '50 lakh - 1 crore':
-                                return ($minAmount <= 10_000_000 && $maxAmount >= 5_000_000);
-                            case 'above 1 crore':
-                                return $maxAmount > 10_000_000;
-                            default:
-                                return false;
-                        }
-                    });
-                }
+    Log::info('Matching result:', ['match' => $match]);
+}
 
+
+
+
+                    
 
 
 
@@ -381,6 +358,45 @@ public function search(Request $request)
 
     return view('partials.investor_list', ['investors' => $filteredInvestors, 'subscriber' => $subscriber]);
 }
+
+// i want to fillter the investment size also add debugging logs to check the values falling through the filter in which the investment size is not matching and get finanl corrected values
+// function categorizeInvestmentSize($size)
+// {
+//     $size = $this->toNumber($size);
+
+//     if ($size < 1000000) {
+//         return ['Less than ₹1M'];
+//     } elseif ($size >= 1000000 && $size < 5000000) {
+//         return ['₹1M - ₹5M'];
+//     } elseif ($size >= 5000000 && $size < 10000000) {
+//         return ['₹5M - ₹10M'];
+//     } else {
+//         return ['More than ₹10M'];
+//     }
+// }
+
+// Add this helper function to your controller:
+private function parseInvestmentSizeToNumber($value)
+{
+    $value = strtoupper(str_replace(['₹', ' ', ','], '', $value));
+
+    if (str_ends_with($value, 'M')) {
+        return floatval(rtrim($value, 'M')) * 1000000;
+    } elseif (str_ends_with($value, 'K')) {
+        return floatval(rtrim($value, 'K')) * 1000;
+    } elseif (is_numeric($value)) {
+        return floatval($value);
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
 
 
 
@@ -470,6 +486,16 @@ function isOverlappingTenure($selected, $normalized) {
 
 
 
+private function toNumber(string $value): float
+{
+    $value = str_replace(['₹', ',', ' '], '', strtoupper($value));
+
+    if (str_ends_with($value, 'M')) {
+        return (float) $value * 1000000;
+    }
+
+    return (float) $value; // fallback if no M
+}
 
 
 public function investeedetaildashboard($id)

@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ResetPasswordMail;
-
+use App\Mail\SubscriptionRequestApprovedMail;
 class SubscriptionRequestController extends Controller
 {
     //
@@ -159,7 +159,8 @@ class SubscriptionRequestController extends Controller
             $SubscriptionRequest->updated_at = now();
             $SubscriptionRequest->save();
             if($SubscriptionRequest->status == 'approved'){
-                $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+                // $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+                $subscriber = Subscriber::where('user_id', $subscriptionRequest->user_id)->first();
                 if($subscriber)
                 {
                     $subscriber->is_subscribed = 1;
@@ -180,44 +181,121 @@ class SubscriptionRequestController extends Controller
             return redirect()->back()->with('success', 'Subscription request updated successfully!');
         }
     }
+    // public function updatestatus(Request $request, $id)
+    // {
+    //     // Validate the request data
+    //     $request->validate([
+    //         'status' => 'required|string|in:approved,rejected,pending',
+    //     ]);
+
+    //     // Find the subscription request by ID
+    //     $subscriptionRequest = SubscriptionRequest::find($id);
+
+    //     if ($subscriptionRequest) {
+    //         // Update the status of the subscription request
+    //         $subscriptionRequest->status = $request->input('status');
+    //         $subscriptionRequest->save();
+    //         if($subscriptionRequest->status == 'approved'){
+    //             // $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
+    //             $subscriber = Subscriber::where('user_id', $subscriptionRequest->user_id)->first();
+    //             if($subscriber)
+    //             {
+    //                 $subscriber->is_subscribed = 1;
+    //                 $subscriber->subscription_start = $subscriptionRequest->subscription_start;
+    //                 // $subscriber->subscription_end = $subscriptionRequest->subscription_end;
+    //                 $subscriber->save();
+    //             }
+    //             else
+    //             {
+    //                 $subscriber = new Subscriber();
+    //                 $subscriber->user_id = Auth::user()->id;
+    //                 $subscriber->is_subscribed = 1;
+    //                 $subscriber->subscription_start = $subscriptionRequest->subscription_start;
+    //                 // $subscriber->subscription_end = $subscriptionRequest->subscription_end;
+    //                 $subscriber->save();
+    //             }
+    //         }
+    //         // Redirect back with a success message
+    //         return redirect()->back()->with('success', 'Subscription request status updated successfully!');
+    //     } else {
+    //         // Redirect back with an error message if the subscription request is not found
+    //         return redirect()->back()->with('error', 'Subscription request not found!');
+    //     }
+    // }
     public function updatestatus(Request $request, $id)
-    {
-        // Validate the request data
-        $request->validate([
-            'status' => 'required|string|in:approved,rejected,pending',
-        ]);
+{
+    // Validate the request data
+    $request->validate([
+        'status' => 'required|string|in:approved,rejected,pending',
+    ]);
 
-        // Find the subscription request by ID
-        $subscriptionRequest = SubscriptionRequest::find($id);
+    // Find the subscription request by ID
+    $subscriptionRequest = SubscriptionRequest::find($id);
 
-        if ($subscriptionRequest) {
-            // Update the status of the subscription request
-            $subscriptionRequest->status = $request->input('status');
-            $subscriptionRequest->save();
-            if($subscriptionRequest->status == 'approved'){
-                $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
-                if($subscriber)
-                {
-                    $subscriber->is_subscribed = 1;
-                    $subscriber->subscription_start = $subscriptionRequest->subscription_start;
-                    // $subscriber->subscription_end = $subscriptionRequest->subscription_end;
-                    $subscriber->save();
-                }
-                else
-                {
-                    $subscriber = new Subscriber();
-                    $subscriber->user_id = Auth::user()->id;
-                    $subscriber->is_subscribed = 1;
-                    $subscriber->subscription_start = $subscriptionRequest->subscription_start;
-                    // $subscriber->subscription_end = $subscriptionRequest->subscription_end;
-                    $subscriber->save();
-                }
+    if ($subscriptionRequest) {
+        // Update the status
+        $subscriptionRequest->status = $request->input('status');
+        $subscriptionRequest->save();
+
+        // ✅ Check and log if approved
+        if ($subscriptionRequest->status === 'approved') {
+            Log::info('Subscription approved for user ID: ' . $subscriptionRequest->user_id);
+
+            // ✅ Update or create subscriber record
+            $subscriber = Subscriber::where('user_id', $subscriptionRequest->user_id)->first();
+
+            if ($subscriber) {
+                $subscriber->is_subscribed = 1;
+                $subscriber->subscription_start = $subscriptionRequest->subscription_start;
+                $subscriber->save();
+
+                Log::info('Existing subscriber updated', [
+                    'user_id' => $subscriber->user_id,
+                    'is_subscribed' => $subscriber->is_subscribed,
+                ]);
+            } else {
+                $subscriber = new Subscriber();
+                $subscriber->user_id = $subscriptionRequest->user_id;
+                $subscriber->is_subscribed = 1;
+                $subscriber->subscription_start = $subscriptionRequest->subscription_start;
+                $subscriber->save();
+
+                Log::info('New subscriber created', [
+                    'user_id' => $subscriber->user_id,
+                    'is_subscribed' => $subscriber->is_subscribed,
+                ]);
             }
-            // Redirect back with a success message
-            return redirect()->back()->with('success', 'Subscription request status updated successfully!');
-        } else {
-            // Redirect back with an error message if the subscription request is not found
-            return redirect()->back()->with('error', 'Subscription request not found!');
+            // ✅ Send email notification to the user
+           $user = User::find($subscriptionRequest->user_id);
+Log::info('Sending subscription approval email to user Name: ' .  $user->name);
+
+$data = [
+    'name' => $user->name,
+    'plan_name' => $subscriptionRequest->no_of_data ?? 'N/A',
+    'amount' => $subscriptionRequest->plan_amount ?? '0',
+    'validity' => '1 Year',
+];
+
+try {
+    Mail::to($user->email)->send(new SubscriptionRequestApprovedMail([
+    'name' => $user->name,
+    'plan_name' => $subscriptionRequest->no_of_data ?? 'N/A',
+    'amount' => $subscriptionRequest->plan_amount ?? '0',
+    'validity' => '1 Year'
+    ]));
+
+    Log::info('Subscription approval email sent to user ID: ' . $user->id);
+} catch (\Exception $e) {
+    Log::error('Failed to send subscription approval email: ' . $e->getMessage());
+} 
+            
         }
+
+        return redirect()->back()->with('success', 'Subscription request status updated successfully!');
+    } else {
+        return redirect()->back()->with('error', 'Subscription request not found!');
     }
 }
+
+}
+ 

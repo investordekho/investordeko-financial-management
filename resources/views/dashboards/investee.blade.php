@@ -178,7 +178,7 @@
                                 </div>
 
                                 <!-- Investment Size Multi-select Dropdown -->
-                                <div class="col-md-3 mb-3">
+                                <!-- <div class="col-md-3 mb-3">
                                     <label for="investment_size"></label>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investmentSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -216,7 +216,42 @@
                                             
                                         </ul>
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-md-3 mb-3">
+    <label for="investment_size"></label>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investmentSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Investment Size
+        </button>
+        <ul class="dropdown-menu px-3 py-2 scrollable-menu" aria-labelledby="investmentSizeDropdown">
+            <li class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="<1000000" id="investment_size_10">
+                    <label class="form-check-label" for="investment_size_10">Below 10 Lakh</label>
+                </div>
+            </li>
+            <li class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="1000000-5000000" id="investment_size_10_50">
+                    <label class="form-check-label" for="investment_size_10_50">10–50 Lakh</label>
+                </div>
+            </li>
+            <li class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="5000000-10000000" id="investment_size_50_100">
+                    <label class="form-check-label" for="investment_size_50_100">50 Lakh – 1 Crore</label>
+                </div>
+            </li>
+            <li class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="investment_size[]" value=">10000000" id="investment_size_100_plus">
+                    <label class="form-check-label" for="investment_size_100_plus">Above 1 Crore</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
 
                                 <!-- Investment Tenure Multi-select Dropdown -->
                                 <div class="col-md-3 mb-3">

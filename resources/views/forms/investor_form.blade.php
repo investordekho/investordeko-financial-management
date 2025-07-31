@@ -310,7 +310,7 @@
     </div>
 
  
-    <div id="public-links-container" class="col-sm-10">
+ <div id="public-links-container" class="col-12">
     @php
         $publicLinks = old('public_links', []);
         $linkDescriptions = old('link_descriptions', []);
@@ -318,12 +318,12 @@
     @endphp
 
     @for ($i = 0; $i < $count; $i++)
-        <div class="public-link-row d-flex align-items-start mb-2">
-            <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
-                <label for="public_links" class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'URL' : '' }}</label>
+        <div class="public-link-row row mb-3">
+            <div class="form-group col-12 col-md-5">
+                <label class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'URL' : '' }}</label>
                 <input 
                     type="url" 
-                    class="form-control spaced-input @error("public_links.$i") is-invalid @enderror" 
+                    class="form-control @error("public_links.$i") is-invalid @enderror" 
                     name="public_links[]" 
                     placeholder="Enter URL" 
                     value="{{ $publicLinks[$i] ?? '' }}" 
@@ -334,10 +334,10 @@
                 @enderror
             </div>
 
-            <div class="form-group flex-grow-1 mr-2">
-                <label for="link_descriptions" class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'Select Account' : '' }}</label>
+            <div class="form-group col-12 col-md-5">
+                <label class="{{ $i == 0 ? 'required' : '' }}">{{ $i == 0 ? 'Select Account' : '' }}</label>
                 <select 
-                    class="form-control spaced-input @error("link_descriptions.$i") is-invalid @enderror" 
+                    class="form-control @error("link_descriptions.$i") is-invalid @enderror" 
                     name="link_descriptions[]" 
                     required
                 >
@@ -350,16 +350,17 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-12 col-md-2 d-flex align-items-end">
                 @if ($i == 0)
-                    <button type="button" class="btn btn-info add-btn mt-4" onclick="addPublicLinkField(this)">+</button>
+                    <button type="button" class="btn btn-info w-100" onclick="addPublicLinkField(this)"> + Add More Links</button>
                 @else
-                    <button type="button" class="btn btn-danger remove-btn mt-4" onclick="removePublicLinkField(this)">-</button>
+                    <button type="button" class="btn btn-danger w-100" onclick="removePublicLinkField(this)">- Remove</button>
                 @endif
             </div>
         </div>
     @endfor
 </div>
+
 
 </div>
 
@@ -586,15 +587,24 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-3 form-group">
-                                    <label id="labelinput" for="previous_investment_company" class="{{$i==0 ? 'required' : '' }}">{{ $i == 0 ? 'Company' : ''}}</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control spaced-input @error('previous_investment_company.' . $i) is-invalid @enderror" 
-                                        id="previous_investment_company" 
-                                        name="previous_investment_company[]" 
-                                        value="{{ $previousInvestmentCompanies[$i] ?? '' }}" 
-                                        required
-                                    >
+                        <label id="labelinput" for="previous_investment_company" class="{{ $i == 0 ? 'required' : '' }}">
+                            {{ $i == 0 ? 'Company' : '' }}
+                        </label>
+
+                        <input 
+                            type="text" 
+                            class="form-control spaced-input @error('previous_investment_company.' . $i) is-invalid @enderror" 
+                            id="previous_investment_company_{{ $i }}" 
+                            name="previous_investment_company[]" 
+                            value="{{ $previousInvestmentCompanies[$i] ?? '' }}" 
+                            required
+                            pattern="^[a-zA-Z0-9\s]+$"
+                            title="Please enter a valid company name (letters and numbers only)"
+                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '')"
+                            autocomplete="off"
+                        />
+
+
                                     @error('previous_investment_company.' . $i)
                                         <span class="text-danger">This field is required</span>
                                     @enderror
@@ -882,22 +892,31 @@
 //     document.getElementById('public-links-container').insertAdjacentHTML('beforeend', newField);
 // }
 function addPublicLinkField(button) {
+    const container = document.getElementById('public-links-container');
+    const currentCount = container.querySelectorAll('.public-link-row').length;
+    const maxLinks = 10; // 1 initial + 9 more
+
+    if (currentCount >= maxLinks) {
+        alert('You can add up to 10 public links only.');
+        return;
+    }
+
     const newField = `
-        <div class="public-link-row d-flex align-items-start mb-2">
-            <div class="form-group flex-grow-1 mr-2" style="max-width: 520px;">
-                <label for="public_links"></label>
+        <div class="public-link-row row mb-3">
+            <div class="form-group col-12 col-md-5">
+                <label></label>
                 <input 
                     type="url" 
-                    class="form-control spaced-input" 
+                    class="form-control" 
                     name="public_links[]" 
                     placeholder="Enter URL" 
                     required
                 >
             </div>
-            <div class="form-group flex-grow-1 mr-2">
-                <label for="link_descriptions"></label>
+            <div class="form-group col-12 col-md-5">
+                <label></label>
                 <select 
-                    class="form-control spaced-input" 
+                    class="form-control" 
                     name="link_descriptions[]" 
                     required
                 >
@@ -908,17 +927,18 @@ function addPublicLinkField(button) {
                     <option value="Others">Others</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 col-md-2 d-flex align-items-end">
                 <button 
                     type="button" 
-                    class="btn btn-danger remove-btn mt-4" 
-                    onclick="removePublicLinkField(this)">-</button>
+                    class="btn btn-danger w-100" 
+                    onclick="removePublicLinkField(this)">Remove</button>
             </div>
         </div>
     `;
 
-    document.getElementById('public-links-container').insertAdjacentHTML('beforeend', newField);
+    container.insertAdjacentHTML('beforeend', newField);
 }
+
 
 function removePublicLinkField(button) {
     // Remove the row containing this button
@@ -1225,34 +1245,34 @@ function removePublicLinkField(button) {
         const container = document.getElementById('previous-investments-container');
 
         const sectors = [          
-                                                'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
-                                                'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
-                                                'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
-                                                'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
-                                                'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
-                                                'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
-                                                'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
-                                                'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
-                                                'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
-                                                'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
-                                                'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
-                                                'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
-                                                'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
-                                                'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
-                                                'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
-                                                'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
-                                                'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
-                                                'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
-                                                'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
-                                                'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
-                                                'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
-                                                'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
-                                                'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
-                                                'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
-                                                'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
-                                                'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
-                                                'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
-                                           ];
+            'Accounting', 'Airlines/Aviation', 'Alternative Dispute Resolution', 'Alternative Medicine', 'Animation', 'Apparel/Fashion', 
+            'Architecture/Planning', 'Arts/Crafts', 'Automotive', 'Aviation/Aerospace', 'Banking/Mortgage', 'Biotechnology/Greentech', 
+            'Broadcast Media', 'Building Materials', 'Business Supplies/Equipment', 'Capital Markets/Hedge Fund/Private Equity', 
+            'Chemicals', 'Civic/Social Organization', 'Civil Engineering', 'Commercial Real Estate', 'Computer Games', 
+            'Computer Hardware', 'Computer Networking', 'Computer Software/Engineering', 'Computer/Network Security', 'Construction', 
+            'Consumer Electronics', 'Consumer Goods', 'Consumer Services', 'Cosmetics', 'Dairy', 'Defense/Space', 'Design', 
+            'E-Learning', 'Education Management', 'Electrical/Electronic Manufacturing', 'Entertainment/Movie Production', 
+            'Environmental Services', 'Events Services', 'Executive Office', 'Facilities Services', 'Farming', 'Financial Services', 
+            'Fine Art', 'Fishery', 'Food Production', 'Food/Beverages', 'Fundraising', 'Furniture', 'Gambling/Casinos', 
+            'Glass/Ceramics/Concrete', 'Government Administration', 'Government Relations', 'Graphic Design/Web Design', 
+            'Health/Fitness', 'Higher Education/Acadamia', 'Hospital/Health Care', 'Hospitality', 'Human Resources/HR', 
+            'Import/Export', 'Individual/Family Services', 'Industrial Automation', 'Information Services', 'Information Technology/IT', 
+            'Insurance', 'International Affairs', 'International Trade/Development', 'Internet', 'Investment Banking/Venture', 
+            'Investment Management/Hedge Fund/Private Equity', 'Judiciary', 'Law Enforcement', 'Law Practice/Law Firms', 'Legal Services', 
+            'Legislative Office', 'Leisure/Travel', 'Library', 'Logistics/Procurement', 'Luxury Goods/Jewelry', 'Machinery', 
+            'Management Consulting', 'Maritime', 'Market Research', 'Marketing/Advertising/Sales', 'Mechanical or Industrial Engineering', 
+            'Media Production', 'Medical Equipment', 'Medical Practice', 'Mental Health Care', 'Military Industry', 'Mining/Metals', 
+            'Motion Pictures/Film', 'Museums/Institutions', 'Music', 'Nanotechnology', 'Newspapers/Journalism', 'Non-Profit/Volunteering', 
+            'Oil/Energy/Solar/Greentech', 'Online Publishing', 'Other Industry', 'Outsourcing/Offshoring', 'Package/Freight Delivery', 
+            'Packaging/Containers', 'Paper/Forest Products', 'Performing Arts', 'Pharmaceuticals', 'Philanthropy', 'Photography', 
+            'Plastics', 'Political Organization', 'Primary/Secondary Education', 'Printing', 'Professional Training', 
+            'Program Development', 'Public Relations/PR', 'Public Safety', 'Publishing Industry', 'Railroad Manufacture', 
+            'Ranching', 'Real Estate/Mortgage', 'Recreational Facilities/Services', 'Religious Institutions', 'Renewables/Environment', 
+            'Research Industry', 'Restaurants', 'Retail Industry', 'Security/Investigations', 'Semiconductors', 'Shipbuilding', 
+            'Sporting Goods', 'Sports', 'Staffing/Recruiting', 'Supermarkets', 'Telecommunications', 'Textiles', 'Think Tanks', 
+            'Tobacco', 'Translation/Localization', 'Transportation', 'Utilities', 'Venture Capital/VC', 'Veterinary', 'Warehousing', 
+            'Wholesale', 'Wine/Spirits', 'Wireless', 'Writing/Editing'
+        ];
         let sectorOptions = `<option value="" selected>Select Sector</option>`;
         
         sectors.forEach(sector => {
@@ -1277,7 +1297,12 @@ function removePublicLinkField(button) {
             </div>
             <div class="col-sm-3 form-group">
                 <label class="required">Company</label>
-                <input type="text" class="form-control" name="previous_investment_company[]" required>
+                <input type="text" class="form-control" name="previous_investment_company[]" required
+                    pattern="^[a-zA-Z0-9\\s]+$"
+                    title="Please enter a valid company name (letters and numbers only)"
+                    oninput="this.value = this.value.replace(/[^a-zA-Z0-9\\s]/g, '')"
+                    autocomplete="off"
+                >
             </div>
             <div class="col-sm-3 form-group">
                 <label class="required">Sector</label>
@@ -1291,7 +1316,6 @@ function removePublicLinkField(button) {
             </div>
         `;
         container.appendChild(newRow);
-
     }
 
     function removePreviousInvestmentField(button) {

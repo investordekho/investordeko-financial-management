@@ -2517,8 +2517,14 @@ window.onload = function() {
 
 // Function to add a new link field
 function addPublicLinkField() {
-    // Get the public links container
+    // Limit to 10 total (1 initial + 9 more)
     const container = document.getElementById('public-links-container');
+    const currentRows = container.querySelectorAll('.row.g-0.mb-3, .row.g-0:not(.mb-3)'); // match all added rows
+
+    if (currentRows.length >= 10) {
+        alert('You can add a maximum of 10 links.');
+        return;
+    }
 
     // Create a new div for the input group with row structure to match Bootstrap columns
     const newRow = document.createElement('div');
@@ -2567,7 +2573,7 @@ function addPublicLinkField() {
 
     // Create the remove button with the col-sm-2 class to align with Add More Links
     const buttonDiv = document.createElement('div');
-    buttonDiv.classList.add('col-sm-2', 'text-end'); // Align right for consistency with Add More Links
+    buttonDiv.classList.add('col-sm-2', 'text-end');
     const removeButton = document.createElement('button');
     removeButton.type = 'button';
     removeButton.classList.add('btn', 'btn-danger');

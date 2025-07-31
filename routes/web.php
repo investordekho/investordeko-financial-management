@@ -35,6 +35,7 @@ use App\Http\Controllers\Auth\New\ForgetPasswordController;
 use App\Http\Controllers\SupportQueryInSubscription;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\Http\Controllers\Auth\RegisterController;
 
 // Home, About, Services, Contact Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -150,6 +151,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/updateinvestorprofile', [FormController::class, 'updateInvestorForm'])->name('updateinvestorprofile');
     Route::post('/updateinvesteeprofile', [FormController::class, 'updateInvesteeForm'])->name('updateinvesteeprofile');
     Route::post('/updatebankerprofile', [FormController::class, 'updateBankerForm'])->name('updatebankerprofile');
+    Route::post('/updateotherprofile', [FormController::class, 'updateOtherForm'])->name('updateotherprofile');
 
 });
 
@@ -186,7 +188,7 @@ Route::post('/resetpassword',[ForgetPasswordController::class,'resetPassword'])-
 
     Route::post('/supportsubscription',[SupportQueryInSubscription::class,'submitsupportrequest'])->name('submit_support');
 
-
+    Route::get('/resendotp', [RegisterController::class, 'resendOtp'])->name('otp.resend'); // for resending OTP
 
 // Route::get('/check-storage', function () {
 //     $path = storage_path('app/public/screenshots');
@@ -198,3 +200,4 @@ Route::post('/resetpassword',[ForgetPasswordController::class,'resetPassword'])-
 //     ];
 // });
 
+Route::get('/servicesperticular', [PageController::class, 'servicesperticular'])->name('servicesperticular');

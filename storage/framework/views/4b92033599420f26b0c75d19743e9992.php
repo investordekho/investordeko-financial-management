@@ -1,9 +1,22 @@
 <?php if(session('success')): ?>
-    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert"><?php echo e(session('success')); ?>
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert" id="success-alert">
+        <?php echo e(session('success')); ?>
 
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+
+    <script>
+        // Auto-dismiss the alert after 4 seconds (4000 milliseconds)
+        setTimeout(function() {
+            var alert = document.getElementById('success-alert');
+            if (alert) {
+                var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            }
+        }, 4000);
+    </script>
 <?php endif; ?>
+
 
 <!-- Hero Section -->
 <section class="hero-banner" style="background: linear-gradient(135deg, #6c757d, #0dcaf0); color: white; padding: 60px 0;">
@@ -285,44 +298,77 @@
 <section class="services-section py-5" style="background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%); animation: fadeIn 1.2s;">
     <div class="container">
         <?php if(auth()->guard()->guest()): ?>
-        <div class="row justify-content-center">
-            <div class="col-md-5 mb-4">
-                <div class="card h-100 border-0 shadow-lg text-center service-flap animate-flap flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front card-body">
-                            <i class="fa-solid fa-user-tie fa-2x mb-3 text-primary"></i>
-                            <h5 class="card-title mb-2 fw-bold">Find Investors</h5>
-                            <p class="card-text mb-3 text-muted">Connect with verified angel investors, VCs, and funding partners to accelerate your startup's growth.</p>
-                            <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-primary px-4 fw-semibold">Browse Investors</a>
-                        </div>
-                        <div class="flip-card-back card-body">
-                            <i class="fa-solid fa-handshake fa-2x mb-3 text-primary"></i>
-                            <h5 class="card-title mb-2 fw-bold">Why Join?</h5>
-                            <p class="card-text mb-3 text-muted">Access a curated investor network and receive expert fundraising guidance for your business.</p>
-                            <a href="<?php echo e(route('register')); ?>" class="btn btn-primary px-4 fw-semibold">Join Now</a>
-                        </div>
-                    </div>
+       <div class="row justify-content-center" style="padding: 10 15px 10px 10px; margin-bottom: 60px;">
+    <div class="col-md-5 mb-4" style="padding: 10 15px 10px 10px; margin-bottom: 40px;"> 
+        <div class="card h-100 border-0 shadow-lg text-center service-flap animate-flap flip-card" style="padding: 10 15px 10px 10px; height: 100%;">
+            <div class="flip-card-inner" style="height: 100%;">
+                <div class="flip-card-front card-body" style="padding: 2rem;">
+                    <i class="fa-solid fa-user-tie mb-2 text-primary" style="font-size: 1.5rem;"></i>
+                    <h5 class="card-title mb-2 fw-bold" style="font-size: 1rem;">Find Investors</h5>
+                    <p class="card-text mb-3 text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Connect with verified angel investors, VCs, and funding partners to accelerate your startup's growth.</p>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-primary px-3 fw-semibold" style="font-size: 0.85rem;">Browse Investors</a>
                 </div>
-            </div>
-            <div class="col-md-5 mb-4">
-                <div class="card h-100 border-0 shadow-lg text-center service-flap animate-flap flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front card-body">
-                            <i class="fa-solid fa-lightbulb fa-2x mb-3 text-success"></i>
-                            <h5 class="card-title mb-2 fw-bold">Find Startups</h5>
-                            <p class="card-text mb-3 text-muted">Discover innovative startups and unlock exclusive investment opportunities tailored for you.</p>
-                            <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-success px-4 fw-semibold">Browse Startups</a>
-                        </div>
-                        <div class="flip-card-back card-body">
-                            <i class="fa-solid fa-rocket fa-2x mb-3 text-success"></i>
-                            <h5 class="card-title mb-2 fw-bold">Why Invest?</h5>
-                            <p class="card-text mb-3 text-muted">Diversify your portfolio and support high-growth ventures with verified business insights.</p>
-                            <a href="<?php echo e(route('register')); ?>" class="btn btn-success px-4 fw-semibold">Get Started</a>
-                        </div>
-                    </div>
+                <div class="flip-card-back card-body" style="padding: 2rem;">
+                    <i class="fa-solid fa-handshake mb-2 text-primary" style="font-size: 1.5rem;"></i>
+                    <h5 class="card-title mb-2 fw-bold" style="font-size: 1rem;">Why Join?</h5>
+                    <p class="card-text mb-3 text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Access a curated investor network and receive expert fundraising guidance for your business.</p>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-primary px-3 fw-semibold" style="font-size: 0.85rem;">Join Now</a>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-5 mb-4" style="padding: 0 15px;">
+        <div class="card h-100 border-0 shadow-lg text-center service-flap animate-flap flip-card" style="height: 100%;">
+            <div class="flip-card-inner" style="height: 100%;">
+                <div class="flip-card-front card-body" style="padding: 2rem;">
+                    <i class="fa-solid fa-lightbulb mb-2 text-success" style="font-size: 1.5rem;"></i>
+                    <h5 class="card-title mb-2 fw-bold" style="font-size: 1rem;">Find Startups</h5>
+                    <p class="card-text mb-3 text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Discover innovative startups and unlock exclusive investment opportunities tailored for you.</p>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-success px-3 fw-semibold" style="font-size: 0.85rem;">Browse Startups</a>
+                </div>
+                <div class="flip-card-back card-body" style="padding: 2rem;">
+                    <i class="fa-solid fa-rocket mb-2 text-success" style="font-size: 1.5rem;"></i>
+                    <h5 class="card-title mb-2 fw-bold" style="font-size: 1rem;">Why Invest?</h5>
+                    <p class="card-text mb-3 text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Diversify your portfolio and support high-growth ventures with verified business insights.</p>
+                    <a href="<?php echo e(route('register')); ?>" class="btn btn-success px-3 fw-semibold" style="font-size: 0.85rem;">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile-only adjustments -->
+<style>
+@media (max-width: 767px) {
+    .flip-card-front.card-body,
+    .flip-card-back.card-body {
+        padding: 1rem !important;
+    }
+
+    .card-title {
+        font-size: 0.95rem !important;
+    }
+
+    .card-text {
+        font-size: 0.8rem !important;
+    }
+
+    .btn {
+        font-size: 0.8rem !important;
+        padding: 6px 12px !important;
+    }
+
+    i[class^="fa-"] {
+        font-size: 1.25rem !important;
+    }
+
+    .col-md-5 {
+        width: 90% !important;
+        margin: 0 auto !important;
+    }
+}
+</style>
+
         <?php endif; ?>
     </div>
 </section>
@@ -409,6 +455,14 @@ body {
     }
 }
 </style>
+<style>
+@media (max-width: 767px) {
+    .services-section .col-md-5:first-child {
+        margin-bottom: 1.5rem !important;
+    }
+}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const flipCards = document.querySelectorAll('.flip-card');

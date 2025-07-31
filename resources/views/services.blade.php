@@ -355,5 +355,22 @@
         myModal.show();
     }
 </script>
+<script>
 
+     let data = @json($data ?? 0);
+if(data == 1){
+    showPopup('Fund Raising', fundRaisingContent);
+} else if(data == 2){
+    showPopup('Public Offering', publicOfferingContent);
+} else if(data == 3){
+    showPopup('Intellectual Property and Legal Services', intellectualPropertyContent);
+} else if(data == 4){
+    showPopup('Compliance and Regulatory Services', complianceRegulatoryContent);
+} else if(data == 5){   
+    showPopup('Financial and Accounting Services', financialAccountingContent);
+} else if(data == 6){
+    showPopup('Other Services', otherServicesContent);
+}
+
+</script>
 @endsection

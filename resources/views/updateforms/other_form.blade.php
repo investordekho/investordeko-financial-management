@@ -58,7 +58,7 @@
     </div>
 
     <!-- Form Section -->
-    <form id="othersForm" action="{{ route('form.other.submit') }}" method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded-bottom shadow-sm mt-0" novalidate>
+    <form id="othersForm" action="{{ route('updateotherprofile') }}" method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded-bottom shadow-sm mt-0" novalidate>
         @csrf
 
         <!-- Contact Details -->
@@ -81,7 +81,7 @@
             <div class="row g-3">
                 <div class="col-md-4">
                     <label id="labelinput" for="full_name" class="required">Full Name</label>
-                    <input type="text" class="form-control spaced-input" id="full_name" name="full_name" value="{{ old('full_name') }}" required  pattern="^[a-zA-Z\s]+$"
+                    <input type="text" class="form-control spaced-input" id="full_name" name="full_name" value="{{ old('full_name',$other->full_name) }}" required  pattern="^[a-zA-Z\s]+$"
         title="Please enter a valid name (letters and spaces only)"
         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                      @if ($errors->has('full_name'))
@@ -96,7 +96,7 @@
                 </div>
                 <div class="col-md-4"> 
                     <label id="labelinput" for="email" class="required">Email</label>
-                    <input type="text" class="form-control spaced-input" id="email" name="email" value="{{ old('email') }}"
+                    <input type="text" class="form-control spaced-input" id="email" name="email" value="{{ old('email',$other->email) }}"
                         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in)$"
                         title="Please enter a valid .in or .com email address"
                         required
@@ -115,7 +115,7 @@
 
                 <div class="col-md-4">
                     <label id="labelinput" for="phone_number" class="required">Phone Number</label>
-                    <input type="text" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="20" value="{{ old('phone_number') }}"   pattern="^\+?[0-9]{7,20}$" 
+                    <input type="text" class="form-control spaced-input" id="phone_number" name="phone_number" maxlength="20" value="{{ old('phone_number',$other->phone_number) }}"   pattern="^\+?[0-9]{7,20}$" 
                 oninput="this.value = this.value.replace(/(?!^\+)[^0-9]/g, '')" required>
                   @if ($errors->has('phone_number'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
@@ -135,7 +135,7 @@
             <div class="form-section-title">Address Details</div>
             <div class="mb-3">
                 <label id="labelinput" for="address" class="required">Address</label>
-                <input type="text" class="form-control spaced-input" id="address" name="address" value="{{ old('address') }}" required >
+                <input type="text" class="form-control spaced-input" id="address" name="address" value="{{ old('address',$other->address) }}" required >
                  @if ($errors->has('address'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
                             <ul class="mb-0 ms-2">
@@ -149,7 +149,7 @@
             <div class="row g-3">
                 <div class="col-md-4">
                     <label id="labelinput" for="city" class="required">City</label>
-                    <input type="text" class="form-control spaced-input" id="city" name="city" value="{{ old('city') }}" required pattern="^[a-zA-Z\s]+$"
+                    <input type="text" class="form-control spaced-input" id="city" name="city" value="{{ old('city',$other->city) }}" required pattern="^[a-zA-Z\s]+$"
         title="Please enter a valid name (letters and spaces only)"
         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                      @if ($errors->has('city'))
@@ -164,7 +164,7 @@
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="state" class="required">State</label>
-                    <input type="text" class="form-control spaced-input" id="state" name="state" value="{{ old('state') }}" required pattern="^[a-zA-Z\s]+$"
+                    <input type="text" class="form-control spaced-input" id="state" name="state" value="{{ old('state',$other->state) }}" required pattern="^[a-zA-Z\s]+$"
         title="Please enter a valid name (letters and spaces only)"
         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                      @if ($errors->has('state'))
@@ -179,7 +179,7 @@
                 </div>
                 <div class="col-md-4">
                     <label id="labelinput" for="country" class="required">Country</label>
-                    <input type="text" class="form-control spaced-input" id="country" name="country" value="{{ old('country') }}" required pattern="^[a-zA-Z\s]+$"
+                    <input type="text" class="form-control spaced-input" id="country" name="country" value="{{ old('country',$other->country) }}" required pattern="^[a-zA-Z\s]+$"
         title="Please enter a valid name (letters and spaces only)"
         oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                      @if ($errors->has('country'))
@@ -200,17 +200,17 @@
             <div class="form-section-title">How did you hear about Investor Dekho?</div>
             <div class="form-floating">
                 <select class="form-select spaced-input" id="referral_source" name="referral_source" required>
-                    <option value="" disabled {{ old('referral_source') ? '' : 'selected' }}>Select Source</option>
-                    <option value="Friend/Family" {{ old('referral_source') == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
-                    <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ old('referral_source') == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media</option>
-                    <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source') == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search</option>
-                    <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source') == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement</option>
-                    <option value="Email Newsletter" {{ old('referral_source') == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
-                    <option value="Event/Seminar" {{ old('referral_source') == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
-                    <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source') == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral</option>
-                    <option value="Blog/Website" {{ old('referral_source') == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
-                    <option value="Direct Mail" {{ old('referral_source') == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
-                    <option value="Company Website" {{ old('referral_source') == 'Company Website' ? 'selected' : '' }}>Company Website</option>
+                    <option value="" disabled {{ old('referral_source',$other->referral_source) ? '' : 'selected' }}>Select Source</option>
+                    <option value="Friend/Family" {{ old('referral_source',$other->referral_source) == 'Friend/Family' ? 'selected' : '' }}>Friend/Family</option>
+                    <option value="Social Media (Facebook, Instagram, Twitter/X, etc.)" {{ old('referral_source',$other->referral_source) == 'Social Media (Facebook, Instagram, Twitter/X, etc.)' ? 'selected' : '' }}>Social Media</option>
+                    <option value="Online Search (Google, Bing, etc.)" {{ old('referral_source',$other->referral_source) == 'Online Search (Google, Bing, etc.)' ? 'selected' : '' }}>Online Search</option>
+                    <option value="Advertisement (TV, Radio, Print)" {{ old('referral_source',$other->referral_source) == 'Advertisement (TV, Radio, Print)' ? 'selected' : '' }}>Advertisement</option>
+                    <option value="Email Newsletter" {{ old('referral_source',$other->referral_source) == 'Email Newsletter' ? 'selected' : '' }}>Email Newsletter</option>
+                    <option value="Event/Seminar" {{ old('referral_source',$other->referral_source) == 'Event/Seminar' ? 'selected' : '' }}>Event/Seminar</option>
+                    <option value="Professional Referral (Doctor, Lawyer, etc.)" {{ old('referral_source',$other->referral_source) == 'Professional Referral (Doctor, Lawyer, etc.)' ? 'selected' : '' }}>Professional Referral</option>
+                    <option value="Blog/Website" {{ old('referral_source',$other->referral_source) == 'Blog/Website' ? 'selected' : '' }}>Blog/Website</option>
+                    <option value="Direct Mail" {{ old('referral_source',$other->referral_source) == 'Direct Mail' ? 'selected' : '' }}>Direct Mail</option>
+                    <option value="Company Website" {{ old('referral_source',$other->referral_source) == 'Company Website' ? 'selected' : '' }}>Company Website</option>
                 </select>
                  @if ($errors->has('referral_source'))
                         <div class="alert alert-danger shadow-sm mt-1 mb-0 px-2 py-1" style="font-size: 0.85rem; border-left: 4px solid #dc3545;">
@@ -230,7 +230,7 @@
             <input type="checkbox" class="form-check-input" id="terms" name="terms" value="1" required>
             <label class="form-check-label" for="terms">I agree to the <a href="{{ route('terms') }}" target="_blank">Terms and Conditions</a></label>
         </div> -->
-         <div class="form-check mb-3">
+         <!-- <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : ''}} required>
                         <label class="form-check-label" for="terms">
                             I agree to the 
@@ -239,7 +239,7 @@
                         @error('terms')
                             <span class="text-danger">You must agree to the Terms and Conditions</span>
                         @enderror
-                    </div>
+                    </div> -->
 
         <!-- Submit -->
         <button type="submit" class="btn btn-primary w-100 py-2">Submit</button>
