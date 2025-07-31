@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ResetPasswordMail;
-
+use App\Mail\SubscriptionRequestApprovedMail;
 class SubscriptionRequestController extends Controller
 {
     //
@@ -265,6 +265,30 @@ class SubscriptionRequestController extends Controller
                     'is_subscribed' => $subscriber->is_subscribed,
                 ]);
             }
+            // ✅ Send email notification to the user
+           $user = User::find($subscriptionRequest->user_id);
+Log::info('Sending subscription approval email to user Name: ' .  $user->name);
+
+$data = [
+    'name' => $user->name,
+    'plan_name' => $subscriptionRequest->no_of_data ?? 'N/A',
+    'amount' => $subscriptionRequest->plan_amount ?? '0',
+    'validity' => '1 Year',
+];
+
+try {
+    Mail::to($user->email)->send(new SubscriptionRequestApprovedMail([
+    'name' => $user->name,
+    'plan_name' => $subscriptionRequest->no_of_data ?? 'N/A',
+    'amount' => $subscriptionRequest->plan_amount ?? '0',
+    'validity' => '1 Year'
+    ]));
+
+    Log::info('Subscription approval email sent to user ID: ' . $user->id);
+} catch (\Exception $e) {
+    Log::error('Failed to send subscription approval email: ' . $e->getMessage());
+} 
+            
         }
 
         return redirect()->back()->with('success', 'Subscription request status updated successfully!');
@@ -274,3 +298,4 @@ class SubscriptionRequestController extends Controller
 }
 
 }
+ 
