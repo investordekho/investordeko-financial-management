@@ -494,9 +494,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 mt-4 text-center">
-                <button type="button" class="btn btn-success" onclick="fetchResults()">Search Now</button>
-            </div>
+            <div class="container">
+    <div class="row justify-content-end">
+        <div class="col-md-2 mt-4">
+            <button type="button" class="btn btn-success w-100" onclick="fetchResults()">Search Now</button>
+        </div>
+    </div>
+</div>
+            
         </div>
 
     </form>
