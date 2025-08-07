@@ -90,7 +90,8 @@ class ExcelUploadController extends Controller
                 'Investment Time Horizon' => 'investment_tenure',
                 'Website' => 'website',
                 'Linkedin' => 'linkedin',
-                'Twitter' => 'twitter'
+                'Twitter' => 'twitter',
+                'Connect Link'=> 'connect link',
             ];
 
             $headerRow = $data[0]->first()->toArray();
@@ -178,14 +179,30 @@ class ExcelUploadController extends Controller
                     }
  
                     // Store Public Links
-                    foreach (['website', 'linkedin', 'twitter'] as $dbColumn) {
-                        // $url = $getValue($dbColumn) ?: $this->getRandomValue('url');
-                        $url =  $getValue($dbColumn) ?: 'Not Provided';
-                        PublicLink::firstOrCreate(
-                            ['investor_id' => $investor->id, 'url' => $url],
-                            ['link_description' => ucfirst($dbColumn)]
+                    // foreach (['website', 'linkedin', 'twitter','connect_link'] as $dbColumn) {
+                    //     // $url = $getValue($dbColumn) ?: $this->getRandomValue('url');
+                    //     $url =  $getValue($dbColumn) ?: 'Not Provided';
+                    //     PublicLink::firstOrCreate( 
+                    //         ['investor_id' => $investor->id, 'url' => $url],
+                    //         ['link_description' => ucfirst($dbColumn)]
+                    //     );
+                    // }
+
+                    foreach (['website', 'linkedin', 'twitter', 'connect link'] as $dbColumn) {
+                        $url = $getValue($dbColumn) ?: 'Not Provided';
+
+                        PublicLink::updateOrInsert(
+                            [
+                                'investor_id' => $investor->id,
+                                'link_description' => ucfirst($dbColumn),
+                            ],
+                            [
+                                'url' => $url,
+                                'updated_at' => now()
+                            ]
                         );
                     }
+
 
                     // Store Address
                     $addressData = [
