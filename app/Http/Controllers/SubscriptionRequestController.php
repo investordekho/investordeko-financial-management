@@ -128,8 +128,9 @@ class SubscriptionRequestController extends Controller
             return back()->with('error', 'Failed to send subscription request email.');
         }    
         
-        return redirect()->route('home')->with('success','Subscription Request Created Successfully!');
-        
+        // return redirect()->route('home')->with('success','Subscription Request Created Successfully!');
+        // retun subscription2 this view
+         return redirect()->route('subscription2')->with('success', 'Subscription request created successfully!');
     }
 
  
@@ -177,6 +178,8 @@ class SubscriptionRequestController extends Controller
                     // $subscriber->subscription_end = $SubscriptionRequest->subscription_end;
                     $subscriber->save();
                 }
+                //update user_accesses table status to approved
+                DB::table('user_accesses')->where('user_id', $SubscriptionRequest->user_id)->update(['status' => 'approved']);
             }
             return redirect()->back()->with('success', 'Subscription request updated successfully!');
         }
@@ -267,28 +270,35 @@ class SubscriptionRequestController extends Controller
             }
             // ✅ Send email notification to the user
            $user = User::find($subscriptionRequest->user_id);
-Log::info('Sending subscription approval email to user Name: ' .  $user->name);
+            Log::info('Sending subscription approval email to user Name: ' .  $user->name);
 
-$data = [
-    'name' => $user->name,
-    'plan_name' => $subscriptionRequest->no_of_data ?? 'N/A',
-    'amount' => $subscriptionRequest->plan_amount ?? '0',
-    'validity' => '1 Year',
-];
+            $data = [
+                'name' => $user->name,
+                'plan_name' => $subscriptionRequest->no_of_data ?? 'N/A',
+                'amount' => $subscriptionRequest->plan_amount ?? '0',
+                'validity' => '1 Year',
+            ];
 
-try {
-    Mail::to($user->email)->send(new SubscriptionRequestApprovedMail([
-    'name' => $user->name,
-    'plan_name' => $subscriptionRequest->no_of_data ?? 'N/A',
-    'amount' => $subscriptionRequest->plan_amount ?? '0',
-    'validity' => '1 Year'
-    ]));
+            try {
+                Mail::to($user->email)->send(new SubscriptionRequestApprovedMail([
+                'name' => $user->name,
+                'plan_name' => $subscriptionRequest->no_of_data ?? 'N/A',
+                'amount' => $subscriptionRequest->plan_amount ?? '0',
+                'validity' => '1 Year'
+                ]));
 
-    Log::info('Subscription approval email sent to user ID: ' . $user->id);
-} catch (\Exception $e) {
-    Log::error('Failed to send subscription approval email: ' . $e->getMessage());
-} 
-            
+                Log::info('Subscription approval email sent to user ID: ' . $user->id);
+            } catch (\Exception $e) {
+                Log::error('Failed to send subscription approval email: ' . $e->getMessage());
+            } 
+            $SubscriptionRequest = SubscriptionRequest::find($id);
+                    //update user_accesses table status to approved
+                DB::table('user_accesses')->where('subscription_request_id', $SubscriptionRequest->id)->update(['status' => 'approved']);  
+        }
+        else if ($subscriptionRequest->status === 'rejected') {
+            Log::info('Subscription rejected for user ID: ' . $subscriptionRequest->user_id);
+            DB::table('user_accesses')->where('subscription_request_id', $subscriptionRequest->id)->update(['status' => 'rejected']);
+            // Optionally, you can add logic to handle rejection, such as notifying the user
         }
 
         return redirect()->back()->with('success', 'Subscription request status updated successfully!');

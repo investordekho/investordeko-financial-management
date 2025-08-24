@@ -125,23 +125,22 @@
                                 <!-- Sector Multi-select Dropdown -->
                                 <div class="col-md-3 mb-3">
                                     <label for="sector"></label>
-                                <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="sectorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Startup Sector
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="sectorDropdown">
-                            <div class="px-3 py-2">
-                                <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
-                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
-                                    <ul id="sectorList">
-                                        <div id="selected-filters-container" class="mb-3"></div>                      
-                                     
-                                    </ul>
-                                </div>
-                            </div>
-                        </ul>
-                    </div>
-
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="sectorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Startup Sector
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="sectorDropdown">
+                                            <div class="px-3 py-2">
+                                                <input type="text" class="form-control mb-2" id="sectorSearch" placeholder="Search sector" onkeyup="filterSectors()">
+                                                <div class="scrollable-menu" style="max-height: 200px; overflow-y: auto;">
+                                                    <ul id="sectorList">
+                                                        <div id="selected-filters-container" class="mb-3"></div>                      
+                                                    
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
                                 </div>
 
                                 <!-- Location Multi-select Dropdown -->
@@ -218,39 +217,39 @@
                                     </div>
                                 </div> -->
                                 <div class="col-md-3 mb-3">
-    <label for="investment_size"></label>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investmentSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            Select Investment Size
-        </button>
-        <ul class="dropdown-menu px-3 py-2 scrollable-menu" aria-labelledby="investmentSizeDropdown">
-            <li class="dropdown-item">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="<1000000" id="investment_size_10">
-                    <label class="form-check-label" for="investment_size_10">Below 10 Lakh</label>
-                </div>
-            </li>
-            <li class="dropdown-item">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="1000000-5000000" id="investment_size_10_50">
-                    <label class="form-check-label" for="investment_size_10_50">10–50 Lakh</label>
-                </div>
-            </li>
-            <li class="dropdown-item">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="5000000-10000000" id="investment_size_50_100">
-                    <label class="form-check-label" for="investment_size_50_100">50 Lakh – 1 Crore</label>
-                </div>
-            </li>
-            <li class="dropdown-item">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="investment_size[]" value=">10000000" id="investment_size_100_plus">
-                    <label class="form-check-label" for="investment_size_100_plus">Above 1 Crore</label>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+                                    <label for="investment_size"></label>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle form-control" type="button" id="investmentSizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Select Investment Size
+                                        </button>
+                                        <ul class="dropdown-menu px-3 py-2 scrollable-menu" aria-labelledby="investmentSizeDropdown">
+                                            <li class="dropdown-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="<1000000" id="investment_size_10">
+                                                    <label class="form-check-label" for="investment_size_10">Below 10 Lakh</label>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="1000000-5000000" id="investment_size_10_50">
+                                                    <label class="form-check-label" for="investment_size_10_50">10–50 Lakh</label>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="investment_size[]" value="5000000-10000000" id="investment_size_50_100">
+                                                    <label class="form-check-label" for="investment_size_50_100">50 Lakh – 1 Crore</label>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="investment_size[]" value=">10000000" id="investment_size_100_plus">
+                                                    <label class="form-check-label" for="investment_size_100_plus">Above 1 Crore</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
 
 
                                 <!-- Investment Tenure Multi-select Dropdown -->
