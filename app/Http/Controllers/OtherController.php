@@ -17,20 +17,23 @@ class OtherController extends Controller
     public function submitOtherForm(Request $request)
     {
         // Validate the incoming request data
+        $user_id = Auth::user()->id;
+        
         $request->validate([
             'full_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'phone_number' => 'required|string|max:10',
+            'phone_number' => 'required|string|max:19',
             'address' => 'required|string',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
+            'country' => 'required|string|max:300',
             'referral_source' => 'required|string|max:255',
             'terms' => 'required|accepted', // Terms must be accepted
         ]);
 
         // Create a new "Other" entry in the database
         Other::create([
+            'user_id' => $user_id,
             'full_name' => $request->input('full_name'),
             'email' => $request->input('email'),
             'phone_number' => $request->input('phone_number'),
@@ -48,13 +51,14 @@ class OtherController extends Controller
         $user->save();
 
         // Redirect with success message
-        return redirect()->route('other.dashboard')->with('success', 'Form submitted successfully.');
+        return redirect()->route('investee.dashboard')->with('success', 'Form submitted successfully.');
     }
 
     // Show the form for "Other" users
     public function showOtherForm()
     {
-        return redirect()->route('banker.dashboard')->with('success', 'Form submitted successfully.');
+        // return redirect()->route('banker.dashboard')->with('success', 'Form submitted successfully.');
+        return view('forms.other_form');
 }
     }
 

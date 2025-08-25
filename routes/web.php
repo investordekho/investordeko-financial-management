@@ -29,6 +29,13 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\ExcelUploadController;
+use App\Http\Controllers\NewBankController;
+use App\Http\Controllers\SubscriptionRequestController;
+use App\Http\Controllers\Auth\New\ForgetPasswordController;
+use App\Http\Controllers\SupportQueryInSubscription;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use App\Http\Controllers\Auth\RegisterController;
 
 // Home, About, Services, Contact Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -77,8 +84,8 @@ Route::post('/filter/banker-investees', [BankerController::class, 'search'])->na
 
 // Order Routes
 Route::get('/order', [OrderController::class, 'showOrderPage'])->name('order');
-Route::post('/process-order', [OrderController::class, 'processOrder'])->name('processOrder');
-
+Route::post('/processOrder/{plan}/{totalprice}', [OrderController::class, 'processOrder'])->name('processOrder');
+//=========================================================================
 // Profile Routes
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/profile/settings', [ProfileController::class, 'showProfileSettings'])->name('profile.settings');
@@ -88,12 +95,8 @@ Route::post('/profile/update', [ProfileController::class, 'updateProfileSettings
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/register', [CustomRegistrationController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [CustomRegistrationController::class, 'register']);
-
-// OTP Verification Routes
-Route::get('/verify-otp', [OTPController::class, 'showOtpForm'])->name('otp.form');
-Route::post('/verify-otp', [OTPController::class, 'verifyOtp'])->name('otp.verify');
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
 // Subscription Routes
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');
@@ -111,9 +114,9 @@ Route::middleware(['auth'])->group(function () {
             case 2:
                 return redirect()->route('investor.dashboard');
             case 3:
-                return redirect()->route('banker.dashboard');
+                return redirect()->route('investee.dashboard');
             case 4:
-                return redirect()->route('other.dashboard');
+                return redirect()->route('investee.dashboard');
             default:
                 return redirect()->route('home')->with('error', 'Invalid category.');
         }
@@ -128,7 +131,28 @@ Route::middleware(['auth'])->group(function () {
     // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
     Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
     Route::get('/investor/exceldownload',[ExcelUploadController::class, 'downloaddataofInvestorExcel'])->name('investor.exceldownload');
-    Route::get('/investor/investorlistdetail/{id}',[InvestorDashboardController::class,'investordetaildashboard'])->name('investor.investorlistdetail');
+    Route::get('/investordashboard/investeelistdetail/{id}',[InvestorDashboardController::class,'investordetaildashboard'])->name('investordashboard.investeelistdetail');
+    Route::get('/investeedashboard/investorlistdetail/{id}',[InvesteeDashboardController::class,'investeedetaildashboard'])->name('investeedashboard.investorlistdetail');
+    Route::get('/bankerdashboard/investordata',[BankerController::class,'investordata'])->name('bankerdashboard.investordata');
+    Route::get('/bankerdashboard/investeedata',[BankerController::class,'investeedata'])->name('bankerdashboard.investeedata');
+    Route::get('/newbankerdashbaord/investor',[NewBankController::class,'searchinvestorforbanker'])->name('newbankerdashboard.investor');
+    Route::get('/newbankerdashbaord/investee',[NewBankController::class,'searchinvesteeforbanker'])->name('newbankerdashbaord.inbestee');
+    Route::get('/newbankerdashbaord/investorview',[NewBankController::class,'returninvestorview'])->name('newbankerdashboard.investorview');
+    Route::get('/newbankerdashbaord/investeeview',[NewBankController::class,'returninvesteeview'])->name('newbankerdashboard.investeeview');
+
+    Route::post('/createsubscriptionrequest',[SubscriptionRequestController::class,'createsubscriptionrequest'])->name('createsubscriptionrequest');
+    Route::get('/subscriptionrequest',[SubscriptionRequestController::class,'allrequests'])->name('subscriptionrequest');
+    Route::put('/updatestatus/{id}',[SubscriptionRequestController::class,'updatestatus'])->name('subscriptionrequest.updatestatus');
+    Route::get('/downloadcompanyexcel',[ExcelUploadController::class,'downloadInvesteeDataExcel'])->name('investee.exceldownload');
+    Route::get('/getprofileverificationcode',[ProfileController::class,'getemailverificationcode'])->name('getprofileverificationcode');
+    Route::post('/verifyemailforupdateprofile',[ProfileController::class,'verifyemailupdateprofile'])->name('verifyemailforupdateprofle');
+
+    Route::get('/updateprofile', [FormController::class, 'updateprofileview'])->name('updateprofile');
+    Route::post('/updateinvestorprofile', [FormController::class, 'updateInvestorForm'])->name('updateinvestorprofile');
+    Route::post('/updateinvesteeprofile', [FormController::class, 'updateInvesteeForm'])->name('updateinvesteeprofile');
+    Route::post('/updatebankerprofile', [FormController::class, 'updateBankerForm'])->name('updatebankerprofile');
+    Route::post('/updateotherprofile', [FormController::class, 'updateOtherForm'])->name('updateotherprofile');
+
 });
 
 // Route::post('/investor/excelupload', [ExcelUploadController::class, 'exceluploadinvestor'])->name('investor.excelupload');
@@ -146,3 +170,34 @@ Route::get('/service-contact', [ServiceContactController::class, 'showContactFor
 Route::post('/service-contact', [ServiceContactController::class, 'submitContactForm'])->name('service.contact.submit');
 
 Route::get('/captcha', [CaptchaController::class, 'generateCaptcha']);
+
+Route::get('/verify-otp', [OTPController::class, 'showForm'])->name('otp.form'); // for showing OTP form
+Route::post('/verify-otp', [OTPController::class, 'verify'])->name('otp.verify'); // for submitting OTP
+
+Route::get('/logoeffect', function () {
+    return view('logoeffect');
+})->name('logo');
+
+
+Route::get('/forgetpassword',[ForgetPasswordController::class,'showForgetPasswordForm'])->name('forgetpassword');
+Route::post('/sendmail',[ForgetPasswordController::class,'sendCodeToEmail'])->name('sendmail');
+Route::post('/verifycode',[ForgetPasswordController::class,'verifyCode'])->name('verifycode');
+Route::post('/resetpassword',[ForgetPasswordController::class,'resetPassword'])->name('resetpassword');
+
+
+
+    Route::post('/supportsubscription',[SupportQueryInSubscription::class,'submitsupportrequest'])->name('submit_support');
+
+    Route::get('/resendotp', [RegisterController::class, 'resendOtp'])->name('otp.resend'); // for resending OTP
+
+// Route::get('/check-storage', function () {
+//     $path = storage_path('app/public/screenshots');
+
+//     return [
+//         'is_writable' => File::isWritable($path),
+//         'exists' => File::exists($path),
+//         'path' => $path
+//     ];
+// });
+
+Route::get('/servicesperticular', [PageController::class, 'servicesperticular'])->name('servicesperticular');

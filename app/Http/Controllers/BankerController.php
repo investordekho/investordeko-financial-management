@@ -15,6 +15,9 @@ use App\Models\Company;
 use App\Models\Subscriber;
 use App\Models\LocationDetail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BankerController extends Controller
 {
@@ -50,23 +53,25 @@ class BankerController extends Controller
             'company_name' => 'required|string|max:255',
             'incorporated_in' => 'required|integer|min:1900|max:' . date('Y'),
             'ib_team_size' => 'required|string',
-            'company_profile' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'address' => 'required|string|max:255',
+            // 'company_profile' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+             'company_profile' => 'required|file',
+            'address' => 'required|string|max:500',
             'location' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'country' => 'required|string|max:100',
             'min_fund_raise_size' => 'required|string',
             'max_fund_raise_size' => 'required|string',
             'email' => 'required|email',
-            'phone_number' => 'required|string|max:15',
+            'phone_number' => 'required',
             'concerned_person_designation' => 'required|string',
             'public_links.*' => 'required|url',
             'link_descriptions.*' => 'required|string',
             'previous_deal_year.*' => 'required|integer|min:1900|max:' . date('Y'),
             'previous_deal_company.*' => 'required|string',
             'previous_deal_sector.*' => 'required|string',
-            'previous_deal_type.*' => 'required|string',
+            'previous_deal_type.*' => 'required|string|in:M&A,Fundraising,IPO,Others',
             'referral_source' => 'required|string',
+             'terms' => 'accepted'
         ]);
 
         // Step 2: Handle file upload for company profile
@@ -74,6 +79,20 @@ class BankerController extends Controller
         if ($request->hasFile('company_profile')) {
             $filePath = $request->file('company_profile')->store('company_profiles', 'public');
         }
+
+
+        $filePath = null;
+
+        if ($request->hasFile('company_profile')) {
+            $file = $request->file('company_profile');
+            $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('attachments', $filename, 'public'); // ✅ specify disk 'public'
+            $filePath = 'attachments/' . $filename; 
+        }
+
+
+
+
 
         // Step 3: Store banker information
         $banker = Banker::create([
@@ -134,7 +153,7 @@ class BankerController extends Controller
         $user->save();
 
         // Step 9: Redirect to dashboard
-        return redirect()->route('banker.dashboard')->with('success_message', 'Banker profile created successfully!');
+        return redirect()->route('investee.dashboard')->with('success_message', 'Banker profile created successfully!');
     }
 
   public function filterInvestees(Request $request)
@@ -238,7 +257,7 @@ class BankerController extends Controller
 
     // Return the filtered results with a view for display
     return view('partials.investor_list', compact('investors', 'subscriber'))->render();
-    return view('partials.investor_list', compact('investors'))->render();
+    // return view('partials.investor_list', compact('investors'))->render();
 }
 
 
@@ -290,10 +309,55 @@ public function search(Request $request)
     }
 
     // Fetch the filtered results
-    $investees = $query->with(['user', 'fundRequirements', 'previousRounds'])->get();
+    // $investees = $query->with(['user', 'fundRequirements', 'previousRounds'])->get();    
+    // Fetch the filtered results
+    $investeesdata = $query->with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])->get();
 
+            
+    if($subscriber && $subscriber->is_subscribed){
+            $investees = $investeesdata->take(10)->values();
+    }
+    else
+    {
+            $investees = $investeesdata->take(3)->values();
+    }
     // Pass investees and subscriber to the partial view for the banker dashboard
     return view('partials.investee_list', compact('investees', 'subscriber'))->render();
 }
 
+public function investordata()
+{
+    $userId = auth()->user()->id;
+    $subscriber = Subscriber::where('user_id', $userId)->first();
+
+    // Fetch investors with related data
+    $investorsQuery = Investor::with([
+        'contactDetails', 'publicLinks', 'previousInvestments',
+        'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
+    ]);
+
+    $investors = ($subscriber && $subscriber->is_subscribed) ? 
+        $investorsQuery->take(10)->get() : 
+        $investorsQuery->take(3)->get();
+
+    return view('dashboards.bankerinvestor', compact('investors', 'subscriber'));
+}
+
+public function investeedata()
+{
+    $userId = auth()->user()->id;
+    $subscriber = Subscriber::where('user_id',$userId)->first();
+    $investeesQuery = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource']);
+    $sectors = SectorDetail::all();
+    $locations =LocationDetail::all();
+
+    if($subscriber && $subscriber->is_subscribed){
+         $investees = $investeesQuery->limit(10)->get();
+    }
+    else
+    {
+         $investees = $investeesQuery->limit(3)->get();
+    }
+    return view('dashboards.investordashboard',compact('subscriber','investees','sectors','locations'));
+}
 }

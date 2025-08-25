@@ -11,10 +11,19 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Rules\CaptchaMatch;
+use App\Http\Controllers\OTPController;
+use App\Services\OtpService;
 class RegisterController extends Controller
 {
     // Add the ValidatesRequests trait to your controller
     use ValidatesRequests;
+
+    protected $otpService;
+
+    public function __construct(OtpService $otpService)
+    {
+        $this->otpService = $otpService;
+    }
 
     // public function showRegistrationForm()
     // {
@@ -45,47 +54,107 @@ class RegisterController extends Controller
 
 
     public function register(Request $request)
+    {
+        // Validate the form fields
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string|max:14|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'category' => 'required',
+            // 'captcha' => ['required', new CaptchaMatch(session('captcha_value_1'))],
+            'captcha'   => ['required', function ($attribute, $value, $fail) {
+                if ($value !== session('captcha_text')) {
+                    $fail('The CAPTCHA is incorrect.');
+                }
+            }],
+            'terms' => 'accepted',
+        ]);
+
+        // // Manually validate captcha
+        // $num1 = session('captcha_value_1');
+        // $num2 = session('captcha_value_2');
+        // $correctCaptcha = $num1 + $num2;
+
+        // if ($request->captcha != $correctCaptcha) {
+        //     return back()->withErrors(['captcha' => 'The entered captcha is incorrect'])->withInput();
+        // }
+
+        //combine phone and country_code_input
+        $phone = $request->country_code.$request->phone;
+        // Create the user
+    
+
+        // Store OTP (default 123456) in session
+        // Generate OTP and send
+        $otp = rand(100000, 999999);
+        $otpsend = $this->otpService->sendOtp($request->phone, $otp);
+        $user = null;
+        if($otpsend['return']){
+            $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $phone,
+            'password' => Hash::make($request->password),
+            'category_id' => $request->category,
+        ]);
+        
+        
+        session(['otp' => $otp, 'user_id' => $user->id]);
+            // Optionally, you can send the OTP via SMS or email here
+            // $this->otpService->sendOtp($phone, $otp);
+
+            // Redirect to OTP verification page
+            return redirect()->route('otp.form',['phone' => $request->phone])->with([
+                'success' => 'Registration successful! Please verify your mobile number using the OTP sent.',
+                'phone' => $request->phone,
+                'country_code' => $request->country_code,
+            ]); // Pass phone number to the OTP form
+        } else {
+            return back()->withErrors(['otp' => 'Failed to send OTP. Please try again later.']);
+        }
+        //log the OTP sending status
+        // if($otpsend) {
+        //     \Log::info("OTP sent successfully to {$request->phone}",['data'=> $otpsend['return']]);
+        // } else {
+        //     \Log::error("Failed to send OTP to {$request->phone}");
+        // }
+        // Redirect to OTP verification page
+        // return redirect()->route('otp.form')->with('success', 'Registration successful! Please verify your mobile number using the OTP sent.');
+            
+    }
+
+    public function resendOtp(Request $request)
 {
-    // Validate the form fields
-    $this->validate($request, [
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'phone' => 'required|string|max:10|unique:users',
-        'password' => 'required|string|min:8|confirmed',
-        'category' => 'required',
-        // 'captcha' => ['required', new CaptchaMatch(session('captcha_value_1'))],
-        'captcha'   => ['required', function ($attribute, $value, $fail) {
-            if ($value !== session('captcha_text')) {
-                $fail('The CAPTCHA is incorrect.');
-            }
-        }],
-        'terms' => 'accepted',
-    ]);
+    \Log::info("Resend OTP function called");
 
-    // // Manually validate captcha
-    // $num1 = session('captcha_value_1');
-    // $num2 = session('captcha_value_2');
-    // $correctCaptcha = $num1 + $num2;
+    // Validate the phone number
+    // $request->validate([
+    //     'phone' => 'required|max:14',
+    // ]);
+    \Log::info("Phone number resend validated", ['phone' => $request->phone]);
 
-    // if ($request->captcha != $correctCaptcha) {
-    //     return back()->withErrors(['captcha' => 'The entered captcha is incorrect'])->withInput();
-    // }
+    // Generate a new OTP
+    $newOtp = rand(100000, 999999);
 
-    // Create the user
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'phone' => $request->phone,
-        'password' => Hash::make($request->password),
-        'category_id' => $request->category,
-    ]);
+    // Send the OTP
+    \Log::info("Sending OTP...");
+    $otpsend = $this->otpService->sendOtp($request->phone, $newOtp);
 
-    // Store OTP (default 123456) in session
-    session(['otp' => '123456', 'user_id' => $user->id]);
+    // Log the complete response from OTP service
+    \Log::info("OTP resend service response", ['response' => $otpsend]);
 
-    // Redirect to OTP verification page
-    return redirect()->route('otp.form')->with('success', 'Registration successful! Please verify your mobile number using the OTP sent.');
+    // Check if OTP was sent successfully
+    if (!empty($otpsend['return']) && $otpsend['return'] === true) {
+        session([
+            'otp' => $newOtp,
+            'phone' => $request->phone,
+        ]);
+
+        return back()->with('success', 'A new OTP has been sent to your registered mobile number.');
+    } else {
+        return back()->withErrors(['otp' => 'Failed to resend OTP. Please try again later.']);
+    }
 }
-
 
 }

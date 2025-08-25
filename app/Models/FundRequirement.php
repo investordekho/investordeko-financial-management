@@ -13,6 +13,7 @@ class FundRequirement extends Model
         'company_id',  // Add company_id here
         'usage',
         'requirement',
+        'amount',
         'unit',
     ];
     public function company()

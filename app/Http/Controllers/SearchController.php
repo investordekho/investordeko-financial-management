@@ -25,7 +25,7 @@ class SearchController extends Controller
             case 'Investor':
                 return redirect()->route('investor.dashboard', ['search' => $searchQuery]);
             case 'Banker':
-                return redirect()->route('banker.dashboard', ['search' => $searchQuery]);
+                return redirect()->route('investee.dashboard', ['search' => $searchQuery]);
             default:
                 return redirect()->route('home')->with('message', 'User category not found.');
         }

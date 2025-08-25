@@ -35,7 +35,7 @@
                 <!-- Register and Forgot Password Links -->
                 <div class="text-center mt-4">
                     <h5>Don't have an account? <a href="{{ route('register') }}">Create Account</a></h5>
-                    <h5><a href="{{ route('password.request') }}">Forgot Password?</a></h5>
+                    <h5><a href="{{ route('forgetpassword') }}">Forgot Password?</a></h5>
                 </div>
             </div>
         </div>

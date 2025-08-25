@@ -21,6 +21,27 @@ use Illuminate\Support\Str;
 use App\Models\InvestorAddress;
 use App\Exports\InvestorsExport;
 use App\Models\LocationDetail;
+use App\Models\Company;
+use App\Models\Attachment;
+use App\Models\ConcernedPerson;
+use App\Models\Founder;
+use App\Models\FundRequirement;
+use App\Models\OtherLink;
+use App\Models\PreviousRound;
+use App\Models\ReferralSource;
+use App\Models\GuidanceNeeded;
+use App\Models\InvestorProfile;
+use App\Models\InvestorProfileAttachment;
+use App\Models\InvestorProfileConcernedPerson;
+use App\Models\InvestorProfileFounder;
+use App\Models\InvestorProfileFundRequirement;
+use App\Models\InvestorProfileOtherLink;
+use App\Models\InvestorProfilePreviousRound;
+use App\Models\InvestorProfileReferralSource;
+use App\Models\InvestorProfileGuidanceNeeded;
+use App\Models\InvestorProfileLocationDetail;
+use App\Models\InvestorProfilePreviousInvestment;
+
 class ExcelUploadController extends Controller
 {
 
@@ -125,7 +146,7 @@ class ExcelUploadController extends Controller
 
                     // Store Contact Details
                     // $mobile = $getValue('mobile') ?: $this->getRandomValue('mobile');
-                    $mobile = $getValue('mobile') ?: "000000000";
+                    $mobile = $getValue('mobile') ?: "null";
                     // foreach (explode(',', $mobile) as $number) {
                     //     ContactDetails::firstOrCreate(
                     //         ['investors_id' => $investor->id, 'concerned_person_phone' => trim($number)],
@@ -150,7 +171,7 @@ class ExcelUploadController extends Controller
                                 [
                                     'concerned_person_name' => $investorData['investor_name'],
                                     'concerned_person_designation' => 'N/A',
-                                    'email' => $getValue('email') ?: 'Not Provided' // Default if missing
+                                    'email' => $getValue('email') ?: 'null' // Default if missing
                                 ]
                             );
                         }
@@ -262,131 +283,6 @@ class ExcelUploadController extends Controller
 
 
 
-    // public function downloaddataofInvestorExcel1(Request $request)
-    // {
-    //     // $investors=Investor::all();
-    //     // $contactDetails=ContactDetails::all();
-    //     // $guidanceNeed=GuidanceNeed::all();
-    //     // $investmentDetail=InvestmentDetail::all();
-    //     // $locationDetail=LocationDetail::all();
-    //     // $previousInvestment=PreviousInvestment::all();
-    //     // $publicLink=PublicLink::all();
-    //     // $referral=Referral::all();
-    //     // $investorAddress=InvestorAddress::all();
-
-    //     $investors=Investor::with([
-    //         'contactDetails',
-    //         'guidanceNeeds',
-    //         'investmentDetails',
-    //         // 'locationDetail',
-    //         'previousInvestments',
-    //         'publicLinks',
-    //         'referrals',
-    //         'investorAddresses',
-    //     ])->get();
-    //     $num=0;
-    //     $data=[];
-    //     foreach($investors as $investor)
-    //     {
-    //         // $id=$investor->id;
-    //         // $investorData=$investor->where('id',$id)->first();
-    //         // $contactDetailsData=$contactDetails->where('investor_id',$id)->first();
-    //         // $guidanceNeedData=$guidanceNeed->where('investor_id',$id)->first();
-    //         // $investmentDetailData=$investmentDetail->where('investor_id',$id)->first();
-    //         // $locationDetailData=$locationDetail->where('investor_id',$id)->first();
-    //         // $previousInvestmentData=$previousInvestment->where('investor_id',$id)->first();
-    //         // $publicLinkData=$publicLink->where('investor_id',$id);
-    //         // $referralData=$referral->where('investor_id',$id)->first();
-    //         // $investorAddressData=$investorAddress->where('investor_id',$id)->first();
-
-            
-    //         $num++;
-    //         $datanew=[
-    //             // "ID"=>$num,
-    //             // "Name"=>$investorData->investor_name ?? 'N/A',
-    //             // "Group"=>$investmentDetailData->investor_type ?? 'N/A',
-    //             // "Address"=>$investorData->address ?? 'N/A',
-    //             // "Country"=>$investorAddressData->country ?? 'N/A',
-    //             // "State"=>$investorAddressData->state ?? 'N/A',
-    //             // "City"=>$investorAddressData->city ?? 'N/A',
-    //             // "Zip Code"=>$investorAddressData->zip_code ?? 'N/A',
-    //             // "Mobile"=>$contactDetailsData->concerned_person_phone ?? 'N/A',
-    //             // "Email"=>$contactDetailsData->email ?? 'N/A',
-    //             // "Ticket Size"=>$contactDetailsData->investment_size ?? 'N/A',
-    //             // "Investment Stage"=>$investmentDetailData->investor_type ?? 'N/A',
-    //             // "Sectors Interested"=>$investorData->sectors_preferred ?? 'N/A',
-    //             // "Investment Time Horizon"=>$investorData->investment_tenure ?? 'N/A',
-    //             // "Website"=>$publicLinkData->where('link_description', 'Website')->first()->url ?? '',
-    //             // "Linkedin"=>$publicLinkData->where('link_description', 'Linkedin')->first()->url ?? '',
-    //             // "Twitter"=>$publicLinkData->where('link_description', 'Twitter')->first()->url ?? '',
-    //             // "invest_in"=>$investmentDetailData->invest_in ?? 'N/A',
-    //             // "concerned_person_name"=>$contactDetailsData->concerned_person_name ?? 'N/A',
-    //             // "concerned_person_designation"=>$contactDetailsData->concerned_person_designation ?? 'N/A',
-    //             // "guidance_needed"=>$guidanceNeedData->guidanceNeedData ?? 'N/A',
-    //             // "other_guidance"=>$guidanceNeedData->other_guidance ?? 'N/A',
-    //             // "previous_investment_year"=>$previousInvestmentData->previous_investment_year ?? 'N/A',
-    //             // "previous_investment_company"=>$previousInvestmentData->previous_investment_company ?? 'N/A',
-    //             // "sector"=>$previousInvestmentData->sector ?? 'N/A',
-    //             // "referral_source"=>$previousInvestmentData->referral_source ?? 'N/A',
-    //             "ID"=>$num,
-    //             "Name"=>$investor->investor_name ?? 'N/A',
-    //             "Group"=>$investor->investor_type ?? 'N/A',
-    //             "Address"=>$investor->address ?? 'N/A',
-    //             "Country"=>$investor->country ?? 'N/A',
-    //             "State"=>$investor->state ?? 'N/A',
-    //             "City"=>$investor->city ?? 'N/A',
-    //             "Zip Code"=>$investor->zip_code ?? 'N/A',
-    //             "Mobile"=>$investor->concerned_person_phone ?? 'N/A',
-    //             "Email"=>$investor->email ?? 'N/A',
-    //             "Ticket Size"=>$investor->investment_size ?? 'N/A',
-    //             "Investment Stage"=>$investor->investor_type ?? 'N/A',
-    //             "Sectors Interested"=>$investor->sectors_preferred ?? 'N/A',
-    //             "Investment Time Horizon"=>$investor->investment_tenure ?? 'N/A',
-    //             "Website"=>$investor->where('link_description', 'Website')->first()->url ?? '',
-    //             "Linkedin"=>$investor->where('link_description', 'Linkedin')->first()->url ?? '',
-    //             "Twitter"=>$investor->where('link_description', 'Twitter')->first()->url ?? '',
-    //             "invest_in"=>$investor->invest_in ?? 'N/A',
-    //             "concerned_person_name"=>$investor->concerned_person_name ?? 'N/A',
-    //             "concerned_person_designation"=>$investor->concerned_person_designation ?? 'N/A',
-    //             "guidance_needed"=>$investor->guidanceNeedData ?? 'N/A',
-    //             "other_guidance"=>$investor->other_guidance ?? 'N/A',
-    //             "previous_investment_year"=>$investor->previous_investment_year ?? 'N/A',
-    //             "previous_investment_company"=>$investor->previous_investment_company ?? 'N/A',
-    //             "sector"=>$investor->sector ?? 'N/A',
-    //             "referral_source"=>$investor->referral_source ?? 'N/A',
-    //         ];            
-
-    //         $data[] = $datanew;
-    //     }
-
-
-    //         $format=$request->input('format','xlsx');
-
-    //         $validFormat = ['xlsx','xls','csv','pdf'];
-
-    //         if(!in_array($format,$validFormat)){
-    //             return response()->json([
-    //                 'message' => 'Invalid format specified .Valid format are: xlsx,xls,csv,pdf.',
-    //             ],400);
-    //         }
-
-    //         $fileName = 'Investor_data.'.$format;
-
-
-    //         $formatMap = 
-    //         [
-    //             'xlsx'=> \Maatwebsite\Excel\Excel::XLSX,
-    //             'xls'=> \Maatwebsite\Excel\Excel::XLS,
-    //             'csv'=> \Maatwebsite\Excel\Excel::CSV,
-    //             'pdf'=> \Maatwebsite\Excel\Excel::DOMPDF,
-    //         ];
-
-            
-    //         return Excel::download(new InvestorsExport($data),$fileName,$formatMap[$format]);
-
-
-        
-    // }
     public function downloaddataofInvestorExcel(Request $request)
     {
 
@@ -501,6 +397,138 @@ class ExcelUploadController extends Controller
 
         
     }
+
+    public function downloadInvesteeDataExcel(Request $request)
+   {
+
+    $company = Company::with([
+        'user',
+        'concernedPerson',
+        'founders',
+        'fundRequirements',
+        'previousRounds',
+        'otherLinks',
+        'attachments',
+        'referralSource',
+        'guidanceNeeded'
+    ])->get();
+    // $company = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource']);
+    $num = 0;
+    $data = [];
+    $data[] = [
+        "ID" => "ID",
+        "Company Name" => "Company Name",
+        "Address" => "Address",
+        "nature_of_business" => "Nature of Business",
+        "Incorporated In" => "Incorporated In",
+        "Website" => "Website",
+        "Linkedin" => "Linkedin",
+        "Name"=> "Name",
+        "Email"=> "Email",
+        "Phone"=> "Phone",
+        "Concerned Person Name"=> "Concerned Person Name",
+        "Concerned Person Designation"=> "Concerned Person Designation",
+        "Concerned Person Email"=> "Concerned Person Email",
+        "Concerned Person Phone"=> "Concerned Person Phone",
+        "Founder Name"=> "Founder Name",
+        "Founder Position"=> "Founder Position",
+        "Founder Education"=> "Founder Education",
+        "Founder Experience"=> "Founder Experience",
+        "Usage"=> "Usage",
+        "Amount"=> "Amount",
+        "Unit"=> "Unit",
+        "Previous Round"=> "Previous Round",
+        "Investors"=> "Investors",
+        "Amount Raised"=> "Amount Raised",
+        "Valuation"=> "Valuation",
+        "Link URL"=> "Link URL",
+        "Link Description"=> "Link Description",
+        "Fisacal Year"=> "Fiscal Year",
+        "Referral Source"=> "Referral Source",
+        "Guidance Needed"=> "Guidance Needed",
+        "Other Guidance"=> "Other Guidance",
+    ];
+
+    foreach ($company as $investee) {
+        $num++;
+        $datanew = [
+            "ID" => $num,
+            "Company Name" => $investee->company_name ?? 'N/A',
+            "Address" => $investee->address ?? 'N/A',
+            "nature_of_business" => $investee->nature_of_business ?? 'N/A',
+            "Incorporated In" => $investee->incorporated_in ?? 'N/A',
+            "Website" => $investee->website ?? 'N/A',
+            "Linkedin" => $investee->linkedin ?? 'N/A',
+            "Name"=> optional($investee->user)->name ?? 'N/A',
+            "Email"=> optional($investee->concernedPerson)->email ?? 'N/A',
+            "Phone"=> optional($investee->concernedPerson)->phone ?? 'N/A',
+            "Concerned Person Name"=> optional($investee->concernedPerson)->name ?? 'N/A',
+            "Concerned Person Designation"=> optional($investee->concernedPerson)->designation ?? 'N/A',
+            "Concerned Person Email"=> optional($investee->concernedPerson)->email ?? 'N/A',
+            "Concerned Person Phone"=> optional($investee->concernedPerson)->phone ?? 'N/A',
+            "Founder Name"=> $investee->founders->pluck('name')->implode(',') ?? 'N/A',
+            "Founder Position"=> $investee->founders->pluck('position')->implode(',') ?? 'N/A',
+            "Founder Education"=> $investee->founders->pluck('education')->implode(',') ?? 'N/A',
+            "Founder Experience"=> $investee->founders->pluck('experience')->implode(',') ?? 'N/A',
+            "Usage"=> $investee->fundRequirements->pluck('usage')->implode(',') ?? 'N/A',
+            "Amount"=> $investee->fundRequirements->pluck('amount')->implode(',') ?? 'N/A',
+            "Unit"=> $investee->fundRequirements->pluck('unit')->implode(',') ?? 'N/A',
+            "Previous Round"=> $investee->previousRounds->pluck('round_name')->implode(', ') ?? 'N/A',
+            "Investors"=> $investee->previousRounds->pluck('previous_investor_name')->implode(', ') ?? 'N/A',
+            "Amount Raised"=> $investee->previousRounds->pluck('amount_raised')->implode(', ') ?? 'N/A',
+            "Valuation"=> $investee->previousRounds->pluck('valuation')->implode(', ') ?? 'N/A',
+            "Link URL" => $investee->otherLinks->pluck('link_url')->implode(', ') ?: 'N/A',
+            "Link Description" => $investee->otherLinks->pluck('link_description')->implode(', ') ?: 'N/A',
+            "Fisacal Year" => $investee->attachments->pluck('fiscal_year')->implode(', ') ?: 'N/A',
+            "Referral Source" => optional($investee->referralSource)->source_name ?? 'N/A',
+            "Guidance Needed" => $investee->guidanceNeeded->pluck('guidance_needed')->implode(', ') ?: 'N/A',
+            "Other Guidance" => $investee->guidanceNeeded->pluck('other_guidance')->implode(', ') ?: 'N/A',
+
+        ];
+
+
+      
+  
+        // "Previous Round"=> $investee->previousRounds->pluck('round_name')->implode ?? 'N/A',
+        // "Investors"=> $investee->previousRounds->pluck('previous_investor_name')->implode(',') ?? 'N/A',
+        // "Amount Raised"=> $investee->previousRounds->pluck('amount_raised')->implode(',') ?? 'N/A',
+        // "Valuation"=> $investee->previousRounds->pluck('valuation')->implode(',') ?? 'N/A',
+        // "Link URL"=> $investee->otherLinks->pluck('link_url')->implode(',') ?? 'N/A',
+        // "Link Description"=> $investee->otherLinks->pluck('link_description')->implode(',') ?? 'N/A',
+        // "Fisacal Year"=> $investee->attachments->pluck('fiscal_year')->implode(',') ?? 'N/A',
+        // "Referral Source"=> $investee->referralSource->pluck('referral_source')->implode(',') ?? 'N/A',
+        // "Guidance Needed"=> $investee->guidanceNeeded->pluck('guidance_needed')->implode(',') ?? 'N/A',
+        // "Other Guidance"=> $investee->guidanceNeeded->pluck('other_guidance')->implode(',') ?? 'N/A',
+
+
+
+
+
+
+        $data[] = $datanew;
+    }
+    $format = $request->input('format', 'xlsx');
+    $validFormat = ['xlsx', 'xls', 'csv', 'pdf'];
+    if (!in_array($format, $validFormat)) {
+        return response()->json([
+            'message' => 'Invalid format specified. Valid formats are: xlsx, xls, csv, pdf.',
+        ], 400);
+    }
+    $fileName = 'Investee_data.' . $format;
+    $formatMap = [
+        'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
+        'xls' => \Maatwebsite\Excel\Excel::XLS,
+        'csv' => \Maatwebsite\Excel\Excel::CSV,
+        'pdf' => \Maatwebsite\Excel\Excel::DOMPDF,
+    ];
+    return Excel::download(new InvestorsExport($data), $fileName, $formatMap[$format]);
+    // return response()->json([
+    //     'message' => 'Data downloaded successfully',
+    //     'data' => $data,
+    // ], 200);
+    // return Excel::download(new InvestorsExport($data), $fileName, $formatMap[$format]);
+}
+
 }
 
 

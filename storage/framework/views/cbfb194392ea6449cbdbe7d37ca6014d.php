@@ -165,12 +165,187 @@
 }
 
 
+#navbarNavDropdown {
+  display: none;
+  flex-direction: column;
+}
+
+#navbarNavDropdown.show {
+  display: flex;
+}
+
+#profileDropdownMenu {
+  display: none;
+}
+
+#profileDropdownMenu.show {
+  display: block;
+}
+
+#navbarToggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Show only on screens less than or equal to 768px */
+@media (max-width: 768px) {
+  #navbarToggle {
+    display: block;
+  }
+
+  /* Optional: stack the menu items for mobile */
+  #navbarNavDropdown {
+    flex-direction: column;
+  }
+}
+
+
+    </style>
+    <style>
+      /* Ensure modal and backdrop appear above all content */
+      .modal-backdrop.show {
+          z-index: 2050 !important;
+      }
+      .modal {
+          z-index: 2060 !important;
+      }
+      body.modal-open {
+          overflow: hidden !important;
+      }
+      /* Optionally, ensure dropdown has lower z-index */
+      .dropdown-menu {
+          z-index: 2000;
+      }
+
+
+   @media (max-width: 768px) {
+    .dropdown-menu {
+        width: 100% !important;
+        left: 0 !important;
+        transform: none !important;
+    }
+
+    .dropdown-menu .row {
+        display: block;
+    }
+
+    .dropdown-menu .col-sm-3.dropdown-menu-column {
+        width: 100% !important;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .dropdown-menu .dropdown-header {
+        font-weight: 600;
+        padding-top: 0.5rem;
+    }
+
+    .dropdown-menu .dropdown-item {
+        padding-left: 1rem;
+    }
+}
+/* General Styles for Dropdown Menu */
+.dropdown-menu {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide toggle button in desktop view */
+#navbarToggle {
+    display: none;
+}
+
+/* Default dropdown columns */
+.dropdown-menu-column {
+    padding: 0.75rem;
+}
+
+/* Dropdown items */
+.dropdown-item {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #212529;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+/* Dropdown header */
+.dropdown-header {
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    color: #343a40;
+}
+
+/* Mobile View Styles */
+@media (max-width: 768px) {
+    /* Show toggle button only in mobile view */
+    #navbarToggle {
+        display: inline-block;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        margin: 0.5rem;
+    }
+
+    .dropdown-menu {
+        width: 100% !important;
+        max-width: 600px;
+        margin: 0 auto;
+        left: 0 !important;
+        transform: none !important;
+        padding: 1rem;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        animation: dropdownFade 0.3s ease-in-out;
+    }
+
+    .dropdown-menu .row {
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .dropdown-menu-column {
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+    }
+}
+
+/* Smooth animation */
+@keyframes dropdownFade {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 
     </style>
 </head>
-<body>
-   
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -199,7 +374,7 @@
           <a href="https://www.youtube.com/@InvestorDekho" class="me-2 text-dark"><i class="bi bi-youtube"></i></a>
           <a href="https://x.com/investordekho" class="me-2 text-dark"><i class="fa-solid fa-x"></i></span></a>
           <a href="https://www.instagram.com/investor_dekho/" class="me-2 text-dark"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.linkedin.com/in/investor-dekho-327689338/" class="text-dark"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.linkedin.com/in/investor-dekho-ad-327689338/" class="text-dark"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </div>
@@ -210,17 +385,23 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
         <!-- Left Section: Logo -->
-        <div class="col-md-1 d-flex align-items-center">
+        <div class="d-flex align-items-center">
             <a class="navbar-brand" href="<?php echo e(route('home')); ?>">
                <img src="<?php echo e(asset('img/Investor-logo.png')); ?>" alt="Logo" style="height: 90px;">
-                
             </a>
         </div>
 
+        <!-- Navbar Toggler for mobile -->
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <button id="navbarToggle">☰</button>
+<!-- The navbar collapse script is included at the bottom of the file after jQuery and Bootstrap JS are loaded -->
+
+
         <!-- Middle Section: Menu -->
-        <div class="col-md-9 d-flex justify-content-end">
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav">
 
                 <?php if(auth()->guard()->check()): ?>
                     <!-- <li class="nav-item">
@@ -234,8 +415,16 @@
                     <?php endif; ?>
                 <?php endif; ?>
 
-
-
+                    <li class="nav-item" style="display:none;">
+                        <a class="nav-link" href="/logoeffect">Logo</a>
+                    </li>
+                    <?php if(auth()->guard()->check()): ?>
+                    <?php if(auth()->user() && auth()->user()->hasRole('Admin')): ?>                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo e(route('subscriptionrequest')); ?>">Subscription Requests </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php endif; ?>    
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo e(route('home')); ?>">Home</a>
                     </li>
@@ -244,10 +433,10 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a href="<?php echo e(route('services')); ?>" class="nav-link dropdown-toggle" id="servicesDropdown" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
-                        <div class="dropdown-menu dropdown-menu-columns border-light m-0">
+                        <div class="dropdown-menu dropdown-menu-columns border-light m-0" style="left: 50% !important; transform: translateX(-50%) !important; width: max-content; padding: 1rem;">
                             <div class="row">
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="<?php echo e(route('services')); ?>"><i class="fa-solid fa-chart-line"></i> Fund Raising</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>1])); ?>"><i class="fa-solid fa-chart-line"></i> Fund Raising</a></h5>
                                     <ul style="list-style: none;">
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#equityFundingModal">Equity Funding</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#debtFundingModal">Debt Funding</a></li>
@@ -257,7 +446,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="<?php echo e(route('services')); ?>"><i class="fas fa-dollar-sign"></i> Public Offering</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>2] )); ?>"><i class="fas fa-dollar-sign"></i> Public Offering</a></h5>
                                     <ul style="list-style: none;">
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoPlanningModal">IPO Planning</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoListingModal">IPO Listing</a></li>
@@ -268,9 +457,9 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="<?php echo e(route('services')); ?>"><i class="fas fa-gavel"></i> Intellectual Property</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>3])); ?>"><i class="fas fa-gavel"></i> Intellectual Property</a></h5>
                                     <ul style="list-style: none;">
-                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#trademarkModal">Trademark</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#designRegistrationModal">Design Registration</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#dscModal">DSC</a></li>
@@ -281,7 +470,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="<?php echo e(route('services')); ?>"><i class="fas fa-tools"></i> Compliance Services</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>4])); ?>"><i class="fas fa-tools"></i> Compliance Services</a></h5>
                                     <ul style="list-style: none;">
                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#incomeTaxModal">Income Tax Return</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#gstCustomsModal">GST, TDS, PF, ESI, PT, Customs</a></li>
@@ -294,7 +483,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="<?php echo e(route('services')); ?>"><i class="fa-solid fa-file-alt"></i> Financial Services</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>5])); ?>"><i class="fa-solid fa-file-alt"></i> Financial Services</a></h5>
                                     <ul style="list-style: none;">
                                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#loanProposalModal">Loan Proposal</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#cmaDataModal">CMA Data</a></li>
@@ -308,7 +497,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="<?php echo e(route('services')); ?>"><i class="fa-solid fa-file-alt"></i> Other Services</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>6])); ?>"><i class="fa-solid fa-file-alt"></i> Other Services</a></h5>
                                     <ul style="list-style: none;">
                                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#structuredFinanceModal">Structured Finance</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#swsAgreementModal">Preparation of SWSA</a></li>
@@ -327,90 +516,131 @@
         </div>
 
         <!-- Right Section: Login/Profile -->
-      <!-- Right Section: Login/Profile -->
-<div class="col-md-1 d-flex justify-content-end">
-    <ul id="profileMenu" class="navbar-nav">
-        <?php if(auth()->guard()->guest()): ?>
-            <!-- Show Login Link if not authenticated -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo e(route('login')); ?>">Login</a>
-            </li>
-        <?php else: ?>
-            <!-- Show User Dropdown if authenticated -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- Display Profile Image if exists, otherwise show default image -->
-                    <?php if(Auth::user()->profile_image): ?>
-                        <img src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
-                    <?php else: ?>
-                        <img src="<?php echo e(asset('img/default_profile.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
-                    <?php endif; ?>
-                    <span class="ms-2"><?php echo e(Auth::user()->name); ?></span>
-                </a>
-                <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                    <!-- Dashboard Link -->
-                    <li>
-                        <a class="dropdown-item" href="
-                            <?php if(Auth::user()->form_filled == 0): ?>
-                                <?php if(Auth::user()->category_id == 1): ?>
-                                    <?php echo e(route('form.investee')); ?>  
-                                <?php elseif(Auth::user()->category_id == 2): ?>
-                                    <?php echo e(route('form.investor')); ?>  
-                                <?php elseif(Auth::user()->category_id == 3): ?>
-                                    <?php echo e(route('form.banker.form')); ?> 
-                                <?php elseif(Auth::user()->category_id == 4): ?>
-                                    <?php echo e(route('form.other')); ?>     
-                                <?php else: ?>
-                                    <?php echo e(route('home')); ?> <!-- Fallback if no valid category -->
-                                <?php endif; ?>
+        <!-- Right Section: Login/Profile -->
+        <div class="col-auto d-flex justify-content-end">
+            <ul id="profileMenu" class="navbar-nav">
+                <?php if(auth()->guard()->guest()): ?>
+                    <!-- Show Login Link if not authenticated -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo e(route('login')); ?>">Login</a>
+                    </li>
+                <?php else: ?>
+                    <!-- Show User Dropdown if authenticated -->
+                    <li class="nav-item dropdown">
+                       <a class="nav-link dropdown-toggle d-flex align-items-center" 
+   href="#" 
+   id="profileToggleBtn" 
+   role="button">
+         <!-- Display Profile Image if exists, otherwise show default image -->
+                            <!-- <?php if(Auth::user()->profile_image): ?>
+                                <img src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
                             <?php else: ?>
-                                <?php if(Auth::user()->category_id == 1): ?>
-                                    <?php echo e(route('investee.dashboard')); ?>
+                                <img src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
+                            <?php endif; ?> -->
+                            <?php
+                                $profileImage = Auth::user()->profile_image;
+                                $imagePath = 'storage/profile_image/' . $profileImage;
+                            ?>
 
-                                <?php elseif(Auth::user()->category_id == 2): ?>
-                                    <?php echo e(route('investor.dashboard')); ?>
-
-                                <?php elseif(Auth::user()->category_id == 3): ?>
-                                    <?php echo e(route('banker.dashboard')); ?>
-
-                                <?php elseif(Auth::user()->category_id == 4): ?>
-                                    <?php echo e(route('banker.dashboard')); ?>
-
-                                <?php else: ?>
-                                    <?php echo e(route('home')); ?>
-
-                                <?php endif; ?>
+                            <?php if($profileImage): ?>
+                                <img 
+                                    src="<?php echo e(asset($imagePath)); ?>" 
+                                    alt="Profile Image" 
+                                    width="40" 
+                                    height="40" 
+                                    class="rounded-circle" 
+                                    style="object-fit: cover;"
+                                    onerror="this.onerror=null;this.src='<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>';"
+                                >
+                            <?php else: ?>
+                                <img 
+                                    src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" 
+                                    alt="Default Profile Image" 
+                                    width="40" 
+                                    height="40" 
+                                    class="rounded-circle" 
+                                    style="object-fit: cover;"
+                                >
                             <?php endif; ?>
-                        ">
-                            <i class="bi bi-house-door-fill me-2"></i> Dashboard
+
+
+                            
+                            <span class="ms-2"><?php echo e(Auth::user()->name); ?></span>
                         </a>
+                        <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <!-- Dashboard Link -->
+                            <li>
+                                <a class="dropdown-item" href="
+                                    <?php if(Auth::user()->form_filled == 0): ?>
+                                        <?php if(Auth::user()->category_id == 1): ?>
+                                            <?php echo e(route('form.investee')); ?>  
+                                        <?php elseif(Auth::user()->category_id == 2): ?>
+                                            <?php echo e(route('form.investor')); ?>  
+                                        <?php elseif(Auth::user()->category_id == 3): ?>
+                                            <?php echo e(route('form.banker.form')); ?> 
+                                        <?php elseif(Auth::user()->category_id == 4): ?>
+                                            <?php echo e(route('form.other')); ?>     
+                                        <?php else: ?>
+                                            <?php echo e(route('home')); ?> <!-- Fallback if no valid category -->
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <?php if(Auth::user()->category_id == 1): ?>
+                                            <?php echo e(route('investee.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 2): ?>
+                                            <?php echo e(route('investor.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 3): ?>
+                                            <?php echo e(route('investee.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 4): ?>
+                                            <?php echo e(route('investee.dashboard')); ?>
+
+                                        <?php else: ?>
+                                            <?php echo e(route('home')); ?>
+
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                ">
+                                    <i class="bi bi-house-door-fill me-2"></i> Dashboard
+                                </a>
+                            </li>
+                            
+                            <!-- Profile Settings Link -->
+                            <li>
+                                <a class="dropdown-item" href="<?php echo e(route('profile.settings')); ?>">
+                                    <i class="bi bi-gear-fill me-2"></i> Profile Settings
+                                </a>
+                            </li>
+
+                            <!-- Update Profile Link -->
+                            <?php if(Auth::user()->form_filled == 1): ?>
+                                <li>
+                                    <a class="dropdown-item" href="<?php echo e(route('updateprofile')); ?>">
+                                        <i class="bi bi-person-lines-fill me-2"></i> Update Profile
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+
+                            
+                            <!-- Divider -->
+                            <li><hr class="dropdown-divider"></li>
+                            
+                            <!-- Logout Link -->
+                            <li>
+                                <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                </a>
+                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
+                                    <?php echo csrf_field(); ?>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
-                    
-                    <!-- Profile Settings Link -->
-                    <li>
-                        <a class="dropdown-item" href="<?php echo e(route('profile.settings')); ?>">
-                            <i class="bi bi-gear-fill me-2"></i> Profile Settings
-                        </a>
-                    </li>
-                    
-                    <!-- Divider -->
-                    <li><hr class="dropdown-divider"></li>
-                    
-                    <!-- Logout Link -->
-                    <li>
-                        <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="bi bi-box-arrow-right me-2"></i> Logout
-                        </a>
-                        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
-                            <?php echo csrf_field(); ?>
-                        </form>
-                    </li>
-                </ul>
-            </li>
-        <?php endif; ?>
-    </ul>
-</div>
+                <?php endif; ?>
+            </ul>
+        </div>
 
 
 
@@ -1185,9 +1415,16 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Include jQuery -->
+<!-- Include jQuery before Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById('navbarToggle').addEventListener('click', function () {
+    const menu = document.getElementById('navbarNavDropdown'); // ✅ Correct ID
+    menu.classList.toggle('show');
+});
+</script>
+
 
 
  <script>
@@ -1198,5 +1435,25 @@
             }
         });
     </script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const profileBtn = document.getElementById("profileToggleBtn");
+    const profileMenu = document.getElementById("profileDropdownMenu");
+
+    profileBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        profileMenu.classList.toggle("show");
+    });
+
+    // Optional: Close if clicked outside
+    document.addEventListener("click", function (e) {
+        if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+            profileMenu.classList.remove("show");
+        }
+    });
+});
+</script>
+
 </body>
 </html><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/includes/header.blade.php ENDPATH**/ ?>

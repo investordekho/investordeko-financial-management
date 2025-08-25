@@ -1,161 +1,234 @@
+<?php 
+    $isSubscribed = isset($subscriber) && $subscriber?->is_subscribed;
+?>
+
+<?php if($investors->count()): ?>
+    <?php 
+        $isSubscribed = $subscriber && $subscriber->is_subscribed;
+        $visibleInvestorCount = $isSubscribed ? $investors->count() : min($investors->count(), 3);
+    ?>
 <style>
-    .blurred-content {
-    filter: blur(5px); /* You can adjust the blur value */
-    opacity: 0.5;
-}
+    .locked-content {
+        filter: blur(5px);
+        opacity: 0.6;
+
+        /* preventing user select */
+
+        user-select: none;
+        pointer-events: none;
+        cursor: not-allowed;
+        
+    }
+
 </style>
+<div class="container mt-5">
+    <!-- <h2 class="text-center mb-4 fw-bold text-dark">Investors List</h2> -->
 
-<div class="row mt-4" id="investorList">
-    <?php if($investors->count()): ?>
-        <?php $__currentLoopData = $investors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $investor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="row">
+        <?php $__currentLoopData = $investors->take($visibleInvestorCount); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $investor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="col-md-12 mb-4">
-                <div class="investor-entry p-3 rounded shadow-sm" style="background-color: #f8f9fa; color: black;">
-                    <div class="row">
-                        <!-- Profile Image -->
-                        <div class="col-md-2 center-image" style="width:90px; height: 90px;">
-    <img src="<?php echo e($investor->profile_image ? asset('uploads/' . $investor->profile_image) : asset('img/default_profile.png')); ?>" class="img-fluid rounded-circle" alt="Investor Logo">
-</div>
+                <div class="investor-card p-4">
+                    <div class="row align-items-center">
+                        
+                        <!-- Profile Image Section -->
+                        <div class="col-md-2 text-center">
+                            <div class="profile-wrapper">
+                                <img src="<?php echo e($investor['profile_image'] ? asset('storage/profile_image/' . $investor['profile_image']) : asset('img/default_profile.png')); ?>" 
+                                     class="profile-img" 
+                                     alt="Investor Profile">
+                                <span class="badge premium-badge">⭐ Premium</span>
+                            </div>
+                        </div>
 
+                        <!-- Investor Info Section -->
+                        <div class="col-md-6">
+                            <h4 class="fw-bold name-text <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
+                                <?php echo e($investor['investor_name'] ?? 'Unknown Investor'); ?>
 
-                        <!-- Investor Name and Address -->
-                        <div class="col-md-6 center-text">
-                            <h2 class="nameE <?php echo e(!$subscriber || !$subscriber->is_subscribed ? 'blurred-content' : ''); ?>">
-                                <?php echo e($investor->investor_name); ?>
+                            </h4> 
+                            <p class="text-muted details-text <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
+                                <i class="bi bi-geo-alt-fill text-primary me-1"></i> <?php echo e($investor['address']); ?>  
+                                <br>
 
-                            </h2>
-                            <p class="mt-2 <?php echo e(!$subscriber || !$subscriber->is_subscribed ? 'blurred-content' : ''); ?>" style="font-size: 18px;">
-                                <i class="bi bi-geo-alt-fill" style="color: #5e6469;"></i>
-                                <?php echo e($investor->address); ?> | 
-                                <i>Member since <?php echo e($investor->investmentDetails->member_since ?? 'N/A'); ?></i> <!-- Fetching member_since -->
+                                    <?php
+                                        $sectors = str_replace([', and', 'and'],',', $investor['sectors_preferred']);    
+                                        $sectors = array_map('trim', explode(',', $sectors));
+                                    ?>
+                                   
+                                    <?php if( count($sectors) > 0): ?>
+                                       <ul class="list-inline">
+                                         <h7 class="text-muted">Sectors:</h7>
+                                            <?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sector): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="list-inline-item text-muted" style="border: 1px solid #ddd; padding: 5px; border-radius: 5px; margin-right: 5px; margin-bottom: 5px; background-color: #f8f9fa;">
+                                                    <!-- <i class="bi bi-check-circle-fill text-success me-1"></i> -->
+                                                    <?php echo e(ucwords(strtolower($sector))); ?>
+
+                                                </li>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                   
                             </p>
+
+
                         </div>
 
-                        <!-- Buy MCA Filings Button -->
-                        <div class="col-md-4 d-flex justify-content-end align-items-center">
-                            <!--<button class="btn btn-dark text-white">✍️ Buy MCA Filings</button>
- -->                        </div>
-                    </div>
-
-                    <hr>
-
-                    <!-- Investment Details -->
-                    <div class="row">
-                        <!-- Investment Type -->
-                        <div class="col-md-3">
-                            <strong>
-                                <i class="bi bi-briefcase" style="color: #5e6469; font-size: 1.8rem;"></i>
-                                <span class="investmentspan2" style="color: black;">Investment Type</span>
-                            </strong>
-                            <br>
-                            <strong>
-                                <span style="color: #7c7f83;" class="<?php echo e(!$subscriber || !$subscriber->is_subscribed ? 'blurred-content' : ''); ?>">
-                                    <?php echo e($investor->investmentDetails->investor_type ?? 'N/A'); ?> <!-- Fetching investor_type from investmentDetails -->
-                                </span>
-                            </strong>
-                        </div>
-
-                        <!-- Investment Size -->
-                        <div class="col-md-3">
-                            <strong>
-                                <i class="bi bi-cash-coin" style="color: #5e6469; font-size: 1.8rem;"></i>
-                                <span class="investmentspan2" style="color: black;">Investment Size</span>
-                            </strong>
-                            <br>
-                            <strong>
-                                <span style="color: #7c7f83;" class="<?php echo e(!$subscriber || !$subscriber->is_subscribed ? 'blurred-content' : ''); ?>">
-                                    <?php echo e($investor->investmentDetails->investment_size ?? 'N/A'); ?> <!-- Fetching investment_size -->
-                                </span>
-                            </strong>
-                        </div>
-
-                        <!-- Investment Tenure -->
-                        <div class="col-md-3">
-                            <strong>
-                                <i class="bi bi-calendar4" style="color: #5e6469; font-size: 1.8rem;"></i>
-                                <span class="investmentspan2" style="color: black;">Investment Tenure</span>
-                            </strong>
-                            <br>
-                            <strong>
-                                <span style="color: #7c7f83;" class="<?php echo e(!$subscriber || !$subscriber->is_subscribed ? 'blurred-content' : ''); ?>">
-                                    <?php echo e($investor->investmentDetails->investment_tenure ?? 'N/A'); ?> <!-- Fetching investment_tenure -->
-                                </span>
-                            </strong>
-                        </div>
-
-                        <!-- Sector Preferred -->
-                        <div class="col-md-3">
-                            <strong>
-                                <i class="bi bi-tags" style="color: #5e6469; font-size: 1.8rem;"></i>
-                                <span class="investmentspan2" style="color: black;">Sector Preferred</span>
-                            </strong>
-                            <br>
-                            <strong>
-                                <span style="color: #7c7f83;" class="<?php echo e(!$subscriber || !$subscriber->is_subscribed ? 'blurred-content' : ''); ?>">
-                                <?php
-                                    $sectors_preferred = $investor->sectors_preferred;
-
-                                    if (!empty($sectors_preferred)) {
-                                        // Explode the string into an array based on commas and trim spaces.
-                                        $sectors_array = array_map('trim', explode(',', $sectors_preferred));
-                                        echo implode(', ', $sectors_array); // Display as a comma-separated list
-                                    } else {
-                                        echo "No sectors preferred";
-                                    }
-                                ?>
-                                </span>
-                            </strong>
-                        </div>
-                    </div>
-
-                   <br>
-
-                    <!-- Public Links Section -->
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <strong style="color: black;">Public Links:</strong>
-                            <?php if($investor->publicLinks->count()): ?>
-                                <?php $__currentLoopData = $investor->publicLinks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <a href="<?php echo e($link->url); ?>" class="<?php echo e(!$subscriber || !$subscriber->is_subscribed ? 'blurred-content' : 'badge bg-dark'); ?>" target="_blank"><?php echo e($link->link_description); ?></a>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <div class="col-md-4 text-end <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
+                            <?php if($isSubscribed): ?>
+                                <a href="<?php echo e(route('investeedashboard.investorlistdetail',['id' => $investor['id']])); ?>" 
+                                class="btn btn-primary btn-sm">🔍 View Details</a>
                             <?php else: ?>
-                                <p>No valid public links available</p>
+                                <span class="btn btn-primary btn-sm disabled" style="cursor: not-allowed; pointer-events: none;">
+                                    🔍 View Details
+                                </span>
                             <?php endif; ?>
                         </div>
+
+
                     </div>
-
-                    <!-- Previous Investments Section -->
-                    <div class="row mt-3">
-                        <div class="<?php echo e(!$subscriber || !$subscriber->is_subscribed ? 'blurred-content' : 'col-md-12'); ?>">
-                            <strong style="color: black;">Previous Investments:</strong>
-                            <?php if($investor->previousInvestments->count()): ?>
-                                <?php $__currentLoopData = $investor->previousInvestments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $investment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <p style="font-size: 18px; font-weight: 400; color: black;">
-                                        <strong>Year: </strong><?php echo e($investment->previous_investment_year); ?>, <b>| </b>
-                                        <strong>Company:</strong> <?php echo e($investment->previous_investment_company); ?>, <b>|</b>
-                                       <b> Sector:</b> <?php echo e($investment->sector); ?>
-
-                                    </p>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php else: ?>
-                                <p style="font-size: 18px; font-weight: 400; color: black;">N/A</p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-        <!-- Subscription Prompt for Unsubscribed Users -->
-        <?php if(!$subscriber || !$subscriber->is_subscribed && $investors->count() == 3): ?>
-            <div class="col-md-12 text-center">
-                <p style="color: black;">Get access to information on all 10,750+ Angel Investors investing in Indian startups.</p>
-                <p style="color: black;">The full list is available only for subscribers. Upgrade to a full subscription and get all the benefits of this unique platform. Go for it now! 🚀</p>
-                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-dark text-white">Subscribe Now</a>
+        <!-- <?php if(!$isSubscribed): ?> -->
+        <!-- <div class="col-md-12 text-center mt-4">
+            <div class="alert subscription-box">
+                <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+                <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
             </div>
-        <?php endif; ?>
-    <?php else: ?>
-        <p>No investors found matching your criteria.</p>
-    <?php endif; ?>
+        </div> -->
+    <!-- <?php endif; ?> -->
+        <!-- <?php if(!$isSubscribed && $investors->count() == 3): ?>
+            <div class="col-md-12 text-center">
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-secondary">🔒 Unlock More Investors</a>
+            </div>
+        <?php endif; ?> -->
+
+    </div>
 </div>
+
+<?php else: ?>
+    <div class="container mt-5 <?php echo e(!$isSubscribed ? 'locked-content' : ''); ?>">
+        <h2 class="text-center mb-4 fw-bold text-dark">No Investors Found</h2>
+        <p class="text-center">Please check back later or consider subscribing for more options.</p>
+    </div>
+
+    
+     <!-- <?php if(!$isSubscribed): ?> -->
+        <!-- <div class="col-md-12 text-center mt-4 mb-2">
+            <div class="alert subscription-box">
+                <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+                <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+            </div>
+        </div> -->
+    <!-- <?php endif; ?> -->
+    <div class="divider height-4"></div>
+<?php endif; ?>
+<div class="col-md-12 text-center mt-4">
+            <div class="alert subscription-box">
+                <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+                <p>Subscribe now to view complete details and get unlimited access to all investees on this platform.</p>
+                <a href="<?php echo e(route('subscription')); ?>" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+            </div>
+        </div>
+         <div class="divider height-4"></div>
+<style>
+    .investor-card {
+        background: linear-gradient(135deg, #ffffff, #f8f9fa);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+    .investor-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .profile-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .profile-img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 4px solid #ddd;
+    }
+    
+    .premium-badge {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: gold;
+        color: black;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .divider {
+        border-top: 1px solid #e0e0e0;
+        margin: 15px 0;
+    }
+
+    .info-label {
+        font-size: 14px;
+        font-weight: bold;
+        color: #6c757d;
+    }
+
+    .info-value {
+        font-size: 16px;
+        color: #333;
+    }
+    
+    .locked-content {
+        filter: blur(5px);
+        opacity: 0.6;
+    }
+    
+    .subscription-box {
+        background: #fffae6;
+        padding: 20px;
+        border-radius: 12px;
+        transition: 0.3s;
+    }
+
+    .subscription-box:hover {
+        background: #ffe5b4;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/partials/investor_list.blade.php ENDPATH**/ ?>

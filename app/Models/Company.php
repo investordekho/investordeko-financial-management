@@ -29,45 +29,50 @@ class Company extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Define relationship with ConcernedPerson model (one-to-one)
+    // Define relationship with ConcernedPerson model (one-to-one)-===============
     public function concernedPerson()
     {
         return $this->hasOne(ConcernedPerson::class);
     }
 
-    // Define relationship with Founder model (one-to-many)
+    // Define relationship with Founder model (one-to-many)-============
     public function founders()
     {
         return $this->hasMany(Founder::class);
     }
 
-    // Define relationship with FundRequirement model (one-to-many)
+    // Define relationship with FundRequirement model (one-to-many)-=============
     public function fundRequirements()
     {
         return $this->hasMany(FundRequirement::class);
     }
 
-    // Define relationship with PreviousRound model (one-to-many)
+    // Define relationship with PreviousRound model (one-to-many)-------===
     public function previousRounds()
     {
         return $this->hasMany(PreviousRound::class);
     }
 
-    // Define relationship with OtherLink model (one-to-many)
+    // Define relationship with OtherLink model (one-to-many)------========
     public function otherLinks()
     {
         return $this->hasMany(OtherLink::class);
     }
 
-    // Define relationship with Attachment model (one-to-many)
+    // Define relationship with Attachment model (one-to-many) ================== 
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
     }
 
-    // Define relationship with ReferralSource model (one-to-one)
+    // Define relationship with ReferralSource model (one-to-one) -===============================
     public function referralSource()
     {
         return $this->hasOne(ReferralSource::class);
+    }
+    // Define relationship with InvesteeGuidanceNeeded model (one-to-many) -===============================
+    public function guidanceNeeded()
+    {
+        return $this->hasMany(investee_guidance_needed_model::class);
     }
 }

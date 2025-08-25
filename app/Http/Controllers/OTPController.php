@@ -5,39 +5,59 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Validation\ValidatesRequests; // Add this line
-
+use App\Services\OtpService;
 class OTPController extends Controller
 {
     use ValidatesRequests; // Include this trait to enable validation
-    
-    public function showOtpForm()
+    protected $otpService;
+
+    public function __construct(OtpService $otpService)
+    {
+        $this->otpService = $otpService;
+    }
+
+    public function showForm()
     {
         return view('auth.verify_otp');
     }
 
-    public function verifyOtp(Request $request)
+
+    
+    public function verify(Request $request)
     {
-        // Use validate() method for OTP validation
-        $this->validate($request, [
-            'otp' => 'required|string',
+        $request->validate([
+            'otp' => 'required|digits:6',
         ]);
 
-        // Default OTP for testing
-        $otp = '123456';
+        if ($request->otp == session('otp')) {
 
-        // Check if the entered OTP matches
-        if ($request->otp == $otp) {
-            // Optionally, clear the OTP from the session or mark user as verified
-            session()->forget('otp'); // This line can be kept if using sessions
-            
-            // Redirect to login with success message
+            session()->forget('otp'); // Clear OTP from session
+           
+            // You can mark user as verified or logged in
+            // return response()->json(['message' => 'OTP verified successfully!']);
             return redirect()->route('login')->with('success', 'Your mobile number has been verified. Please log in.');
-        } else {
-            // Return an error if the OTP doesn't match
-            return back()->withErrors(['otp' => 'The entered OTP is incorrect. Please try again.']);
         }
+
+        // return response()->json(['message' => 'Invalid OTP'], 422);
+        return back()->withErrors(['otp'=> 'The entered OTP is incorrect. Please try again.']);
     }
+    // public function verify(Request $request)
+    // {
+    //     $request->validate([
+    //         'otp' => 'required|digits:6',
+    //     ]);
+
+    //     if ($request->otp == '123456') { // Replace with actual OTP verification logic
+
+    //         // session()->forget('otp'); // Clear OTP from session
+           
+    //         // You can mark user as verified or logged in
+    //         // return response()->json(['message' => 'OTP verified successfully!']);
+    //         return redirect()->route('login')->with('success', 'Your mobile number has been verified. Please log in.');
+    //     }
+
+    //     // return response()->json(['message' => 'Invalid OTP'], 422);
+    //     return back()->withErrors(['otp'=> 'The entered OTP is incorrect. Please try again.']);
+    // }
 }
-
-
 
