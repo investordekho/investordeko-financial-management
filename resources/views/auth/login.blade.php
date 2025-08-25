@@ -18,6 +18,12 @@
                         </ul>
                     </div>
                 @endif
+                <!-- Display Success Message -->
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
                 <form method="POST" action="{{ route('login') }}"> <!-- Laravel login route -->
                     @csrf <!-- CSRF token is required -->
