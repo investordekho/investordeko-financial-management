@@ -36,6 +36,7 @@ use App\Http\Controllers\SupportQueryInSubscription;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\SearchControllerOnSubscription;
 
 // Home, About, Services, Contact Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -69,7 +70,8 @@ Route::get('/banker/investee/search', [DashboardController::class, 'searchInvest
 Route::get('/banker/investor/search', [DashboardController::class, 'searchInvestor'])->name('banker.investor.search');
 Route::post('/dashboard/investor/search', [InvestorDashboardController::class, 'search'])->name('investor.search');
 Route::post('/dashboard/investee/search', [InvesteeDashboardController::class, 'search'])->name('investee.search');
-
+//New  search for whole data
+// Route::post('/dashboard/investee/search',[SearchControllerOnSubscription::class,'search'])->name('investee.search');
 // Bank Form Routes
 Route::get('/form/bank', [FormController::class, 'showBankerForm'])->name('form.bank');
 Route::post('/form/bank-submit', [BankerController::class, 'store'])->name('form.bank.submit');
@@ -100,7 +102,8 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 // Subscription Routes
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');
-
+Route::get('/selectcategory', [SearchControllerOnSubscription::class, 'selectCategoryView'])->name('subscription2');
+Route::post('/investorintresteddata', [SearchControllerOnSubscription::class, 'sectorintresteddata'])->name('sectorintresteddata');
 // Dashboard Routes for different categories (protected by auth middleware)
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {

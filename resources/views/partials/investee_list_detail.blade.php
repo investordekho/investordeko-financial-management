@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div style="display:flex; justify-content:center; align-items: left; margin-bottom:10px; padding: 10px; box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); transaction 0.3s;">
+<div class="details-flex" style="display:flex; justify-content:center; align-items: left; margin-bottom:10px; padding: 10px; box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); transaction 0.3s;">
         <div class="sidebar">
         <!-- <h3>Profile</h3> -->
             <ul>
@@ -16,46 +16,7 @@
             </ul>
         </div>
 
-<div style="min-width: 850px; margin-left: 10px; background:rgb(255, 255, 255); border-radius: 12px; padding: 25px; box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); transition: 0.3s; border: 1px solid #ccc;">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="main-content" style="min-width: 850px; margin-left: 10px; background:rgb(255, 255, 255); border-radius: 12px; padding: 25px; box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); transition: 0.3s; border: 1px solid #ccc;">
 
                 <div style="background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); max-width: 1000px; margin: 30px auto; text-align: left; border-left: 5px solid #007bff;">
 
@@ -115,32 +76,6 @@
                 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <div style="background: linear-gradient(135deg, #f8f9fb, #ffffff); padding: 20px; border-radius: 10px; box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08); border: 1px solid #ddd; width: 100%; max-width: 100%; font-family: Arial, sans-serif; box-sizing: border-box; margin-bottom: 20px;">
             <h4 id="company-founders" style="font-size: 18px; color: #333; font-weight: bold; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 8px;" class="section">
                 🚀 Founders Information
@@ -185,49 +120,6 @@
                 @endforeach
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <!-- Concerned Person Section -->
                 <div style="background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border: 1px solid #e3e7ec; width: 100%; max-width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box;">
                     <h4 id="company-concerned-person" style="display: flex; align-items: center; font-size: 20px; color: #2d3e50; font-weight: bold; margin-bottom: 18px; border-bottom: 3px solid #007bff; padding-bottom: 8px;" class="section">
@@ -276,72 +168,6 @@
                     @endif
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <!-- <hr style="margin: 30px 0; border: none; height: 1px; background: linear-gradient(to right, rgb(229, 255, 0), rgb(212, 78, 0));"> -->
 
 <!-- Card Container -->
@@ -378,36 +204,6 @@
     </ul>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     <!-- <hr style="margin: 30px 0; border: none; height: 2px; background: linear-gradient(to right, #007bff, #00bcd4);"> -->
 
@@ -457,67 +253,6 @@
 
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <h4 id="company-other-links" style="text-align: center; font-size: 22px; font-weight: 600; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;" class="section"> 
     🔗 Other Links
 </h4>
@@ -559,17 +294,6 @@
 </ul>
 
 <!-- <hr style="margin: 30px 0; border: none; height: 2px; background: linear-gradient(to right, #ddd, transparent);"> -->
-
-
-
-
-
-
-
-
-
-
-
             <h4 id="company-attachments" style="text-align: center; font-size: 20px; color: #2c3e50; font-weight: 600; border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-bottom: 20px;" class="section">
                 📄 Attachments
             </h4>
@@ -614,31 +338,7 @@
     <li style="padding: 12px; margin-bottom: 8px; background-color: #f9f9f9; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);">
         <dfn style="font-size: 14px; color: #333;">{{ $investee->source_name ?? 'N/A' }}</dfn>
     </li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
+</ul>                
         </div>
     </div>
 
@@ -690,35 +390,23 @@
 
 
 
-
-
-
-
-
-
-
-
-    
-
 <style>
+    /* Sidebar Styling */
     .sidebar {
-    width: 300px;
-    /* background: linear-gradient(to bottom, #007bff, #0056b3); */
-    background: linear-gradient(to bottom, #007bff, #007bff);
-    padding: 10px;
-    border-radius: 12px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    position: sticky;
-    top: 80px; /* Adjust based on navbar height */
-    max-height: calc(100vh - 100px); /* Prevent overlap with footer */
-    overflow-y: auto; /* Enable scrolling if necessary */
-}
-
+        width: 300px;
+        background: linear-gradient(to bottom, #007bff, #007bff);
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        position: sticky;
+        top: 80px;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
 
     .sidebar h3 {
         text-align: center;
-        /* background: linear-gradient(to right, #174a7d, #13507a); */
         color: white;
         padding: 10px;
         border-radius: 8px;
@@ -727,70 +415,143 @@
     .sidebar ul {
         list-style: none;
         padding: 0;
-        /* margin-top: 10px; */
-        margin : 10px;
+        margin: 10px;
     }
 
     .sidebar ul li {
-        margin: 2px 2px;
+        margin: 2px;
         padding: 10px;
         border-radius: 8px;
         transition: 0.3s;
     }
 
-    /* .sidebar ul li a {
+    .sidebar ul li a {
         text-decoration: none;
         font-size: 14px;
-        color: #333;
+        color: white;
         display: block;
-        padding: 10px;
+        padding: 5px;
         border-radius: 8px;
         transition: all 0.3s;
-    } */
-
-    .sidebar ul li a {
-    text-decoration: none;
-    font-size: 14px; /* Increased font size */
-    color: white; /* Changed to white for better visibility */
-    display: block;
-    padding: 5px 5px;
-    border-radius: 8px;
-    transition: all 0.3s;
-    background: transparent;
-}
-    /* .sidebar ul li a:hover, .sidebar ul li a.active {
-        background: #174a7d;
-        color: white;
-    } */
-/* Sidebar Hover and Active */
-.sidebar ul li a:hover, 
-.sidebar ul li a.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    font-weight: bold;
-    border-radius: 5px;
-}
-    .main-content {
-    flex: 1;
-    min-width: 850px;
-    margin-left: 10px;
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 10px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
-    transition: 0.3s;
-    border: 1px solid #ccc;
-    padding-bottom: 50px; /* Ensure content does not overlap footer */
-}
-@media screen and (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        margin-bottom: 20px;
-        position: relative; /* Change from sticky to relative on small screens */
+        background: transparent;
     }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        font-weight: bold;
+    }
+
+    /* Main Content Styling */
     .main-content {
-        min-width: 100%;
-        margin-left: 0;
+        flex: 1;
+        width: 100%;
+        margin-left: 10px;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        border: 1px solid #ccc;
+        padding-bottom: 50px;
+        box-sizing: border-box;
+    }
+
+    /* Footer Styling */
+    .site-footer {
+        width: 100%;
+        clear: both;
+        background: #343a40;
+        color: white;
+        padding: 1.5rem 0;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+    }
+
+    .social-media {
+        z-index: 1000;
+    }
+
+    /* Mobile Responsive Styling */
+    @media screen and (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            margin-bottom: 15px;
+            position: relative;
+        }
+         #main-content {
+        min-width: 100% !important;
+        margin-left: 0 !important;
+        padding: 15px !important;
+    }
+
+        .sidebar ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            flex: 1 1 45%;
+            margin: 5px 0;
+        }
+
+        .sidebar ul li a {
+            background: #f1f1f1;
+            text-align: center;
+            font-size: 14px;
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        .main-content {
+            width: 100% !important;
+            margin-left: 0 !important;
+            padding: 15px !important;
+        }
+
+        .site-footer {
+            font-size: 0.9rem;
+            padding: 1rem 0.5rem;
+        }
+
+        .details-flex,
+        .founder-details,
+        .concerned-row,
+        .fund-round {
+            flex-direction: column !important;
+            gap: 10px;
+        }
+
+        .details-flex > div,
+        .founder-details > div,
+        .concerned-row > div,
+        .fund-round > div {
+            width: 100% !important;
+        }
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    @media screen and (max-width: 768px) {
+    .details-flex {
+        flex-direction: column !important;
+        padding: 10px !important;
+    }
+
+    .sidebar {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+
+    #main-content {
+        min-width: 100% !important;
+        margin-left: 0 !important;
+        padding: 15px !important;
     }
 }
 
