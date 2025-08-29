@@ -657,16 +657,17 @@ public function updateInvesteeForm(Request $request)
             'concerned_person_email' => 'required|email',
             'concerned_person_designation' => 'required|string',
             'concerned_person_phone' => 'required|string',
-            'founder_name.*' => 'required|string',
-            'founder_position.*' => 'required|string',
-            'founder_education.*' => 'required|string',
-            'founder_experience.*' => 'required|numeric',
-            'fund_usage.*' => 'required|string',
-            'fund_requirement.*' => 'required|numeric',
-            'previous_rounds.*' => 'required|string',
-            'investors.*' => 'required|string',
-            'amount_raised.*' => 'required|numeric',
-            'valuation.*' => 'required|numeric',
+            // 'founder_name.*' => 'required|string',
+            // 'founder_position.*' => 'required|string',
+            // 'founder_education.*' => 'required|string',
+            // 'founder_experience.*' => 'required|numeric',
+            'fund_usage.*' => 'nullable|string',
+            'fund_requirement.*' => 'nullable|numeric',
+            'fund_unit.*' => 'nullable|string', //
+            'previous_rounds.*' => 'nullable|string',
+            'investors.*' => 'nullable|string',
+            'amount_raised.*' => 'nullable|numeric',
+            'valuation.*' => 'nullable|numeric',
             'public_links.*' => 'nullable|url',
             'link_descriptions.*' => 'nullable|string',
             'fiscal_year.*' => 'nullable|integer|digits:4',
@@ -674,7 +675,7 @@ public function updateInvesteeForm(Request $request)
             'pitch_deck' => 'nullable|file|mimes:ppt,pptx,pdf,doc,docx|max:2048',
             'referral_source' => 'nullable|string',
             'website' => 'required|url',
-            'linkedin' => 'required|url',
+            'linkedin' => 'nullable|url',
             'guidance_needed.*' => 'nullable|string',
             'other_attachment' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048',
         ]);
@@ -702,6 +703,8 @@ public function updateInvesteeForm(Request $request)
 
         // Update founders
         $company->founders()->delete();
+       
+        if ($request->has('founder_name')) {
         foreach ($request->founder_name as $i => $name) {
             $company->founders()->create([
                 'name' => $name,
@@ -710,9 +713,12 @@ public function updateInvesteeForm(Request $request)
                 'experience' => $request->founder_experience[$i],
             ]);
         }
+        }
 
         // Update fund requirements
         $company->fundRequirements()->delete();
+        if ($request->has('fund_usage') && $request->has('fund_requirement')) {
+        
         foreach ($request->fund_usage as $i => $usage) {
             $company->fundRequirements()->create([
                 'usage' => $usage,
@@ -720,9 +726,11 @@ public function updateInvesteeForm(Request $request)
                 'unit' => $request->fund_unit[$i] ?? null,
             ]);
         }
+        }
 
         // Update previous rounds
         $company->previousRounds()->delete();
+        if($request->has('previous_rounds')){
         foreach ($request->previous_rounds as $i => $round) {
             $company->previousRounds()->create([
                 'round' => $round,
@@ -730,6 +738,7 @@ public function updateInvesteeForm(Request $request)
                 'amount_raised' => $request->amount_raised[$i],
                 'valuation' => $request->valuation[$i],
             ]);
+        }
         }
 
         // Update public links
@@ -747,8 +756,9 @@ public function updateInvesteeForm(Request $request)
         if ($request->delete_pitch_deck == '1' && $company->attachments()->where('type', 'pitch_deck')->exists() && $request->hasFile('pitch_deck')) {
             $company->attachments()->where('type', 'pitch_deck')->delete();
         }
+         $company->attachments()->where('type', 'pitch_deck')->delete();
         if ($request->hasFile('pitch_deck')) {
-            $company->attachments()->where('type', 'pitch_deck')->delete();
+           
             $pitchFile = $request->file('pitch_deck');
             $pitchName = Str::random(40) . '.' . $pitchFile->getClientOriginalExtension();
             $pitchFile->storeAs('attachments', $pitchName, 'public');

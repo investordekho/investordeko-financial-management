@@ -926,7 +926,6 @@
                 id="linkedin_link" 
                 name="linkedin" 
                 value="{{ old('linkedin' , $company->linkedin ?? '') }}" 
-                required
                 placeholder="https://www.linkedin.com/in/username"
             >
              <div id="linkedin_link_error" class="text-danger small"></div>
@@ -1396,7 +1395,7 @@
 
 
 
-<div id="founder-details-container" class="p-3 rounded-4 shadow-sm mb-4" style="background-color: #ffffff; border: 1px solid #e2e8f0;">
+<!-- <div id="founder-details-container" class="p-3 rounded-4 shadow-sm mb-4" style="background-color: #ffffff; border: 1px solid #e2e8f0;">
     <div class="row g-3 align-items-end">
         <div class="col-sm-12">
             <h3 class="fs-5 fw-semibold text-dark">Founder Details</h3>
@@ -1404,10 +1403,10 @@
 
         @forelse ($founders as $index => $founder)
             <div class="row g-3 align-items-end mb-2">
-                <input type="hidden" name="founder_ids[]" value="{{ $founder->id }}">
+                <input type="hidden" name="founder_ids[]" value="{{ $founder->id }}"> -->
 
                 <!-- Name -->
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <label class="required">Name <span class="text-danger">*</span></label>
                     <input type="text"
                         class="form-control @error('founder_name.' . $index) is-invalid @enderror"
@@ -1420,10 +1419,10 @@
                     @error('founder_name.' . $index)
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> -->
 
                 <!-- Position -->
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <label class="required">Position</label>
                     <select 
                         class="form-control @error('founder_position.' . $index) is-invalid @enderror"
@@ -1440,10 +1439,10 @@
                     @error('founder_position.' . $index)
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> -->
 
                 <!-- Education -->
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <label class="required">Qualification <span class="text-danger">*</span></label>
                     <input type="text"
                         class="form-control @error('founder_education.' . $index) is-invalid @enderror"
@@ -1456,10 +1455,10 @@
                     @error('founder_education.' . $index)
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> -->
 
                 <!-- Experience -->
-                <div class="col-md-3">
+                <!-- <div class="col-md-3">
                      {{-- JS live validation error --}}
                     <div class="invalid-feedback js-error" style="display: none;">
                         Experience must be greater than 0
@@ -1481,11 +1480,11 @@
                     @enderror
 
                    
-                </div>
+                </div> -->
 
 
                 <!-- Remove Button -->
-                <div class="col-md-1 text-end">
+                <!-- <div class="col-md-1 text-end">
                     @if($loop->first)
                         <button type="button" class="btn btn-success mt-2" onclick="addFounderField()">+</button>
                     @else
@@ -1497,7 +1496,7 @@
             <p class="text-muted">No founder details available.</p>
         @endforelse
     </div>
-</div>
+</div> -->
 
 
 
@@ -1636,7 +1635,7 @@
             <select 
                 class="form-control spaced-input @error("fund_usage.$index") is-invalid @enderror" 
                 name="fund_usage[]" 
-                required
+                
             >
                 <option value="" disabled {{ old("fund_usage.$index", $fund->usage) ? '' : 'selected' }}>Select Usage</option>
                 <option value="Capex" {{ old("fund_usage.$index", $fund->usage) == 'Capex' ? 'selected' : '' }}>Capex</option>
@@ -1661,14 +1660,12 @@
                     value="{{ old("fund_requirement.$index", $fund->amount) }}" 
                     min="1"
                     step="0.01"
-                    required
                     oninput="if (this.value < 1) this.value = ''"
                 >
                 
                 <select 
                     class="form-select spaced-input @error("fund_unit.$index") is-invalid @enderror" 
                     name="fund_unit[]" 
-                    required
                 >
                     <option value="crores" {{ old("fund_unit.$index", $fund->unit) == 'crores' ? 'selected' : '' }}>Cr</option>
                     <option value="lakhs" {{ old("fund_unit.$index", $fund->unit) == 'lakhs' ? 'selected' : '' }}>Lakh</option>
@@ -1699,7 +1696,6 @@
             <select 
                 class="form-control spaced-input @error('fund_usage.0') is-invalid @enderror" 
                 name="fund_usage[]" 
-                required
             >
                 <option value="" disabled selected>Select Usage</option>
                 <option value="Capex">Capex</option>
@@ -1720,7 +1716,6 @@
                     value="{{ old('fund_requirement.0') }}" 
                     min="1"
                     step="0.01"
-                    required
                     oninput="if (this.value < 1) this.value = ''"
                 >
                 
@@ -2068,7 +2063,7 @@
             <select 
                 class="form-select @error("previous_rounds.$index") is-invalid @enderror" 
                 name="previous_rounds[]" 
-                required
+                
             >
                 <option value="" disabled {{ old("previous_rounds.$index", $round->round) ? '' : 'selected' }}>Select Round</option>
                 @foreach(['Pre seed round', 'Seed Round', 'Series A round', 'Series B round', 'Series C round', 'Series D round', 'Series E and beyond'] as $option)
@@ -2087,7 +2082,6 @@
                 class="form-control @error("investors.$index") is-invalid @enderror" 
                 name="investors[]" 
                 value="{{ old("investors.$index", $round->investors) }}" 
-                required
                 pattern="^[A-Za-z\s\.\-&']+$"
                 title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                 oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
@@ -2107,7 +2101,6 @@
                 min="0.01" 
                 step="0.01" 
                 oninput="if (this.value < 0) this.value = ''"
-                required
             >
             @error("amount_raised.$index")
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -2126,7 +2119,6 @@
                 min="0.01" 
                 step="0.01" 
                 oninput="if (this.value <= 0) this.value = ''"
-                required
             >
             @error("valuation.$index")
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -2149,7 +2141,7 @@
             <select 
                 class="form-select" 
                 name="previous_rounds[]" 
-                required
+                
             >
                 <option value="" selected disabled>Select Round</option>
                 @foreach(['Pre seed round', 'Seed Round', 'Series A round', 'Series B round', 'Series C round', 'Series D round', 'Series E and beyond'] as $option)
@@ -2167,7 +2159,7 @@
                 pattern="^[A-Za-z\s\.\-&']+$"
                 title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                 oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
-                required
+                
             >
         </div>
 
@@ -2177,9 +2169,8 @@
             type="number" 
             class="form-control" 
             name="amount_raised[]" 
-            min="0.01" 
+    
             step="0.01" 
-            required
             oninput="if (this.value <= 0) this.value = ''"
             >
         </div>
@@ -2192,8 +2183,8 @@
                 name="valuation[]" 
                 min="0.01" 
                 step="0.01" 
-                required
-                oninput="if (this.value <= 0) this.value = ''" required
+                
+                oninput="if (this.value <= 0) this.value = ''" 
             >
         </div>
 
@@ -2504,8 +2495,8 @@
 
 
 function validateForm() {
-    const valuations = document.querySelectorAll('input[name="valuation[]"]');
-    const amountRaised = document.querySelectorAll('input[name="amount_raised[]"]');
+    // const valuations = document.querySelectorAll('input[name="valuation[]"]');
+    // const amountRaised = document.querySelectorAll('input[name="amount_raised[]"]');
     const founderExperience = document.querySelectorAll('input[name="founder_experience[]"]');
 
     const validateFieldGroup = (fields, message) => {
@@ -2527,8 +2518,8 @@ function validateForm() {
         });
     };
 
-    validateFieldGroup(valuations, "Valuation must be greater than 0");
-    validateFieldGroup(amountRaised, "Amount must be greater than 0");
+    // validateFieldGroup(valuations, "Valuation must be greater than 0");
+    // validateFieldGroup(amountRaised, "Amount must be greater than 0");
     validateFieldGroup(founderExperience, "Experience must be greater than 0");
 }
 

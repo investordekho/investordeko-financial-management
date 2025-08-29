@@ -10,7 +10,7 @@
 
     <!-- Page Title -->
     <title>@yield('title', 'InvestorDekho.in  ')</title>
-
+    <link rel="icon" type="image/png" href="{{ asset('img/Investor-logo.png') }}">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}"> <!-- Main App CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"> <!-- Custom CSS -->
