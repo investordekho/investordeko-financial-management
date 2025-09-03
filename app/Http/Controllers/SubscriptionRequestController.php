@@ -113,7 +113,8 @@ class SubscriptionRequestController extends Controller
     
         //send email to admin
         try{    
-        Mail::to('investordekhopoojad@gmail.com')->send(new \App\Mail\SubscriptionRequestMail([
+        // Mail::to('investordekhopoojad@gmail.com')->send(new \App\Mail\SubscriptionRequestMail([
+        Mail::to('info@investordekho.in')->send(new \App\Mail\SubscriptionRequestMail([
                     'name' => $request->input('name'),
                     'phone' => $request->input('phone'),
                     'payment_method' => $request->input('payment_method'),

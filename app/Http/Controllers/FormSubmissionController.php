@@ -436,7 +436,9 @@ public function store(Request $request)
                 : $request->guidance_needed,
         ];
         // mail to admin 
-        Mail::to('investordekhopoojad@gmail.com')->send(new GuidanceNeededInvesteeMail($subscriptionRequest));
+        // Mail::to('investordekhopoojad@gmail.com')->send(new GuidanceNeededInvesteeMail($subscriptionRequest));
+        Mail::to('support@investordekho.in')->send(new GuidanceNeededInvesteeMail($subscriptionRequest));
+
     }
     if ($user->category_id == 1) { 
        

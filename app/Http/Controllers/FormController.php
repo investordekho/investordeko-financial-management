@@ -850,7 +850,8 @@ public function updateInvesteeForm(Request $request)
 
     // Send email
     if ($request->guidance_needed) {
-        Mail::to('investordekhopoojad@gmail.com')->send(new GuidanceNeededInvesteeMail([
+        // Mail::to('investordekhopoojad@gmail.com')->send(new GuidanceNeededInvesteeMail([
+          Mail::to('support@investordekho.in')->send(new GuidanceNeededInvesteeMail([
             'user_id' => $user->id,
             'name' => $user->name,
             'phone' => $user->phone,

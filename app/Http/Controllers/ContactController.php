@@ -27,7 +27,8 @@ class ContactController extends Controller
     // Logic to handle the form submission, such as saving to the database or sending an email
 
     try {
-        Mail::to('investordekhopoojad@gmail.com')->send(new NavbarMail($request->all()));
+        // Mail::to('investordekhopoojad@gmail.com')->send(new NavbarMail($request->all()));
+        Mail::to('help@investordekho.in')->send(new NavbarMail($request->all()));
         return redirect()->back()->with('success', 'Your request has been submitted successfully.');
     } catch (\Exception $e) {
         return redirect()->back()->with('error', 'Error sending email: ' . $e->getMessage());

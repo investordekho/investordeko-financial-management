@@ -28,7 +28,7 @@
     <a class="btn btn-link" href="{{ route('services') }}">Public Offering</a>
     <a class="btn btn-link" href="{{ route('services') }}">Intellectual Property and Legal Services</a>
     <a class="btn btn-link" href="{{ route('services') }}">Compliance and Regulatory Services</a>
-    <a class="btn btn-link" href="{{ route('services') }}">Financial and Accounting Services</a>
+    <a class="btn btn-link" href="{{ route('services') }}">Financial and Accounting Advisory</a>
     <a class="btn btn-link" href="{{ route('services') }}">Others</a>
 </div>
 

@@ -858,11 +858,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         DSC
                     </a>
                 </li>
-                <li class="mb-2">
+                <!-- <li class="mb-2">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#onlineListingModal" class="text-decoration-none text-dark">
                         Online Listing
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -894,16 +894,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span class="me-2"><i class="fa-solid fa-file-alt text-secondary"></i></span> Compliance and Regulatory Services
             </h5>
             <ul class="service-list list-unstyled text-start w-100">
-                <li class="mb-2">
+                <!-- <li class="mb-2">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#incomeTaxModal" class="text-decoration-none text-dark">
                         Income Tax Return
                     </a>
-                </li>
-                <li class="mb-2">
+                </li> -->
+                <!-- <li class="mb-2">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#gstCustomsModal" class="text-decoration-none text-dark">
                         GST, TDS, PF, ESI, PT, Customs
                     </a>
-                </li>
+                </li> -->
                 <li class="mb-2">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#mcaRocWorksModal" class="text-decoration-none text-dark">
                         MCA & ROC Works
@@ -949,12 +949,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 margin-right: 0;
                 z-index: 2;
             ">
-                <img src="{{ asset('storage/screenshots/as2.jpg') }}" alt="Financial and Accounting Services" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
+                <img src="{{ asset('storage/screenshots/as2.jpg') }}" alt="Financial and Accounting Advisory" class="img-fluid w-100 h-100" style="object-fit:cover; border-radius:20px 20px 0 0;">
             </div>
             <div style="height: 140px;"></div> <!-- Spacer to push content below the image -->
             
             <h5 class="service-title mb-3 d-flex align-items-center justify-content-center" style="width: 100%;">
-                <span class="me-2"><i class="fa-solid fa-file-invoice-dollar text-success"></i></span> Financial and Accounting Services
+                <!-- <span class="me-2"><i class="fa-solid fa-file-invoice-dollar text-success"></i></span> Financial and Accounting Services -->
+                 <span class="me-2"><i class="fa-solid fa-file-invoice-dollar text-success"></i></span> Financial Services
             </h5>
             <ul class="service-list list-unstyled text-start w-100">
                  <li class="mb-2">
@@ -969,14 +970,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 </li>
                 <li class="mb-2">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#accountingModal" class="text-decoration-none text-dark">
-                        Accounting
+                        Accounting Advisory
                     </a>
                 </li>
-                <li class="mb-2">
+                <!-- <li class="mb-2">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#subsidyModal" class="text-decoration-none text-dark">
                         Subsidy
                     </a>
-                </li>
+                </li> -->
                 <li class="mb-2">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#taxPlanningModal" class="text-decoration-none text-dark">
                         Tax Planning
@@ -994,7 +995,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </li>
                 <li class="mb-2">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#tevStudyModal" class="text-decoration-none text-dark">
-                        TEV Study
+                        TEV Study Advisory
                     </a>        
                 </li>
             </ul>
