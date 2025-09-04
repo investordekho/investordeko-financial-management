@@ -11,11 +11,21 @@
 }
 
 /* Sidebar Styling */
-.sidebar {
+/* .sidebar {
     height: 100vh;
     position: sticky;
     top: 80px;
     background: linear-gradient(to bottom, #007bff, #0056b3);
+    padding: 20px;
+    overflow-y: auto;
+    border-radius: 8px;
+} */
+/* Sidebar Styling */
+.sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 80px;
+    background: linear-gradient(to bottom, #0e1217ff, #0b2c50ff);
     padding: 20px;
     overflow-y: auto;
     border-radius: 8px;
@@ -122,11 +132,21 @@ h2, h4 {
 }
 
 /* Sidebar Styling */
-.sidebar {
+/* .sidebar {
     height: 100vh;
     position: sticky;
     top: 80px;
     background: linear-gradient(to bottom, #007bff, #0056b3);
+    padding: 20px;
+    overflow-y: auto;
+    border-radius: 8px;
+} */
+    /* Sidebar Styling */
+.sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 80px;
+    background: linear-gradient(to bottom, #0e1217ff, #0b2c50ff);
     padding: 20px;
     overflow-y: auto;
     border-radius: 8px;
