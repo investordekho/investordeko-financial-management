@@ -204,7 +204,7 @@ public function store(Request $request)
         'link_descriptions.*' => 'nullable|string', //
         'pitch_deck' => 'nullable|file|mimes:ppt,pptx,pdf,doc,docx|max:2048', //
         'referral_source' => 'required|string', //
-        'website' => 'required|url', //
+        'website' => 'required', //
         'linkedin' => 'nullable|url', //
         'fiscal_year.*' => 'nullable|integer|digits:4', //
         'financials.*' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048', //

@@ -930,7 +930,7 @@
                 name="website" 
                 value="{{ old('website') }}" 
                 required
-                pattern="^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$"
+                pattern="^https?:\/\/([\w-]+\.)+[\w-]{2,}(\/.*)?$"
                 title="Please enter a valid domain (e.g., example.com)"
                 placeholder="example.com"
             >
@@ -2956,7 +2956,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script>
+ <script>
 document.addEventListener('DOMContentLoaded', function () {
     let websiteInput = document.getElementById('company_website');
     let linkedinInput = document.getElementById('linkedin_link');
@@ -3032,7 +3032,47 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+</script> 
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let form = document.getElementById('investeeForm');
+    let websiteInput = document.getElementById('company_website');
+    let websiteError = document.getElementById('company_website_error');
+
+    // Strict regex for website (must start with http/https)
+    // const urlPattern = /^https?:\/\/([\w-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+    const urlPattern = /^(https?:\/\/|(www\.))([\w-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+
+    
+    // const urlPattern = /^(https?:\/\/)?(www\.)?([\w-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+
+
+
+    form.addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // validate website
+        if (!urlPattern.test(websiteInput.value.trim())) {
+            websiteError.textContent = 'Please enter a valid URL (e.g., https://www.example.com)';
+            websiteInput.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            websiteError.textContent = '';
+            websiteInput.classList.remove('is-invalid');
+        }
+
+        // block submission if invalid
+        if (!isValid) {
+            event.preventDefault();
+            websiteInput.focus();
+        }
+    });
+});
 </script>
+
+
 
 <script>
             function filterQualificationInput(input) {
