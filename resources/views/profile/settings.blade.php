@@ -144,8 +144,8 @@
         if (hide ==="false"){
           
             $inputname.removeAttribute('readonly');
-            $inputemail.removeAttribute('readonly');
-            $inputphone.removeAttribute('readonly');
+            // $inputemail.removeAttribute('readonly');
+            // $inputphone.removeAttribute('readonly');
         }
     };
 </script>

@@ -8,6 +8,7 @@ use App\Models\Subscriber;
 use App\Models\User;
 use App\Models\SubscriptionRequest;
 use App\Models\Payment_detail;
+use App\Models\UserAccess;
 use Illuminate\Support\Facades\Log;
 
 class InvesteeDashboardController extends Controller
@@ -35,7 +36,67 @@ class InvesteeDashboardController extends Controller
 
         return view('dashboards.investee', compact('investors', 'subscriber'));
     }
-    public function index()
+//     public function index()
+// {
+//     $userId = auth()->user()->id;
+//     $category_id = auth()->user()->category_id;
+//     $subscriber = Subscriber::where('user_id', $userId)->first();
+//     $formed_filled = auth()->user()->form_filled;
+
+//     if($formed_filled==0 && $category_id == 1){
+//         return redirect()->route('form.investee');
+//     }
+//     if($formed_filled == 0 && $category_id == 2){
+//         return redirect()->route('form.investor');
+//     }
+//     if($formed_filled == 0 && $category_id == 3){
+//         return redirect()->route('form.banker');
+//     }
+//     if($formed_filled == 0 && $category_id == 4){
+//         return redirect()->route('form.other');
+//     }
+//     // Fetch investors with related data
+//     $investorsQuery = Investor::with([
+//         'contactDetails', 'publicLinks', 'previousInvestments',
+//         'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
+//     ]);
+
+//         $subscriber_data = SubscriptionRequest::where('user_id', $userId)->first();
+//         if($subscriber && $subscriber->is_subscribed==1)
+//             {
+//                 if($subscriber_data && $subscriber_data->status){
+                    
+//                     if($subscriber_data->status== 'approved'){
+//                         $count = $subscriber_data->no_of_data;
+//                         if($category_id== '3' || $category_id=='4'){
+
+//                             $halfcount = $count%2;
+//                             if($halfcount==0){
+//                                 $count = $count/2;
+//                             }
+//                             else{
+//                                 $count = ($count/2)+0.5;
+//                             }
+//                         }
+//                         $investors = $investorsQuery->take($count)->get(); 
+//                     }
+//                     else{
+//                         $investors = $investorsQuery->take(3)->get();
+//                     }
+                
+//                 }
+//                 else{
+//                         $investors = $investorsQuery->take(3)->get();
+//                 }
+//             }
+//         else{
+//                 $investors = $investorsQuery->take(3)->get();
+//             }
+
+//     return view('dashboards.investee', compact('investors', 'subscriber'));
+// }
+
+   public function index()
 {
     $userId = auth()->user()->id;
     $category_id = auth()->user()->category_id;
@@ -54,11 +115,41 @@ class InvesteeDashboardController extends Controller
     if($formed_filled == 0 && $category_id == 4){
         return redirect()->route('form.other');
     }
-    // Fetch investors with related data
-    $investorsQuery = Investor::with([
-        'contactDetails', 'publicLinks', 'previousInvestments',
-        'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
-    ]);
+    // // Fetch investors with related data
+    // $investorsQuery = Investor::with([
+    //     'contactDetails', 'publicLinks', 'previousInvestments',
+    //     'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
+    // ]);
+    // $useraccessuser_id = UserAccess::where('user_id', $userId)->get();
+    // //take only those investors whose id is in the useraccess table
+    // $investorsQuery->whereIn('id', function ($query) use ($userId) {
+    //     $query->select('investor_id')
+    //           ->from('user_accesses')
+    //           ->where('user_id', $userId)
+    //           ->where('status', 'active');
+    // });
+    // //log the data we are getting from the useraccess table
+    
+    // Log::info('User Access Data for User ID ' . $userId . ':', $useraccessuser_id->toArray());
+
+$investorsQuery = Investor::with([
+    'contactDetails', 'publicLinks', 'previousInvestments',
+    'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
+]);
+
+// Fetch IDs from UserAccess table first
+$userAccessIds = UserAccess::where('user_id', $userId)
+                  ->where('status', 'approved')
+                  ->pluck('investor_id')
+                  ->toArray();
+
+Log::info('User Access IDs:', $userAccessIds);
+
+// Apply whereIn using the array
+$investorsQuery->whereIn('id', $userAccessIds);
+
+$investorsData = $investorsQuery->get();
+Log::info('Investors fetched:', $investorsData->toArray());
 
         $subscriber_data = SubscriptionRequest::where('user_id', $userId)->first();
         if($subscriber && $subscriber->is_subscribed==1)
@@ -76,8 +167,12 @@ class InvesteeDashboardController extends Controller
                             else{
                                 $count = ($count/2)+0.5;
                             }
+                            $investors = $investorsQuery->take($count)->get();
                         }
-                        $investors = $investorsQuery->take($count)->get(); 
+                         else{
+                            //take only those investors whose id is in the useraccess table
+                            $investors = $investorsQuery->get();
+                         }
                     }
                     else{
                         $investors = $investorsQuery->take(3)->get();
@@ -92,9 +187,15 @@ class InvesteeDashboardController extends Controller
                 $investors = $investorsQuery->take(3)->get();
             }
 
-    return view('dashboards.investee', compact('investors', 'subscriber'));
-}
+            $userAccess = UserAccess::where('user_id', $userId)
+                ->where('status', 'approved')
+                ->pluck('investor_id') // only IDs of approved investors
+                ->toArray();
 
+    // return view('partials.investor_list', ['investors' => $filteredInvestors, 'subscriber' => $subscriber, 'userAccess' => $userAccess]);
+
+    return view('dashboards.investee', compact('investors', 'subscriber', 'userAccess'));
+}
 
     /**
      * Search for investors based on filter criteria.
@@ -235,12 +336,17 @@ public function search(Request $request)
     // $limit = $subscriber && $subscriber->is_subscribed ? 10 : 3;
     $limit = $count;
     // Fetch limited investors first
-    $investorsQuery = Investor::query()
+    // $investorsQuery = Investor::query()
+    //     ->with('investmentDetails')
+    //     ->select('investors.*')
+    //     ->distinct()
+    //     ->take($limit);
+
+       $investorsQuery = Investor::query()
         ->with('investmentDetails')
         ->select('investors.*')
-        ->distinct()
-        ->take($limit);
-
+        ->distinct();
+        
     // Get the first 10 (or 3) investors before applying search filters
     $limitedInvestors = $investorsQuery->get();
 
@@ -281,30 +387,30 @@ public function search(Request $request)
 
       $investmentSizes = $request->input('investment_size', []);
 
-if (!empty($investmentSizes)) {
-    Log::info('Selected Investment Sizes from request:', $investmentSizes);
+        if (!empty($investmentSizes)) {
+            Log::info('Selected Investment Sizes from request:', $investmentSizes);
 
-    $dbSize = $this->parseInvestmentSizeToNumber($investmentDetails->investment_size ?? '');
+            $dbSize = $this->parseInvestmentSizeToNumber($investmentDetails->investment_size ?? '');
 
-    Log::info('Parsed investment size from DB:', ['input' => $investmentDetails->investment_size, 'numeric' => $dbSize]);
+            Log::info('Parsed investment size from DB:', ['input' => $investmentDetails->investment_size, 'numeric' => $dbSize]);
 
-    $matchesAny = collect($investmentSizes)->contains(function ($range) use ($dbSize) {
-        if ($range === '<1000000') {
-            return $dbSize < 1000000;
-        } elseif ($range === '1000000-5000000') {
-            return $dbSize >= 1000000 && $dbSize <= 5000000;
-        } elseif ($range === '5000000-10000000') {
-            return $dbSize > 5000000 && $dbSize <= 10000000;
-        } elseif ($range === '>10000000') {
-            return $dbSize > 10000000;
+            $matchesAny = collect($investmentSizes)->contains(function ($range) use ($dbSize) {
+                if ($range === '<1000000') {
+                    return $dbSize < 1000000;
+                } elseif ($range === '1000000-5000000') {
+                    return $dbSize >= 1000000 && $dbSize <= 5000000;
+                } elseif ($range === '5000000-10000000') {
+                    return $dbSize > 5000000 && $dbSize <= 10000000;
+                } elseif ($range === '>10000000') {
+                    return $dbSize > 10000000;
+                }
+                return false;
+            });
+
+            $match = $match && $matchesAny;
+
+            Log::info('Matching result:', ['match' => $match]);
         }
-        return false;
-    });
-
-    $match = $match && $matchesAny;
-
-    Log::info('Matching result:', ['match' => $match]);
-}
 
 
 
@@ -356,7 +462,12 @@ if (!empty($investmentSizes)) {
         $filteredInvestors = $filteredInvestors->sortByDesc(fn($inv) => $inv->investmentDetails->investment_size ?? 0)->values();
     }
 
-    return view('partials.investor_list', ['investors' => $filteredInvestors, 'subscriber' => $subscriber]);
+   $userAccess = UserAccess::where('user_id', $userId)
+                ->where('status', 'approved')
+                ->pluck('investor_id') // only IDs of approved investors
+                ->toArray();
+
+    return view('partials.investor_list', ['investors' => $filteredInvestors, 'subscriber' => $subscriber, 'userAccess' => $userAccess]);
 }
 
 // i want to fillter the investment size also add debugging logs to check the values falling through the filter in which the investment size is not matching and get finanl corrected values

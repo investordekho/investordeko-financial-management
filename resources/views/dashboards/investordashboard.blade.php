@@ -146,7 +146,7 @@
 
         <div class="row mb-4">
             <!-- Location Multi-select Dropdown -->
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="filter-box">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle form-control mt-4" type="button" id="locationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -445,7 +445,7 @@
             </div>
 
             <!-- Usage of Fund Multi-select Dropdown -->
-            <div class="col-md-2 mt-4">
+            <div class="col-md-3 mt-4">
                 <div class="filter-box">
                   
                     <div class="dropdown">
@@ -494,9 +494,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 mt-4 text-center">
-                <button type="button" class="btn btn-success" onclick="fetchResults()">Search Now</button>
-            </div>
+            <div class="container">
+    <div class="row justify-content-end">
+        <div class="col-md-2 mt-4">
+            <button type="button" class="btn btn-success w-100" onclick="fetchResults()">Search Now</button>
+        </div>
+    </div>
+</div>
+            
         </div>
 
     </form>
