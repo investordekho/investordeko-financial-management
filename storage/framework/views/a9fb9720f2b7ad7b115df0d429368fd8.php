@@ -1,8 +1,8 @@
 <!-- resources/views/terms.blade.php -->
 
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
     <div class="container">
         <h1 class="display-3 mb-4 animated slideInDown">Terms and Conditions</h1>
@@ -235,4 +235,6 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/terms.blade.php ENDPATH**/ ?>
