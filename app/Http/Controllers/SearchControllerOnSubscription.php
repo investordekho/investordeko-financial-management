@@ -192,6 +192,17 @@ function isOverlappingTenure2($selected, $normalized) {
 
  public function selectCategoryView(Request $request)
  {
+    $category_id = auth()->user()->category_id;
+    if($category_id == 1){
+        return view('areaofintrest.properties');    
+    }elseif($category_id == 2){
+        return view('areaofintrest.companies');
+    }elseif($category_id == 3){
+        return view('areaofintrest.funds');
+    }else{
+        return view('areaofintrest.properties');
+    }
+
     return view('areaofintrest.properties');
  }
  
@@ -1162,6 +1173,417 @@ private function matchesTenureRange(string $selected, ?int $months): bool
 //     return redirect()->route('home')->with('success', 'Your subscription will be activated soon.');
 // }
  
+// public function companycustomiseddata(Request $request)
+// {
+
+//     $locations = (array) $request->input('Location', []);
+//     // $sectors   = (array) $request->input('Sector', []);
+//     $incorporated_years = (array) $request->input('incorporatedList',[]);
+//     $usageoffunds     = (array) $request->input('fundUsageList',[]);
+    
+//     $user_id = auth()->id();
+//     $subscriptionRequest = SubscriptionRequest::where('user_id', $user_id);
+//     $data_no = $subscriptionRequest ? $subscriptionRequest->data_no : 0;
+
+//     // helper: normalize keywords
+//     $toKeywords = function (array $values): array {
+//         $stopwords = ['and', 'or', 'the', 'of', 'in', 'on', 'for', 'to', 'a', 'an'];
+//         $all = [];
+//         foreach ($values as $v) {
+//             $v = strtolower($v);
+//             $v = preg_replace('/[^a-z0-9 ]+/i', ' ', $v);
+//             $parts = array_filter(explode(' ', preg_replace('/\s+/', ' ', trim($v))));
+//             foreach ($parts as $p) {
+//                 if (strlen($p) >= 2 && !in_array($p, $stopwords)) $all[] = $p;
+//             }
+//         }
+//         return array_values(array_unique($all));
+//     };
+
+//     // $sectorKeywords   = $toKeywords($sectors);
+//     $locationKeywords = $toKeywords($locations);
+
+//     $companies = Company::get();
+    
+//     Log::info('Company Customised Request:', $request->all());
+//     Log::info('Normalized Filters', [
+//         'locations'          => $locations,
+//         'sectors'            => $sectors,
+//         'incorporated_years' => $incorporated_years,
+//         'usageoffunds'       => $usageoffunds,
+//         'data_no'            => $data_no,
+//     ]);
+
+//     if($data_no === 0){
+//         return redirect()->route('home')->with('info', 'No new data requested in this subscription.');
+//     }
+
+//     $data = $companies->filter(function ($comp) use ($locations, $sectors, $incorporated_years, $usageoffunds) {
+//         $details = $comp;
+//         $match = false;
+
+//         // Location match
+//         if (!empty($locations)) {
+//             $addr = strtolower($comp->address ?? '');
+//             foreach ($locations as $word) {
+//                 if (str_contains($addr, strtolower($word))) {
+//                     $match = true; break;
+//                 }
+//             }
+//         }
+
+//         // Sector match
+//         // if (!$match && !empty($sectors)) {
+//         //     $normalized = strtolower(preg_replace('/[^a-z0-9 ]+/i', ' ', $comp->sectors ?? ''));
+//         //     $dbTokens = array_filter(explode(' ', preg_replace('/\s+/', ' ', $normalized)));
+//         //     foreach ($sectors as $word) {
+//         //         if (in_array(strtolower($word), $dbTokens)) {
+//         //             $match = true; break;
+//         //         }
+//         //     }
+//         // }
+
+//         // Incorporated year match
+//         if (!$match && !empty($incorporated_years) && $details) {
+//             foreach ($incorporated_years as $yearRange) {
+//                 if ($this->matchesIncorporationRange($yearRange, $details->incorporated_in ?? null)) {
+//                     $match = true; break;
+//                 }
+//             }
+//         }
+
+//         // Usage of funds match
+//         if (!$match && !empty($usageoffunds) && $details) {
+//             $dbUsage = strtolower($details->fund_requirements->usage ?? '');
+//             foreach ($usageoffunds as $usage) {
+//                 if (str_contains($dbUsage, strtolower($usage))) {
+//                     $match = true; break;
+//                 }
+//             }
+//         }
+
+//         return $match;
+//     });
+
+//     $data = $data->take($data_no);
+//     foreach ($data as $comp) {
+//         UserAccess::firstOrCreate(
+//             ['user_id' => $user_id, 'company_id' => $comp->id],
+//             [
+//                 'status'     => 'pending',
+//                 'start_date' => now(),
+//                 'end_date'   => now()->addDays(360),
+//             ]
+//         );
+//     }
+// }
+// public function companycustomiseddata(Request $request)
+// {
+//     $locations          = (array) $request->input('Location', []);
+//     $incorporated_years = (array) $request->input('incorporatedList', []);
+//     $usageoffunds       = (array) $request->input('fundUsageList', []);
+
+//     $user_id = auth()->id();
+
+//     // Get latest subscription
+//     $subscriptionRequest = SubscriptionRequest::where('user_id', $user_id)->latest()->first();
+//     $data_no = $subscriptionRequest ? $subscriptionRequest->data_no : 0;
+
+//     if ($data_no === 0) {
+//         return redirect()->route('home')->with('info', 'No new data requested in this subscription.');
+//     }
+
+//     // Already assigned companies
+//     $alreadyAssignedIds = UserAccess::where('user_id', $user_id)->pluck('company_id')->toArray();
+
+//     // Base query for filtered companies
+//     $query = Company::query()->with('fund_requirements');
+
+//     // Location filter
+//     if (!empty($locations)) {
+//         $query->where(function ($q) use ($locations) {
+//             foreach ($locations as $loc) {
+//                 $q->orWhere('address', 'LIKE', '%' . $loc . '%');
+//             }
+//         });
+//     }
+
+//     // Incorporated year filter
+//     if (!empty($incorporated_years)) {
+//         $query->where(function ($q) use ($incorporated_years) {
+//             foreach ($incorporated_years as $yearRange) {
+//                 $q->orWhere(function ($subQ) use ($yearRange) {
+//                     [$start, $end] = explode('-', $yearRange); // e.g., "2000-2010"
+//                     $subQ->whereBetween('incorporated_in', [$start, $end]);
+//                 });
+//             }
+//         });
+//     }
+
+//     // Usage of funds filter
+//     if (!empty($usageoffunds)) {
+//         $query->whereHas('fund_requirements', function ($q) use ($usageoffunds) {
+//             foreach ($usageoffunds as $usage) {
+//                 $q->orWhere('usage', 'LIKE', '%' . $usage . '%');
+//             }
+//         });
+//     }
+
+//     // Exclude already assigned
+//     if (!empty($alreadyAssignedIds)) {
+//         $query->whereNotIn('id', $alreadyAssignedIds);
+//     }
+
+//     // Get filtered companies
+//     $filteredCompanies = $query->get();
+
+//     // Take up to data_no from filtered
+//     $finalCompanies = $filteredCompanies->take($data_no);
+
+//     // If not enough, backfill randomly
+//     $remainingCount = $data_no - $finalCompanies->count();
+//     if ($remainingCount > 0) {
+//         $randomCompanies = Company::whereNotIn('id', array_merge($alreadyAssignedIds, $finalCompanies->pluck('id')->toArray()))
+//             ->inRandomOrder()
+//             ->take($remainingCount)
+//             ->get();
+
+//         $finalCompanies = $finalCompanies->merge($randomCompanies);
+//     }
+
+//     // Assign to user
+//     foreach ($finalCompanies as $comp) {
+//         UserAccess::firstOrCreate(
+//             ['user_id' => $user_id, 'company_id' => $comp->id],
+//             [
+//                 'status'     => 'pending',
+//                 'start_date' => now(),
+//                 'end_date'   => now()->addDays(360),
+//             ]
+//         );
+//     }
+
+//     $count = $finalCompanies->count();
+//     $msg = $count < $data_no
+//         ? "Assigned {$count} companies (not enough unique records available to reach {$data_no})."
+//         : "Assigned {$count} companies as requested.";
+
+//     return redirect()->route('home')->with('success', $msg);
+// }
+
+public function companycustomiseddata(Request $request)
+{
+    Log::info("ppppppppppppppppppppppppppppppppppppppppppppddddddddddddddddddddddddddddddddddddFunction companycustomiseddata called-------------------------------------------------");
+    Log::info('CompanyCustomised Request:', $request->all());
+
+    // Get filters from request
+    $locations          = (array) $request->input('locations', []);
+    $incorporated_years = (array) $request->input('incorporated_in', []);
+    $usageoffunds       = (array) $request->input('fund_usage', []);
+    Log::info("Incorporated Years: " . json_encode($incorporated_years));
+    Log::info("Usage of Funds: " . json_encode($usageoffunds));
+    Log::info("Locations: " . json_encode($locations));
+    $user_id = auth()->id();
+    $subscriptionRequest = SubscriptionRequest::where('user_id', $user_id)->latest()->first();
+    $data_no = max(0, (int)($subscriptionRequest->no_of_data ?? 0));
+
+    Log::info("Data No from Subscription: " . $data_no);
+    if ($data_no === 0) {
+        return redirect()->route('home')->with('info', 'No new data requested in this subscription.');
+    }   
+    Log::info("Data No requested: " . $data_no);
+    // Helper: normalize keywords
+    $toKeywords = function (array $values): array {
+        $stopwords = ['and', 'or', 'the', 'of', 'in', 'on', 'for', 'to', 'a', 'an'];
+        $all = [];
+        foreach ($values as $v) {
+            $v = strtolower($v);
+            $v = preg_replace('/[^a-z0-9 ]+/i', ' ', $v);
+            $parts = array_filter(explode(' ', preg_replace('/\s+/', ' ', trim($v))));
+            foreach ($parts as $p) {
+                if (strlen($p) >= 2 && !in_array($p, $stopwords)) $all[] = $p;
+            }
+        }
+        return array_values(array_unique($all));
+    };
+
+    Log::info("Locations: " . json_encode($locations));
+    $locationKeywords = $toKeywords($locations);
+    $usageKeywords    = $toKeywords($usageoffunds);
+
+    Log::info('Normalized Filters', [
+        'locations'          => $locationKeywords,
+        'incorporated_years' => $incorporated_years,
+        'usageoffunds'       => $usageKeywords,
+        'data_no'            => $data_no,
+    ]);
+    Log::info("Location Keywords: " . json_encode($locationKeywords));
+    // Already assigned companies
+    $alreadyAssignedIds = UserAccess::where('user_id', $user_id)->pluck('company_id')->toArray();
+
+    // Get all companies
+    $companies = Company::with('fundRequirements')->get();
+    Log::info("Total companies in DB: " . $companies->count());
+    // Filter companies based on OR logic across all filters
+    // $filteredCompanies = $companies->filter(function ($comp) use ($locationKeywords, $incorporated_years, $usageKeywords) {
+    //     $match = false;
+
+    //     // Location match
+    //     if (!empty($locationKeywords)) {
+    //         $addr = strtolower($comp->address ?? '');
+    //         foreach ($locationKeywords as $word) {
+    //             if (str_contains($addr, $word)) { $match = true; break; }
+    //         }
+    //     }
+
+    //     // Incorporated year match
+    //     if (!$match && !empty($incorporated_years)) {
+    //         foreach ($incorporated_years as $yearRange) {
+    //             if ($this->matchesIncorporationRange($yearRange, $comp->incorporated_in ?? null)) {
+    //                 $match = true; break;
+    //             }
+    //         }
+    //     }
+
+    //     // Usage of funds match
+    //     if (!$match && !empty($usageKeywords) && $comp->requirements) {
+    //         $dbUsage = strtolower($comp->requirements->usage ?? '');
+    //         foreach ($usageKeywords as $usage) {
+    //             if (str_contains($dbUsage, $usage)) { $match = true; break; }
+    //         }
+    //     }
+
+    //     return $match;
+    // });
+    $filteredCompanies = $companies->filter(function ($comp) use ($locationKeywords, $incorporated_years, $usageKeywords) {
+    $match = false;
+    $matchReasons = [];
+
+    // Location match
+    if (!empty($locationKeywords)) {
+        $addr = strtolower($comp->address ?? '');
+        foreach ($locationKeywords as $word) {
+            if (str_contains($addr, $word)) {
+                $match = true;
+                $matchReasons[] = "Location match: '{$word}' found in '{$addr}'";
+                break;
+            }
+        }
+    }
+
+    // Incorporated year match
+    if (!$match && !empty($incorporated_years)) {
+        foreach ($incorporated_years as $yearRange) {
+            if ($this->matchesIncorporationRange($yearRange, $comp->incorporated_in ?? null)) {
+                $match = true;
+                $matchReasons[] = "Incorporated year match: '{$comp->incorporated_in}' matched with '{$yearRange}'";
+                break;
+            }
+        }
+    }
+
+    // Usage of funds match
+    if (!$match && !empty($usageKeywords) && $comp->fundRequirements->isNotEmpty()) {
+        foreach ($comp->fundRequirements as $req) {
+            $dbUsage = strtolower($req->usage ?? '');
+            foreach ($usageKeywords as $usage) {
+                if (str_contains($dbUsage, $usage)) {
+                    $match = true;
+                    $matchReasons[] = "Usage of fund match: '{$usage}' found in '{$dbUsage}'";
+                    break 2; // exit both loops
+                }
+            }
+        }
+    }
+
+    if ($match) {
+        \Log::info("Company ID {$comp->id} matched because: ", $matchReasons);
+    } else {
+        \Log::info("Company ID {$comp->id} did not match any filter.");
+    }
+
+    return $match;
+});
+
+    Log::info("Filtered companies count after applying filters: " . $filteredCompanies->count());
+    // Exclude already assigned companies
+    $filteredCompanies = $filteredCompanies->whereNotIn('id', $alreadyAssignedIds);
+    $allAvailablePool  = $companies->whereNotIn('id', $alreadyAssignedIds);
+
+    Log::info('Pool sizes after excluding already assigned', [
+        'filtered_available' => $filteredCompanies->count(),
+        'all_available'      => $allAvailablePool->count(),
+        'requested_new'      => $data_no,
+    ]);
+
+    // Pick up to data_no from filtered pool
+    $finalCompanies = $filteredCompanies->take($data_no);
+
+    // Backfill randomly if not enough filtered
+    if ($finalCompanies->count() < $data_no) {
+        $remaining = $data_no - $finalCompanies->count();
+        $extras = $allAvailablePool
+            ->whereNotIn('id', $finalCompanies->pluck('id')->all())
+            ->shuffle() // randomize
+            ->take($remaining);
+
+        $finalCompanies = $finalCompanies->merge($extras);
+    }
+
+    // Ensure we never exceed data_no
+    if ($finalCompanies->count() > $data_no) {
+        $finalCompanies = $finalCompanies->take($data_no);
+    }
+
+    // Determine subscription_request_id safely
+    $subscriptionRequestId = $subscriptionRequest instanceof \App\Models\SubscriptionRequest
+        ? $subscriptionRequest->id
+        : null;
+
+    // Assign companies to user
+    foreach ($finalCompanies as $comp) {
+        UserAccess::updateOrCreate(
+            ['user_id' => $user_id, 'company_id' => $comp->id],
+            [
+                'status'                 => 'pending',
+                'start_date'             => now(),
+                'end_date'               => now()->addDays(360),
+                'subscription_request_id'=> $subscriptionRequestId
+            ]
+        );
+    }
+    Log::info("Final Companies Assigned to User ID {$user_id}: " . $finalCompanies->pluck('id')->implode(', '));
+    $inserted = $finalCompanies->count();
+    // $msg = $inserted < $data_no
+    //     ? "{$inserted} companies (not enough unique records available to reach {$data_no})."
+    //     : "{$inserted} companies are requested.";
+    $msg = $inserted < $data_no 
+    ? "Your request has been sent. {$inserted} companies added (not enough unique records available to reach {$data_no})." 
+    : "Your request has been sent. {$inserted} companies are requested.";
+
+
+    Log::info('Final Companies Selected', [
+        'count' => $inserted,
+        'ids'   => $finalCompanies->pluck('id')->all(),
+    ]);
+
+    return redirect()->route('home')->with('success', $msg);
+}
+
+private function matchesIncorporationRange($compYear, $yearValue)
+{
+    // If user didn't provide a year, don't filter (always true)
+    if (empty($yearValue)) {
+        return true;
+    }
+
+    // If it's a single year (e.g. 2023, 2022 etc.)
+    if (is_numeric($yearValue) && strlen($yearValue) === 4) {
+        return (int)$compYear === (int)$yearValue;
+    }
+
+    return false; // If it's something invalid
+}
 
 
 

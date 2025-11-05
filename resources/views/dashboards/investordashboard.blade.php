@@ -3,41 +3,41 @@
 @section('content')
 
 <style>
-    /* CSS to make the dropdown scrollable */
-.scrollable-menu {
-    max-height: 200px; /* Set the maximum height for the dropdown */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Disable horizontal scrolling */
-}
+        /* CSS to make the dropdown scrollable */
+    .scrollable-menu {
+        max-height: 200px; /* Set the maximum height for the dropdown */
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: hidden; /* Disable horizontal scrolling */
+    }
 
-/* Optional: Add styling to the scrollbar */
-.scrollable-menu::-webkit-scrollbar {
-    width: 6px; /* Width of the scrollbar */
-}
+    /* Optional: Add styling to the scrollbar */
+    .scrollable-menu::-webkit-scrollbar {
+        width: 6px; /* Width of the scrollbar */
+    }
 
-.scrollable-menu::-webkit-scrollbar-thumb {
-    background-color: #888; /* Color of the scrollbar thumb */
-    border-radius: 10px; /* Rounded corners */
-}
+    .scrollable-menu::-webkit-scrollbar-thumb {
+        background-color: #888; /* Color of the scrollbar thumb */
+        border-radius: 10px; /* Rounded corners */
+    }
 
-.scrollable-menu::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Darker color on hover */
-}
+    .scrollable-menu::-webkit-scrollbar-thumb:hover {
+        background-color: #555; /* Darker color on hover */
+    }
 
-.bg-light {
-    --bs-bg-opacity: 1;
-    background-color: #e8eaed !important;
-    border: 0px;
-}
+    .bg-light {
+        --bs-bg-opacity: 1;
+        background-color: #e8eaed !important;
+        border: 0px;
+    }
 
-#searchBox, #locationDropdown, #natureOfBusinessDropdown, #incorporatedDropdown, #fundUsageDropdown {
-    color: #198754;
-    background-color: #ffffff;
-    font-family: robot;
-    font-weight: 400;
-    font-size: 18px;
-    border: 0px;
-}
+    #searchBox, #locationDropdown, #natureOfBusinessDropdown, #incorporatedDropdown, #fundUsageDropdown {
+        color: #198754;
+        background-color: #ffffff;
+        font-family: robot;
+        font-weight: 400;
+        font-size: 18px;
+        border: 0px;
+    }
 
 
 

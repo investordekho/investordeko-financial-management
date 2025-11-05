@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class FundRequirement extends Model
 {
     use HasFactory;
+
+    protected $table = 'fund_requirements';
     // Allow mass assignment for the listed fields
     protected $fillable = [
         'company_id',  // Add company_id here

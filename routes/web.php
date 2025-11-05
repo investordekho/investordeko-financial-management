@@ -86,7 +86,7 @@ Route::post('/filter/banker-investees', [BankerController::class, 'search'])->na
 
 // Order Routes
 Route::get('/order', [OrderController::class, 'showOrderPage'])->name('order');
-Route::post('/processOrder/{plan}/{totalprice}', [OrderController::class, 'processOrder'])->name('processOrder');
+Route::get('/processOrder/{plan}/{totalprice}', [OrderController::class, 'processOrder'])->name('processOrder');
 //=========================================================================
 // Profile Routes
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -102,8 +102,9 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 // Subscription Routes
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');
-Route::get('/selectcategory', [SearchControllerOnSubscription::class, 'selectCategoryView'])->name('subscription2');
+Route::get('/selectcategory', [SearchControllerOnSubscription::class, 'selectCategoryView'])->name('subscription2');      //2
 Route::post('/investorintresteddata', [SearchControllerOnSubscription::class, 'sectorintresteddata'])->name('sectorintresteddata');
+Route::post('/companycustomiseddata', [SearchControllerOnSubscription::class, 'companycustomiseddata'])->name('companycustomiseddata');
 // Dashboard Routes for different categories (protected by auth middleware)
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
@@ -143,7 +144,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/newbankerdashbaord/investorview',[NewBankController::class,'returninvestorview'])->name('newbankerdashboard.investorview');
     Route::get('/newbankerdashbaord/investeeview',[NewBankController::class,'returninvesteeview'])->name('newbankerdashboard.investeeview');
 
-    Route::post('/createsubscriptionrequest',[SubscriptionRequestController::class,'createsubscriptionrequest'])->name('createsubscriptionrequest');
+    Route::post('/createsubscriptionrequest',[SubscriptionRequestController::class,'createsubscriptionrequest'])->name('createsubscriptionrequest');  //1
     Route::get('/subscriptionrequest',[SubscriptionRequestController::class,'allrequests'])->name('subscriptionrequest');
     Route::put('/updatestatus/{id}',[SubscriptionRequestController::class,'updatestatus'])->name('subscriptionrequest.updatestatus');
     Route::get('/downloadcompanyexcel',[ExcelUploadController::class,'downloadInvesteeDataExcel'])->name('investee.exceldownload');
