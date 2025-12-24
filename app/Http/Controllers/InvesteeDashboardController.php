@@ -10,6 +10,7 @@ use App\Models\SubscriptionRequest;
 use App\Models\Payment_detail;
 use App\Models\UserAccess;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 
 class InvesteeDashboardController extends Controller
 {
@@ -36,67 +37,9 @@ class InvesteeDashboardController extends Controller
 
         return view('dashboards.investee', compact('investors', 'subscriber'));
     }
-//     public function index()
-// {
-//     $userId = auth()->user()->id;
-//     $category_id = auth()->user()->category_id;
-//     $subscriber = Subscriber::where('user_id', $userId)->first();
-//     $formed_filled = auth()->user()->form_filled;
 
-//     if($formed_filled==0 && $category_id == 1){
-//         return redirect()->route('form.investee');
-//     }
-//     if($formed_filled == 0 && $category_id == 2){
-//         return redirect()->route('form.investor');
-//     }
-//     if($formed_filled == 0 && $category_id == 3){
-//         return redirect()->route('form.banker');
-//     }
-//     if($formed_filled == 0 && $category_id == 4){
-//         return redirect()->route('form.other');
-//     }
-//     // Fetch investors with related data
-//     $investorsQuery = Investor::with([
-//         'contactDetails', 'publicLinks', 'previousInvestments',
-//         'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
-//     ]);
 
-//         $subscriber_data = SubscriptionRequest::where('user_id', $userId)->first();
-//         if($subscriber && $subscriber->is_subscribed==1)
-//             {
-//                 if($subscriber_data && $subscriber_data->status){
-                    
-//                     if($subscriber_data->status== 'approved'){
-//                         $count = $subscriber_data->no_of_data;
-//                         if($category_id== '3' || $category_id=='4'){
-
-//                             $halfcount = $count%2;
-//                             if($halfcount==0){
-//                                 $count = $count/2;
-//                             }
-//                             else{
-//                                 $count = ($count/2)+0.5;
-//                             }
-//                         }
-//                         $investors = $investorsQuery->take($count)->get(); 
-//                     }
-//                     else{
-//                         $investors = $investorsQuery->take(3)->get();
-//                     }
-                
-//                 }
-//                 else{
-//                         $investors = $investorsQuery->take(3)->get();
-//                 }
-//             }
-//         else{
-//                 $investors = $investorsQuery->take(3)->get();
-//             }
-
-//     return view('dashboards.investee', compact('investors', 'subscriber'));
-// }
-
-   public function index()
+   public function index2()
 {
     $userId = auth()->user()->id;
     $category_id = auth()->user()->category_id;
@@ -115,41 +58,24 @@ class InvesteeDashboardController extends Controller
     if($formed_filled == 0 && $category_id == 4){
         return redirect()->route('form.other');
     }
-    // // Fetch investors with related data
-    // $investorsQuery = Investor::with([
-    //     'contactDetails', 'publicLinks', 'previousInvestments',
-    //     'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
-    // ]);
-    // $useraccessuser_id = UserAccess::where('user_id', $userId)->get();
-    // //take only those investors whose id is in the useraccess table
-    // $investorsQuery->whereIn('id', function ($query) use ($userId) {
-    //     $query->select('investor_id')
-    //           ->from('user_accesses')
-    //           ->where('user_id', $userId)
-    //           ->where('status', 'active');
-    // });
-    // //log the data we are getting from the useraccess table
-    
-    // Log::info('User Access Data for User ID ' . $userId . ':', $useraccessuser_id->toArray());
+        $investorsQuery = Investor::with([
+        'contactDetails', 'publicLinks', 'previousInvestments',
+        'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
+    ]);
 
-$investorsQuery = Investor::with([
-    'contactDetails', 'publicLinks', 'previousInvestments',
-    'investmentDetails', 'referrals', 'guidanceNeeds', 'investorAddresses'
-]);
+    // Fetch IDs from UserAccess table first
+    $userAccessIds = UserAccess::where('user_id', $userId)
+                    ->where('status', 'approved')
+                    ->pluck('investor_id')
+                    ->toArray();
 
-// Fetch IDs from UserAccess table first
-$userAccessIds = UserAccess::where('user_id', $userId)
-                  ->where('status', 'approved')
-                  ->pluck('investor_id')
-                  ->toArray();
+    // Log::info('User Access IDs:', $userAccessIds);
 
-Log::info('User Access IDs:', $userAccessIds);
+    // Apply whereIn using the array
+    $investorsQuery->whereIn('id', $userAccessIds);
 
-// Apply whereIn using the array
-$investorsQuery->whereIn('id', $userAccessIds);
-
-$investorsData = $investorsQuery->get();
-Log::info('Investors fetched:', $investorsData->toArray());
+    $investorsData = $investorsQuery->get();
+    // Log::info('Investors fetched:', $investorsData->toArray());
 
         $subscriber_data = SubscriptionRequest::where('user_id', $userId)->first();
         if($subscriber && $subscriber->is_subscribed==1)
@@ -197,92 +123,216 @@ Log::info('Investors fetched:', $investorsData->toArray());
     return view('dashboards.investee', compact('investors', 'subscriber', 'userAccess'));
 }
 
-    /**
-     * Search for investors based on filter criteria.
-     */
-//    public function search(Request $request)
-// {
-//     // Get the logged-in user's ID
-//     $userId = auth()->user()->id;
+public function index(Request $request)
+{
+    $userId = auth()->user()->id;
+    $category_id = auth()->user()->category_id;
+    $subscriber = Subscriber::where('user_id', $userId)->first();
 
-//     // Check if the user is subscribed
-//     $subscriber = Subscriber::where('user_id', $userId)->first();
+    // Get the first 10 (or 3 if not subscribed) investors from the database
+    
+    // $limit = $subscriber && $subscriber->is_subscribed ? 10 : 3;
+    
+    
+    $count=0;
+    $subscriber_data = SubscriptionRequest::where('user_id', $userId)->first();
+    if($subscriber && $subscriber->is_subscribed==1)
+        {
+            if($subscriber_data && $subscriber_data->status){
+                
+                if($subscriber_data->status== 'approved'){
+                    $count = $subscriber_data->no_of_data;
+                    if($category_id== '3' || $category_id=='4'){
 
-//     // Start building the query with a join to investment_details table
-//     $query = Investor::query()->with('investmentDetails');
+                        $halfcount = $count%2;
+                        if($halfcount==0){
+                            $count = $count/2;
+                        }
+                        else{
+                            $count = ($count/2)+0.5;
+                        }
+                    }
+                    // $investors = $investorsQuery->take($count)->get(); 
+                }
+                else{
+                    $count=3;
+                    // $investors = $investorsQuery->take(3)->get();
+                }
+            
+            }
+            else{
+                $count=3;
+                    // $investors = $investorsQuery->take(3)->get();
+            }
+        }
+    else{
+            $count=3;
+            // $investors = $investorsQuery->take(3)->get();
+        }
 
-//     $limit = $subscriber && $subscriber->is_subscribed ? 10 : 3;
-//     $investors = $query->select('investors.*')->distinct()->take($limit)->get();
+    // $limit = $subscriber && $subscriber->is_subscribed ? 10 : 3;
+    $limit = $count;
+    // Fetch limited investors first
+    // $investorsQuery = Investor::query()
+    //     ->with('investmentDetails')
+    //     ->select('investors.*')
+    //     ->distinct()
+    //     ->take($limit);
 
-//     // Filter based on sectors (match any sector using LIKE)
-//     $sectors = $request->input('sector', []);
-//     if (!empty($sectors)) {
-//         $query->where(function ($q) use ($sectors) {
-//             foreach ($sectors as $sector) {
-//                 $q->orWhere('sectors_preferred', 'LIKE', '%' . $sector . '%');
-//             }
-//         });
-//     }
+       $investorsQuery = Investor::query()
+        ->with('investmentDetails')
+        ->select('investors.*')
+        ->distinct();
+        
+    // Get the first 10 (or 3) investors before applying search filters
+    $limitedInvestors = $investorsQuery->get();
 
-//     // Filter based on location (address)
-//     $locations = $request->input('location', []);
-//     if (!empty($locations)) {
-//         $query->where(function ($q) use ($locations) {
-//             foreach ($locations as $location) {
-//                 $q->orWhere('address', 'LIKE', '%' . $location . '%');
-//             }
-//         });
-//     }
+    // Now filter within these investors
+    $filteredInvestors = $limitedInvestors->filter(function ($investor) use ($request) {
+        $match = true;
 
-//     // Join with the investment_details table to filter based on investment size, tenure, and type
-//     $query->join('investment_details', 'investment_details.investor_id', '=', 'investors.id');
+        // Filter by sector
+        $sectors = $request->input('sector', []);
+        if (!empty($sectors)) {
+            $match = $match && collect($sectors)->contains(function ($sector) use ($investor) {
+                return str_contains($investor->sectors_preferred, $sector);
+            });
+        }
 
-//     // Filter based on investment size
-//     $investmentSizes = $request->input('investment_size', []);
-//     if (!empty($investmentSizes)) {
-//         $query->where(function ($q) use ($investmentSizes) {
-//             foreach ($investmentSizes as $size) {
-//                 $q->orWhere('investment_details.investment_size', 'LIKE', '%' . $size . '%');
-//             }
-//         });
-//     }
+        // Filter by location
+        $locations = $request->input('location', []);
+        if (!empty($locations)) {
+            $match = $match && collect($locations)->contains(function ($location) use ($investor) {
+                return str_contains($investor->address, $location);
+            });
+        }
 
-//     // Filter based on investment tenure
-//     $investmentTenures = $request->input('investment_tenure', []);
-//     if (!empty($investmentTenures)) {
-//         $query->where(function ($q) use ($investmentTenures) {
-//             foreach ($investmentTenures as $tenure) {
-//                 $q->orWhere('investment_details.investment_tenure', 'LIKE', '%' . $tenure . '%');
-//             }
-//         });
-//     }
+        // Filter by investment size, tenure, and type (from investmentDetails)
+        $investmentDetails = $investor->investmentDetails;
 
-//     // Filter based on investor type
-//     $investorTypes = $request->input('investor_type', []);
-//     if (!empty($investorTypes)) {
-//         $query->where(function ($q) use ($investorTypes) {
-//             foreach ($investorTypes as $type) {
-//                 $q->orWhere('investment_details.investor_type', 'LIKE', '%' . $type . '%');
-//             }
-//         });
-//     }
+        if ($investmentDetails) {
+            // $investmentSizes = $request->input('investment_size', []);
+            // if (!empty($investmentSizes)) {
+            //     $match = $match && collect($investmentSizes)->contains(function ($size) use ($investmentDetails) {
+            //         // Normalize the investment size to handle different formats
+            //         $size = strtolower(trim($size));
+            //         // Check if the investment size contains the specified size
 
-//     // Handle sorting
-//     $sort = $request->input('sort', null);
-//     if ($sort == 'A-Z') {
-//         $query->orderBy('investor_name', 'asc');
-//     } elseif ($sort == 'Z-A') {
-//         $query->orderBy('investor_name', 'desc');
-//     } elseif ($sort == 'investment_size_asc') {
-//         $query->orderBy('investment_details.investment_size', 'asc');
-//     } elseif ($sort == 'investment_size_desc') {
-//         $query->orderBy('investment_details.investment_size', 'desc');
-//     }
+            //         return str_contains($investmentDetails->investment_size, $size);
+            //     }); 
+            // }
 
-//     // Determine the number of results based on subscription status
-//     // Return a partial view containing only the investor list and subscriber data
-//     return view('partials.investor_list', compact('investors', 'subscriber'));
-// }
+      $investmentSizes = $request->input('investment_size', []);
+
+        if (!empty($investmentSizes)) {
+            // Log::info('Selected Investment Sizes from request:', $investmentSizes);
+
+            $dbSize = $this->parseInvestmentSizeToNumber($investmentDetails->investment_size ?? '');
+
+            // Log::info('Parsed investment size from DB:', ['input' => $investmentDetails->investment_size, 'numeric' => $dbSize]);
+
+            $matchesAny = collect($investmentSizes)->contains(function ($range) use ($dbSize) {
+                if ($range === '<1000000') {
+                    return $dbSize < 1000000;
+                } elseif ($range === '1000000-5000000') {
+                    return $dbSize >= 1000000 && $dbSize <= 5000000;
+                } elseif ($range === '5000000-10000000') {
+                    return $dbSize > 5000000 && $dbSize <= 10000000;
+                } elseif ($range === '>10000000') {
+                    return $dbSize > 10000000;
+                }
+                return false;
+            });
+
+            $match = $match && $matchesAny;
+
+            // Log::info('Matching result:', ['match' => $match]);
+        }
+
+
+
+
+                    
+
+
+
+
+
+
+
+             // ✅ Filter by investment tenure (Corrected)
+             $investmentTenures = $request->input('investment_tenure', []);
+             $normalizedTenure = $this->normalizeTenure($investmentDetails->investment_tenure);
+ 
+             if (!empty($investmentTenures)) {
+                 $match = $match && collect($investmentTenures)->contains(fn($selectedTenure) => $this->isOverlappingTenure($selectedTenure, $normalizedTenure));
+             }
+
+
+            
+            $investorTypes = $request->input('investor_type', []);
+            if (!empty($investorTypes) && $investmentDetails) {
+                $match = $match && collect($investorTypes)->contains(function ($type) use ($investmentDetails) {
+                    return str_contains($investmentDetails->investor_type, $type);
+                });
+            }
+            
+            
+
+        }
+
+        return $match;
+    });
+
+    // Convert collection back to an array for sorting
+    $filteredInvestors = $filteredInvestors->values();
+
+    // Apply sorting
+    $sort = $request->input('sort', null);
+    if ($sort == 'Investor Name (Ascending)') {
+        $filteredInvestors = $filteredInvestors->sortBy('investor_name')->values();
+    } elseif ($sort == 'Investor Name (Descending)') {
+        $filteredInvestors = $filteredInvestors->sortByDesc('investor_name')->values();
+    } elseif ($sort == 'Investment Size (Low to High)') {
+        $filteredInvestors = $filteredInvestors->sortBy(fn($inv) => $inv->investmentDetails->investment_size ?? 0)->values();
+    } elseif ($sort == 'Investment Size (High to Low)') {
+        $filteredInvestors = $filteredInvestors->sortByDesc(fn($inv) => $inv->investmentDetails->investment_size ?? 0)->values();
+    }
+
+   if (!Schema::hasTable('user_accesses')) {
+    $userAccess = [];
+} else {
+    $userAccess = UserAccess::where('user_id', $userId)
+        ->where('status', 'approved')
+        ->pluck('investor_id')
+        ->toArray();
+}
+
+
+                //save data in session investors ,subscriber and useraccess
+                // session(['investors' => $filteredInvestors]);
+                // session(['subscriber' => $subscriber]);
+                // session(['userAccess' => $userAccess]);
+                //lets just store investors id in session
+               
+                $investorIds = $filteredInvestors->pluck('id')->toArray();
+                $userCanAccessNew = array_values(array_diff($investorIds, $userAccess));
+                $userAccess = array_values($userAccess);
+                log::info('User Access IDs:', $userAccess);
+                log::info('User Can Access New Investors1111111111111111111111111111111111111111111111111111111111111:', $userCanAccessNew);
+                session()->forget(['investor_ids', 'userAccess', 'subscriber', 'max_investors_can_subscribe']);
+                session(['investor_ids' => $investorIds]);
+                session(['subscriber' => $subscriber]);
+                session(['userAccess' => $userAccess]);
+                session(['max_investors_can_subscribe' => $userCanAccessNew]);
+                session(['max_investees_can_subscribe' => 0]); // Initialize to 0
+                log::info('Investor IDs stored in session:', $investorIds);
+                log::info('index method called from investee dashboard--investeedashboardcontroller');
+    // Show subscription message if there are investors not in userAccess   
+    $showSubscribeMessage = false;
+     
+    return view('dashboards.investee', ['investors' => $filteredInvestors, 'subscriber' => $subscriber, 'userAccess' => $userAccess, 'showSubscribeMessage' => $showSubscribeMessage]);
+}
 
 
 
@@ -388,11 +438,11 @@ public function search(Request $request)
       $investmentSizes = $request->input('investment_size', []);
 
         if (!empty($investmentSizes)) {
-            Log::info('Selected Investment Sizes from request:', $investmentSizes);
+            // Log::info('Selected Investment Sizes from request:', $investmentSizes);
 
             $dbSize = $this->parseInvestmentSizeToNumber($investmentDetails->investment_size ?? '');
 
-            Log::info('Parsed investment size from DB:', ['input' => $investmentDetails->investment_size, 'numeric' => $dbSize]);
+            // Log::info('Parsed investment size from DB:', ['input' => $investmentDetails->investment_size, 'numeric' => $dbSize]);
 
             $matchesAny = collect($investmentSizes)->contains(function ($range) use ($dbSize) {
                 if ($range === '<1000000') {
@@ -409,7 +459,7 @@ public function search(Request $request)
 
             $match = $match && $matchesAny;
 
-            Log::info('Matching result:', ['match' => $match]);
+            // Log::info('Matching result:', ['match' => $match]);
         }
 
 
@@ -462,32 +512,39 @@ public function search(Request $request)
         $filteredInvestors = $filteredInvestors->sortByDesc(fn($inv) => $inv->investmentDetails->investment_size ?? 0)->values();
     }
 
-   $userAccess = UserAccess::where('user_id', $userId)
+    $userAccess = UserAccess::where('user_id', $userId)
                 ->where('status', 'approved')
-                ->pluck('investor_id') // only IDs of approved investors
+                ->pluck('investor_id')
                 ->toArray();
 
-    return view('partials.investor_list', ['investors' => $filteredInvestors, 'subscriber' => $subscriber, 'userAccess' => $userAccess]);
+    $investorIds = $filteredInvestors->pluck('id')->toArray();
+     $userCanAccessNew = array_diff($investorIds, $userAccess);
+    log::info('User Can Access New Investors 3', $userCanAccessNew);
+     session()->forget(['investor_ids', 'userAccess', 'subscriber', 'max_investors_can_subscribe']);
+               
+    session(['investor_ids' => $investorIds]);
+    session(['subscriber' => $subscriber]);
+    session(['userAccess' => $userAccess]);
+    session(['max_investors_can_subscribe' => $userCanAccessNew]);
+    session(['max_investees_can_subscribe' => 0]); // Initialize to 0
+    
+    // Show subscription message if there are investors not in userAccess
+    $showSubscribeMessage = (count($investorIds) > 0 && 
+                            count(array_diff($investorIds, $userAccess)) > 0 && $request->hasAny(['sector', 'location', 'investment_size', 'investment_tenure', 'investor_type']));
+
+    log::info('Investor IDs stored in session:', $investorIds);
+    log::info('search method called from investee dashboard--investeedaashboardcontroller');                            
+
+    return view('partials.investor_list', [
+        'investors' => $filteredInvestors, 
+        'subscriber' => $subscriber, 
+        'userAccess' => $userAccess,
+        'showSubscribeMessage' => $showSubscribeMessage
+    ]);
 }
 
-// i want to fillter the investment size also add debugging logs to check the values falling through the filter in which the investment size is not matching and get finanl corrected values
-// function categorizeInvestmentSize($size)
-// {
-//     $size = $this->toNumber($size);
-
-//     if ($size < 1000000) {
-//         return ['Less than ₹1M'];
-//     } elseif ($size >= 1000000 && $size < 5000000) {
-//         return ['₹1M - ₹5M'];
-//     } elseif ($size >= 5000000 && $size < 10000000) {
-//         return ['₹5M - ₹10M'];
-//     } else {
-//         return ['More than ₹10M'];
-//     }
-// }
-
 // Add this helper function to your controller:
-private function parseInvestmentSizeToNumber($value)
+function parseInvestmentSizeToNumber($value)
 {
     $value = strtoupper(str_replace(['₹', ' ', ','], '', $value));
 
@@ -583,11 +640,11 @@ function isOverlappingTenure($selected, $normalized) {
     $overlapping = ($selMin < $normMax) && ($normMin < $selMax); // Overlapping check
 
     // 🔹 Debug Output
-    if ($overlapping) {
-        \Log::info("Overlapping Tenure Found: {$selected} and {$normalized}");
-    } else {
-        \Log::info("No Overlap: {$selected} and {$normalized}");
-    }
+    // if ($overlapping) {
+    //     \Log::info("Overlapping Tenure Found: {$selected} and {$normalized}");
+    // } else {
+    //     \Log::info("No Overlap: {$selected} and {$normalized}");
+    // }
 
     return $overlapping;
 }
@@ -597,7 +654,7 @@ function isOverlappingTenure($selected, $normalized) {
 
 
 
-private function toNumber(string $value): float
+function toNumber(string $value): float
 {
     $value = str_replace(['₹', ',', ' '], '', strtoupper($value));
 
@@ -609,7 +666,7 @@ private function toNumber(string $value): float
 }
 
 
-public function investeedetaildashboard($id)
+ function investeedetaildashboard($id)
 {
      // Fetch the investor with the given ID
      $investor = Investor::with(['contactDetails','publicLinks', 'previousInvestments', 'investmentDetails','referrals','guidanceNeeds','public_links','investorAddresses'])->find($id);
@@ -621,4 +678,5 @@ public function investeedetaildashboard($id)
 
      return view('partials.investor_list_detail', compact('investor'));
 }
+
 }

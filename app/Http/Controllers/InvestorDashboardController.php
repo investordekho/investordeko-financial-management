@@ -10,7 +10,9 @@ use App\Models\LocationDetail;
 use App\Models\SubscriptionRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\UserAccess;
+use Illuminate\Support\Facades\Schema;
 class InvestorDashboardController extends Controller
 {
     /**
@@ -206,143 +208,63 @@ class InvestorDashboardController extends Controller
     });
 
     // ✅ Fetch approved access list (for checking if user has access)
+    // $userAccess = UserAccess::where('user_id', $userId)
+    //     ->where('status', 'approved')
+    //     ->pluck('company_id')
+    //     ->toArray();
+
+    
+     if (!Schema::hasTable('user_accesses')) {
+    $userAccess = [];
+} else {
     $userAccess = UserAccess::where('user_id', $userId)
-        ->where('status', 'approved')
-        ->pluck('company_id')
-        ->toArray();
+    ->where('status', 'approved')
+    ->pluck('company_id')
+    ->filter()
+    ->unique()
+    ->values()
+    ->toArray();
+}
+
+        $investee_ids = $filtered->pluck('id')->toArray();
+        $userCanAccessNew = array_diff($investee_ids, $userAccess);
+        Log::info('User Can Access New Investees2222222222222222222222222222222222222222222222222222:', $userCanAccessNew);
+        // save data in session 
+        session()->forget(['investee_ids', 'userAccess_investee_id', 'subscriber_investee',]);
+        session(['investee_ids' => $investee_ids]);
+        // session(['filtered_investees' => $filtered]);
+        session(['user_access_investee_id' => $userAccess]); 
+        session(['subscriber_investee' => $subscriber]);
+        session(['max_investees_can_subscribe' => ($userCanAccessNew) ? count($userCanAccessNew) : 0]);
+        session(['max_investors_can_subscribe' => 0]); // Initialize to 0
+        Log::info('max_investees_can_subscribe stored in session:-----------[[[[[[[[[[[[[[[[[[-----------[]]]]]]]]]]]]]]]]]]]]]]---------', ['max_investees_can_subscribe' => $userCanAccessNew]);
+        log::info('Investee IDs stored in session:', $investee_ids);
+        session()->forget(['investor_ids', 'userAccess', 'subscriber']);
+        log::info('search method called from investor dashboard from -----InvestorDashboardController');
+ // Show subscription message if there are investors not in userAccess
+ 
+ $hasFilters =
+    $request->filled('location') ||
+    $request->filled('nature_of_business') ||
+    $request->filled('incorporated_in') ||
+    $request->filled('fund_usage') ||
+    $request->filled('searchBox');
+
+    $showSubscribeMessageinvestee =
+    count($investee_ids) > 0 &&
+    count(array_diff($investee_ids, $userAccess)) > 0 &&
+    $hasFilters;
 
     return view('partials.investee_list', [
         'investees' => $filtered,
         'subscriber' => $subscriber,
-        'userAccess' => $userAccess
+        'userAccess' => $userAccess,
+        'showSubscribeMessageinvestee' => $showSubscribeMessageinvestee,
+        'data' => $request->all()
     ])->render();
 }
 
-    // public function search(Request $request)
-    // {
-    //     $userId = auth()->user()->id;
-    //     $category_id = auth()->user()->category_id;
-    //     $subscriber = Subscriber::where('user_id', $userId)->first();
-    
-    //     $address = $request->input('location', []);
-    //     $nature_of_business = $request->input('nature_of_business', []);
-    //     $incorporated_in = $request->input('incorporated_in', null);
-    //     // $incorporated_in = is_array($incorporated_in) ? $incorporated_in[0] : $incorporated_in;
-    //     $incorporated_in = is_array($incorporated_in) && count($incorporated_in) > 0 ? (int) $incorporated_in[0] : null;
-    //     $fund_usage = $request->input('fund_usage', null);
-    //     $searchbox = $request->input('searchBox', []);
-        
-
-    //     // dd($request->input('incorporated_in'), gettype($request->input('incorporated_in')));
-
-
-    //     $limit = 3; // default
-    //     $subscription_request = SubscriptionRequest::where('user_id', $userId)->first();
-    //     if ($subscriber && $subscriber->is_subscribed && $subscription_request && $subscription_request->status == 'approved') {
-    //         $limit = $subscription_request->no_of_data;
-        
-    //     if($category_id== '3' || $category_id=='4'){
-
-    //         $halfcount = $limit%2;
-    //         if($halfcount==0){
-    //             $limit = $limit/2;
-    //         }
-    //         else{
-    //             $limit = ($limit/2)-0.5;
-    //         }
-    //     }
-    //     }
-    //     else {
-    //         $limit = 3; // default limit for non-subscribers
-    //     }
-    //     $companyids = DB::table('user_accesses')->where('user_id', $userId)->pluck('company_id')->toArray();
-
-    //     if (!is_array($companyids) || empty($companyids)) {
-    //         // If not an array or empty, return empty result early
-    //         return view('partials.investee_list', [
-    //         'investees' => collect(),
-    //         'subscriber' => $subscriber
-    //         ])->render();
-    //     }
-    //     //check $companyids is array and not empty
-    //     // 1. Get the first N records only
-    //     // $limitedCompanies = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])
-    //     //     ->orderBy('id') // make sure the order is deterministic
-    //     //     ->take($limit)
-    //     //     ->get();
-    //      $limitedCompanies = Company::with(['user','concernedPerson','founders','fundRequirements','previousRounds','otherLinks','attachments','referralSource'])
-    //         ->whereIn('id', $companyids)
-    //         ->orderBy('id') // make sure the order is deterministic
-    //         ->get();
-    
-    //     // Apply filtering in the collection
-    //     $filtered = $limitedCompanies->filter(function ($company) use ($address, $nature_of_business, $incorporated_in, $fund_usage, $searchbox) {
-    //         // Match searchbox
-    //         if (!empty($searchbox)) {
-    //             $match = false;
-    //             $searchStr = strtolower($searchbox);
-    //             if (str_contains(strtolower($company->company_name), $searchStr) ||
-    //                 str_contains(strtolower($company->address), $searchStr) ||
-    //                 str_contains(strtolower($company->nature_of_business), $searchStr)) {
-    //                 $match = true;
-    //             }
-    //             if (!$match) return false;
-    //         }
-
-    //         // Match address
-    //         if (!empty($address) && !in_array($company->address, $address)) {
-    //             return false;
-    //         }
-
-    //         // Match nature_of_business
-    //         if (!empty($nature_of_business) && !in_array($company->nature_of_business, $nature_of_business)) {
-    //             return false;
-    //         }
-
-    //         // Match incorporation year
-    //         if (!empty($incorporated_in) && (int) $company->incorporated_in !== (int) $incorporated_in) {
-    //             return false;
-    //         }
-
-    //          // Match fund usage
-    //         // Match fund usage
-    //         // Match fund usage
-    //         if (!empty($fund_usage)) {
-    //             // Ensure $fund_usage is a string
-    //             $fundUsageStr = is_array($fund_usage) ? implode(' ', $fund_usage) : $fund_usage;
-
-    //             $hasUsage = $company->fundRequirements->contains(function ($fr) use ($fundUsageStr) {
-    //                 // Handle $fr->usage being array or string
-    //                 if (is_array($fr->usage)) {
-    //                     $usage = implode(' ', $fr->usage);
-    //                 } elseif (is_string($fr->usage)) {
-    //                     $usage = $fr->usage;
-    //                 } else {
-    //                     return false;
-    //                 }
-
-    //                 return strtolower($usage) === strtolower($fundUsageStr);
-    //             });
-
-    //             if (!$hasUsage) return false;
-    //         }
-
-
-    //         return true;
-    //     });
-
-    
-    //     return view('partials.investee_list', [
-    //         'investees' => $filtered,
-    //         'subscriber' => $subscriber
-    //     ])->render();
-    // }
-    
-    
-    
-    
-    
-
+  
     public function investordetaildashboard($id)
     {
         // $id = $request->input('id');

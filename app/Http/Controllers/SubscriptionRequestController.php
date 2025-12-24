@@ -129,16 +129,42 @@ class SubscriptionRequestController extends Controller
             return back()->with('error', 'Failed to send subscription request email.');
         }    
         
+        Subscriber::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'is_subscribed' => 1,
+                'subscription_start' => null,
+                'subscription_end' => null,
+            ]
+        );
         // return redirect()->route('home')->with('success','Subscription Request Created Successfully!');
         // retun subscription2 this view
-         return redirect()->route('subscription2')->with('success', 'Subscription request created successfully!');
+        //login user
+            $user = Auth::user();
+
+            if($user->category_id == 1){
+                return redirect()->route('subscription2')->with('success', 'Subscription request created successfully!');
+            }
+            if($user->category_id == 2){
+                return redirect()->route('sectorInterestedDatacompany')->with('success', 'Subscription request created successfully!');
+            } 
+            else{
+                return redirect()->route('sectorInterestedDataCombine')->with('success', 'Subscription request created successfully!');
+            }  
+        
     }
 
  
     public function updatesubScriptionRequest(Request $request)
     {
         // $isSubscripbed_data = Subscriber::where('user_id', Auth::user()->id)->first();
-
+        log::info('Update Subscription Request called by user ID: ' . Auth::user()->id);
+         $request->validate([
+            'id' => 'required|integer|exists:subscription_requests,id',
+            'status' => 'required|string|in:approved,rejected,pending',
+            'no_of_data' => 'required|numeric',
+            'plan_amount' => 'required|numeric',
+        ]);
         $updat_data_id = $request->input('id');
         $SubscriptionRequest = SubscriptionRequest::find($update_data_id);
         if($SubscriptionRequest)
@@ -185,47 +211,7 @@ class SubscriptionRequestController extends Controller
             return redirect()->back()->with('success', 'Subscription request updated successfully!');
         }
     }
-    // public function updatestatus(Request $request, $id)
-    // {
-    //     // Validate the request data
-    //     $request->validate([
-    //         'status' => 'required|string|in:approved,rejected,pending',
-    //     ]);
-
-    //     // Find the subscription request by ID
-    //     $subscriptionRequest = SubscriptionRequest::find($id);
-
-    //     if ($subscriptionRequest) {
-    //         // Update the status of the subscription request
-    //         $subscriptionRequest->status = $request->input('status');
-    //         $subscriptionRequest->save();
-    //         if($subscriptionRequest->status == 'approved'){
-    //             // $subscriber = Subscriber::where('user_id' , Auth::user()->id)->first();
-    //             $subscriber = Subscriber::where('user_id', $subscriptionRequest->user_id)->first();
-    //             if($subscriber)
-    //             {
-    //                 $subscriber->is_subscribed = 1;
-    //                 $subscriber->subscription_start = $subscriptionRequest->subscription_start;
-    //                 // $subscriber->subscription_end = $subscriptionRequest->subscription_end;
-    //                 $subscriber->save();
-    //             }
-    //             else
-    //             {
-    //                 $subscriber = new Subscriber();
-    //                 $subscriber->user_id = Auth::user()->id;
-    //                 $subscriber->is_subscribed = 1;
-    //                 $subscriber->subscription_start = $subscriptionRequest->subscription_start;
-    //                 // $subscriber->subscription_end = $subscriptionRequest->subscription_end;
-    //                 $subscriber->save();
-    //             }
-    //         }
-    //         // Redirect back with a success message
-    //         return redirect()->back()->with('success', 'Subscription request status updated successfully!');
-    //     } else {
-    //         // Redirect back with an error message if the subscription request is not found
-    //         return redirect()->back()->with('error', 'Subscription request not found!');
-    //     }
-    // }
+   
     public function updatestatus(Request $request, $id)
 {
     // Validate the request data

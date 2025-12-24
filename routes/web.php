@@ -102,8 +102,10 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 // Subscription Routes
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');
-Route::get('/selectcategory', [SearchControllerOnSubscription::class, 'selectCategoryView'])->name('subscription2');      //2
-Route::post('/investorintresteddata', [SearchControllerOnSubscription::class, 'sectorintresteddata'])->name('sectorintresteddata');
+// Route::get('/selectcategory', [SearchControllerOnSubscription::class, 'selectCategoryView'])->name('subscription2');      //2
+Route::get('/investorintresteddata', [SearchControllerOnSubscription::class, 'sectorintresteddata'])->name('subscription2');
+Route::get('/sectorInterestedDatacompany', [SearchControllerOnSubscription::class, 'sectorInterestedDatacompany'])->name('sectorInterestedDatacompany');
+Route::get('/sectorInterestedDataCombine', [SearchControllerOnSubscription::class, 'sectorInterestedDataCombine'])->name('sectorInterestedDataCombine');
 Route::post('/companycustomiseddata', [SearchControllerOnSubscription::class, 'companycustomiseddata'])->name('companycustomiseddata');
 // Dashboard Routes for different categories (protected by auth middleware)
 Route::middleware(['auth'])->group(function () {

@@ -199,13 +199,39 @@
 
 
  -->
+<!-- if (config('app.debug')) {
+    if (isset($userAccess)) {
+        echo '<pre style="background:#fffbe6;padding:10px;border:1px solid #ffdca8;color:#222;overflow:auto;">';
+        echo 'userAccess:' . PHP_EOL . e(var_export($userAccess, true));
+        echo '</pre>';
+    } else {
+        echo '<pre style="background:#fffbe6;padding:10px;border:1px solid #ffdca8;color:#222;">userAccess: (not set)</pre>';
+    }
+} -->
 @php 
     $isSubscribed = $subscriber?->is_subscribed ?? false;
+
+    $approvedInvestors = [];
+    $lockedInvestors = [];
+
+
+    foreach($investors as $investor) {
+        $approved = in_array($investor->id, $userAccess);
+
+        if($approved) {
+            $approvedInvestors[] = $investor;
+        } else {
+            $lockedInvestors[] = $investor;
+           
+        }
+    }
+
+    $sortedInvestors = array_merge($approvedInvestors, $lockedInvestors);
 @endphp
 
 @if($investors->count())
 <style>
-    .locked-content {
+    .locked-content { 
         filter: blur(5px);
         opacity: 0.6;
         pointer-events: none;
@@ -215,22 +241,26 @@
     }
 </style>
 
+@if($showSubscribeMessage)
+<div class="col-md-12 text-center mt-4">
+    <div class="alert subscription-box">
+        <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
+        <p>Subscribe now to view full details and get unlimited access to all search results.</p>
+        <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
+    </div>
+</div>
+@endif
 <div class="container mt-5">
     <div class="row">
-        @foreach ($investors as $investor)
+        @foreach ($sortedInvestors as $investor)
             @php
-                // Approved investor check
                 $approved = in_array($investor->id, $userAccess);
-                // Apply blur only if not approved and user not subscribed
-                $blurClass = !$approved ? 'locked-content' : '';
-
-                
+                $blurClass = (!$approved || !$isSubscribed) ? 'locked-content' : '';
             @endphp
-<!-- $blurClass = (!$approved && !$isSubscribed) ? 'locked-content' : ''; -->
+
             <div class="col-md-12 mb-4">
                 <div class="investor-card p-4 {{ $blurClass }}">
                     <div class="row align-items-center">
-
                         <!-- Profile Image -->
                         <div class="col-md-2 text-center">
                             <div class="profile-wrapper">
@@ -275,7 +305,6 @@
                                 </span>
                             @endif
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -290,6 +319,7 @@
 </div>
 @endif
 
+<!-- @if($showSubscribeMessage)
 <div class="col-md-12 text-center mt-4">
     <div class="alert subscription-box">
         <h5 class="fw-bold">🔒 Unlock Full Access!</h5>
@@ -297,6 +327,7 @@
         <a href="{{ route('subscription') }}" class="btn btn-warning btn-lg">🚀 Subscribe Now</a>
     </div>
 </div>
+@endif -->
 
 <style>
     .investor-card {
