@@ -42,7 +42,7 @@ class FormSubmissionController extends Controller
         'previous_rounds.*' => 'required|string',
         'investors.*' => 'required|string',
         'amount_raised.*' => 'required|numeric',
-        'valuation.*' => 'required|numeric',
+        'valuation.*' => 'nullable|numeric',
         'public_links.*' => 'nullable|url',
         'link_descriptions.*' => 'nullable|string',
         'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx',
@@ -75,15 +75,15 @@ class FormSubmissionController extends Controller
     ]);
 
     // Store founder details
-    foreach ($request->founder_name as $index => $name) {
-        Founder::create([
-            'company_id' => $company->id,
-            'name' => $name,
-            'position' => isset($request->founder_position[$index]) ? $request->founder_position[$index] : null,
-            'education' => isset($request->founder_education[$index]) ? $request->founder_education[$index] : null,
-            'experience' => isset($request->founder_experience[$index]) ? $request->founder_experience[$index] : null,
-        ]);
-    }
+    // foreach ($request->founder_name as $index => $name) {
+    //     Founder::create([
+    //         'company_id' => $company->id,
+    //         'name' => $name,
+    //         'position' => isset($request->founder_position[$index]) ? $request->founder_position[$index] : null,
+    //         'education' => isset($request->founder_education[$index]) ? $request->founder_education[$index] : null,
+    //         'experience' => isset($request->founder_experience[$index]) ? $request->founder_experience[$index] : null,
+    //     ]);
+    // }
 
     // Store fund requirements
     foreach ($request->fund_usage as $index => $usage) {
@@ -178,6 +178,7 @@ public function store(Request $request)
     $user->form_filled = true;
     $user->save();
 
+    try {
     $request->validate([
         'company_name' => 'required|string',
         'address' => 'required|string',
@@ -187,28 +188,32 @@ public function store(Request $request)
         'concerned_person_email' => 'required|email',
         'concerned_person_designation' => 'required|string',
         'concerned_person_phone' => 'required|string', //
-        'founder_name.*' => 'required|string', //
-        'founder_position.*'=>'required|string', //
-        'founder_education.*'=>'required|string', //
-        'founder_experience.*' => 'required|numeric', //
-        'fund_usage.*' => 'required|string', //
-        'fund_requirement.*' => 'required|numeric', //
-        'previous_rounds.*' => 'required|string', //
-        'investors.*' => 'required|string', //
-        'amount_raised.*' => 'required|numeric', //
-        'valuation.*' => 'required|numeric', //
+        // 'founder_name.*' => 'nullable|string', //
+        // 'founder_position.*'=>'nullable|string', //
+        // 'founder_education.*'=>'nullable|string', //
+        // 'founder_experience.*' => 'nullable|numeric', //
+        'fund_usage.*' => 'nullable|string', //
+        'fund_requirement.*' => 'nullable|numeric', //
+        'fund_unit.*' => 'nullable|string', //
+        'previous_rounds.*' => 'nullable|string', //
+        'investors.*' => 'nullable|string', //
+        // 'amount_raised.*' => 'nullable|numeric', //
+        'amount_raised.*' => 'nullable|numeric', //
+        'valuation.*' => 'nullable|numeric',
         'public_links.*' => 'nullable|url', //
         'link_descriptions.*' => 'nullable|string', //
-        'pitch_deck' => 'required|file|mimes:ppt,pptx,pdf,doc,docx|max:2048', //
+        'pitch_deck' => 'nullable|file|mimes:ppt,pptx,pdf,doc,docx|max:2048', //
         'referral_source' => 'required|string', //
-        'website' => 'required|url', //
-        'linkedin' => 'required|url', //
-        'fiscal_year.*' => 'required|integer|digits:4', //
-        'financials.*' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:2048', //
+        'website' => 'required', //
+        'linkedin' => 'nullable|url', //
+        'fiscal_year.*' => 'nullable|integer|digits:4', //
+        'financials.*' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048', //
         'guidance_needed.*' => 'nullable|string', //
         'other_attachment'=>'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048', //
     ]);
-
+} catch (\Illuminate\Validation\ValidationException $e) {
+    dd($e->errors());
+}
     // \Log::info('Financial Count:', ['count' => count($request->file('financials'))]);
     // foreach ($request->file('financials') as $index => $f) {
     //     \Log::info("File $index: " . $f->getClientOriginalName());
@@ -242,38 +247,68 @@ public function store(Request $request)
     ]);
 
     // Store founder details
-    foreach ($request->founder_name as $index => $name) {
-        Founder::create([
-            'company_id' => $company->id,
-            'name' => $name,
-            'position' => isset($request->founder_position[$index]) ? $request->founder_position[$index] : null,
-            'education' => isset($request->founder_education[$index]) ? $request->founder_education[$index] : null,
-            'experience' => isset($request->founder_experience[$index]) ? $request->founder_experience[$index] : null,
-        ]);
-    }
-
-    // Store fund requirements
+    // foreach ($request->founder_name as $index => $name) {
+    //     Founder::create([
+    //         'company_id' => $company->id,
+    //         'name' => $name,
+    //         'position' => isset($request->founder_position[$index]) ? $request->founder_position[$index] : null,
+    //         'education' => isset($request->founder_education[$index]) ? $request->founder_education[$index] : null,
+    //         'experience' => isset($request->founder_experience[$index]) ? $request->founder_experience[$index] : null,
+    //     ]);
+    // }
+    if ($request->has('fund_usage')) {
     foreach ($request->fund_usage as $index => $usage) {
         FundRequirement::create([
-            'company_id' => $company->id,
-            'usage' => $usage,
-            'requirement' => $request->fund_requirement[$index],
-            'unit' => isset($request->fund_unit[$index]) ? $request->fund_unit[$index] : null,
-            'amount' => isset($request->fund_requirement[$index]) ? $request->fund_requirement[$index] : 0,
-            // 'amount' => isset($request->amount[$index]) ? $request->amount[$index] : 0,
+            'company_id'  => $company->id ?? 0,
+            'usage'       => $usage ?: 'N/A',
+            'requirement' => $request->fund_requirement[$index] ?? 0,
+            'unit'        => $request->fund_unit[$index] ?? null,
+            'amount'      => $request->fund_requirement[$index] ?? 0,
         ]);
     }
+}
+
+    // Store fund requirements
+    // foreach ($request->fund_usage as $index => $usage) {
+    //     FundRequirement::create([
+    //         'company_id' => $company->id ?? 0,
+    //         'usage' => $usage ?? 'N/A',
+    //         'requirement' => $request->fund_requirement[$index] ? $request->fund_requirement[$index]:0,
+    //         'unit' => isset($request->fund_unit[$index]) ? $request->fund_unit[$index] : null,
+    //         'amount' => isset($request->fund_requirement[$index]) ? $request->fund_requirement[$index] : 0,
+    //         // 'amount' => isset($request->amount[$index]) ? $request->amount[$index] : 0,
+    //     ]);
+    // }
 
     // Store previous rounds
+    if ($request->has('previous_rounds')) {
     foreach ($request->previous_rounds as $index => $round) {
+        // ✅ Skip completely empty rows
+        if (empty($round) 
+            && empty($request->investors[$index]) 
+            && empty($request->amount_raised[$index]) 
+            && empty($request->valuation[$index])) {
+            continue;
+        }
+
         PreviousRound::create([
-            'company_id' => $company->id,
-            'round' => $round,
-            'investors' => isset($request->investors[$index]) ? $request->investors[$index] : '',
-            'amount_raised' => isset($request->amount_raised[$index]) ? $request->amount_raised[$index] : 0,
-            'valuation' => isset($request->valuation[$index]) ? $request->valuation[$index] : 0,
+            'company_id'    => $company->id,
+            'round'         => $round ?? '',
+            'investors'     => $request->investors[$index] ?? '',
+            'amount_raised' => $request->amount_raised[$index] ?? 0,
+            'valuation'     => $request->valuation[$index] ?? 0,
         ]);
     }
+}
+    // foreach ($request->previous_rounds as $index => $round) {
+    //     PreviousRound::create([
+    //         'company_id' => $company->id,
+    //         'round' => $round,
+    //         'investors' => isset($request->investors[$index]) ? $request->investors[$index] : '',
+    //         'amount_raised' => isset($request->amount_raised[$index]) ? $request->amount_raised[$index] : 0,
+    //         'valuation' => isset($request->valuation[$index]) ? $request->valuation[$index] : 0,
+    //     ]);
+    // }
 
     // Store other links
     if($request->public_links){
@@ -401,7 +436,9 @@ public function store(Request $request)
                 : $request->guidance_needed,
         ];
         // mail to admin 
-        Mail::to('investordekhopoojad@gmail.com')->send(new GuidanceNeededInvesteeMail($subscriptionRequest));
+        // Mail::to('investordekhopoojad@gmail.com')->send(new GuidanceNeededInvesteeMail($subscriptionRequest));
+        Mail::to('support@investordekho.in')->send(new GuidanceNeededInvesteeMail($subscriptionRequest));
+
     }
     if ($user->category_id == 1) { 
        

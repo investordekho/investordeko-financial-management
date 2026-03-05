@@ -75,15 +75,19 @@
                             @endif
 
                         </label>
-                        <input 
-                            type="number" 
-                            id="num_investors" 
-                            style="width: 100px; text-align: center;" 
-                            class="form-control" 
-                            min="1" 
-                            value="1" 
-                            onchange="calculatePrice()" 
-                            required>
+                       <input 
+                            type="number"
+                            id="num_investors"
+                            class="form-control"
+                            min="1"
+                            max="{{ $max_count }}"
+                            value="1"
+                            oninput="calculatePrice()"
+                            onchange="calculatePrice()"
+                            style="width:100px; text-align:center;"
+                            required
+                        >
+
                     </div>
 
                     <!-- Pricing Slabs -->
@@ -103,26 +107,50 @@
 </div>
 <div style="height: 20px;"></div>
 <script>
-    function calculatePrice() {
-        let numInvestors = parseInt(document.getElementById('num_investors').value);
-        let priceFirst10 = 999;
-        let priceAbove10 = 499;
-        let totalPrice = 0;
+ function calculatePrice() {
+    let input = document.getElementById('num_investors');
+    let maxValue = parseInt(input.max);
+    let numInvestors = parseInt(input.value);
 
-        if (numInvestors <= 10) {
-            totalPrice = numInvestors * priceFirst10;
-            document.getElementById('price_slab_up_to_10').style.display = "block";
-            document.getElementById('price_slab_above_10').style.display = "none";
-        } else {
-            totalPrice = numInvestors * priceAbove10;
-            document.getElementById('price_slab_up_to_10').style.display = "none";
-            document.getElementById('price_slab_above_10').style.display = "block";
-        }
-
-        document.getElementById('total_price').innerText = totalPrice;
-        let checkoutLink = "{{ route('order') }}";
-        document.getElementById('checkout_link').href = checkoutLink + '?investors=' + numInvestors + '&price=' + totalPrice;
+    // Allow user to type without forcing reset
+    if (isNaN(numInvestors)) {
+        return; // do nothing until a valid number is entered
     }
+
+    // Limit to max
+    if (numInvestors > maxValue) {
+        numInvestors = maxValue;
+        input.value = maxValue;
+    }
+
+    // Force minimum only AFTER valid number exists
+    if (numInvestors < 1) {
+        numInvestors = 1;
+        input.value = 1;
+    }
+
+    let priceFirst10 = 999;
+    let priceAbove10 = 499;
+    let totalPrice = 0;
+
+    if (numInvestors <= 10) {
+        totalPrice = numInvestors * priceFirst10;
+        document.getElementById('price_slab_up_to_10').style.display = "block";
+        document.getElementById('price_slab_above_10').style.display = "none";
+    } else {
+        totalPrice = numInvestors * priceAbove10;
+        document.getElementById('price_slab_up_to_10').style.display = "none";
+        document.getElementById('price_slab_above_10').style.display = "block";
+    }
+
+    document.getElementById('total_price').innerText = totalPrice;
+
+    let checkoutLink = "{{ route('order') }}";
+    document.getElementById('checkout_link').href =
+        checkoutLink + '?investors=' + numInvestors + '&price=' + totalPrice;
+}
+
+
 
     document.addEventListener('DOMContentLoaded', calculatePrice);
 </script>

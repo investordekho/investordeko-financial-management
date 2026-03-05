@@ -7,10 +7,25 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- ✅ Add Your SEO Tags Here -->
+    <!-- <title>InvestorDekho.in | Discover Top Investors & Startups in India</title> -->
+     <title>@yield('title', 'InvestorDekho.in | Discover Top Investors & Startups in India')</title>
+    <meta name="description" content="Explore thousands of investors, startups, and funding opportunities on InvestorDekho.in — India’s most trusted investor intelligence platform. Get curated investor insights, verified funding data, and powerful search tools to raise capital faster. Register free today!">
+    <meta name="keywords" content="Investor database India, Startup funding India, Angel investors India, VC database India, Private equity India, Startup data analytics">
+    <!-- <meta name="robots" content="index, follow"> -->
+     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta property="og:title" content="InvestorDekho.in | Discover Top Investors & Startups in India">
+    <meta property="og:description" content="InvestorDekho.in is India’s most trusted investor intelligence platform. Explore thousands of investors and startups.">
+    <meta property="og:image" content="{{ asset('img/Investor-logo.png') }}">
+    <meta property="og:url" content="{{ url('/') }}">
+
+
+
+ 
 
     <!-- Page Title -->
-    <title>@yield('title', 'InvestorDekho.in  ')</title>
-
+    <!-- <title>@yield('title', 'InvestorDekho.in  ')</title> -->
+    <link rel="icon" type="image/png" href="{{ asset('img/Investor-logo.png') }}">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}"> <!-- Main App CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"> <!-- Custom CSS -->
@@ -121,226 +136,226 @@
       .profile-dropdown .dropdown-toggle::after {
           display: none;
       }
-      
-    /* Adjust the dropdown container */
-#profileDropdownMenu {
-    position: absolute;
-    top: 100%;  /* Position it right below the toggle */
-    right: 0;  /* Align it to the right */
-    left: auto; /* Remove the left alignment */
-    min-width: 150px;  /* Set a minimum width */
-    max-width: 200px;  /* Set a maximum width */
-    background-color: #fff;  /* Background color */
-    border: 1px solid #ddd;  /* Light border */
-    border-radius: 5px;  /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* Light shadow */
-    z-index: 1000;  /* Ensure it appears above other content */
-}
+        
+        /* Adjust the dropdown container */
+        #profileDropdownMenu {
+            position: absolute;
+            top: 100%;  /* Position it right below the toggle */
+            right: 0;  /* Align it to the right */
+            left: auto; /* Remove the left alignment */
+            min-width: 150px;  /* Set a minimum width */
+            max-width: 200px;  /* Set a maximum width */
+            background-color: #fff;  /* Background color */
+            border: 1px solid #ddd;  /* Light border */
+            border-radius: 5px;  /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* Light shadow */
+            z-index: 1000;  /* Ensure it appears above other content */
+        }
 
-/* Adjust dropdown links */
-#profileDropdownMenu a {
-    color: #333;
-    padding: 10px 15px;
-    display: block;
-    white-space: nowrap;  /* Prevent text wrapping */
-    text-align: left;  /* Align text to the left */
-}
+        /* Adjust dropdown links */
+        #profileDropdownMenu a {
+            color: #333;
+            padding: 10px 15px;
+            display: block;
+            white-space: nowrap;  /* Prevent text wrapping */
+            text-align: left;  /* Align text to the left */
+        }
 
-/* Hover effect */
-#profileDropdownMenu a:hover {
-    background-color: #f8f9fa;
-    color: #007bff;
-}
+        /* Hover effect */
+        #profileDropdownMenu a:hover {
+            background-color: #f8f9fa;
+            color: #007bff;
+        }
 
-/* Profile icon alignment */
-#profileDropdown {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        /* Profile icon alignment */
+        #profileDropdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-#profileDropdown i {
-    font-size: 1.5rem;  /* Adjust icon size */
-    margin-right: 8px;  /* Space between icon and username */
-}
+        #profileDropdown i {
+            font-size: 1.5rem;  /* Adjust icon size */
+            margin-right: 8px;  /* Space between icon and username */
+        }
 
 
-#navbarNavDropdown {
-  display: none;
-  flex-direction: column;
-}
+        #navbarNavDropdown {
+        display: none;
+        flex-direction: column;
+        }
 
-#navbarNavDropdown.show {
-  display: flex;
-}
+        #navbarNavDropdown.show {
+        display: flex;
+        }
 
-#profileDropdownMenu {
-  display: none;
-}
+        #profileDropdownMenu {
+        display: none;
+        }
 
-#profileDropdownMenu.show {
-  display: block;
-}
+        #profileDropdownMenu.show {
+        display: block;
+        }
 
-#navbarToggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
+        #navbarToggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        }
 
-/* Show only on screens less than or equal to 768px */
-@media (max-width: 768px) {
-  #navbarToggle {
-    display: block;
-  }
+        /* Show only on screens less than or equal to 768px */
+        @media (max-width: 768px) {
+        #navbarToggle {
+            display: block;
+        }
 
-  /* Optional: stack the menu items for mobile */
-  #navbarNavDropdown {
-    flex-direction: column;
-  }
-}
+        /* Optional: stack the menu items for mobile */
+        #navbarNavDropdown {
+            flex-direction: column;
+        }
+        }
 
 
     </style>
     <style>
-      /* Ensure modal and backdrop appear above all content */
-      .modal-backdrop.show {
-          z-index: 2050 !important;
-      }
-      .modal {
-          z-index: 2060 !important;
-      }
-      body.modal-open {
-          overflow: hidden !important;
-      }
-      /* Optionally, ensure dropdown has lower z-index */
-      .dropdown-menu {
-          z-index: 2000;
-      }
+            /* Ensure modal and backdrop appear above all content */
+            .modal-backdrop.show {
+                z-index: 2050 !important;
+            }
+            .modal {
+                z-index: 2060 !important;
+            }
+            body.modal-open {
+                overflow: hidden !important;
+            }
+            /* Optionally, ensure dropdown has lower z-index */
+            .dropdown-menu {
+                z-index: 2000;
+            }
 
 
-   @media (max-width: 768px) {
-    .dropdown-menu {
-        width: 100% !important;
-        left: 0 !important;
-        transform: none !important;
-    }
+        @media (max-width: 768px) {
+            .dropdown-menu {
+                width: 100% !important;
+                left: 0 !important;
+                transform: none !important;
+            }
 
-    .dropdown-menu .row {
-        display: block;
-    }
+            .dropdown-menu .row {
+                display: block;
+            }
 
-    .dropdown-menu .col-sm-3.dropdown-menu-column {
-        width: 100% !important;
-        display: block;
-        margin-bottom: 1rem;
-    }
+        .dropdown-menu .col-sm-3.dropdown-menu-column {
+            width: 100% !important;
+            display: block;
+            margin-bottom: 1rem;
+        }
 
-    .dropdown-menu .dropdown-header {
-        font-weight: 600;
-        padding-top: 0.5rem;
-    }
+        .dropdown-menu .dropdown-header {
+            font-weight: 600;
+            padding-top: 0.5rem;
+        }
 
-    .dropdown-menu .dropdown-item {
-        padding-left: 1rem;
-    }
-}
-/* General Styles for Dropdown Menu */
-.dropdown-menu {
-    padding: 1rem;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+        .dropdown-menu .dropdown-item {
+            padding-left: 1rem;
+        }
+        }
+        /* General Styles for Dropdown Menu */
+        .dropdown-menu {
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-/* Hide toggle button in desktop view */
-#navbarToggle {
-    display: none;
-}
+        /* Hide toggle button in desktop view */
+        #navbarToggle {
+            display: none;
+        }
 
-/* Default dropdown columns */
-.dropdown-menu-column {
-    padding: 0.75rem;
-}
+        /* Default dropdown columns */
+        .dropdown-menu-column {
+            padding: 0.75rem;
+        }
 
-/* Dropdown items */
-.dropdown-item {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    color: #212529;
-    text-decoration: none;
-    display: block;
-}
+        /* Dropdown items */
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            color: #212529;
+            text-decoration: none;
+            display: block;
+        }
 
-.dropdown-item:hover {
-    background-color: #f0f0f0;
-    color: #000;
-}
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+            color: #000;
+        }
 
-/* Dropdown header */
-.dropdown-header {
-    font-weight: bold;
-    font-size: 1.05rem;
-    margin-bottom: 0.5rem;
-    color: #343a40;
-}
+        /* Dropdown header */
+        .dropdown-header {
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            color: #343a40;
+        }
 
-/* Mobile View Styles */
-@media (max-width: 768px) {
-    /* Show toggle button only in mobile view */
-    #navbarToggle {
-        display: inline-block;
-        background: none;
-        border: none;
-        font-size: 2rem;
-        cursor: pointer;
-        margin: 0.5rem;
-    }
+        /* Mobile View Styles */
+        @media (max-width: 768px) {
+            /* Show toggle button only in mobile view */
+            #navbarToggle {
+                display: inline-block;
+                background: none;
+                border: none;
+                font-size: 2rem;
+                cursor: pointer;
+                margin: 0.5rem;
+            }
 
-    .dropdown-menu {
-        width: 100% !important;
-        max-width: 600px;
-        margin: 0 auto;
-        left: 0 !important;
-        transform: none !important;
-        padding: 1rem;
-        border-radius: 8px;
-        background-color: #ffffff;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        animation: dropdownFade 0.3s ease-in-out;
-    }
+            .dropdown-menu {
+                width: 100% !important;
+                max-width: 600px;
+                margin: 0 auto;
+                left: 0 !important;
+                transform: none !important;
+                padding: 1rem;
+                border-radius: 8px;
+                background-color: #ffffff;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                animation: dropdownFade 0.3s ease-in-out;
+            }
 
-    .dropdown-menu .row {
-        flex-direction: column;
-        margin: 0;
-    }
+            .dropdown-menu .row {
+                flex-direction: column;
+                margin: 0;
+            }
 
-    .dropdown-menu-column {
-        margin-bottom: 1rem;
-        padding: 0.75rem;
-        background-color: #f8f9fa;
-        border: 1px solid #e0e0e0;
-        border-radius: 6px;
-    }
-}
+            .dropdown-menu-column {
+                margin-bottom: 1rem;
+                padding: 0.75rem;
+                background-color: #f8f9fa;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+            }
+        }
 
-/* Smooth animation */
-@keyframes dropdownFade {
-    0% {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        /* Smooth animation */
+        @keyframes dropdownFade {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
 
     </style>
-</head>
+
 
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -349,6 +364,29 @@
 </head>
 
 <body>
+<!-- SEO Intro (Hidden from users, visible to Google) -->
+<section class="homepage-intro seo-only">
+  <div>
+    <h1>InvestorDekho — India’s Leading Investor & Startup Data Platform</h1>
+    <p>
+      Explore thousands of verified investors, startups, and funding opportunities. 
+      InvestorDekho helps entrepreneurs and investors make smarter decisions 
+      with actionable insights and sector intelligence.
+    </p>
+  </div>
+</section>
+
+<style>
+  /* Hide visually but keep for SEO */
+  .seo-only {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>
 
 <!-- Top Header -->
 <div class="top-bar bg-light-blue py-2">
@@ -386,22 +424,25 @@
     <div class="container">
         <!-- Left Section: Logo -->
         <div class="d-flex align-items-center">
-            <a class="navbar-brand" href="{{ route('home') }}">
-               <img src="{{ asset('img/Investor-logo.png') }}" alt="Logo" style="height: 90px;">
-            </a>
-        </div>
+    <a class="navbar-brand d-flex flex-column align-items-center" href="{{ route('home') }}">
+        <img src="{{ asset('img/Investor-logo.png') }}" alt="Logo" style="height: 90px;"> <!-- smaller logo -->
+        <span style="font-size: 14px; font-weight: 500; color: #011a41; margin-top: 2px; text-align: center;">
+            JaiBharti Investor Insights Private Limited
+        </span>
+    </a>
+</div>
 
         <!-- Navbar Toggler for mobile -->
         <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button> -->
         <button id="navbarToggle">☰</button>
-<!-- The navbar collapse script is included at the bottom of the file after jQuery and Bootstrap JS are loaded -->
+    <!-- The navbar collapse script is included at the bottom of the file after jQuery and Bootstrap JS are loaded -->
 
 
         <!-- Middle Section: Menu -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" data-nosnippet>
 
                 @auth
                     <!-- <li class="nav-item">
@@ -449,8 +490,8 @@
                                     <h5><a href="{{ route('servicesperticular',['data'=>2] ) }}"><i class="fas fa-dollar-sign"></i> Public Offering</a></h5>
                                     <ul style="list-style: none;">
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoPlanningModal">IPO Planning</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoListingModal">IPO Listing</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#bonusSharesModal">Bonus Shares</a></li>
+                                        <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoListingModal">IPO Listing</a></li> -->
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#bonusSharesModal">Bonus Issue</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#rightsIssueModal">Rights Issue</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#esopPlanningModal">ESOP Planning</a></li>
 
@@ -459,11 +500,11 @@
                                 <div class="col-sm-3 dropdown-menu-column">
                                     <h5><a href="{{ route('servicesperticular',['data'=>3]) }}"><i class="fas fa-gavel"></i> Intellectual Property</a></h5>
                                     <ul style="list-style: none;">
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li>
+                                        <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li> -->
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#trademarkModal">Trademark</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#designRegistrationModal">Design Registration</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#dscModal">DSC</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#onlineListingModal">Online Listing</a></li>
+                                        <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#dscModal">DSC</a></li> -->
+                                        <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#onlineListingModal">Online Listing</a></li> -->
         
                                     </ul>
                                 </div>
@@ -472,8 +513,8 @@
                                 <div class="col-sm-3 dropdown-menu-column">
                                     <h5><a href="{{ route('servicesperticular',['data'=>4]) }}"><i class="fas fa-tools"></i> Compliance Services</a></h5>
                                     <ul style="list-style: none;">
-                                       <li><a href="#" data-bs-toggle="modal" data-bs-target="#incomeTaxModal">Income Tax Return</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#gstCustomsModal">GST, TDS, PF, ESI, PT, Customs</a></li>
+                                       <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#incomeTaxModal">Income Tax Return</a></li> -->
+                                        <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#gstCustomsModal">GST, TDS, PF, ESI, PT, Customs</a></li> -->
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#mcaRocWorksModal">MCA & ROC Works</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#appointmentResignationModal">Appointment & Resignation of Directors</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#annualReturnModal">Annual Return</a></li>
@@ -487,8 +528,9 @@
                                     <ul style="list-style: none;">
                                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#loanProposalModal">Loan Proposal</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#cmaDataModal">CMA Data</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#accountingModal">Accounting</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#subsidyModal">Subsidy</a></li>
+                                        <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#accountingModal">Accounting</a></li> -->
+                                        <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#subsidyModal">Subsidy</a></li> -->
+                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#taxPlanningModal">TEV Study & Advisory</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#taxPlanningModal">Tax Planning</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#capitalReStructuringModal">Capital Re-Structuring</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#projectReportModal">Project Report</a></li>
@@ -499,6 +541,7 @@
                                 <div class="col-sm-3 dropdown-menu-column">
                                     <h5><a href="{{ route('servicesperticular',['data'=>6]) }}"><i class="fa-solid fa-file-alt"></i> Other Services</a></h5>
                                     <ul style="list-style: none;">
+                                           <li><a href="#" data-bs-toggle="modal" data-bs-target="#structuredFinanceModal">Internal Audit</a></li>
                                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#structuredFinanceModal">Structured Finance</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#swsAgreementModal">Preparation of SWSA</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#shaAgreementModal">Preparation of Share Holders' Agreement (SHA)</a></li>
@@ -518,7 +561,7 @@
         <!-- Right Section: Login/Profile -->
         <!-- Right Section: Login/Profile -->
         <div class="col-auto d-flex justify-content-end">
-            <ul id="profileMenu" class="navbar-nav">
+            <ul id="profileMenu" class="navbar-nav" data-nosnippet>
                 @guest
                     <!-- Show Login Link if not authenticated -->
                     <li class="nav-item">
@@ -1344,6 +1387,29 @@
     </div>
 </div>
 
+<!-- Business Valuation Modal -->
+<div class="modal fade" id="businessValuationModal" tabindex="-1" aria-labelledby="businessValuationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="businessValuationModalLabel">Business Valuation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>We provide expert Business Valuation services to help companies, investors, and stakeholders determine the true economic value of a business. Our valuation process involves a detailed analysis of financial statements, market conditions, industry trends, and future growth prospects. We use globally recognized valuation methods, including Discounted Cash Flow (DCF), Comparable Company Analysis, and Precedent Transactions, to deliver accurate and reliable valuations for fundraising, mergers & acquisitions, financial reporting, and strategic decision-making.</p>
+                
+                <!-- Contact Us Button -->
+                <div class="text-center mt-4">
+                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Structured Finance Modal -->
 <div class="modal fade" id="swsAgreementModal" tabindex="-1" aria-labelledby="structuredFinanceModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -1409,6 +1475,29 @@
         </div>
     </div>
 </div>
+
+<!-- Financial Modelling Modal -->
+<div class="modal fade" id="financialModellingModal" tabindex="-1" aria-labelledby="financialModellingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="financialModellingModalLabel">Financial Modelling</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>We specialize in building comprehensive financial models that help businesses and investors make informed decisions. Our financial modelling services include creating dynamic Excel-based models to forecast revenue, expenses, cash flow, and profitability. We design models for budgeting, business planning, valuation, fundraising, mergers & acquisitions, and scenario analysis. Our models are structured, easy to update, and provide a clear understanding of financial performance and future projections, empowering strategic growth and investment planning.</p>
+                
+                <!-- Contact Us Button -->
+                <div class="text-center mt-4">
+                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Include jQuery before Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

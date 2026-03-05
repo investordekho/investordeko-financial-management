@@ -157,9 +157,9 @@
         </div>
 
         <div class="col-md-4">
-            <div class="service-card" onclick="showPopup('Financial and Accounting Services', financialAccountingContent)">
+            <div class="service-card" onclick="showPopup('Financial and Accounting Advisory', financialAccountingContent)">
                 <i class="fa-solid fa-calculator service-icon"></i>
-                <h2>Financial and Accounting Services</h2>
+                <h2>Financial and Accounting Advisory</h2>
             </div>
         </div>
 
@@ -367,7 +367,7 @@ if(data == 1){
 } else if(data == 4){
     showPopup('Compliance and Regulatory Services', complianceRegulatoryContent);
 } else if(data == 5){   
-    showPopup('Financial and Accounting Services', financialAccountingContent);
+    showPopup('Financial and Accounting Advisory', financialAccountingContent);
 } else if(data == 6){
     showPopup('Other Services', otherServicesContent);
 }

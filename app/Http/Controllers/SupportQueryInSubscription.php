@@ -33,7 +33,8 @@
             // Attempt to send email
             try {
                 \Log::info('Attempting to send support mail.');
-                Mail::to('investordekhopoojad@gmail.com')->send(new SupportSubscription($request->all()));
+                // Mail::to('investordekhopoojad@gmail.com')->send(new SupportSubscription($request->all()));
+                  Mail::to('support@investordekho.in')->send(new SupportSubscription($request->all()));
                 \Log::info('Support mail sent successfully.');
                 return redirect()->back()->with('success', 'Your request has been submitted successfully.');
             } catch (\Exception $e) {

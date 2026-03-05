@@ -42,7 +42,8 @@ public function submitContactForm(Request $request)
     // STEP 3: Attempt to send email
     try {
         \Log::info('Attempting to send service mail.');
-        Mail::to('investordekhopoojad@gmail.com')->send(new ServiceMail($request->all()));
+        // Mail::to('investordekhopoojad@gmail.com')->send(new ServiceMail($request->all()));
+          Mail::to('support@investordekho.in')->send(new ServiceMail($request->all()));
         \Log::info('Service mail sent successfully.');
         return redirect()->back()->with('success', 'Your request has been submitted successfully.');
     } catch (\Exception $e) {

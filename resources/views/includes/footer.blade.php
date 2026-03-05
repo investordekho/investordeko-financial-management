@@ -13,6 +13,11 @@
                         Mumbai – 400093
                     </p>
                     <br>
+                   <!-- Company Name with Icon (Inline CSS) -->
+                    <h5 style="color: #ffffff; font-size: 14px; font-weight: 600; letter-spacing: 0.5px; line-height: 1.3; text-align: left; margin-bottom: 1rem;">
+                        <i class="fas fa-building" style="color: #ffffff; font-size: 16px; vertical-align: middle; margin-right: 0.5rem;"></i>
+                        JaiBharti Investor Insights Private Limited
+                    </h5>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3" style="transform: scaleX(-1); -webkit-transform: scaleX(-1);"></i>+91 2231561436</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@financialmindss.com</p>
                     <div class="d-flex pt-2">
@@ -28,7 +33,7 @@
     <a class="btn btn-link" href="{{ route('services') }}">Public Offering</a>
     <a class="btn btn-link" href="{{ route('services') }}">Intellectual Property and Legal Services</a>
     <a class="btn btn-link" href="{{ route('services') }}">Compliance and Regulatory Services</a>
-    <a class="btn btn-link" href="{{ route('services') }}">Financial and Accounting Services</a>
+    <a class="btn btn-link" href="{{ route('services') }}">Financial and Accounting Advisory</a>
     <a class="btn btn-link" href="{{ route('services') }}">Others</a>
 </div>
 

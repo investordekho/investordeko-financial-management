@@ -912,7 +912,7 @@
         <div class="col-md-5">
             <label for="company_website" class="form-label required">Company Website <span class="text-danger">*</span></label>
           
-            <input 
+            <!-- <input 
                 type="url" 
                 class="form-control @error('website') is-invalid @enderror" 
                 id="company_website" 
@@ -922,7 +922,19 @@
                 pattern="^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$"
                 title="Please enter a valid website URL (e.g., https://example.com)"
                 placeholder="https://example.com"
+            > -->
+            <input 
+                type="text" 
+                class="form-control @error('website') is-invalid @enderror" 
+                id="company_website" 
+                name="website" 
+                value="{{ old('website') }}" 
+                required
+                pattern="^https?:\/\/([\w-]+\.)+[\w-]{2,}(\/.*)?$"
+                title="Please enter a valid domain (e.g., example.com)"
+                placeholder="example.com"
             >
+
 
               <div id="company_website_error" class="text-danger small"></div>
             @error('website')
@@ -939,7 +951,7 @@
                 id="linkedin_link" 
                 name="linkedin" 
                 value="{{ old('linkedin') }}" 
-                required
+                
                 placeholder="https://www.linkedin.com/in/username"
             >
              <div id="linkedin_link_error" class="text-danger small"></div>
@@ -1186,7 +1198,7 @@
 
 
 
-    <div id="founder-details-container" class="p-3 rounded-4 shadow-sm mb-4" style="background-color: #ffffff; border: 1px solid #e2e8f0;">
+    <!-- <div id="founder-details-container" class="p-3 rounded-4 shadow-sm mb-4" style="background-color: #ffffff; border: 1px solid #e2e8f0;">
         <div class="row g-3 align-items-end">
             <div class="col-sm-12">
                 <h3 class="fs-5 fw-semibold text-dark">Founder Details</h3>
@@ -1211,7 +1223,17 @@
 
             <div class="col-md-2">
                 <label id="labelinput" for="founder_position" class="required">Position</label>
-                <select 
+                <input   
+                    type="text" 
+                    class="form-control @error('founder_position.0') is-invalid @enderror" 
+                    name="founder_position[]" 
+                    value="{{ old('founder_position.0') }}" 
+                    required
+                    pattern="^[A-Za-z\s\.\-&']+$"
+                    title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                    oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
+                    > -->
+                <!-- <select 
                     class="form-control @error('founder_position.0') is-invalid @enderror" 
                     name="founder_position[]" 
                     required
@@ -1270,8 +1292,8 @@
                     <option value="Secretary" {{ old('founder_position.0') == 'Secretary'? 'selected':''}}>Secretary</option>
                     <option value="Supervisor" {{ old('founder_position.0') == 'Supervisor'? 'selected':''}}>Supervisor</option>
                     <option value="Vice President" {{ old('founder_position.0') == 'Vice President'? 'selected':''}}>Vice President</option>
-                </select>
-                @error('founder_position.0')
+                </select> -->
+                <!-- @error('founder_position.0')
                     <span class="text-danger">This Field is Required</span>
                 @enderror
             </div>
@@ -1295,20 +1317,16 @@
             </div>
 
             <div class="col-md-3">
-                 <!-- {{-- JS live validation error --}}
-                    <div class="invalid-feedback js-error" style="display: none;">
-                        Experience must be greater than 0
-                    </div> -->
                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years) <span style="color:red;">*</span></label>
                 <input 
                     type="number" 
                     class="form-control @error('founder_experience.0') is-invalid @enderror" 
                     name="founder_experience[]" 
                     value="{{ old('founder_experience.0') }}" 
-                    step="0.1"       
-                    min="0.1"
+                    step="1"       
+                    min="1"
                     max="100"
-                    oninput="if (this.value < 0.1) this.value = ''"
+                    oninput="if (this.value < 1) this.value = ''"
                     required
                 >
                 @error('founder_experience.0')
@@ -1327,7 +1345,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 
@@ -1384,7 +1402,7 @@
             <select 
                 class="form-control spaced-input @error('fund_usage.0') is-invalid @enderror" 
                 name="fund_usage[]" 
-                required
+                
             >
                 <option value="" disabled {{ old('fund_usage.0') ? '' : 'selected' }}>Select Usage</option>
                 <option value="Capex" {{ old('fund_usage.0') == 'Capex' ? 'selected' : '' }}>Capex</option>
@@ -1408,14 +1426,14 @@
                     value="{{ old('fund_requirement.0') }}" 
                     min="1"
                     step="0.01"
-                    required
+                    
                     oninput="if (this.value < 1) this.value = ''"
                 >
                 
                 <select 
                     class="form-select spaced-input @error('fund_unit.0') is-invalid @enderror" 
                     name="fund_unit[]" 
-                    required
+                    
                 >
                     <option value="crores" {{ old('fund_unit.0') == 'crores' ? 'selected' : '' }}>Cr</option>
                     <option value="lakhs" {{ old('fund_unit.0') == 'lakhs' ? 'selected' : '' }}>Lakh</option>
@@ -1669,11 +1687,11 @@
         <div class="row mb-3">
             
             <div class="col-md-2">
-                <label id="labelinput" for="previous_rounds" class="form-label required">Previous Round <span class="text-danger">*</span></label>
+                <label id="labelinput" for="previous_rounds" class="form-label">Previous Round <span class="text-danger">*</span></label>
                 <select 
                     class="form-select @error('previous_rounds.0') is-invalid @enderror" 
                     name="previous_rounds[]" 
-                    required
+                    
                 >
                     <option value="" disabled {{ old('previous_rounds.0') ? '' : 'selected' }}>Select Round</option>
                     <option value="Pre seed round" {{ old('previous_rounds.0') == 'Pre seed round' ? 'selected' : '' }}>Pre seed round</option>
@@ -1697,7 +1715,7 @@
                     class="form-control @error('investors.0') is-invalid @enderror" 
                     name="investors[]" 
                     value="{{ old('investors.0') }}" 
-                    required
+                    
                     pattern="^[A-Za-z\s\.\-&']+$"
                     title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
                     oninput="this.value = this.value.replace(/[^A-Za-z\s.\-&']/g, '')"
@@ -1708,43 +1726,54 @@
                 @enderror
             </div>
 
-           
-            <div class="col-md-3">
-                <label id="labelinput" for="amount_raised" class="form-label required">Amount Raised (in cr) <span class="text-danger">*</span></label>
+           <div class="col-md-3">
+        <label id="labelinput" for="amount_raised" class="form-label required">Amount Raised (in cr)</label>
+        <input 
+            type="number" 
+            class="form-control @error('amount_raised.0') is-invalid @enderror" 
+            name="amount_raised[]" 
+            step="0.01"
+            value="{{ old('amount_raised.0') }}" 
+        >
+        @error('amount_raised.0')
+            <div class="invalid-feedback">This Field is Required</div>
+        @enderror
+    </div>
+
+            <!-- <div class="col-md-3">
+                <label id="labelinput" for="amount_raised" class="form-label">Amount Raised (in cr)</label>
                 <input 
                     type="number" 
                     class="form-control @error('amount_raised.0') is-invalid @enderror" 
                     name="amount_raised[]" 
                     min="0.01" 
                     step="0.01" 
-                    oninput = "if (this.value <= 0) this.value = ''"
+                   
                     value="{{ old('amount_raised.0') }}" 
-                    required
+                    
                 >
                 @error('amount_raised.0')
                     <div class="invalid-feedback">This Field is Required</div>
-                @enderror
+                @enderror -->
                    <!-- {{-- JS validation error --}}
                  <div class="invalid-feedback js-error" style="display: none;">Amount must be greater than 0</div> -->
-            </div>
+            <!-- </div> -->
 
            
-            <div class="col-md-3">
-                <label id="labelinput" for="valuation" class="form-label required">Valuation (in cr) <span class="text-danger">*</span></label>
-                <input 
-                    type="number" 
-                    class="form-control @error('valuation.0') is-invalid @enderror" 
-                    name="valuation[]" 
-                    value="{{ old('valuation.0') }}" 
-                    min="0.01"
-                    step="0.01"
-                    oninput="if (this.value <= 0) this.value = ''"
-                    required
-                >
-                @error('valuation.0')
-                    <div class="invalid-feedback">This Field is Required</div>
-                @enderror
-            </div>
+          <div class="col-md-3">
+    <label id="labelinput" for="valuation" class="form-label">Valuation (in cr)</label>
+    <input 
+        type="number"  {{-- Use text to bypass browser number validation --}}
+        class="form-control @error('valuation.0') is-invalid @enderror" 
+        name="valuation[]" 
+        value="{{ old('valuation.0') }}"
+          step="0.01" 
+    >
+    @error('valuation.0')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
 
           
             <div class="col-md-1 mt-3">
@@ -1819,7 +1848,7 @@
         name="pitch_deck" 
         value="{{ old('pitch_deck.0')}}"
         accept=".ppt,.pptx,.pdf,.doc,.docx" 
-        required
+        
         onchange="validatePitchDeckFile(this)"
     >
     <div id="pitch_deck_error" class="text-danger"></div>
@@ -1942,7 +1971,7 @@
         <div class="row mb-4 align-items-end financial-entry">
             <div class="col-md-3">
                 <label class="required">Fiscal Year <span style="color:red;">*</span></label>
-                <select name="fiscal_year[]" class="form-control spaced-input" required>
+                <select name="fiscal_year[]" class="form-control spaced-input">
                     <option value="" disabled >Select Year</option>
                     <option value="2020">2020-2021</option>
                     <option value="2021">2021-2022</option>
@@ -1952,7 +1981,7 @@
             </div>
             <div class="col-md-8">
                 <label class="required">Choose File <small>(pdf, doc, docx, xls, xlsx)</small> <span style="color:red;">*</span></label>
-                <input type="file" name="financials[]" accept=".pdf,.doc,.docx,.xls,.xlsx" class="form-control spaced-input" required>
+                <input type="file" name="financials[]" accept=".pdf,.doc,.docx,.xls,.xlsx" class="form-control spaced-input">
             </div>
             <div class="col-md-1">
                 <button type="button" class="btn btn-info" onclick="addFinancialsField()">+</button>
@@ -2261,48 +2290,48 @@ function validateFinancials() {
  <script>
 
         
-    function validateForm() {
-        const valuations = document.querySelectorAll('input[name="valuation[]"]');
-        const amountRaised = document.querySelectorAll('input[name="amount_raised[]"]');
-        const founderExperience = document.querySelectorAll('input[name="founder_experience[]"]');
+    // function validateForm() {
+    //     const valuations = document.querySelectorAll('input[name="valuation[]"]');
+    //     const amountRaised = document.querySelectorAll('input[name="amount_raised[]"]');
+    //     const founderExperience = document.querySelectorAll('input[name="founder_experience[]"]');
 
-        const validateFieldGroup = (fields, message) => {
-            fields.forEach(input => {
-                const errorDiv = input.parentElement.querySelector('.js-error');
-                const value = parseFloat(input.value);
-                if (value <= 0 || isNaN(value)) {
-                    input.classList.add('is-invalid');
-                    if (errorDiv) {
-                        errorDiv.textContent = message;
-                        errorDiv.style.display = 'block';
-                    }
-                } else {
-                    input.classList.remove('is-invalid');
-                    if (errorDiv) {
-                        errorDiv.style.display = 'none';
-                    }
-                }
-            });
-        };
+    //     const validateFieldGroup = (fields, message) => {
+    //         fields.forEach(input => {
+    //             const errorDiv = input.parentElement.querySelector('.js-error');
+    //             const value = parseFloat(input.value);
+    //             if (value <= 0 || isNaN(value)) {
+    //                 input.classList.add('is-invalid');
+    //                 if (errorDiv) {
+    //                     errorDiv.textContent = message;
+    //                     errorDiv.style.display = 'block';
+    //                 }
+    //             } else {
+    //                 input.classList.remove('is-invalid');
+    //                 if (errorDiv) {
+    //                     errorDiv.style.display = 'none';
+    //                 }
+    //             }
+    //         });
+    //     };
 
-        validateFieldGroup(valuations, "Valuation must be greater than 0");
-        validateFieldGroup(amountRaised, "Amount must be greater than 0");
-        validateFieldGroup(founderExperience, "Experience must be greater than 0");
-    }
+    //     validateFieldGroup(valuations, "Valuation must be greater than 0");
+    //     validateFieldGroup(amountRaised, "Amount must be greater than 0");
+    //     validateFieldGroup(founderExperience, "Experience must be greater than 0");
+    // }
 
 
-    const form = document.getElementById('investeeForm');
-    form.addEventListener('input', validateForm);
-    form.addEventListener('change', validateForm);
-    form.addEventListener('submit', function(event) {
-        validateForm();
-        const invalidInputs = form.querySelectorAll('.is-invalid');
-        if (invalidInputs.length > 0) {
-            event.preventDefault();
-            alert('Please correct the errors in the form before submitting.');
-            invalidInputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    // const form = document.getElementById('investeeForm');
+    // form.addEventListener('input', validateForm);
+    // form.addEventListener('change', validateForm);
+    // form.addEventListener('submit', function(event) {
+    //     validateForm();
+    //     const invalidInputs = form.querySelectorAll('.is-invalid');
+    //     if (invalidInputs.length > 0) {
+    //         event.preventDefault();
+    //         alert('Please correct the errors in the form before submitting.');
+    //         invalidInputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //     }
+    // });
 
 
     function fillConcernedPersonDetails() {
@@ -2375,56 +2404,56 @@ document.getElementById('investeeForm').addEventListener('submit', function(even
 
     // Custom validation for dynamically added public_links[] and link_descriptions[]
     // Custom validation for dynamically added public_links[] and link_descriptions[]
-    const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
-    const linkDescriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
-    for (let i = 0; i < publicLinks.length; i++) {
-        publicLinks[i].classList.remove('is-invalid');
-        linkDescriptions[i].classList.remove('is-invalid');
-        const linkFilled = publicLinks[i].value.trim() !== '';
-        const descSelected = linkDescriptions[i].value && linkDescriptions[i].value.trim() !== '';
+    // const publicLinks = document.querySelectorAll('input[name="public_links[]"]');
+    // const linkDescriptions = document.querySelectorAll('select[name="link_descriptions[]"]');
+    // for (let i = 0; i < publicLinks.length; i++) {
+    //     publicLinks[i].classList.remove('is-invalid');
+    //     linkDescriptions[i].classList.remove('is-invalid');
+    //     const linkFilled = publicLinks[i].value.trim() !== '';
+    //     const descSelected = linkDescriptions[i].value && linkDescriptions[i].value.trim() !== '';
        
         
-        if (publicLinks.length === 1) {
-            // Only one row
-            if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
-                if (!linkFilled) publicLinks[i].classList.add('is-invalid');
-                if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
-                isValid = false;
-                publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        // if both empty: allowed (do nothing)
-        }
-        else {
-            // More than one row
-            if (i === 0) {
-                // First row is always required
-                if (!linkFilled) {
-                    publicLinks[i].classList.add('is-invalid');
-                    isValid = false;
-                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-                if (!descSelected) {
-                    linkDescriptions[i].classList.add('is-invalid');
-                    isValid = false;
-                    linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            } else {
-                // All other rows must be either fully filled or fully empty
-                if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
-                    if (!linkFilled) publicLinks[i].classList.add('is-invalid');
-                    if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
-                    isValid = false;
-                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else if (!linkFilled && !descSelected) {
-                    // ❌ error on both if completely empty
-                    publicLinks[i].classList.add('is-invalid');
-                    linkDescriptions[i].classList.add('is-invalid');
-                    isValid = false;
-                    publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        }
-    }
+    //     if (publicLinks.length === 1) {
+    //         // Only one row
+    //         if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
+    //             if (!linkFilled) publicLinks[i].classList.add('is-invalid');
+    //             if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
+    //             isValid = false;
+    //             publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //         }
+    //     // if both empty: allowed (do nothing)
+    //     }
+    //     else {
+    //         // More than one row
+    //         if (i === 0) {
+    //             // First row is always required
+    //             if (!linkFilled) {
+    //                 publicLinks[i].classList.add('is-invalid');
+    //                 isValid = false;
+    //                 publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //             }
+    //             if (!descSelected) {
+    //                 linkDescriptions[i].classList.add('is-invalid');
+    //                 isValid = false;
+    //                 linkDescriptions[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //             }
+    //         } else {
+    //             // All other rows must be either fully filled or fully empty
+    //             if ((linkFilled && !descSelected) || (!linkFilled && descSelected)) {
+    //                 if (!linkFilled) publicLinks[i].classList.add('is-invalid');
+    //                 if (!descSelected) linkDescriptions[i].classList.add('is-invalid');
+    //                 isValid = false;
+    //                 publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //             } else if (!linkFilled && !descSelected) {
+    //                 // ❌ error on both if completely empty
+    //                 publicLinks[i].classList.add('is-invalid');
+    //                 linkDescriptions[i].classList.add('is-invalid');
+    //                 isValid = false;
+    //                 publicLinks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //             }
+    //         }
+    //     }
+    // }
 
     if (!isValid) {
         event.preventDefault();
@@ -2625,62 +2654,15 @@ function removeLinkField(button) {
             </div>
             <div class="col-md-2">
                 <label id="labelinput" for="founder_position" class="required">Position</label>
-                <select class="form-control" name="founder_position[]" required>
-                    <option value="" disabled selected>Select Position</option>
-                    <option value="Chief Administrative Officer">Chief Administrative Officer</option>
-                    <option value="Chief Analytics Officer">Chief Analytics Officer</option>
-                    <option value="Chief Brand Officer">Chief Brand Officer</option>
-                    <option value="Chief Business Development Officer">Chief Business Development Officer</option>
-                    <option value="Chief Business Officer">Chief Business Officer</option>
-                    <option value="Chief Commercial Officer">Chief Commercial Officer</option>
-                    <option value="Chief Communications Officer">Chief Communications Officer</option>
-                    <option value="Chief Compliance Officer">Chief Compliance Officer</option>
-                    <option value="Chief Content Officer">Chief Content Officer</option>
-                    <option value="Chief Creative Officer">Chief Creative Officer</option>
-                    <option value="Chief Customer Officer">Chief Customer Officer</option>
-                    <option value="Chief Data Officer">Chief Data Officer</option>
-                    <option value="Chief Design Officer">Chief Design Officer</option>
-                    <option value="Chief Digital Officer">Chief Digital Officer</option>
-                    <option value="Chief Diversity Officer">Chief Diversity Officer</option>
-                    <option value="Chief Executive Officer">Chief Executive Officer</option>
-                    <option value="Chief Experience Officer">Chief Experience Officer</option>
-                    <option value="Chief Financial Officer">Chief Financial Officer</option>
-                    <option value="Chief Gaming Officer">Chief Gaming Officer</option>
-                    <option value="Chief Genealogical Officer">Chief Genealogical Officer</option>
-                    <option value="Chief Human Resources Officer">Chief Human Resources Officer</option>
-                    <option value="Chief Information Officer">Chief Information Officer</option>
-                    <option value="Chief Information Officer (Higher Education)">Chief Information Officer (Higher Education)</option>
-                    <option value="Chief Information Security Officer">Chief Information Security Officer</option>
-                    <option value="Chief Innovation Officer">Chief Innovation Officer</option>
-                    <option value="Chief Investment Officer">Chief Investment Officer</option>
-                    <option value="Chief Knowledge Officer">Chief Knowledge Officer</option>
-                    <option value="Chief Learning Officer">Chief Learning Officer</option>
-                    <option value="Chief Marketing Officer">Chief Marketing Officer</option>
-                    <option value="Chief Operating Officer">Chief Operating Officer</option>
-                    <option value="Chief Privacy Officer">Chief Privacy Officer</option>
-                    <option value="Chief Process Officer">Chief Process Officer</option>
-                    <option value="Chief Product Officer">Chief Product Officer</option>
-                    <option value="Chief Reputation Officer">Chief Reputation Officer</option>
-                    <option value="Chief Research Officer">Chief Research Officer</option>
-                    <option value="Chief Restructuring Officer">Chief Restructuring Officer</option>
-                    <option value="Chief Risk Officer">Chief Risk Officer</option>
-                    <option value="Chief Science Officer">Chief Science Officer</option>
-                    <option value="Chief Scientific Officer">Chief Scientific Officer</option>
-                    <option value="Chief Security Officer">Chief Security Officer</option>
-                    <option value="Chief Services Officer">Chief Services Officer</option>
-                    <option value="Chief Strategy Officer">Chief Strategy Officer</option>
-                    <option value="Chief Sustainability Officer">Chief Sustainability Officer</option>
-                    <option value="Chief Technology Officer">Chief Technology Officer</option>
-                    <option value="Chief Visibility Officer">Chief Visibility Officer</option>
-                    <option value="Chief Visionary Officer">Chief Visionary Officer</option>
-                    <option value="Chief Web Officer">Chief Web Officer</option>
-                    <option value="General Manager">General Manager</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Others">Others</option>
-                    <option value="Secretary">Secretary</option>
-                    <option value="Supervisor">Supervisor</option>
-                    <option value="Vice President">Vice President</option>
-                </select>
+                <input   
+                type="text" 
+                class="form-control" 
+                name="founder_position[]" 
+                required
+                pattern="^[A-Za-z\\s.\\-&']+$"
+                title="Only letters, spaces, dots, hyphens, ampersands, and apostrophes are allowed."
+                oninput="this.value = this.value.replace(/[^A-Za-z\\s.\\-&']/g, '')"
+            >
             </div>
             <div class="col-md-2">
                 <label id="labelinput" for="founder_education" class="required">Highest Qualification</label>
@@ -2694,10 +2676,10 @@ function removeLinkField(button) {
             <div class="col-md-3">
                 <label id="labelinput" for="founder_experience" class="required">Work Experience (In Years)</label>
                 <input type="number" class="form-control " name="founder_experience[]" 
-                    step="0.1"       
-                    min="0.1"
+                    step="1"       
+                    min="1"
                     max="100"
-                    oninput="if (this.value < 0.1) this.value = ''" 
+                    oninput="if (this.value < 1) this.value = ''" 
                     required>
             </div>
             <div class="col-md-1">
@@ -2761,7 +2743,7 @@ document.addEventListener('DOMContentLoaded', function () {
         newRow.innerHTML = `
             <div class="col-md-3">
                 <label id="labelinput" for="fund_usage" class="required">Usage of Fund</label>
-                <select class="form-control spaced-input" name="fund_usage[]" required>
+                <select class="form-control spaced-input" name="fund_usage[]" >
                     <option value="" disabled selected>Select Usage</option>
                     <option value="Capex">Capex</option>
                     <option value="Opex">Opex</option>
@@ -2776,8 +2758,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <input class="form-control spaced-input" type="number" name="fund_requirement[]"  min="1"
                     step="0.01"
                     oninput="if (this.value < 1) this.value = ''"
-                    required>
-                    <select class="form-select spaced-input" name="fund_unit[]" required>
+                    >
+                    <select class="form-select spaced-input" name="fund_unit[]">
                         <option value="crores">Cr</option>
                         <option value="lakhs">Lakh</option>
                     </select>
@@ -2823,7 +2805,7 @@ document.addEventListener('DOMContentLoaded', function () {
         newRow.innerHTML = `
             <div class="col-md-2">
                 <label id="labelinput" for="previous_rounds" class="required">Previous Round</label>
-                <select class="form-control spaced-input" name="previous_rounds[]" required>
+                <select class="form-control spaced-input" name="previous_rounds[]">
                     <option value="" disabled selected>Select Round</option>
                     <option value="Pre seed round">Pre seed round</option>
                     <option value="Seed Round">Seed Round</option>
@@ -2836,7 +2818,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="investors" class="required">Investors</label>
-                <input type="text" class="form-control spaced-input" name="investors[]" required 
+                <input type="text" class="form-control spaced-input" name="investors[]"  
                     pattern="^[A-Za-z\s.,&'-]+$"
                     title="Only letters, spaces, commas, periods, ampersands, and hyphens are allowed."
                     oninput="filterInvestorInput(this)"
@@ -2844,14 +2826,14 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="amount_raised" class="required">Amount Raised (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="amount_raised[]" min="0.01" step="0.01" required>
+                <input type="number" class="form-control spaced-input" name="amount_raised[]" step="0.01">
 
             </div>
             <div class="col-md-3">
                 <label id="labelinput" for="valuation" class="required">Valuation (in cr)</label>
-                <input type="number" class="form-control spaced-input" name="valuation[]" min="0.01"
+                <input type="number" class="form-control spaced-input" name="valuation[]"
                     step="0.01"
-                    oninput="if (this.value <= 0) this.value = ''" required>
+                    oninput="if (this.value <= 0) this.value = ''">
             </div>
             <div class="col-md-1">
                 <button class="btn btn-danger float-end" type="button" onclick="removePreviousRoundField(this)">×</button>
@@ -2974,7 +2956,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script>
+ <script>
 document.addEventListener('DOMContentLoaded', function () {
     let websiteInput = document.getElementById('company_website');
     let linkedinInput = document.getElementById('linkedin_link');
@@ -3050,7 +3032,47 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+</script> 
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let form = document.getElementById('investeeForm');
+    let websiteInput = document.getElementById('company_website');
+    let websiteError = document.getElementById('company_website_error');
+
+    // Strict regex for website (must start with http/https)
+    // const urlPattern = /^https?:\/\/([\w-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+    const urlPattern = /^(https?:\/\/|(www\.))([\w-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+
+    
+    // const urlPattern = /^(https?:\/\/)?(www\.)?([\w-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+
+
+
+    form.addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // validate website
+        if (!urlPattern.test(websiteInput.value.trim())) {
+            websiteError.textContent = 'Please enter a valid URL (e.g., https://www.example.com)';
+            websiteInput.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            websiteError.textContent = '';
+            websiteInput.classList.remove('is-invalid');
+        }
+
+        // block submission if invalid
+        if (!isValid) {
+            event.preventDefault();
+            websiteInput.focus();
+        }
+    });
+});
 </script>
+
+
 
 <script>
             function filterQualificationInput(input) {
@@ -3226,6 +3248,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+});
+</script>
+<script>
+document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent native validation
+    this.submit(); // Force submit
 });
 </script>
 

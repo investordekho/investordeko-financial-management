@@ -36,7 +36,7 @@
 
             <div class="text-center mt-4">
                 <p>Click the button below to confirm your subscription:</p>
-                <form method="POST" action="{{ route('processOrder', ['plan' => $plan, 'totalprice' => $totalprice]) }}">
+                <form method="GET" action="{{ route('processOrder', ['plan' => $plan, 'totalprice' => $totalprice]) }}">
                     @csrf
                     <input type="hidden" name="plan" value="{{ $plan }}">
                     <button type="submit" id="submit" class="btn btn-success btn-lg">Confirm Subscription</button>

@@ -192,10 +192,22 @@ function isOverlappingTenure2($selected, $normalized) {
 
  public function selectCategoryView(Request $request)
  {
+    $category_id = auth()->user()->category_id;
+    if($category_id == 1){
+        return view('areaofintrest.properties');    
+    }elseif($category_id == 2){
+        return view('areaofintrest.companies');
+    }elseif($category_id == 3){
+        return view('areaofintrest.properties');
+    }else{
+        return view('areaofintrest.properties');
+    }
+
+    
     return view('areaofintrest.properties');
  }
  
-
+ 
 public function sectorintresteddata2(Request $request)
 {
     //print to debug data received
@@ -323,622 +335,312 @@ public function sectorintresteddata2(Request $request)
 }
 
 
-// public function sectorintresteddata(Request $request)
-// {
-//     Log::info('SectorInterested Request:', $request->all());
-
-//     $sectors            = (array) $request->input('sector', []);
-//     $locations          = (array) $request->input('location', []);
-//     $investment_sizes   = (array) $request->input('investment_size', []);
-//     $investment_tenures = (array) $request->input('investment_tenure', []);
-//     $investor_types     = (array) $request->input('investor_type', []);
-
-//     $userId = auth()->id();
-//     $subscriptionRequest = SubscriptionRequest::where('user_id', $userId)->latest()->first();
-//     $data_no = $subscriptionRequest ? $subscriptionRequest->data_no : 0;
-
-//     // 🔹 Helper: Normalize keywords
-//     $toKeywords = function (array $values): array {
-//         $stopwords = ['and', 'or', 'the', 'of', 'in', 'on', 'for', 'to', 'a', 'an'];
-//         $all = [];
-//         foreach ($values as $v) {
-//             $v = strtolower($v);
-//             $v = preg_replace('/[^a-z0-9 ]+/i', ' ', $v);
-//             $parts = array_filter(explode(' ', preg_replace('/\s+/', ' ', trim($v))));
-//             foreach ($parts as $p) {
-//                 if (strlen($p) >= 2 && !in_array($p, $stopwords)) {
-//                     $all[] = $p;
-//                 }
-//             }
-//         }
-//         return array_values(array_unique($all));
-//     };
-
-//     $sectorKeywords   = $toKeywords($sectors);
-//     $locationKeywords = $toKeywords($locations);
-
-//     Log::info("Normalized Filters", [
-//         'sectorKeywords'     => $sectorKeywords,
-//         'locationKeywords'   => $locationKeywords,
-//         'investment_sizes'   => $investment_sizes,
-//         'investment_tenures' => $investment_tenures,
-//         'investor_types'     => $investor_types,
-//     ]);
-
-//     // 🔹 Fetch all investors with details
-//     $investors = Investor::with('investmentDetails')->get();
-
-//     // 🔹 Apply OR logic across all filters
-//     $filteredInvestors = $investors->filter(function ($inv) use (
-//         $sectorKeywords, $locationKeywords, $investment_sizes, $investment_tenures, $investor_types
-//     ) {
-//         $details = $inv->investmentDetails;
-//         $match = false;
-
-//         // Sector match
-//         if (!empty($sectorKeywords)) {
-//             $normalized = strtolower(preg_replace('/[^a-z0-9 ]+/i', ' ', $inv->sectors_preferred ?? ''));
-//             $dbTokens = array_filter(explode(' ', preg_replace('/\s+/', ' ', $normalized)));
-//             $matches = array_intersect($sectorKeywords, $dbTokens);
-//             if (!empty($matches)) $match = true;
-//         }
-
-//         // Location match
-//         if (!$match && !empty($locationKeywords)) {
-//             $addr = strtolower($inv->address ?? '');
-//             foreach ($locationKeywords as $word) {
-//                 if (str_contains($addr, $word)) {
-//                     $match = true; break;
-//                 }
-//             }
-//         }
-
-//         // Investment Size match
-//         if (!$match && !empty($investment_sizes) && $details) {
-//             $dbSize = $this->parseInvestmentSizeToNumber($details->investment_size ?? '');
-//             foreach ($investment_sizes as $range) {
-//                 if ($range === '<1000000' && $dbSize < 1000000) { $match = true; break; }
-//                 if ($range === '1000000-5000000' && $dbSize >= 1000000 && $dbSize <= 5000000) { $match = true; break; }
-//                 if ($range === '5000000-10000000' && $dbSize > 5000000 && $dbSize <= 10000000) { $match = true; break; }
-//                 if ($range === '>10000000' && $dbSize > 10000000) { $match = true; break; }
-//             }
-//         }
-
-//         // Tenure match
-//         if (!$match && !empty($investment_tenures) && $details) {
-//             $tenureMonths = $this->parseTenureToMonths($details->investment_tenure ?? '');
-//             foreach ($investment_tenures as $selectedTenure) {
-//                 if ($this->matchesTenureRange($selectedTenure, $tenureMonths)) {
-//                     $match = true; break;
-//                 }
-//             }
-//         }
-
-//         // Investor Type match
-//         if (!$match && !empty($investor_types) && $details) {
-//             $dbType = strtolower($details->investor_type ?? '');
-//             foreach ($investor_types as $type) {
-//                 if (str_contains($dbType, strtolower($type))) {
-//                     $match = true; break;
-//                 }
-//             }
-//         }
-
-//         return $match;
-//     });
-
-//     // 🔹 Now handle data count scenarios
-//     $matchedCount = $filteredInvestors->count();
-//     Log::info("Filtered Investors Count", ['matched' => $matchedCount, 'required' => $data_no]);
-
-//     if ($matchedCount >= $data_no) {
-//         // ✅ Have enough data, just take $data_no
-//         $finalInvestors = $filteredInvestors->take($data_no);
-//     } else {
-//         // ❌ Not enough data, fill from all investors (excluding already chosen)
-//         $remaining = $data_no - $matchedCount;
-//         $extraInvestors = $investors->whereNotIn('id', $filteredInvestors->pluck('id'))
-//                                    ->take($remaining);
-//         $finalInvestors = $filteredInvestors->merge($extraInvestors);
-//     }
-
-//     Log::info("Final Investors", [
-//         'count' => $finalInvestors->count(),
-//         'ids' => $finalInvestors->pluck('id')
-//     ]);
-
-//     // 🔹 Save User Access
-//     foreach ($finalInvestors as $inv) {
-//         UserAccess::firstOrCreate(
-//             ['user_id' => $userId, 'investor_id' => $inv->id],
-//             [
-//                 'company_id' => $inv->company_id,
-//                 'status'     => 'pending',
-//                 'start_date' => now(),
-//                 'end_date'   => now()->addDays(360),
-//             ]
-//         );
-//     }
-
-//     return redirect()->route('home')->with('success', 'Your subscription will be activated soon.');
-// }
-
-// public function sectorintresteddata(Request $request)
-// {
-//     Log::info('SectorInterested Request:', $request->all());
-
-//     $sectors            = (array) $request->input('sector', []);
-//     $locations          = (array) $request->input('location', []);
-//     $investment_sizes   = (array) $request->input('investment_size', []);
-//     $investment_tenures = (array) $request->input('investment_tenure', []);
-//     $investor_types     = (array) $request->input('investor_type', []);
-
-//     $userId = auth()->id();
-//     $subscriptionRequest = SubscriptionRequest::where('user_id', $userId)->latest()->first();
-//     $data_no = $subscriptionRequest ? $subscriptionRequest->data_no : 0;
-
-//     // 🔹 Helper: Normalize keywords
-//     $toKeywords = function (array $values): array {
-//         $stopwords = ['and', 'or', 'the', 'of', 'in', 'on', 'for', 'to', 'a', 'an'];
-//         $all = [];
-//         foreach ($values as $v) {
-//             $v = strtolower($v);
-//             $v = preg_replace('/[^a-z0-9 ]+/i', ' ', $v);
-//             $parts = array_filter(explode(' ', preg_replace('/\s+/', ' ', trim($v))));
-//             foreach ($parts as $p) {
-//                 if (strlen($p) >= 2 && !in_array($p, $stopwords)) {
-//                     $all[] = $p;
-//                 }
-//             }
-//         }
-//         return array_values(array_unique($all));
-//     };
-
-//     $sectorKeywords   = $toKeywords($sectors);
-//     $locationKeywords = $toKeywords($locations);
-
-//     Log::info("Normalized Filters", [
-//         'sectorKeywords'     => $sectorKeywords,
-//         'locationKeywords'   => $locationKeywords,
-//         'investment_sizes'   => $investment_sizes,
-//         'investment_tenures' => $investment_tenures,
-//         'investor_types'     => $investor_types,
-//     ]);
-
-//     // 🔹 STEP 1: Get all investors with details
-//     $investors = Investor::with('investmentDetails')->get();
-
-//     // 🔹 STEP 2: Apply your OR logic filters
-//     $filteredInvestors = $investors->filter(function ($inv) use (
-//         $sectorKeywords, $locationKeywords, $investment_sizes, $investment_tenures, $investor_types
-//     ) {
-//         $details = $inv->investmentDetails;
-//         $match = false;
-
-//         // Sector match
-//         if (!empty($sectorKeywords)) {
-//             $normalized = strtolower(preg_replace('/[^a-z0-9 ]+/i', ' ', $inv->sectors_preferred ?? ''));
-//             $dbTokens = array_filter(explode(' ', preg_replace('/\s+/', ' ', $normalized)));
-//             if (!empty(array_intersect($sectorKeywords, $dbTokens))) {
-//                 $match = true;
-//             }
-//         }
-
-//         // Location match
-//         if (!$match && !empty($locationKeywords)) {
-//             $addr = strtolower($inv->address ?? '');
-//             foreach ($locationKeywords as $word) {
-//                 if (str_contains($addr, $word)) {
-//                     $match = true;
-//                     break;
-//                 }
-//             }
-//         }
-
-//         // Investment Size match
-//         if (!$match && !empty($investment_sizes) && $details) {
-//             $dbSize = $this->parseInvestmentSizeToNumber($details->investment_size ?? '');
-//             foreach ($investment_sizes as $range) {
-//                 if (
-//                     ($range === '<1000000' && $dbSize < 1000000) ||
-//                     ($range === '1000000-5000000' && $dbSize >= 1000000 && $dbSize <= 5000000) ||
-//                     ($range === '5000000-10000000' && $dbSize > 5000000 && $dbSize <= 10000000) ||
-//                     ($range === '>10000000' && $dbSize > 10000000)
-//                 ) {
-//                     $match = true;
-//                     break;
-//                 }
-//             }
-//         }
-
-//         // Tenure match
-//         if (!$match && !empty($investment_tenures) && $details) {
-//             $tenureMonths = $this->parseTenureToMonths($details->investment_tenure ?? '');
-//             foreach ($investment_tenures as $selectedTenure) {
-//                 if ($this->matchesTenureRange($selectedTenure, $tenureMonths)) {
-//                     $match = true;
-//                     break;
-//                 }
-//             }
-//         }
-
-//         // Investor Type match
-//         if (!$match && !empty($investor_types) && $details) {
-//             $dbType = strtolower($details->investor_type ?? '');
-//             foreach ($investor_types as $type) {
-//                 if (str_contains($dbType, strtolower($type))) {
-//                     $match = true;
-//                     break;
-//                 }
-//             }
-//         }
-
-//         return $match;
-//     });
-
-//     // 🔹 STEP 3: Get already assigned investors for this user
-//     $alreadyAssigned = UserAccess::where('user_id', $userId)->pluck('investor_id')->toArray();
-
-//     // 🔹 STEP 4: Remove already assigned investors
-//     $filteredInvestors = $filteredInvestors->whereNotIn('id', $alreadyAssigned);
-
-//     // 🔹 STEP 5: Select final investors
-//     $needed = $data_no;
-//     $finalInvestors = $filteredInvestors->take($needed);
-
-//     if ($finalInvestors->count() < $needed) {
-//         $remaining = $needed - $finalInvestors->count();
-//         $extraInvestors = $investors->whereNotIn('id', array_merge(
-//             $alreadyAssigned,
-//             $finalInvestors->pluck('id')->toArray()
-//         ))->take($remaining);
-
-//         $finalInvestors = $finalInvestors->merge($extraInvestors);
-//     }
-
-//     Log::info("Final Investors Selected", [
-//         'count' => $finalInvestors->count(),
-//         'ids' => $finalInvestors->pluck('id')->toArray()
-//     ]);
-
-//     // 🔹 STEP 6: Save unique UserAccess entries
-//     foreach ($finalInvestors as $inv) {
-//         UserAccess::firstOrCreate(
-//             ['user_id' => $userId, 'investor_id' => $inv->id],
-//             [
-//                 'company_id' => $inv->company_id,
-//                 'status'     => 'pending',
-//                 'start_date' => now(),
-//                 'end_date'   => now()->addDays(360),
-//             ]
-//         );
-//     }
-
-//     return redirect()->route('home')->with('success', 'Your subscription will be activated soon.');
-// }
-
-
-
-
-// public function sectorintresteddata(Request $request)
-// {
-//     Log::info('SectorInterested Request:', $request->all());
-
-//     $sectors            = (array) $request->input('sector', []);
-//     $locations          = (array) $request->input('location', []);
-//     $investment_sizes   = (array) $request->input('investment_size', []);
-//     $investment_tenures = (array) $request->input('investment_tenure', []);
-//     $investor_types     = (array) $request->input('investor_type', []);
-
-//     $userId = auth()->id();
-//     $subscriptionRequest = SubscriptionRequest::where('user_id', $userId)->latest()->first();
-//     $data_no = $subscriptionRequest ? $subscriptionRequest->data_no : 0;
-
-//     // 🔹 Helper: Normalize keywords
-//     $toKeywords = function (array $values): array {
-//         $stopwords = ['and', 'or', 'the', 'of', 'in', 'on', 'for', 'to', 'a', 'an'];
-//         $all = [];
-//         foreach ($values as $v) {
-//             $v = strtolower($v);
-//             $v = preg_replace('/[^a-z0-9 ]+/i', ' ', $v);
-//             $parts = array_filter(explode(' ', preg_replace('/\s+/', ' ', trim($v))));
-//             foreach ($parts as $p) {
-//                 if (strlen($p) >= 2 && !in_array($p, $stopwords)) {
-//                     $all[] = $p;
-//                 }
-//             }
-//         }
-//         return array_values(array_unique($all));
-//     };
-
-//     $sectorKeywords   = $toKeywords($sectors);
-//     $locationKeywords = $toKeywords($locations);
-
-//     Log::info("Normalized Filters", [
-//         'sectorKeywords'     => $sectorKeywords,
-//         'locationKeywords'   => $locationKeywords,
-//         'investment_sizes'   => $investment_sizes,
-//         'investment_tenures' => $investment_tenures,
-//         'investor_types'     => $investor_types,
-//     ]);
-
-//     // 🔹 Fetch all investors with details
-//     $investors = Investor::with('investmentDetails')->get();
-
-//     // 🔹 Apply OR logic across all filters
-//     $filteredInvestors = $investors->filter(function ($inv) use (
-//         $sectorKeywords, $locationKeywords, $investment_sizes, $investment_tenures, $investor_types
-//     ) {
-//         $details = $inv->investmentDetails;
-//         $match = false; // We want OR logic, so start with false
-
-//         // 🔸 Sector match
-//         if (!empty($sectorKeywords)) {
-//             $normalized = strtolower(preg_replace('/[^a-z0-9 ]+/i', ' ', $inv->sectors_preferred ?? ''));
-//             $dbTokens = array_filter(explode(' ', preg_replace('/\s+/', ' ', $normalized)));
-//             $matches = array_intersect($sectorKeywords, $dbTokens);
-//             if (!empty($matches)) $match = true;
-
-//             Log::info("Sector Match Debug", [
-//                 'investor_id' => $inv->id,
-//                 'searched' => $sectorKeywords,
-//                 'db' => $inv->sectors_preferred,
-//                 'matches' => $matches
-//             ]);
-//         }
-
-//         // 🔸 Location match
-//         if (!$match && !empty($locationKeywords)) {
-//             $addr = strtolower($inv->address ?? '');
-//             foreach ($locationKeywords as $word) {
-//                 if (str_contains($addr, $word)) {
-//                     $match = true; break;
-//                 }
-//             }
-//         }
-
-//         // 🔸 Investment Size match
-//         if (!$match && !empty($investment_sizes) && $details) {
-//             $dbSize = $this->parseInvestmentSizeToNumber($details->investment_size ?? '');
-//             foreach ($investment_sizes as $range) {
-//                 if ($range === '<1000000' && $dbSize < 1000000) { $match = true; break; }
-//                 if ($range === '1000000-5000000' && $dbSize >= 1000000 && $dbSize <= 5000000) { $match = true; break; }
-//                 if ($range === '5000000-10000000' && $dbSize > 5000000 && $dbSize <= 10000000) { $match = true; break; }
-//                 if ($range === '>10000000' && $dbSize > 10000000) { $match = true; break; }
-//             }
-//         }
-
-//         // 🔸 Tenure match
-//         if (!$match && !empty($investment_tenures) && $details) {
-//             $tenureMonths = $this->parseTenureToMonths($details->investment_tenure ?? '');
-//             foreach ($investment_tenures as $selectedTenure) {
-//                 if ($this->matchesTenureRange($selectedTenure, $tenureMonths)) {
-//                     $match = true; break;
-//                 }
-//             }
-//         }
-
-//         // 🔸 Investor Type match
-//         if (!$match && !empty($investor_types) && $details) {
-//             $dbType = strtolower($details->investor_type ?? '');
-//             foreach ($investor_types as $type) {
-//                 if (str_contains($dbType, strtolower($type))) {
-//                     $match = true; break;
-//                 }
-//             }
-//         }
-
-//         return $match;
-//     });
-
-//     Log::info("Final Matched Investors", [
-//         'count' => $filteredInvestors->count(),
-//         'ids'   => $filteredInvestors->pluck('id')
-//     ]);
-
-//     // 🔹 Apply data_no limit
-//     $filteredInvestors = $filteredInvestors->take($data_no);
-
-//     // 🔹 Save User Access
-//     foreach ($filteredInvestors as $inv) {
-//         UserAccess::firstOrCreate(
-//             ['user_id' => $userId, 'investor_id' => $inv->id],
-//             [
-//                 'company_id' => $inv->company_id,
-//                 'status'     => 'pending',
-//                 'start_date' => now(),
-//                 'end_date'   => now()->addDays(360),
-//             ]
-//         );
-//     }
-
-//     return redirect()->route('home')->with('success', 'Your subscription will be activated soon.');
-// }
-
 public function sectorintresteddata(Request $request)
 {
-    Log::info('SectorInterested Request:', $request->all());
+    Log::info('SectorInterested Session Data:', session()->all());
+    log::info('sectorintresteddata called');
+    $userId      = auth()->id();
+    $investorIds = session('investor_ids', []);
+    $userAccess  = session('userAccess', []);
+    $subscriber  = session('subscriber');
 
-    $sectors            = (array) $request->input('sector', []);
-    $locations          = (array) $request->input('location', []);
-    $investment_sizes   = (array) $request->input('investment_size', []);
-    $investment_tenures = (array) $request->input('investment_tenure', []);
-    $investor_types     = (array) $request->input('investor_type', []);
-
-    $userId = auth()->id();
+       // Subscription — how many new investors to assign
     $subscriptionRequest = SubscriptionRequest::where('user_id', $userId)->latest()->first();
-    $data_no = max(0, (int)($subscriptionRequest->no_of_data ?? 0)); // how many NEW records to add now
+    $data_no = max(0, (int) ($subscriptionRequest->no_of_data ?? 0));
 
-    // helper: normalize keywords
-    $toKeywords = function (array $values): array {
-        $stopwords = ['and', 'or', 'the', 'of', 'in', 'on', 'for', 'to', 'a', 'an'];
-        $all = [];
-        foreach ($values as $v) {
-            $v = strtolower($v);
-            $v = preg_replace('/[^a-z0-9 ]+/i', ' ', $v);
-            $parts = array_filter(explode(' ', preg_replace('/\s+/', ' ', trim($v))));
-            foreach ($parts as $p) {
-                if (strlen($p) >= 2 && !in_array($p, $stopwords)) $all[] = $p;
-            }
-        }
-        return array_values(array_unique($all));
-    };
-
-    $sectorKeywords   = $toKeywords($sectors);
-    $locationKeywords = $toKeywords($locations);
-
-    Log::info('Normalized Filters', [
-        'sectorKeywords'     => $sectorKeywords,
-        'locationKeywords'   => $locationKeywords,
-        'investment_sizes'   => $investment_sizes,
-        'investment_tenures' => $investment_tenures,
-        'investor_types'     => $investor_types,
-        'data_no'            => $data_no,
-    ]);
-
-    // nothing to add
     if ($data_no === 0) {
-        return redirect()->route('home')->with('info', 'No new data requested in this subscription.');
+        return redirect()->route('home')
+            ->with('info', 'No new data requested.');
     }
 
-    // all investors + details
-    $investors = Investor::with('investmentDetails')->get();
+    // Investors user already filtered in index()
+    $filteredInvestors = Investor::with('investmentDetails')
+        ->whereIn('id', $investorIds)
+        ->get();
 
-    // OR logic across all filters
-    $filteredInvestors = $investors->filter(function ($inv) use (
-        $sectorKeywords, $locationKeywords, $investment_sizes, $investment_tenures, $investor_types
-    ) {
-        $details = $inv->investmentDetails;
-        $match = false;
+    // All investors for random backfill
+    $allInvestors = Investor::with('investmentDetails')->get();
 
-        // sector
-        if (!empty($sectorKeywords)) {
-            $normalized = strtolower(preg_replace('/[^a-z0-9 ]+/i', ' ', $inv->sectors_preferred ?? ''));
-            $dbTokens = array_filter(explode(' ', preg_replace('/\s+/', ' ', $normalized)));
-            if (!empty(array_intersect($sectorKeywords, $dbTokens))) $match = true;
-        }
+    // Remove already assigned investors
+    // $assignedSet = collect($userAccess)->flip();
+    $assignedSet = collect($userAccess)
+    ->filter(fn($v) => is_numeric($v))   // keep only numbers
+    ->map(fn($v) => (int)$v)             // convert to integer
+    ->unique()                           // remove duplicates
+    ->flip();
 
-        // location
-        if (!$match && !empty($locationKeywords)) {
-            $addr = strtolower($inv->address ?? '');
-            foreach ($locationKeywords as $word) {
-                if (str_contains($addr, $word)) { $match = true; break; }
-            }
-        }
+    $filteredInvestors = $filteredInvestors->reject(fn($inv) => $assignedSet->has($inv->id));
+    $allInvestors = $allInvestors->reject(fn($inv) => $assignedSet->has($inv->id));
 
-        // investment size
-        if (!$match && !empty($investment_sizes) && $details) {
-            $dbSize = $this->parseInvestmentSizeToNumber($details->investment_size ?? '');
-            foreach ($investment_sizes as $range) {
-                if (
-                    ($range === '<1000000' && $dbSize < 1000000) ||
-                    ($range === '1000000-5000000' && $dbSize >= 1000000 && $dbSize <= 5000000) ||
-                    ($range === '5000000-10000000' && $dbSize > 5000000 && $dbSize <= 10000000) ||
-                    ($range === '>10000000' && $dbSize > 10000000)
-                ) { $match = true; break; }
-            }
-        }
+    // STEP 1: Take from filtered first
+    $selected = $filteredInvestors->take($data_no);
 
-        // tenure
-        if (!$match && !empty($investment_tenures) && $details) {
-            $tenureMonths = $this->parseTenureToMonths($details->investment_tenure ?? '');
-            foreach ($investment_tenures as $selectedTenure) {
-                if ($this->matchesTenureRange($selectedTenure, $tenureMonths)) { $match = true; break; }
-            }
-        }
+    $remaining = $data_no - $selected->count();
 
-        // investor type
-        if (!$match && !empty($investor_types) && $details) {
-            $dbType = strtolower($details->investor_type ?? '');
-            foreach ($investor_types as $type) {
-                if (str_contains($dbType, strtolower($type))) { $match = true; break; }
-            }
-        }
-
-        return $match;
-    });
-
-    // do not assign duplicates from any past subscriptions
-    $alreadyAssignedIds = UserAccess::where('user_id', $userId)->pluck('investor_id')->all();
-
-    // remove already assigned from both pools
-    $filteredInvestors = $filteredInvestors->whereNotIn('id', $alreadyAssignedIds);
-    $allAvailablePool  = $investors->whereNotIn('id', $alreadyAssignedIds);
-
-    Log::info('Pool sizes after excluding already assigned', [
-        'filtered_available' => $filteredInvestors->count(),
-        'all_available'      => $allAvailablePool->count(),
-        'requested_new'      => $data_no,
-    ]);
-
-    // pick up to data_no from filtered pool
-    $finalInvestors = $filteredInvestors->take($data_no);
-
-    // if not enough filtered, backfill from the general pool (still excluding already picked)
-    if ($finalInvestors->count() < $data_no) {
-        $remaining = $data_no - $finalInvestors->count();
-        $extras = $allAvailablePool
-            ->whereNotIn('id', $finalInvestors->pluck('id')->all())
+    // STEP 2: Random backfill (no duplicates)
+    if ($remaining > 0) {
+        $randomFill = $allInvestors
+            ->whereNotIn('id', $selected->pluck('id'))
+            ->shuffle()
             ->take($remaining);
 
-        $finalInvestors = $finalInvestors->merge($extras);
+        $selected = $selected->merge($randomFill);
     }
 
-    // absolute safety: ensure we never exceed data_no in this run
-    if ($finalInvestors->count() > $data_no) {
-        $finalInvestors = $finalInvestors->take($data_no);
+    // Save into UserAccess
+    foreach ($selected as $inv) {
+        UserAccess::create([
+            'user_id'     => $userId,
+            'investor_id' => $inv->id,
+            'subscription_request_id' => $subscriptionRequest->id,
+        ]);
+    }
+     // clear session data
+     session()->forget(['investor_ids', 'user_access', 'subscriber']);
+
+
+    return redirect()->route('home')->with('success', 'Investors assigned successfully!');
+}
+
+public function sectorInterestedDatacompany(Request $request)
+{
+    Log::info('SectorInterested Session Data:', session()->all());
+    log::info('sectorInterestedDatacompany called');
+    $userId = auth()->id();
+
+    // Company IDs filtered in search()
+    $companyIds = session('investee_ids', []);   // same as investor code but for companies
+
+    // User's approved access list for companies
+    $userAccess = session('user_access_investee_id', []); 
+
+    // Subscriber details
+    $subscriber = session('subscriber_investee');
+
+       // Fetch latest subscription request
+    $subscriptionRequest = SubscriptionRequest::where('user_id', $userId)
+        ->latest()
+        ->first();
+
+    $data_no = max(0, (int) ($subscriptionRequest->no_of_data ?? 0));
+
+    if ($data_no === 0) {
+        return redirect()->route('home')
+            ->with('info', 'No new data requested.');
     }
 
-    Log::info('Final Investors Selected (new inserts only)', [
-        'count' => $finalInvestors->count(),
-        'ids'   => $finalInvestors->pluck('id')->all(),
+    // STEP 1: Get filtered companies from search()
+    $filteredCompanies = Company::with([
+        'user', 'concernedPerson', 'founders', 
+        'fundRequirements', 'previousRounds',
+        'otherLinks', 'attachments', 'referralSource'
+    ])
+    ->whereIn('id', $companyIds)
+    ->get();
+
+    // STEP 2: Get all companies for random backfill
+    $allCompanies = Company::with([
+        'user', 'concernedPerson', 'founders', 
+        'fundRequirements', 'previousRounds',
+        'otherLinks', 'attachments', 'referralSource'
+    ])->get();
+
+    // Clean userAccess (only company_id)
+    $assignedSet = collect($userAccess)
+        ->filter(fn($v) => is_numeric($v))
+        ->map(fn($v) => (int)$v)
+        ->unique()
+        ->flip();
+
+    // Remove already assigned companies
+    $filteredCompanies = $filteredCompanies->reject(fn($c) => $assignedSet->has($c->id));
+    $allCompanies = $allCompanies->reject(fn($c) => $assignedSet->has($c->id));
+
+    // STEP 3: Take from filtered companies first
+    $selected = $filteredCompanies->take($data_no);
+
+    $remaining = $data_no - $selected->count();
+
+    // STEP 4: Fill remaining with RANDOM companies
+    if ($remaining > 0) {
+        $randomFill = $allCompanies
+            ->whereNotIn('id', $selected->pluck('id'))
+            ->shuffle()
+            ->take($remaining);
+
+        $selected = $selected->merge($randomFill);
+    }
+
+    // STEP 5: Save to user_accesses table (company_id field)
+    foreach ($selected as $company) {
+        UserAccess::create([
+            'user_id'     => $userId,
+            'company_id'  => $company->id,
+            // 'status'      => 'approved',
+            'subscription_request_id' => $subscriptionRequest->id,
+            'start_date'  => now(),
+            'end_date'    => now()->addDays(30),
+        ]);
+    }
+     session()->forget(['investee_ids', 'user_access_investee_id', 'subscriber_investee']);
+
+
+    return redirect()->route('home')
+        ->with('success', 'Companies assigned successfully!');
+}
+
+public function sectorInterestedDataCombine(Request $request)
+{
+    Log::info('SectorInterested Session Data:', session()->all());
+    log::info('sectorInterestedDataCombine called');    
+    $userId = auth()->id();
+
+    // -----------------------------
+    // 1️⃣ DETECT WHICH TYPE WE ARE PROCESSING
+    // -----------------------------
+    $investorIds = session('investor_ids', []);
+    $companyIds  = session('investee_ids', []);
+
+    log::info('Investor IDs------------1:', $investorIds);
+    log::info('Company IDs-------------2:', $companyIds);
+    //check which value is available
+
+    $savestype;
+    if(empty($investorIds)){
+        $savestype = 'company'; 
+    }
+    else{
+        $savestype = 'investor';
+    }
+    $isInvestorMode = count($investorIds) > 0;
+    $isCompanyMode  = count($companyIds) > 0;
+
+    if (!$isInvestorMode && !$isCompanyMode) {
+        return redirect()->route('home')
+            ->with('info', 'No filtered data found.');
+    }
+
+    // -----------------------------
+    // 2️⃣ SUBSCRIPTION LIMIT
+    // -----------------------------
+    $subscriptionRequest = SubscriptionRequest::where('user_id', $userId)
+        ->latest()
+        ->first();
+
+    $data_no = max(0, (int) ($subscriptionRequest->no_of_data ?? 0));
+
+    if ($data_no === 0) {
+        return redirect()->route('home')
+            ->with('info', 'No new data requested.');
+    }
+
+    // -----------------------------
+    // 3️⃣ ACCESS LIST BASED ON MODE
+    // -----------------------------
+    $userAccess = $isInvestorMode 
+        ? session('userAccess', []) 
+        : session('user_access_investee_id', []);
+
+    $assignedSet = collect($userAccess)
+        ->filter(fn($v) => is_numeric($v))
+        ->map(fn($v) => (int)$v)
+        ->unique()
+        ->flip();
+
+    // -----------------------------
+    // 4️⃣ FETCH DATA BASED ON TYPE
+    // -----------------------------
+    if ($isInvestorMode) {
+
+        // FILTERED INVESTORS
+        $filtered = Investor::with('investmentDetails')
+            ->whereIn('id', $investorIds)
+            ->get();
+
+        // ALL INVESTORS FOR RANDOM BACKFILL
+        $all = Investor::with('investmentDetails')->get();
+
+    } else {
+
+        // FILTERED COMPANIES
+        $filtered = Company::with([
+            'user', 'concernedPerson', 'founders',
+            'fundRequirements', 'previousRounds',
+            'otherLinks', 'attachments', 'referralSource'
+        ])
+        ->whereIn('id', $companyIds)
+        ->get();
+
+        // ALL COMPANIES FOR RANDOM BACKFILL
+        $all = Company::with([
+            'user', 'concernedPerson', 'founders',
+            'fundRequirements', 'previousRounds',
+            'otherLinks', 'attachments', 'referralSource'
+        ])->get();
+    }
+
+    // -----------------------------
+    // 5️⃣ REMOVE ALREADY ASSIGNED ITEMS
+    // -----------------------------
+    $filtered = $filtered->reject(fn($item) => $assignedSet->has($item->id));
+    $all = $all->reject(fn($item) => $assignedSet->has($item->id));
+
+    // -----------------------------
+    // 6️⃣ SELECT FROM FILTERED FIRST
+    // -----------------------------
+    $selected = $filtered->take($data_no);
+
+    $remaining = $data_no - $selected->count();
+
+    // -----------------------------
+    // 7️⃣ RANDOM FILL IF REQUIRED
+    // -----------------------------
+    if ($remaining > 0) {
+        $randomFill = $all
+            ->whereNotIn('id', $selected->pluck('id'))
+            ->shuffle()
+            ->take($remaining);
+
+        $selected = $selected->merge($randomFill);
+    }
+
+    // -----------------------------
+    // 8️⃣ SAVE TO user_accesses
+    // -----------------------------
+    foreach ($selected as $item) {
+
+        UserAccess::create([
+            'user_id'     => $userId,
+            // 'investor_id' => $isInvestorMode ? $item->id : null,
+            // 'company_id'  => $isCompanyMode  ? $item->id : null,
+            'investor_id' => $savestype == 'investor' ? $item->id : null,   
+            'company_id'  => $savestype == 'company'  ? $item->id : null,
+            // 'status'      => 'approved',
+            'subscription_request_id' => $subscriptionRequest->id,
+            'start_date'  => now(),
+            'end_date'    => now()->addDays(60),
+        ]);
+    }
+
+    session()->forget([
+        'investor_ids', 
+        'investee_ids', 
+        'userAccess', 
+        'user_access_investee_id', 
+        'subscriber', 
+        'subscriber_investee'
     ]);
-
-    
-    // insert new user_accesses (firstOrCreate prevents duplicate rows)
-    // foreach ($finalInvestors as $inv) {
-    //     UserAccess::firstOrCreate(
-    //         ['user_id' => $userId, 'investor_id' => $inv->id],
-    //         [
-    //             'company_id' => $inv->company_id,
-    //             'status'     => 'pending',
-    //             'start_date' => now(),
-    //             'end_date'   => now()->addDays(360),
-    //             'subscription_request_id' => $subscriptionRequest->id ?? null
-    //         ]
-    //     );
-    // }
-     // insert/update UserAccess with subscription_request_id
-   $subscriptionRequestId = null;
-
-// check if it's nested
-if (is_array($subscriptionRequest) && isset($subscriptionRequest['App\\Models\\SubscriptionRequest'])) {
-    $subscriptionRequestId = $subscriptionRequest['App\\Models\\SubscriptionRequest']->id;
-} elseif ($subscriptionRequest instanceof \App\Models\SubscriptionRequest) {
-    $subscriptionRequestId = $subscriptionRequest->id;
-}
-
-foreach ($finalInvestors as $inv) {
-    UserAccess::updateOrCreate(
-        ['user_id' => $userId, 'investor_id' => $inv->id],
-        [
-            'company_id' => $inv->company_id,
-            'status' => 'pending',
-            'start_date' => now(),
-            'end_date' => now()->addDays(360),
-            'subscription_request_id' => $subscriptionRequestId
-        ]
-    );
+    // -----------------------------
+    // 9️⃣ REDIRECT WITH SUCCESS
+    // -----------------------------
+    return redirect()->route('home')
+        ->with('success', $isInvestorMode 
+            ? 'Investors assigned successfully!'
+            : 'Companies assigned successfully!'
+        );
 }
 
 
-    $inserted = $finalInvestors->count();
-    $msg = $inserted < $data_no
-        ? "Assigned {$inserted} new investors (not enough unique records available to reach {$data_no})."
-        : "Assigned {$inserted} new investors as requested.";
-
-    return redirect()->route('home')->with('success', $msg);
-}
 
 // ✅ Normalize tenure string to months with detailed logs
 private function parseTenureToMonths(string $tenure): ?int
@@ -999,169 +701,191 @@ private function matchesTenureRange(string $selected, ?int $months): bool
 
 
 
-// public function sectorintresteddata(Request $request)
-// {
-//     Log::info('SectorInterested Request:', $request->all());
+public function companycustomiseddata(Request $request)
+{
+    
+    Log::info("ppppppppppppppppppppppppppppppppppppppppppppddddddddddddddddddddddddddddddddddddFunction companycustomiseddata called-------------------------------------------------");
+    Log::info('CompanyCustomised Request:', $request->all());
 
-//     $sectors            = (array) $request->input('sector', []);
-//     $locations          = (array) $request->input('location', []);
-//     $investment_sizes   = (array) $request->input('investment_size', []);
-//     $investment_tenures = (array) $request->input('investment_tenure', []);
-//     $investor_types     = (array) $request->input('investor_type', []);
+    // Get filters from request
+    $locations          = (array) $request->input('locations', []);
+    $incorporated_years = (array) $request->input('incorporated_in', []);
+    $usageoffunds       = (array) $request->input('fund_usage', []);
+    Log::info("Incorporated Years: " . json_encode($incorporated_years));
+    Log::info("Usage of Funds: " . json_encode($usageoffunds));
+    Log::info("Locations: " . json_encode($locations));
+    $user_id = auth()->id();
+    $subscriptionRequest = SubscriptionRequest::where('user_id', $user_id)->latest()->first();
+    $data_no = max(0, (int)($subscriptionRequest->no_of_data ?? 0));
 
-//     $userId = auth()->id();
+    Log::info("Data No from Subscription: " . $data_no);
+    if ($data_no === 0) {
+        return redirect()->route('home')->with('info', 'No new data requested in this subscription.');
+    }   
+    Log::info("Data No requested: " . $data_no);
+    // Helper: normalize keywords
+    $toKeywords = function (array $values): array {
+        $stopwords = ['and', 'or', 'the', 'of', 'in', 'on', 'for', 'to', 'a', 'an'];
+        $all = [];
+        foreach ($values as $v) {
+            $v = strtolower($v);
+            $v = preg_replace('/[^a-z0-9 ]+/i', ' ', $v);
+            $parts = array_filter(explode(' ', preg_replace('/\s+/', ' ', trim($v))));
+            foreach ($parts as $p) {
+                if (strlen($p) >= 2 && !in_array($p, $stopwords)) $all[] = $p;
+            }
+        }
+        return array_values(array_unique($all));
+    };
 
-//     $subscriptionRequest = SubscriptionRequest::where('user_id', $userId)
-//         ->latest()
-//         ->first();
-//     $data_no = $subscriptionRequest ? $subscriptionRequest->data_no : 0;
+    Log::info("Locations: " . json_encode($locations));
+    $locationKeywords = $toKeywords($locations);
+    $usageKeywords    = $toKeywords($usageoffunds);
 
-//     // 🔹 Normalize keywords helper
-//     $toKeywords = function (array $values): array {
-//         $stopwords = ['and', 'or', 'the', 'of', 'in', 'on', 'for', 'to', 'a', 'an'];
-//         $all = [];
-//         foreach ($values as $v) {
-//             $v = strtolower($v);
-//             $v = preg_replace('/[^a-z0-9 ]+/i', ' ', $v);
-//             $parts = array_filter(explode(' ', preg_replace('/\s+/', ' ', trim($v))));
-//             foreach ($parts as $p) {
-//                 if (strlen($p) >= 2 && !in_array($p, $stopwords)) {
-//                     $all[] = $p;
-//                 }
-//             }
-//         }
-//         return array_values(array_unique($all));
-//     };
+    Log::info('Normalized Filters', [
+        'locations'          => $locationKeywords,
+        'incorporated_years' => $incorporated_years,
+        'usageoffunds'       => $usageKeywords,
+        'data_no'            => $data_no,
+    ]);
+    Log::info("Location Keywords: " . json_encode($locationKeywords));
+    // Already assigned companies
+    $alreadyAssignedIds = UserAccess::where('user_id', $user_id)->pluck('company_id')->toArray();
 
-//     $sectorKeywords   = $toKeywords($sectors);
-//     $locationKeywords = $toKeywords($locations);
+    // Get all companies
+    $companies = Company::with('fundRequirements')->get();
+    Log::info("Total companies in DB: " . $companies->count());
+  
 
-//     // 🔹 Get all investors
-//     $investors = Investor::with('investmentDetails')->get();
+    $filteredCompanies = $companies->filter(function ($comp) use ($locationKeywords, $incorporated_years, $usageKeywords) {
+    $match = false;
+    $matchReasons = [];
 
-//     // 🔹 Step 1: Match sectors/locations
-//     $sectorMatchedInvestors = $investors->filter(function ($inv) use ($sectorKeywords, $locationKeywords, $sectors) {
-//         $originalSector = strtolower($inv->sectors_preferred ?? '');
-//         $originalAddr   = strtolower($inv->address ?? '');
+    // Location match
+    if (!empty($locationKeywords)) {
+        $addr = strtolower($comp->address ?? '');
+        foreach ($locationKeywords as $word) {
+            if (str_contains($addr, $word)) {
+                $match = true;
+                $matchReasons[] = "Location match: '{$word}' found in '{$addr}'";
+                break;
+            }
+        }
+    }
 
-//         // Tokenize sectors
-//         $normalized = strtolower(preg_replace('/[^a-z0-9 ]+/i', ' ', $inv->sectors_preferred ?? ''));
-//         $dbTokens = array_filter(explode(' ', preg_replace('/\s+/', ' ', $normalized)));
+    // Incorporated year match
+    if (!$match && !empty($incorporated_years)) {
+        foreach ($incorporated_years as $yearRange) {
+            if ($this->matchesIncorporationRange($yearRange, $comp->incorporated_in ?? null)) {
+                $match = true;
+                $matchReasons[] = "Incorporated year match: '{$comp->incorporated_in}' matched with '{$yearRange}'";
+                break;
+            }
+        }
+    }
 
-//         $matches = array_intersect($sectorKeywords, $dbTokens);
+    // Usage of funds match
+    if (!$match && !empty($usageKeywords) && $comp->fundRequirements->isNotEmpty()) {
+        foreach ($comp->fundRequirements as $req) {
+            $dbUsage = strtolower($req->usage ?? '');
+            foreach ($usageKeywords as $usage) {
+                if (str_contains($dbUsage, $usage)) {
+                    $match = true;
+                    $matchReasons[] = "Usage of fund match: '{$usage}' found in '{$dbUsage}'";
+                    break 2; // exit both loops
+                }
+            }
+        }
+    }
 
-//         // Log every investor for debugging
-//         Log::info('Sector Match Debug', [
-//             'searched_input'      => $sectors,
-//             'normalized_keywords' => $sectorKeywords,
-//             'db_sector_original'  => $inv->sectors_preferred,
-//             'db_sector_normalized'=> implode(' ', $dbTokens),
-//             'matched_keywords'    => array_values($matches),
-//             'investor_id'         => $inv->id,
-//             'company_id'          => $inv->company_id,
-//         ]);
+    if ($match) {
+        \Log::info("Company ID {$comp->id} matched because: ", $matchReasons);
+    } else {
+        \Log::info("Company ID {$comp->id} did not match any filter.");
+    }
 
-//         // Sector OR location match
-//         $sectorMatch   = !empty($matches);
-//         $locationMatch = false;
-//         foreach ($locationKeywords as $word) {
-//             if (str_contains($originalAddr, $word)) {
-//                 $locationMatch = true; break;
-//             }
-//         }
+    return $match;
+    });
 
-//         return $sectorMatch || $locationMatch;
-//     });
+    Log::info("Filtered companies count after applying filters: " . $filteredCompanies->count());
+    // Exclude already assigned companies
+    $filteredCompanies = $filteredCompanies->whereNotIn('id', $alreadyAssignedIds);
+    $allAvailablePool  = $companies->whereNotIn('id', $alreadyAssignedIds);
 
-//     // 🔹 Step 2: Apply investment filters
-//     $applyInvestmentFilters = !empty($investment_sizes) || !empty($investment_tenures) || !empty($investor_types);
+    Log::info('Pool sizes after excluding already assigned', [
+        'filtered_available' => $filteredCompanies->count(),
+        'all_available'      => $allAvailablePool->count(),
+        'requested_new'      => $data_no,
+    ]);
 
-//     $fullyFilteredInvestors = $sectorMatchedInvestors->filter(function ($inv) use (
-//         $applyInvestmentFilters, $investment_sizes, $investment_tenures, $investor_types
-//     ) {
-//         if (!$applyInvestmentFilters) return true;
+    // Pick up to data_no from filtered pool
+    $finalCompanies = $filteredCompanies->take($data_no);
 
-//         $details = $inv->investmentDetails;
-//         if (!$details) return false;
-//         $match = false;
+    // Backfill randomly if not enough filtered
+    if ($finalCompanies->count() < $data_no) {
+        $remaining = $data_no - $finalCompanies->count();
+        $extras = $allAvailablePool
+            ->whereNotIn('id', $finalCompanies->pluck('id')->all())
+            ->shuffle() // randomize
+            ->take($remaining);
 
-//         // Investment size
-//         if (!empty($investment_sizes) && !$match) {
-//             $dbSize = $this->parseInvestmentSizeToNumber($details->investment_size ?? '');
-//             foreach ($investment_sizes as $range) {
-//                 if ($range === '<1000000' && $dbSize < 1000000) { $match = true; break; }
-//                 if ($range === '1000000-5000000' && $dbSize >= 1000000 && $dbSize <= 5000000) { $match = true; break; }
-//                 if ($range === '5000000-10000000' && $dbSize > 5000000 && $dbSize <= 10000000) { $match = true; break; }
-//                 if ($range === '>10000000' && $dbSize > 10000000) { $match = true; break; }
-//             }
-//         }
+        $finalCompanies = $finalCompanies->merge($extras);
+    }
 
-//         // Investment tenure
-//         if (!empty($investment_tenures) && !$match) {
-//             $normalizedTenure = $this->normalizeTenure($details->investment_tenure ?? '');
-//             foreach ($investment_tenures as $selectedTenure) {
-//                 if ($this->isOverlappingTenure($selectedTenure, $normalizedTenure)) {
-//                     $match = true; break;
-//                 }
-//             }
-//         }
+    // Ensure we never exceed data_no
+    if ($finalCompanies->count() > $data_no) {
+        $finalCompanies = $finalCompanies->take($data_no);
+    }
 
-//         // Investor type
-//         if (!empty($investor_types) && !$match) {
-//             $dbType = strtolower($details->investor_type ?? '');
-//             foreach ($investor_types as $type) {
-//                 if (str_contains($dbType, strtolower($type))) {
-//                     $match = true; break;
-//                 }
-//             }
-//         }
+    // Determine subscription_request_id safely
+    $subscriptionRequestId = $subscriptionRequest instanceof \App\Models\SubscriptionRequest
+        ? $subscriptionRequest->id
+        : null;
 
-//         return $match;
-//     });
+    // Assign companies to user
+    foreach ($finalCompanies as $comp) {
+        UserAccess::updateOrCreate(
+            ['user_id' => $user_id, 'company_id' => $comp->id],
+            [
+                'status'                 => 'pending',
+                'start_date'             => now(),
+                'end_date'               => now()->addDays(360),
+                'subscription_request_id'=> $subscriptionRequestId
+            ]
+        );
+    }
+    Log::info("Final Companies Assigned to User ID {$user_id}: " . $finalCompanies->pluck('id')->implode(', '));
+    $inserted = $finalCompanies->count();
+    // $msg = $inserted < $data_no
+    //     ? "{$inserted} companies (not enough unique records available to reach {$data_no})."
+    //     : "{$inserted} companies are requested.";
+    $msg = $inserted < $data_no 
+    ? "Your request has been sent. {$inserted} companies added (not enough unique records available to reach {$data_no})." 
+    : "Your request has been sent. {$inserted} companies are requested.";
 
-//     // 🔹 Limit final selection
-//     $fullyFilteredInvestors = $fullyFilteredInvestors->take($data_no);
 
-//     // 🔹 Insert only matched investors
-//     foreach ($fullyFilteredInvestors as $inv) {
-//         UserAccess::firstOrCreate(
-//             ['user_id' => $userId, 'investor_id' => $inv->id],
-//             [
-//                 'company_id' => $inv->company_id,
-//                 'status'     => 'pending',
-//                 'granted_by_user_id' => null,
-//                 'start_date' => now(),
-//                 'end_date'   => now()->addDays(360),
-//             ]
-//         );
-//     }
+    Log::info('Final Companies Selected', [
+        'count' => $inserted,
+        'ids'   => $finalCompanies->pluck('id')->all(),
+    ]);
 
-//     // 🔹 Fill randoms if needed
-//     $required = max(0, $data_no - $fullyFilteredInvestors->count());
-//     if ($required > 0) {
-//         $extra = Investor::whereNotIn('id', $fullyFilteredInvestors->pluck('id'))
-//             ->whereNotIn('id', UserAccess::where('user_id', $userId)->pluck('investor_id'))
-//             ->inRandomOrder()
-//             ->take($required)
-//             ->get();
+    return redirect()->route('home')->with('success', $msg);
+}
 
-//         foreach ($extra as $inv) {
-//             UserAccess::firstOrCreate(
-//                 ['user_id' => $userId, 'investor_id' => $inv->id],
-//                 [
-//                     'company_id' => $inv->company_id,
-//                     'status'     => 'pending',
-//                     'granted_by_user_id' => null,
-//                     'start_date' => now(),
-//                     'end_date'   => now()->addDays(360),
-//                 ]
-//             );
-//         }
-//     }
+private function matchesIncorporationRange($compYear, $yearValue)
+{
+    // If user didn't provide a year, don't filter (always true)
+    if (empty($yearValue)) {
+        return true;
+    }
 
-//     return redirect()->route('home')->with('success', 'Your subscription will be activated soon.');
-// }
- 
+    // If it's a single year (e.g. 2023, 2022 etc.)
+    if (is_numeric($yearValue) && strlen($yearValue) === 4) {
+        return (int)$compYear === (int)$yearValue;
+    }
+
+    return false; // If it's something invalid
+}
 
 
 
