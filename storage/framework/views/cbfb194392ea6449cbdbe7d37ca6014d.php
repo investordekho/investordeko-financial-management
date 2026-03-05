@@ -4,31 +4,31 @@
     <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
     <!-- ✅ Add Your SEO Tags Here -->
     <!-- <title>InvestorDekho.in | Discover Top Investors & Startups in India</title> -->
-     <title>@yield('title', 'InvestorDekho.in | Discover Top Investors & Startups in India')</title>
+     <title><?php echo $__env->yieldContent('title', 'InvestorDekho.in | Discover Top Investors & Startups in India'); ?></title>
     <meta name="description" content="Explore thousands of investors, startups, and funding opportunities on InvestorDekho.in — India’s most trusted investor intelligence platform. Get curated investor insights, verified funding data, and powerful search tools to raise capital faster. Register free today!">
     <meta name="keywords" content="Investor database India, Startup funding India, Angel investors India, VC database India, Private equity India, Startup data analytics">
     <!-- <meta name="robots" content="index, follow"> -->
      <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta property="og:title" content="InvestorDekho.in | Discover Top Investors & Startups in India">
     <meta property="og:description" content="InvestorDekho.in is India’s most trusted investor intelligence platform. Explore thousands of investors and startups.">
-    <meta property="og:image" content="{{ asset('img/Investor-logo.png') }}">
-    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:image" content="<?php echo e(asset('img/Investor-logo.png')); ?>">
+    <meta property="og:url" content="<?php echo e(url('/')); ?>">
 
 
 
  
 
     <!-- Page Title -->
-    <!-- <title>@yield('title', 'InvestorDekho.in  ')</title> -->
-    <link rel="icon" type="image/png" href="{{ asset('img/Investor-logo.png') }}">
+    <!-- <title><?php echo $__env->yieldContent('title', 'InvestorDekho.in  '); ?></title> -->
+    <link rel="icon" type="image/png" href="<?php echo e(asset('img/Investor-logo.png')); ?>">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}"> <!-- Main App CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}"> <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?php echo e(asset('css/app.css')); ?>"> <!-- Main App CSS -->
+    <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>"> <!-- Custom CSS -->
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -56,8 +56,8 @@
     <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<link rel="stylesheet" href="{{ asset('css/app.css') }}"> 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}"> 
+<link rel="stylesheet" href="<?php echo e(asset('css/app.css')); ?>"> 
+    <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>"> 
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -424,8 +424,8 @@
     <div class="container">
         <!-- Left Section: Logo -->
         <div class="d-flex align-items-center">
-    <a class="navbar-brand d-flex flex-column align-items-center" href="{{ route('home') }}">
-        <img src="{{ asset('img/Investor-logo.png') }}" alt="Logo" style="height: 90px;"> <!-- smaller logo -->
+    <a class="navbar-brand d-flex flex-column align-items-center" href="<?php echo e(route('home')); ?>">
+        <img src="<?php echo e(asset('img/Investor-logo.png')); ?>" alt="Logo" style="height: 90px;"> <!-- smaller logo -->
         <span style="font-size: 14px; font-weight: 500; color: #011a41; margin-top: 2px; text-align: center;">
             JaiBharti Investor Insights Private Limited
         </span>
@@ -444,40 +444,40 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav" data-nosnippet>
 
-                @auth
+                <?php if(auth()->guard()->check()): ?>
                     <!-- <li class="nav-item">
-                        <span class="nav-link">Role: {{ auth()->user()->roles->pluck('name') }}</span>
+                        <span class="nav-link">Role: <?php echo e(auth()->user()->roles->pluck('name')); ?></span>
                     </li> -->
 
-                    @if(auth()->user()->hasRole('Admin'))
+                    <?php if(auth()->user()->hasRole('Admin')): ?>
                         <li class="nav-item">
-                            <a class="nav-link " href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                            <a class="nav-link " href="<?php echo e(route('admin.dashboard')); ?>">Admin Dashboard</a>
                         </li>
-                    @endif
-                @endauth
+                    <?php endif; ?>
+                <?php endif; ?>
 
                     <li class="nav-item" style="display:none;">
                         <a class="nav-link" href="/logoeffect">Logo</a>
                     </li>
-                    @auth
-                    @if(auth()->user() && auth()->user()->hasRole('Admin'))                    
+                    <?php if(auth()->guard()->check()): ?>
+                    <?php if(auth()->user() && auth()->user()->hasRole('Admin')): ?>                    
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('subscriptionrequest') }}">Subscription Requests </a>
+                        <a class="nav-link" href="<?php echo e(route('subscriptionrequest')); ?>">Subscription Requests </a>
                     </li>
-                    @endif
-                    @endauth    
+                    <?php endif; ?>
+                    <?php endif; ?>    
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Home</a>
+                        <a class="nav-link" href="<?php echo e(route('home')); ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('about') }}">About</a>
+                        <a class="nav-link" href="<?php echo e(route('about')); ?>">About</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="{{ route('services') }}" class="nav-link dropdown-toggle" id="servicesDropdown" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+                        <a href="<?php echo e(route('services')); ?>" class="nav-link dropdown-toggle" id="servicesDropdown" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
                         <div class="dropdown-menu dropdown-menu-columns border-light m-0" style="left: 50% !important; transform: translateX(-50%) !important; width: max-content; padding: 1rem;">
                             <div class="row">
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('servicesperticular',['data'=>1]) }}"><i class="fa-solid fa-chart-line"></i> Fund Raising</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>1])); ?>"><i class="fa-solid fa-chart-line"></i> Fund Raising</a></h5>
                                     <ul style="list-style: none;">
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#equityFundingModal">Equity Funding</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#debtFundingModal">Debt Funding</a></li>
@@ -487,7 +487,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('servicesperticular',['data'=>2] ) }}"><i class="fas fa-dollar-sign"></i> Public Offering</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>2] )); ?>"><i class="fas fa-dollar-sign"></i> Public Offering</a></h5>
                                     <ul style="list-style: none;">
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoPlanningModal">IPO Planning</a></li>
                                         <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#ipoListingModal">IPO Listing</a></li> -->
@@ -498,7 +498,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('servicesperticular',['data'=>3]) }}"><i class="fas fa-gavel"></i> Intellectual Property</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>3])); ?>"><i class="fas fa-gavel"></i> Intellectual Property</a></h5>
                                     <ul style="list-style: none;">
                                         <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#patentModal">Patent</a></li> -->
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#trademarkModal">Trademark</a></li>
@@ -511,7 +511,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('servicesperticular',['data'=>4]) }}"><i class="fas fa-tools"></i> Compliance Services</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>4])); ?>"><i class="fas fa-tools"></i> Compliance Services</a></h5>
                                     <ul style="list-style: none;">
                                        <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#incomeTaxModal">Income Tax Return</a></li> -->
                                         <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#gstCustomsModal">GST, TDS, PF, ESI, PT, Customs</a></li> -->
@@ -524,7 +524,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('servicesperticular',['data'=>5]) }}"><i class="fa-solid fa-file-alt"></i> Financial Services</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>5])); ?>"><i class="fa-solid fa-file-alt"></i> Financial Services</a></h5>
                                     <ul style="list-style: none;">
                                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#loanProposalModal">Loan Proposal</a></li>
                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#cmaDataModal">CMA Data</a></li>
@@ -539,7 +539,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 dropdown-menu-column">
-                                    <h5><a href="{{ route('servicesperticular',['data'=>6]) }}"><i class="fa-solid fa-file-alt"></i> Other Services</a></h5>
+                                    <h5><a href="<?php echo e(route('servicesperticular',['data'=>6])); ?>"><i class="fa-solid fa-file-alt"></i> Other Services</a></h5>
                                     <ul style="list-style: none;">
                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#structuredFinanceModal">Internal Audit</a></li>
                                          <li><a href="#" data-bs-toggle="modal" data-bs-target="#structuredFinanceModal">Structured Finance</a></li>
@@ -552,7 +552,7 @@
                         </div>
                     </li>
                     <li class="nav-item" style="margin-right: 50px;">
-                        <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                        <a class="nav-link" href="<?php echo e(route('contact')); ?>">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -562,12 +562,12 @@
         <!-- Right Section: Login/Profile -->
         <div class="col-auto d-flex justify-content-end">
             <ul id="profileMenu" class="navbar-nav" data-nosnippet>
-                @guest
+                <?php if(auth()->guard()->guest()): ?>
                     <!-- Show Login Link if not authenticated -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link" href="<?php echo e(route('login')); ?>">Login</a>
                     </li>
-                @else
+                <?php else: ?>
                     <!-- Show User Dropdown if authenticated -->
                     <li class="nav-item dropdown">
                        <a class="nav-link dropdown-toggle d-flex align-items-center" 
@@ -575,70 +575,75 @@
    id="profileToggleBtn" 
    role="button">
          <!-- Display Profile Image if exists, otherwise show default image -->
-                            <!-- @if (Auth::user()->profile_image)
-                                <img src="{{ asset('storage/profile_image/' . Auth::user()->profile_image) }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
-                            @else
-                                <img src="{{ asset('storage/profile_image/default_profile_image.png') }}" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
-                            @endif -->
-                            @php
+                            <!-- <?php if(Auth::user()->profile_image): ?>
+                                <img src="<?php echo e(asset('storage/profile_image/' . Auth::user()->profile_image)); ?>" alt="Profile Image" class="rounded-circle" width="40" height="40">
+                            <?php else: ?>
+                                <img src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" alt="Default Profile Image" class="rounded-circle" width="40" height="40">
+                            <?php endif; ?> -->
+                            <?php
                                 $profileImage = Auth::user()->profile_image;
                                 $imagePath = 'storage/profile_image/' . $profileImage;
-                            @endphp
+                            ?>
 
-                            @if ($profileImage)
+                            <?php if($profileImage): ?>
                                 <img 
-                                    src="{{ asset($imagePath) }}" 
+                                    src="<?php echo e(asset($imagePath)); ?>" 
                                     alt="Profile Image" 
                                     width="40" 
                                     height="40" 
                                     class="rounded-circle" 
                                     style="object-fit: cover;"
-                                    onerror="this.onerror=null;this.src='{{ asset('storage/profile_image/default_profile_image.png') }}';"
+                                    onerror="this.onerror=null;this.src='<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>';"
                                 >
-                            @else
+                            <?php else: ?>
                                 <img 
-                                    src="{{ asset('storage/profile_image/default_profile_image.png') }}" 
+                                    src="<?php echo e(asset('storage/profile_image/default_profile_image.png')); ?>" 
                                     alt="Default Profile Image" 
                                     width="40" 
                                     height="40" 
                                     class="rounded-circle" 
                                     style="object-fit: cover;"
                                 >
-                            @endif
+                            <?php endif; ?>
 
 
                             
-                            <span class="ms-2">{{ Auth::user()->name }}</span>
+                            <span class="ms-2"><?php echo e(Auth::user()->name); ?></span>
                         </a>
                         <ul id="profileDropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                             <!-- Dashboard Link -->
                             <li>
                                 <a class="dropdown-item" href="
-                                    @if(Auth::user()->form_filled == 0)
-                                        @if(Auth::user()->category_id == 1)
-                                            {{ route('form.investee') }}  
-                                        @elseif(Auth::user()->category_id == 2)
-                                            {{ route('form.investor') }}  
-                                        @elseif(Auth::user()->category_id == 3)
-                                            {{ route('form.banker.form') }} 
-                                        @elseif(Auth::user()->category_id == 4)
-                                            {{ route('form.other') }}     
-                                        @else
-                                            {{ route('home') }} <!-- Fallback if no valid category -->
-                                        @endif
-                                    @else
-                                        @if(Auth::user()->category_id == 1)
-                                            {{ route('investee.dashboard') }}
-                                        @elseif(Auth::user()->category_id == 2)
-                                            {{ route('investor.dashboard') }}
-                                        @elseif(Auth::user()->category_id == 3)
-                                            {{ route('investee.dashboard') }}
-                                        @elseif(Auth::user()->category_id == 4)
-                                            {{ route('investee.dashboard') }}
-                                        @else
-                                            {{ route('home') }}
-                                        @endif
-                                    @endif
+                                    <?php if(Auth::user()->form_filled == 0): ?>
+                                        <?php if(Auth::user()->category_id == 1): ?>
+                                            <?php echo e(route('form.investee')); ?>  
+                                        <?php elseif(Auth::user()->category_id == 2): ?>
+                                            <?php echo e(route('form.investor')); ?>  
+                                        <?php elseif(Auth::user()->category_id == 3): ?>
+                                            <?php echo e(route('form.banker.form')); ?> 
+                                        <?php elseif(Auth::user()->category_id == 4): ?>
+                                            <?php echo e(route('form.other')); ?>     
+                                        <?php else: ?>
+                                            <?php echo e(route('home')); ?> <!-- Fallback if no valid category -->
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <?php if(Auth::user()->category_id == 1): ?>
+                                            <?php echo e(route('investee.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 2): ?>
+                                            <?php echo e(route('investor.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 3): ?>
+                                            <?php echo e(route('investee.dashboard')); ?>
+
+                                        <?php elseif(Auth::user()->category_id == 4): ?>
+                                            <?php echo e(route('investee.dashboard')); ?>
+
+                                        <?php else: ?>
+                                            <?php echo e(route('home')); ?>
+
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 ">
                                     <i class="bi bi-house-door-fill me-2"></i> Dashboard
                                 </a>
@@ -646,19 +651,19 @@
                             
                             <!-- Profile Settings Link -->
                             <li>
-                                <a class="dropdown-item" href="{{ route('profile.settings') }}">
+                                <a class="dropdown-item" href="<?php echo e(route('profile.settings')); ?>">
                                     <i class="bi bi-gear-fill me-2"></i> Profile Settings
                                 </a>
                             </li>
 
                             <!-- Update Profile Link -->
-                            @if(Auth::user()->form_filled == 1)
+                            <?php if(Auth::user()->form_filled == 1): ?>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('updateprofile') }}">
+                                    <a class="dropdown-item" href="<?php echo e(route('updateprofile')); ?>">
                                         <i class="bi bi-person-lines-fill me-2"></i> Update Profile
                                     </a>
                                 </li>
-                            @endif
+                            <?php endif; ?>
 
                             
                             <!-- Divider -->
@@ -666,17 +671,17 @@
                             
                             <!-- Logout Link -->
                             <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="bi bi-box-arrow-right me-2"></i> Logout
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
+                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
+                                    <?php echo csrf_field(); ?>
                                 </form>
                             </li>
                         </ul>
                     </li>
-                @endguest
+                <?php endif; ?>
             </ul>
         </div>
 
@@ -699,7 +704,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -722,7 +727,7 @@
                 
                  <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -744,7 +749,7 @@
                 
                  <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -766,7 +771,7 @@
                 
                  <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -787,7 +792,7 @@
                 <p>We represent our clients in pitching to investors. We deliver persuasive presentations that showcase the company's value proposition, address potential risks, and answer investors' questions. We negotiate terms and conditions with investors to secure the best possible deal for our clients.</p>
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -808,7 +813,7 @@
                 <p>We work closely with companies to prepare for an Initial Public Offering (IPO). We conduct thorough due diligence, help determine the company's valuation, and assist in drafting the IPO prospectus.</p>
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -829,7 +834,7 @@
                 <p>We manage the IPO listing process on stock exchanges. We coordinate with regulatory bodies, market makers, and investors to ensure a smooth and successful listing.</p>
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -850,7 +855,7 @@
                 <p>We advise companies on the issuance of bonus shares to existing shareholders. We help to determine the appropriate ratio of bonus shares, file necessary paperwork with regulatory authorities, and ensure compliance with listing regulations.</p>
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -871,7 +876,7 @@
                 <p>We assist in the issuance of rights issues when companies need to raise additional capital from existing shareholders (rights issue). We calculate the subscription price, prepare the rights issue circular, and manage the subscription process.</p>
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -892,7 +897,7 @@
                 <p>We help companies to design and implement Employee Stock Option (ESOP) plans. We advise on the structure of the ESOP plan, valuation of the company's shares, and tax implications for both the company and employees.</p>
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -916,7 +921,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -938,7 +943,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -960,7 +965,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -982,7 +987,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1004,7 +1009,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1026,7 +1031,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1048,7 +1053,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1071,7 +1076,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1093,7 +1098,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1115,7 +1120,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1136,7 +1141,7 @@
                 <p>We guide businesses through the company registration process, including selecting the appropriate type of entity, drafting necessary documents, and obtaining government approvals.</p>
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1158,7 +1163,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1180,7 +1185,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1202,7 +1207,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1224,7 +1229,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1246,7 +1251,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1268,7 +1273,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1290,7 +1295,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1312,7 +1317,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1334,7 +1339,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1356,7 +1361,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1378,7 +1383,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1400,7 +1405,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1423,7 +1428,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1445,7 +1450,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1467,7 +1472,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1489,7 +1494,7 @@
                 
                 <!-- Contact Us Button -->
                 <div class="text-center mt-4">
-                    <a href="{{ route('service.contact.form') }}" class="btn btn-primary">
+                    <a href="<?php echo e(route('service.contact.form')); ?>" class="btn btn-primary">
                         Contact Us
                     </a>
                 </div>
@@ -1540,4 +1545,4 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/includes/header.blade.php ENDPATH**/ ?>

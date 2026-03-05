@@ -29,22 +29,22 @@
                 </div>
                <div class="col-lg-4 col-md-6">
     <h2 class="text-white mb-4">Services</h2>
-    <a class="btn btn-link" href="{{ route('services') }}">Fund Raising</a>
-    <a class="btn btn-link" href="{{ route('services') }}">Public Offering</a>
-    <a class="btn btn-link" href="{{ route('services') }}">Intellectual Property and Legal Services</a>
-    <a class="btn btn-link" href="{{ route('services') }}">Compliance and Regulatory Services</a>
-    <a class="btn btn-link" href="{{ route('services') }}">Financial and Accounting Advisory</a>
-    <a class="btn btn-link" href="{{ route('services') }}">Others</a>
+    <a class="btn btn-link" href="<?php echo e(route('services')); ?>">Fund Raising</a>
+    <a class="btn btn-link" href="<?php echo e(route('services')); ?>">Public Offering</a>
+    <a class="btn btn-link" href="<?php echo e(route('services')); ?>">Intellectual Property and Legal Services</a>
+    <a class="btn btn-link" href="<?php echo e(route('services')); ?>">Compliance and Regulatory Services</a>
+    <a class="btn btn-link" href="<?php echo e(route('services')); ?>">Financial and Accounting Advisory</a>
+    <a class="btn btn-link" href="<?php echo e(route('services')); ?>">Others</a>
 </div>
 
 <div class="col-lg-4 col-md-6">
     <h2 class="text-white mb-4">Quick Links</h2>
-    <a class="btn btn-link" href="{{ route('about') }}">About Us</a>
-    <a class="btn btn-link" href="{{ route('contact') }}">Contact Us</a>
-    <a class="btn btn-link" href="{{ route('services') }}">Our Services</a>
-    <a class="btn btn-link" href="{{ route('terms') }}">Terms & Conditions</a>
-    <a class="btn btn-link" href="{{ route('support') }}">Support</a>
-    <a href="{{ route('privacy-policy') }}" class="btn btn-link">Privacy</a>
+    <a class="btn btn-link" href="<?php echo e(route('about')); ?>">About Us</a>
+    <a class="btn btn-link" href="<?php echo e(route('contact')); ?>">Contact Us</a>
+    <a class="btn btn-link" href="<?php echo e(route('services')); ?>">Our Services</a>
+    <a class="btn btn-link" href="<?php echo e(route('terms')); ?>">Terms & Conditions</a>
+    <a class="btn btn-link" href="<?php echo e(route('support')); ?>">Support</a>
+    <a href="<?php echo e(route('privacy-policy')); ?>" class="btn btn-link">Privacy</a>
 </div>
 
 </div>
@@ -121,7 +121,7 @@
     </script>
 
     <!-- Main Custom JS file -->
-    <script src="{{ asset('dashboard/js/main.js') }}"></script> <!-- Make sure this file exists -->
+    <script src="<?php echo e(asset('dashboard/js/main.js')); ?>"></script> <!-- Make sure this file exists -->
 
     <!-- Custom JavaScript for dropdown menu functionality -->
     <script>
@@ -141,9 +141,10 @@
 
     <!-- Additional Scripts -->
 
-    <script src="{{ asset('js/main.js') }}"></script> <!-- Your custom main JavaScript -->
+    <script src="<?php echo e(asset('js/main.js')); ?>"></script> <!-- Your custom main JavaScript -->
 </body>
 </html>
 
 
 
+<?php /**PATH C:\xampp\htdocs\demo\investordeko-financial-management\resources\views/includes/footer.blade.php ENDPATH**/ ?>
